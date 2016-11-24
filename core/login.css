@@ -1,0 +1,38 @@
+body 
+{
+	background-color:#E2E2E2;
+}
+
+div.bubble
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	border-radius: 10px;
+	padding: 5%;
+	background-color: #FFFFFF;
+}
+
+div.loginbox
+{
+	font-weight: bold;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+input
+{
+	width: 100%;
+}
+
+#loginbutton
+{
+	width: 100%;
+	height: 10%;
+}
+
+H1
+{
+	text-align: center;
+}
