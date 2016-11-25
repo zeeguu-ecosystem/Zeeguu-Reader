@@ -13,7 +13,7 @@ div.bubble
 	background-color: #FFFFFF;
 }
 
-div.loginbox
+form.loginbox
 {
 	font-weight: bold;
 	margin-left: auto;
