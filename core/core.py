@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response
-import requests
+import requests, translation, readability
 
 ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch"
 STATUS_WRONGUSER  = 401; STATUS_WRONGPASS = 400; STATUS_ACCEPT = 200;
@@ -36,7 +36,8 @@ def login_handle():
         response.set_cookie('sessionID', sessionID)
     return response;
 
-# Display the home page.
+# Display a dummy article.
 def home(sessionID):
-    print sessionID
-    return render_template('article.html')
+    print "User with session "+sessionID+" retrieved dummy article."
+    article = readability.makeReadable(render_template('article.html'))
+    return translation.makeTranslatable(sessionID,article)
