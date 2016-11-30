@@ -22,7 +22,7 @@ function tagText()
 		var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
 		range.surroundContents(zeeguuTag);
 		
-		// Launch request.
+		// Launch request to Zeeguu API.
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function() { 
 			if (xmlHttp.readyState == 4 && xmlHttp.status == 200)

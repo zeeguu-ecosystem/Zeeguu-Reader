@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, make_response
+import readable
 import requests, translation, readability
 
 ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch"
@@ -39,5 +40,6 @@ def login_handle():
 # Display a dummy article.
 def home(sessionID):
     print "User with session "+sessionID+" retrieved dummy article."
-    article = readability.makeReadable(render_template('article.html'))
+    response = requests.get('http://www.nu.nl/buitenland/4358426/donald-trump-stopt-als-directeur-van-eigen-bedrijf-presidentschap.html')
+    article = readable.makeReadable(response.text)
     return translation.makeTranslatable(sessionID,article)
