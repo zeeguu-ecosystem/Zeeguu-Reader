@@ -11,7 +11,7 @@ zeeguu
 .mdl-layout__header,
 .mdl-layout__drawer-button 
 {
-  color: black !;
+  color: black !important;
 }
 
 .title
