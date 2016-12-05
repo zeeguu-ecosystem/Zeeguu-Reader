@@ -1,22 +1,12 @@
 html
 {
-    font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 80%;
+	max-height:100%;
 }
 
-body 
-{
-	background-color:#E2E2E2;
-}
-
-div.arrow-up {
-  width: 0; 
-  height: 0; 
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  margin-left: auto;
-  margin-right: auto;
-  border-bottom: 40px solid #FFFFFF;
-}
 
 img.eleph {
 	display: block;
@@ -24,38 +14,12 @@ img.eleph {
     height: 20%;
 }
 
-div.bubble
+div.loginbox
 {
-	margin-left: auto;
-	margin-right: auto;
-	width: 80%;
-	height: 50%;
-	border-radius: 10px;
-	padding: 5%;
-	background-color: #FFFFFF;
-}
-
-form.loginbox
-{
-	font-weight: bold;
-	margin-left: auto;
-	margin-right: auto;
-	width: 100%;
-	height: 100%;
-}
-
-input
-{
-	width: 100%;
-}
-
-#loginbutton
-{
-	width: 100%;
-	height: 10%;
-}
-
-H1
-{
-	text-align: center;
+    text-align:center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	/* bring your own prefixes */
+	transform: translate(-50%, -50%);
 }

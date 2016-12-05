@@ -1,20 +1,31 @@
 <HTML>
 <HEAD>
 	<META name="viewport" content="width=device-width, initial-scale=1">
-	<LINK rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+	<LINK rel="stylesheet" href="{{ url_for('static',filename='styles/mdl/material.min.css') }}">
+	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/login.css') }}" type= "text/css">
+	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<SCRIPT src="/static/styles/mdl/material.min.js"></SCRIPT>
 </HEAD>
-<IMG class="eleph" src="{{ url_for('static',filename='images/eleph.png') }}" alt="Zeeguu">
-<div class="arrow-up"></div>
-	<DIV class="bubble">
-		<FORM class="loginbox" method="post">
-			<H1>Sign in</H1>
-			<LABEL>Username</LABEL><BR/>
-			<INPUT type="text" placeholder="Enter Username" name="username" required><BR/>
-			
-			<LABEL>Password</LABEL><BR/>
-			<INPUT type="password" placeholder="Enter Password" name="password" required><BR/><BR/>
+<DIV class="loginbox">
+	<H2>Hello.</H2>
+	<FORM method="post">
+		<DIV class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<INPUT class="mdl-textfield__input" type="text" id="UserField" name="username" required>
+			<LABEL class="mdl-textfield__label" for="UserField">Username</LABEL>
+		</DIV>
+		<BR/>
 
-			<BUTTON type="submit" id="loginbutton" >Login</BUTTON>
-		</FORM>
-	</DIV>
+		<DIV class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<INPUT class="mdl-textfield__input" type="password" id="PassField" name="password" required>
+			<LABEL class="mdl-textfield__label" for="PassField">Password</LABEL>
+		</DIV>
+		<BR/><BR/>
+
+		<BUTTON class="mdl-button mdl-js-button 
+					   mdl-button--raised mdl-js-ripple-effect 
+					   mdl-button--accent" type="submit" id="loginbutton" >
+		Login
+		</BUTTON>
+	</FORM>
+</DIV>
 </HTML>
