@@ -1,9 +1,10 @@
 var ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch";
 var HTML_ZEEGUUTAG = "ZEEGUU";
  
-$(document).click(function()
-{
-	tagText();
+$(document).ready(function() {
+	$(".translatable").click(function() {
+		tagText();
+	});
 });
  
 function tagText() 

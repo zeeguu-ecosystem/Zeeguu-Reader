@@ -1,8 +1,3 @@
-html
-{
-    font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
-}
-
 zeeguu
 {
 	background-color:#d1e2ff;
@@ -11,7 +6,7 @@ zeeguu
 .mdl-layout__header,
 .mdl-layout__drawer-button 
 {
-  color: black !important;
+  color: black;
 }
 
 .title
@@ -24,4 +19,5 @@ zeeguu
   margin-left: auto;
   margin-right: auto;
   width:80%;
+  text-align:justify;
 }

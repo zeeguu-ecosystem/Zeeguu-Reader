@@ -7,19 +7,11 @@ html
 	max-height:100%;
 }
 
-
-img.eleph {
-	display: block;
-    margin: 0 auto;
-    height: 20%;
-}
-
 div.loginbox
 {
     text-align:center;
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	/* bring your own prefixes */
 	transform: translate(-50%, -50%);
 }
