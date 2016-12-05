@@ -5,5 +5,23 @@ html
 
 zeeguu
 {
-	background-color:#E2E2E2;
+	background-color:#d1e2ff;
+}
+
+.mdl-layout__header,
+.mdl-layout__drawer-button 
+{
+  color: black;
+}
+
+.title
+{
+  font-size: 1.5em;
+}
+
+.page-content
+{
+  margin-left: auto;
+  margin-right: auto;
+  width:80%;
 }
