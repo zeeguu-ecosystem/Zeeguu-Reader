@@ -3,6 +3,11 @@ zeeguu
 	background-color:#d1e2ff;
 }
 
+zeeguu:after 
+{
+	content: " (" attr(translation) ")";
+}
+
 .mdl-layout__header,
 .mdl-layout__drawer-button 
 {

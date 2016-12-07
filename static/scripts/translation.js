@@ -42,5 +42,5 @@ function tagText()
 
 function setTranslation(zeeguuTag, translation)
 {	
-	zeeguuTag.innerHTML += " ("+translation+")";
+	zeeguuTag.setAttribute("translation", translation);
 }
