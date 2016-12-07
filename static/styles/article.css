@@ -5,7 +5,7 @@ zeeguu
 
 zeeguu:after 
 {
-	content: " (" attr(translation) ")";
+	content: " (" attr(translation) ") ";
 }
 
 .mdl-layout__header,
@@ -14,7 +14,7 @@ zeeguu:after
   color: black;
 }
 
-.title
+P.title
 {
   font-size: 1.5em;
 }

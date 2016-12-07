@@ -8,7 +8,7 @@ def makeArticle(source):
      
     # Insert article at div.
     doc = Document(source)    
-    soup.find('div', {'id': 'articleTitle'}).append(doc.title());
+    soup.find('p', {'id': 'articleTitle'}).append(doc.title());
     soup.find('div', {'id': 'articleContent'}).append(Soup(doc.summary(True), 'html.parser'));
 
     return unicode(soup)
