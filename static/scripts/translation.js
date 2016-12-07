@@ -65,4 +65,22 @@ function tagText()
 function setTranslation(zeeguuTag, translation)
 {	
 	zeeguuTag.setAttribute("translation", translation);
+	//mergeTags();
+}
+
+function mergeTags()
+{
+	var all = document.getElementsByTagName(HTML_ZEEGUUTAG);
+	for (var i=0, max=all.length; i < max; i++) {
+		while (all[i].firstChild) {
+			clearTags(all[i])
+		}
+	}	
+}
+
+function clearTags(zeeguuNode) {
+	var nodes = zeeguuNode.getElementsByTagName(HTML_ZEEGUUTAG);
+	for (var i=0, max=nodes.length; i < max; i++) {
+		 $(nodes[i]).contents().unwrap();
+	}	
 }
