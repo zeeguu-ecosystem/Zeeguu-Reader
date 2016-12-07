@@ -29,12 +29,12 @@ def login_handle():
     result = requests.post(ZEEGUU_SERVER+'/session/'+username, password)
     
     # Check for login succces, sends the user back to login or continues.
-    if (result.status_code == STATUS_WRONGUSER or result.status_code == STATUS_WRONGPASS):
-        response = make_response(login_form())
-    else:
+    if (result.status_code == STATUS_ACCEPT):
         sessionID = result.content
         response = make_response(home(sessionID))
         response.set_cookie('sessionID', sessionID)
+    else:
+	response = make_response(login_form())
     return response;
 
 # Display a dummy article.
