@@ -44,7 +44,10 @@ function tagText()
 
 	// Insert tags.
 	var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
-	range.surroundContents(zeeguuTag);
+	var contents = range.extractContents();
+    clearTags(contents);
+	zeeguuTag.appendChild(contents);
+	range.insertNode(zeeguuTag);
 	
 	// Launch request to Zeeguu API.
 	var xmlHttp = new XMLHttpRequest();
@@ -65,22 +68,23 @@ function tagText()
 function setTranslation(zeeguuTag, translation)
 {	
 	zeeguuTag.setAttribute("translation", translation);
-	//mergeTags();
 }
 
-function mergeTags()
-{
-	var all = document.getElementsByTagName(HTML_ZEEGUUTAG);
-	for (var i=0, max=all.length; i < max; i++) {
-		while (all[i].firstChild) {
-			clearTags(all[i])
-		}
-	}	
-}
 
-function clearTags(zeeguuNode) {
-	var nodes = zeeguuNode.getElementsByTagName(HTML_ZEEGUUTAG);
-	for (var i=0, max=nodes.length; i < max; i++) {
-		 $(nodes[i]).contents().unwrap();
-	}	
+function clearTags(contents) {
+	console.log(contents.children);
+	var temp = document.createElement('div');
+
+	while (contents.firstChild)
+		temp.appendChild(contents.firstChild);
+
+	var tags = temp.getElementsByTagName(HTML_ZEEGUUTAG);
+	var length = tags.length;
+
+	while (length--)
+		$(tags[length]).contents().unwrap();
+
+	// Add elements back to fragment:
+	while (temp.firstChild)
+		contents.appendChild(temp.firstChild);	
 }
