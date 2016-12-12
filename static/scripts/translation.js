@@ -20,16 +20,14 @@ $(document).ready(function() {
 	});
 });
  
+// Wraps a zeeguutag including translation around the selected content.
 function tagText() 
 {
 	// Select content.
 	var selection = window.getSelection();
 	var range = selection.getRangeAt(0);
 	
-	// Check if selection has been translated already.
-	if (range.commonAncestorContainer.parentNode.nodeName == HTML_ZEEGUUTAG) 
-		return;
-	
+	// Properly select content based on mode.
 	if (translateMode == WORDMODE)
 	{
 		selection.modify('move','backward','word');
@@ -38,14 +36,21 @@ function tagText()
 		selection.modify('move','backward','sentence');
 		selection.modify('extend','forward','sentence');
 	} 
+	coverTag(selection, HTML_ZEEGUUTAG);
 	
-	var text = selection.toString(); 
-	range = selection.getRangeAt(0);
-
+	// Check if selection has been tagged already.
+	if (isTagged(selection, HTML_ZEEGUUTAG)) {
+		selection.modify('move','backward','character');
+		return;
+	}
+	
 	// Insert tags.
+	var text = selection.toString(); 
+	range = selection.getRangeAt(0);	
+	
 	var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
 	var contents = range.extractContents();
-    clearTags(contents);
+    clearTags(contents, HTML_ZEEGUUTAG);
 	zeeguuTag.appendChild(contents);
 	range.insertNode(zeeguuTag);
 	
@@ -70,15 +75,32 @@ function setTranslation(zeeguuTag, translation)
 	zeeguuTag.setAttribute("translation", translation);
 }
 
+// Fixes partial selection of 'tag' nodes.
+function coverTag(selection, tag)
+{
+	var range = selection.getRangeAt(0);
+	var parent = selection.anchorNode.parentElement;
+	if (parent && parent.nodeName == tag)
+		range.setStartBefore(selection.anchorNode.parentElement);
+	selection.addRange(range);
+}
 
-function clearTags(contents) {
-	console.log(contents.children);
+function isTagged(selection, tag) {
+	var range = selection.getRangeAt(0);
+	var contents = range.cloneContents();
+	var children = contents.children;
+	return (children.length == 1 && children[0].nodeName == tag)
+		    && (contents.textContent == children[0].textContent);
+}
+
+// Clears the given tag from contents.
+function clearTags(contents, tag) {
 	var temp = document.createElement('div');
 
 	while (contents.firstChild)
 		temp.appendChild(contents.firstChild);
 
-	var tags = temp.getElementsByTagName(HTML_ZEEGUUTAG);
+	var tags = temp.getElementsByTagName(tag);
 	var length = tags.length;
 
 	while (length--)
