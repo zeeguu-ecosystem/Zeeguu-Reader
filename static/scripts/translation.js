@@ -45,7 +45,7 @@ function tagText()
 	}
 	
 	// Insert tags.
-	var text = selection.toString(); 
+	var text = escape(selection.toString()); 
 	range = selection.getRangeAt(0);	
 	
 	var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
@@ -60,6 +60,7 @@ function tagText()
 		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
 			setTranslation(zeeguuTag, xmlHttp.responseText);
 	}
+	
 	var postData = "context="+text;
 	postData += "&url=zeeguu-mr-core.herokuapp.com"
 	postData += "&word="+text;
