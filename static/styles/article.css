@@ -5,7 +5,7 @@ zeeguu
 
 zeeguu:after 
 {
-	content: " (" attr(translation) ") ";
+	content: attr(translation);
 }
 
 .mdl-layout__header,

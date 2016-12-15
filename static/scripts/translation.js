@@ -54,7 +54,7 @@ function tagText()
 
 function setTranslation(zeeguuTag, translation)
 {	
-	zeeguuTag.setAttribute("translation", translation);
+	zeeguuTag.setAttribute("translation", " (" + translation + ") ");
 }
 
 // Merges the zeeguutags surrounding the given zeeguutag.
