@@ -1,59 +1,29 @@
 var ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch";
 var HTML_ZEEGUUTAG = "ZEEGUU";
-var WORDMODE = "word";
-var SENTMODE = "sentence";
-var translateMode = WORDMODE;
- 
+
 $(document).ready(function() {
 	$(".translatable").click(function() 
 	{
-		if (isText(window.getSelection()))
-		{
+		if ($('#toggle_translate').is(':checked'))
 			tagText();
-			if (translateMode == SENTMODE)
-				document.getElementById("modeSwitch").click();
-		}
-	});
-	
-	$('#modeSwitch').click(function()
-	{
-		if($(this).is(':checked'))
-			translateMode = SENTMODE;
-		else 
-			translateMode = WORDMODE;
 	});
 });
 
-function isText(selection)
-{
-	return true;
-}
-
- 
 // Wraps a zeeguutag including translation around the selected content.
 function tagText() 
 {
-	// Select content.
+	// Get the current selection.
 	var selection = window.getSelection();
-	var range = selection.getRangeAt(0);
 	
-	// Properly select content based on mode.
-	if (translateMode == WORDMODE)
-	{
-		selection.modify('move','backward','word');
-		selection.modify('extend','forward','word');
-	} else {
-		selection.modify('move','backward','sentence');
-		selection.modify('extend','forward','sentence');
-	} 
+	// Properly select content
+	selection.modify('move','backward','word');
+	selection.modify('extend','forward','word');
 	coverTag(selection, HTML_ZEEGUUTAG);
 	
 	// Check if selection has been tagged already.
-	if (!(range.commonAncestorContainer.parentNode.nodeName == HTML_ZEEGUUTAG) 
-	     && !isTagged(selection, HTML_ZEEGUUTAG)) {
+	if (!isTagged(selection, HTML_ZEEGUUTAG)) {
 		// Insert tags.
-		range = selection.getRangeAt(0);	
-		
+		var range = selection.getRangeAt(0);	
 		var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
 		var contents = range.extractContents();
 		clearTags(contents, HTML_ZEEGUUTAG);
@@ -78,6 +48,7 @@ function tagText()
 		xmlHttp.send(postData);
 	}
 	
+	// Undo selection.
     selection.modify('move','backward','character');
 }
 
@@ -86,6 +57,7 @@ function setTranslation(zeeguuTag, translation)
 	zeeguuTag.setAttribute("translation", translation);
 }
 
+// Merges the zeeguutags surrounding the given zeeguutag.
 function mergeZeeguu(zeeguuTag)
 {
 	var spaces = '';
@@ -134,7 +106,7 @@ function isTagged(selection, tag) {
 		    && (contents.textContent == children[0].textContent);
 }
 
-// Clears the given tag from contents.
+// Clears the given contents from tag.
 function clearTags(contents, tag) {
 	var temp = document.createElement('div');
 
@@ -147,7 +119,6 @@ function clearTags(contents, tag) {
 	while (length--)
 		$(tags[length]).contents().unwrap();
 
-	// Add elements back to fragment:
 	while (temp.firstChild)
 		contents.appendChild(temp.firstChild);	
 }
