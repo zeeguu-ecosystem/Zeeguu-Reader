@@ -8,6 +8,23 @@ zeeguu:after
 	content: attr(translation);
 }
 
+#altermenu
+{
+	display: none;
+	z-index:1;
+	color: #000000;
+	text-align: center;
+	padding: 0px;
+	background: #eaf2ff;
+	border-radius: 3px;
+	box-shadow: 0px -14px 39px 0px rgba(0, 0, 0, 0.2);
+}
+
+#altermenu .mdl-button
+{
+	width:100%;
+}
+
 .mdl-layout__header,
 .mdl-layout__drawer-button 
 {

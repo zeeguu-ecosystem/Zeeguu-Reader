@@ -6,6 +6,23 @@ $(document).ready(function() {
 	{
 		if ($('#toggle_translate').is(':checked'))
 			tagText();
+	
+		$(HTML_ZEEGUUTAG).click(function() {
+			// .position() uses position relative to the offset parent, 
+			var pos = $(this).position();
+
+			// .outerWidth() takes into account border and padding.
+			var width = $(this).outerWidth();
+			var menuHeight = $("#alterMenu").outerHeight();
+
+			//show the menu directly over the placeholder
+			$("#alterMenu").css({
+				position: "absolute",
+				width: width,
+				top: pos.top - menuHeight/2 + 3 +"px",
+				left: pos.left + "px"
+			}).show();
+		});
 	});
 });
 
