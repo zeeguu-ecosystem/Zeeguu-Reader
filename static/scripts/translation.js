@@ -11,9 +11,14 @@ $(document).ready(function() {
 				$("#alterMenu").hide();
 			else if (event.target.nodeName == HTML_ZEEGUUTAG)
 				openAlterMenu(event.target);
-			else 
+			else
 				tagText();
-		}
+		} 
+	});
+	
+	$("#toggle_translate").change(function() {
+		if(!this.checked) 
+			$("#alterMenu").hide();
 	});
 });
 
@@ -28,7 +33,7 @@ function openAlterMenu(zeeguuTag)
 		width: width,
 		top: pos.top - menuHeight/2 +"px",
 		left: pos.left + "px"
-	}).show();
+	}).fadeIn();
 }
 
 
@@ -43,32 +48,23 @@ function tagText()
 	selection.modify('extend','forward','word');
 	coverTag(selection, HTML_ZEEGUUTAG);
 	
-	// Check if selection has been tagged already.
+	// Check if selection has been tagged already, if not tag it.
 	if (!isTagged(selection, HTML_ZEEGUUTAG)) {
-		// Insert tags.
 		var range = selection.getRangeAt(0);	
 		var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
 		var contents = range.extractContents();
 		clearTags(contents, HTML_ZEEGUUTAG);
 		zeeguuTag.appendChild(contents);
 		range.insertNode(zeeguuTag);
-		
 		mergeZeeguu(zeeguuTag);
 		
-		// Launch request to Zeeguu API.
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.onreadystatechange = function() { 
-			if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-				setTranslation(zeeguuTag, xmlHttp.responseText);
-		}
-		
-		var postData = "context=" + escape(getContext(selection));
-		postData += "&url=zeeguu-mr-core.herokuapp.com"
-		postData += "&word=" + escape(zeeguuTag.textContent); 
-		console.log(postData);
-		xmlHttp.open("POST", ZEEGUU_SERVER+"/translate/nl/en", true); 
-		xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlHttp.send(postData);
+		var text = escape(zeeguuTag.textContent);
+		var context = escape(getContext(selection));
+		var url = "zeeguu-mr-core.herokuapp.com";
+		requestZeeguu("/translate/nl/en", text, context, url,
+					  setTranslation, zeeguuTag);
+		requestZeeguu("/get_possible_translations/nl/en", text, context, url,
+					  setAlternatives, zeeguuTag);
 	}
 	
 	// Undo selection.
@@ -85,6 +81,27 @@ function getContext(selection)
 function setTranslation(zeeguuTag, translation)
 {	
 	zeeguuTag.setAttribute("translation", " (" + translation + ") ");
+}
+
+function setAlternatives(zeeguuTag, alternatives)
+{	
+	console.log(alternatives);
+}
+
+// Launch request to Zeeguu API.
+function requestZeeguu(endpoint, word, context, url, responseHandler, zeeguuTag)
+{
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function() { 
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+			responseHandler(zeeguuTag, xmlHttp.responseText);
+	}
+	var postData = "context=" + context;
+	postData += "&url=" + url;
+	postData += "&word=" + word; 
+	xmlHttp.open("POST", ZEEGUU_SERVER + endpoint + "?session=" + SESSION_ID, true); 
+	xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlHttp.send(postData);
 }
 
 // Merges the zeeguutags surrounding the given zeeguutag.

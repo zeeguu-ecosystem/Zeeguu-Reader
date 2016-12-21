@@ -41,4 +41,4 @@ def login_handle():
 def home(sessionID):
     print "User with session "+sessionID+" retrieved dummy article."
     response = requests.get('http://www.nu.nl/buitenland/4358426/donald-trump-stopt-als-directeur-van-eigen-bedrijf-presidentschap.html')
-    return article.makeArticle(response.text)
+    return article.makeArticle(sessionID, response.text)
