@@ -84,9 +84,14 @@ function setTranslation(zeeguuTag, translation)
 }
 
 function setAlternatives(zeeguuTag, alternatives)
-{	
-	console.log(alternatives);
+{	alternatives = JSON.parse(alternatives).translations;
+	for (var i = 1; i < Math.min(alternatives.length, 3); i++)
+	{
+		var alternative = alternatives[i];
+		zeeguuTag.setAttribute("alt"+i, alternative.translation);
+    }
 }
+
 
 // Launch request to Zeeguu API.
 function requestZeeguu(endpoint, word, context, url, responseHandler, zeeguuTag)
