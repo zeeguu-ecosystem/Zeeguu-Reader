@@ -1,30 +1,36 @@
 var ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch";
 var HTML_ZEEGUUTAG = "ZEEGUU";
 
+// User control functions defined here (handles click events).
 $(document).ready(function() {
-	$(".translatable").click(function() 
+	$(".translatable").click(function(event) 
 	{
 		if ($('#toggle_translate').is(':checked'))
-			tagText();
-	
-		$(HTML_ZEEGUUTAG).click(function() {
-			// .position() uses position relative to the offset parent, 
-			var pos = $(this).position();
-
-			// .outerWidth() takes into account border and padding.
-			var width = $(this).outerWidth();
-			var menuHeight = $("#alterMenu").outerHeight();
-
-			//show the menu directly over the placeholder
-			$("#alterMenu").css({
-				position: "absolute",
-				width: width,
-				top: pos.top - menuHeight/2 + 3 +"px",
-				left: pos.left + "px"
-			}).show();
-		});
+		{
+			if ($("#alterMenu").is(":visible"))
+				$("#alterMenu").hide();
+			else if (event.target.nodeName == HTML_ZEEGUUTAG)
+				openAlterMenu(event.target);
+			else 
+				tagText();
+		}
 	});
 });
+
+// Places the alternative translation menu.
+function openAlterMenu(zeeguuTag)
+{
+	var pos = $(zeeguuTag).position();
+	var width = $(zeeguuTag).outerWidth();
+	var menuHeight = $("#alterMenu").outerHeight();
+	$("#alterMenu").css({
+		position: "absolute",
+		width: width,
+		top: pos.top - menuHeight/2 +"px",
+		left: pos.left + "px"
+	}).show();
+}
+
 
 // Wraps a zeeguutag including translation around the selected content.
 function tagText() 
@@ -56,10 +62,10 @@ function tagText()
 				setTranslation(zeeguuTag, xmlHttp.responseText);
 		}
 		
-		var text = escape(zeeguuTag.textContent); 
-		var postData = "context="+text;
+		var postData = "context=" + escape(getContext(selection));
 		postData += "&url=zeeguu-mr-core.herokuapp.com"
-		postData += "&word="+text;
+		postData += "&word=" + escape(zeeguuTag.textContent); 
+		console.log(postData);
 		xmlHttp.open("POST", ZEEGUU_SERVER+"/translate/nl/en", true); 
 		xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xmlHttp.send(postData);
@@ -67,6 +73,13 @@ function tagText()
 	
 	// Undo selection.
     selection.modify('move','backward','character');
+}
+
+function getContext(selection)
+{
+	selection.modify('move','backward','sentence');
+	selection.modify('extend','forward','sentence');
+	return selection.toString();
 }
 
 function setTranslation(zeeguuTag, translation)
