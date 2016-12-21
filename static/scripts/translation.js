@@ -8,7 +8,7 @@ $(document).ready(function() {
 		if ($('#toggle_translate').is(':checked'))
 		{
 			if ($("#alterMenu").is(":visible"))
-				$("#alterMenu").hide();
+				closeAlterMenu();
 			else if (event.target.nodeName == HTML_ZEEGUUTAG)
 				openAlterMenu(event.target);
 			else
@@ -18,22 +18,52 @@ $(document).ready(function() {
 	
 	$("#toggle_translate").change(function() {
 		if(!this.checked) 
-			$("#alterMenu").hide();
+			closeAlterMenu();
 	});
 });
 
 // Places the alternative translation menu.
 function openAlterMenu(zeeguuTag)
 {
+	var transCount = parseInt(zeeguuTag.getAttribute("transCount"));
+	$("#alterMenu").empty();
+	
+	// Add buttons with click listeners that replace the translation.
+	for (var i = 0; i < transCount; i++)
+	{
+		var button = document.createElement('button');
+		var alternative = zeeguuTag.getAttribute("translation"+i);
+		button.textContent = alternative;
+		$(button).addClass("mdl-button").addClass("mdl-js-button")
+				 .addClass("mdl-js-ripple-effect");
+		$("#alterMenu").append($(button));
+		$(button).click({zeeguuTag: zeeguuTag, choice: i}, function(event) {
+			var zeeguuTag =  event.data.zeeguuTag;
+			var choice = event.data.choice;
+			var oldText = zeeguuTag.getAttribute("translation0");
+			var newText = zeeguuTag.getAttribute("translation"+choice);
+			zeeguuTag.setAttribute("translation0",newText);
+			zeeguuTag.setAttribute("translation"+choice, oldText);
+		});
+	}
+
+	// Show the menu below the to be altered word.
 	var pos = $(zeeguuTag).position();
-	var width = $(zeeguuTag).outerWidth();
-	var menuHeight = $("#alterMenu").outerHeight();
+	var tagwidth = $(zeeguuTag).outerWidth();
+	$(zeeguuTag).append($("#alterMenu"));
 	$("#alterMenu").css({
 		position: "absolute",
-		width: width,
-		top: pos.top - menuHeight/2 +"px",
+		width: tagwidth,
 		left: pos.left + "px"
-	}).fadeIn();
+	}).slideDown();
+}
+
+function closeAlterMenu()
+{
+	$("#alterMenu").slideUp(function() 
+	{
+    	$("#alterMenuContainer").append($("#alterMenu"));
+	});
 }
 
 

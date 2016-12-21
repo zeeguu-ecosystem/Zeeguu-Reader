@@ -23,6 +23,7 @@ zeeguu[translation0]:after
 #altermenu .mdl-button
 {
 	width:100%;
+	display: block;
 }
 
 .mdl-layout__header,
