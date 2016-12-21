@@ -3,9 +3,9 @@ zeeguu
 	background-color:#eaf2ff;
 }
 
-zeeguu:after 
+zeeguu[translation0]:after 
 {
-	content: attr(translation);
+	content: " (" attr(translation0) ") ";
 }
 
 #altermenu

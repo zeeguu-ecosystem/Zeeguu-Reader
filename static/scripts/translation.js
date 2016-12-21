@@ -61,10 +61,8 @@ function tagText()
 		var text = escape(zeeguuTag.textContent);
 		var context = escape(getContext(selection));
 		var url = "zeeguu-mr-core.herokuapp.com";
-		requestZeeguu("/translate/nl/en", text, context, url,
-					  setTranslation, zeeguuTag);
 		requestZeeguu("/get_possible_translations/nl/en", text, context, url,
-					  setAlternatives, zeeguuTag);
+					  setTranslations, zeeguuTag);
 	}
 	
 	// Undo selection.
@@ -78,20 +76,13 @@ function getContext(selection)
 	return selection.toString();
 }
 
-function setTranslation(zeeguuTag, translation)
-{	
-	zeeguuTag.setAttribute("translation", " (" + translation + ") ");
+function setTranslations(zeeguuTag, translations)
+{	translations = JSON.parse(translations).translations;
+	var transCount = Math.min(translations.length, 3);
+	zeeguuTag.setAttribute("transCount", transCount);
+	for (var i = 0; i < transCount; i++)
+		zeeguuTag.setAttribute("translation"+i, translations[i].translation);
 }
-
-function setAlternatives(zeeguuTag, alternatives)
-{	alternatives = JSON.parse(alternatives).translations;
-	for (var i = 1; i < Math.min(alternatives.length, 3); i++)
-	{
-		var alternative = alternatives[i];
-		zeeguuTag.setAttribute("alt"+i, alternative.translation);
-    }
-}
-
 
 // Launch request to Zeeguu API.
 function requestZeeguu(endpoint, word, context, url, responseHandler, zeeguuTag)
