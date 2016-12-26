@@ -1,11 +1,16 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, send_from_directory
 import article
 import requests
+import os
 
 ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch"
 STATUS_WRONGUSER  = 401; STATUS_WRONGPASS = 400; STATUS_ACCEPT = 200;
 
 app = Flask(__name__)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'images/favicon.ico')
 
 # Main entrypoint, asks the user to login before continuing.       
 @app.route('/', methods=['GET', 'POST'])
