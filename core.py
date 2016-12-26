@@ -45,5 +45,5 @@ def login_handle():
 # Display a dummy article.
 def home(sessionID):
     print "User with session "+sessionID+" retrieved dummy article."
-    response = requests.get('http://www.nu.nl/buitenland/4358426/donald-trump-stopt-als-directeur-van-eigen-bedrijf-presidentschap.html')
+    response = requests.get('http://nl.ign.com/nintendo-switch/94111/news/take-two-ceo-nintendo-doet-veel-moeite-voor-nintendo-switch')
     return article.makeArticle(sessionID, response.text)

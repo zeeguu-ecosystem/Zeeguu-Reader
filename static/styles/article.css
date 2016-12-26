@@ -35,6 +35,24 @@ zeeguu[translation0]:after
 P.title
 {
   font-size: 1.5em;
+  font-weight: bold;
+}
+
+h1, h2, h3, h4
+{
+  font-size: 1.4em;
+}
+
+h5,h6
+{
+  font-size: 0.7em;
+}
+
+a.disabled
+{
+  color: grey;
+  pointer-events: none;
+  cursor: default;
 }
 
 .page-content

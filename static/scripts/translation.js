@@ -3,6 +3,8 @@ var HTML_ZEEGUUTAG = "ZEEGUU";
 
 // User control functions defined here (handles click events).
 $(document).ready(function() {
+	enableLinks(false);
+	
 	$(".translatable").click(function(event) 
 	{
 		if ($('#toggle_translate').is(':checked'))
@@ -17,10 +19,24 @@ $(document).ready(function() {
 	});
 	
 	$("#toggle_translate").change(function() {
-		if(!this.checked) 
+		if(this.checked)  {
+			enableLinks(false);
+		} 
+		else
+		{
 			closeAlterMenu();
+			enableLinks(true);
+		}
 	});
 });
+
+function enableLinks(enabled)
+{
+	if (enabled)
+		$('a').removeClass('disabled');
+	else
+		$('a').addClass('disabled');
+}
 
 // Places the alternative translation menu.
 function openAlterMenu(zeeguuTag)
