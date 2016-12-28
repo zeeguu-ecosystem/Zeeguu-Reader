@@ -9,5 +9,5 @@ if [ ! -d ${VIRTUALENV_ROOT} ]; then
 fi
 
 source ${VIRTUALENV_ROOT}/bin/activate
-export FLASK_APP=core.py
+export FLASK_APP=zeeguu_umr.py
 flask run --host=0.0.0.0
