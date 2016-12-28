@@ -1,9 +1,15 @@
 var ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch";
 var HTML_ZEEGUUTAG = "ZEEGUU";
 
-// User control functions defined here (handles click events).
+// User control event listeners appended to document here.
 $(document).ready(function() {
-	enableLinks(false);
+	openTranslateMode();
+	$("#toggle_translate").change(function() {
+		if (this.checked)
+			openTranslateMode();
+		else
+			closeTranslateMode();
+	});
 	
 	$(".translatable").click(function(event) 
 	{
@@ -17,25 +23,18 @@ $(document).ready(function() {
 				tagText();
 		} 
 	});
-	
-	$("#toggle_translate").change(function() {
-		if(this.checked)  {
-			enableLinks(false);
-		} 
-		else
-		{
-			closeAlterMenu();
-			enableLinks(true);
-		}
-	});
 });
 
-function enableLinks(enabled)
+// Change style and hides open translation tools.
+function openTranslateMode()
 {
-	if (enabled)
-		$('a').removeClass('disabled');
-	else
-		$('a').addClass('disabled');
+	$("a").addClass("disabled");
+}
+
+function closeTranslateMode()
+{
+	closeAlterMenu();
+	$("a").removeClass("disabled");
 }
 
 // Places the alternative translation menu.
