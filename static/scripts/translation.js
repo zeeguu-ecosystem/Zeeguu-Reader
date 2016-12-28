@@ -3,12 +3,16 @@ var HTML_ZEEGUUTAG = "ZEEGUU";
 
 // User control event listeners appended to document here.
 $(document).ready(function() {
-	openTranslateMode();
-	$("#toggle_translate").change(function() {
+	disable_href();
+	$("#toggle_translate").change(function() 
+	{
 		if (this.checked)
-			openTranslateMode();
+			disable_href();
 		else
-			closeTranslateMode();
+		{
+			closeAlterMenu();
+			enable_href();
+		}
 	});
 	
 	$(".translatable").click(function(event) 
@@ -25,16 +29,25 @@ $(document).ready(function() {
 	});
 });
 
-// Change style and hides open translation tools.
-function openTranslateMode()
+// Disable or enable links. 
+// Done in this peculiar way as default link disabling methods do not
+// pass a proper text selection.
+function disable_href()
 {
-	$("a").addClass("disabled");
+	$('.translatable').find('a').each(function() 
+	{
+		this.setAttribute('href_disabled',this.getAttribute('href'));
+		this.removeAttribute('href');
+	});	
 }
 
-function closeTranslateMode()
+function enable_href()
 {
-	closeAlterMenu();
-	$("a").removeClass("disabled");
+	$('.translatable').find('a').each(function() 
+	{
+		this.setAttribute('href',this.getAttribute('href_disabled'));
+		this.removeAttribute('href_disabled');
+	});	
 }
 
 // Places the alternative translation menu.

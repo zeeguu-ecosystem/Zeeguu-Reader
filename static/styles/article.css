@@ -48,10 +48,10 @@ h5,h6
   font-size: 0.7em;
 }
 
-a.disabled
+a[href_disabled]
 {
   color: grey;
-  pointer-events: none;
+  text-decoration: underline;
   cursor: default;
 }
 
