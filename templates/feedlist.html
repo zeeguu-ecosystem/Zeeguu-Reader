@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+	<TITLE>Zeeguu UMR</TITLE>
+	<META name="viewport" content="width=device-width, initial-scale=1">
+	<LINK rel="stylesheet" href="{{ url_for('static',filename='styles/mdl/material.min.css') }}">
+	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/login.css') }}" type= "text/css">
+	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/feedlist.css') }}" type= "text/css">
+	<SCRIPT src="/static/styles/mdl/material.min.js"></SCRIPT>
+	<SCRIPT>var SESSION_ID =  {{ sessionID }}</SCRIPT>
+</HEAD>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title">Zeeguu UMR</span>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Settings</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="">About</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+		<!-- List of articles -->
+		<ul class="feedlist">
+			{% for entry in entries %}
+			<li class="feedentry"><a href="/article?sessionID={{ sessionID }}&articleURL={{ entry.url }}">{{ entry.title }}</a></li>
+			{% else %}
+			Unbelievable.  No entries here so far.
+			{% endfor %}
+		</ul>
+    </div>
+  </main>
+</div>
+</HTML>
