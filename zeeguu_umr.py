@@ -40,7 +40,7 @@ def handleLoginForm():
         response = make_response(getFeed(sessionID))
         response.set_cookie('sessionID', sessionID)
     else:
-	response = make_response(getLogin_form())
+	response = make_response(getLoginForm())
     return response;
 
 # Returns a zeeguu enhanced article.

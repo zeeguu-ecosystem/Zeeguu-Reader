@@ -129,8 +129,12 @@ function tagText()
 
 function getContext(selection)
 {
-	selection.modify('move','backward','sentence');
-	selection.modify('extend','forward','sentence');
+	if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+		// TODO Implement firefox alternative.
+    } else {
+	    selection.modify('move','backward','sentence');
+		selection.modify('extend','forward','sentence');
+	}
 	return selection.toString();
 }
 
