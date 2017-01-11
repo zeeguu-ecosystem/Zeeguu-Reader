@@ -21,12 +21,24 @@ $(document).ready(function() {
 		{
 			if ($("#alterMenu").is(":visible"))
 				closeAlterMenu();
-			else if (event.target.nodeName == HTML_ZEEGUUTAG)
-				openAlterMenu(event.target);
+			else if (event.target.nodeName == HTML_ZEEGUUTAG) 
+			{
+			  var zeeguuTag = event.target;
+			  var transCount = parseInt(zeeguuTag.getAttribute("transCount"));
+			  if (transCount > 1)
+			    openAlterMenu(zeeguuTag);
+			  else
+			    notifyUser("Sorry, no alternatives.");
+			}
 			else
 				tagText();
 		} 
 	});
+});
+
+$(window).on("orientationchange", function() {
+	var zeeguuTag = $("#alterMenu").parent();
+	placeAlterMenu(zeeguuTag);
 });
 
 // Disable or enable links. 
@@ -48,6 +60,15 @@ function enable_href()
 		this.setAttribute('href',this.getAttribute('href_disabled'));
 		this.removeAttribute('href_disabled');
 	});	
+}
+
+function notifyUser(message)
+{
+	var notification = document.querySelector('.mdl-js-snackbar');
+	notification.MaterialSnackbar.showSnackbar(
+	{
+		message: message
+	});
 }
 
 // Places the alternative translation menu.
@@ -74,16 +95,26 @@ function openAlterMenu(zeeguuTag)
 			zeeguuTag.setAttribute("translation"+choice, oldText);
 		});
 	}
+	placeAlterMenu(zeeguuTag);
+	$("#alterMenu").slideDown();
+}
 
-	// Show the menu below the to be altered word.
+// Show the menu below the to be altered word.
+function placeAlterMenu(zeeguuTag)
+{
 	var pos = $(zeeguuTag).position();
+	var tagheight = $(zeeguuTag).outerHeight();
 	var tagwidth = $(zeeguuTag).outerWidth();
+	var menuwidth = $("#alterMenu").outerWidth();
+	var topScroll = $(".mdl-layout__content").scrollTop();
 	$(zeeguuTag).append($("#alterMenu"));
 	$("#alterMenu").css({
 		position: "absolute",
-		width: tagwidth,
-		left: pos.left + "px"
-	}).slideDown();
+		maxWidth: "80%",
+		display: "inline-block",
+		left: pos.left + (tagwidth-menuwidth)/2 + "px",
+		top: pos.top + tagheight + topScroll + "px"
+	});
 }
 
 function closeAlterMenu()

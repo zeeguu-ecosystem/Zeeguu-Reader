@@ -24,6 +24,8 @@ zeeguu[translation0]:after
 {
 	width:100%;
 	display: block;
+	text-transform: none;
+	word-wrap: break-word !important;
 }
 
 .mdl-layout__header,

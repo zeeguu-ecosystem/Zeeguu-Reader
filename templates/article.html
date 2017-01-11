@@ -7,8 +7,8 @@
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<SCRIPT>var SESSION_ID =  {{ sessionID }}</SCRIPT>
 	<SCRIPT src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/translation.js') }}"></SCRIPT>
 	<SCRIPT src="/static/styles/mdl/material.min.js"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/translation.js') }}"></SCRIPT>
 </HEAD>
 <BODY>
 <!-- Top bar -->
@@ -36,6 +36,10 @@
 		<DIV id="articleContent" class="translatable"></DIV>
     </div>
   </main>
+  <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
+	  <div class="mdl-snackbar__text"></div>
+	  <button class="mdl-snackbar__action" type="button"></button>
+  </div>
 </div>
 
 <!-- Menu to change the translation -->
