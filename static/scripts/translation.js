@@ -38,7 +38,11 @@ $(document).ready(function() {
 
 $(window).on("resize", function() {
 	var zeeguuTag = $("#alterMenu").parent();
-	placeAlterMenu(zeeguuTag);
+	if ($("#alterMenu").is(":visible")) 
+	{
+		placeAlterMenu(zeeguuTag);
+		$("#alterMenu").show();
+	}
 });
 
 // Disable or enable links. 
@@ -115,6 +119,7 @@ function placeAlterMenu(zeeguuTag)
 		left: pos.left + (tagwidth-menuwidth)/2 + "px",
 		top: pos.top + tagheight + topScroll + "px"
 	});
+	$("#alterMenu").hide();
 }
 
 function closeAlterMenu()
