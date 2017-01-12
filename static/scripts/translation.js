@@ -36,7 +36,7 @@ $(document).ready(function() {
 	});
 });
 
-$(window).on("orientationchange", function() {
+$(window).on("resize", function() {
 	var zeeguuTag = $("#alterMenu").parent();
 	placeAlterMenu(zeeguuTag);
 });

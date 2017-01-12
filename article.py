@@ -8,7 +8,17 @@ def makeArticle(sessionID, source):
      
     # Insert article at div.
     doc = Document(source)    
-    soup.find('p', {'id': 'articleTitle'}).append(doc.title());
-    soup.find('div', {'id': 'articleContent'}).append(Soup(doc.summary(True), 'html.parser'));
+    soup.find('p', {'id': 'articleTitle'}).append(doc.short_title());
+    summary = doc.summary(True)
+    summary = removeImages(summary)
+    soup.find('div', {'id': 'articleContent'}).append(Soup(summary, 'html.parser'));
 
     return unicode(soup)
+
+def removeImages(summary):
+    soup = Soup(summary, 'html.parser')
+    [s.extract() for s in soup(['img', 'hr'])]
+    [s.extract() for s in soup(class_=classBlackList)]
+    return unicode(soup)
+
+classBlackList = ["wp-caption-text"]
