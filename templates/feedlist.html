@@ -21,14 +21,12 @@
     <nav class="mdl-navigation">
 	  <div class="options">
 		  <b>My sources:</b><br /><br />
+		  {% for feed in feeds %}
 		  <span class="mdl-chip mdl-chip--deletable">
-			<span class="mdl-chip__text">Wearables</span>
+			<span class="mdl-chip__text">{{feed.title}}</span>
 			<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
 		  </span> <BR />
-		  <span class="mdl-chip mdl-chip--deletable">
-			<span class="mdl-chip__text">Groninger Krant</span>
-			<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
-		  </span><BR />
+		  {% endfor %}
 		  <span class="mdl-chip mdl-chip--deletable mdl-color--blue">
 			<span class="mdl-chip__text">Add new source</span>
 			<button type="button" class="mdl-chip__action"><i class="material-icons">add</i></button>
@@ -39,11 +37,11 @@
   <main class="mdl-layout__content">
     <div class="page-content">
 		<!-- List of articles -->
-		<ul class="feedlist">
-			{% for entry in entries %}
-			<li class="feedentry"><a href="/article?sessionID={{ sessionID }}&articleURL={{ entry.url }}">{{ entry.title }}</a></li>
+		<ul class="articleList">
+			{% for article in articles %}
+			<li class="articleEntry"><a href="/article?sessionID={{ sessionID }}&articleURL={{ article.url }}">{{ article.title }}</a></li>
 			{% else %}
-			Unbelievable.  No entries here so far.
+			<center>Unbelievable.  No entries here so far! Please subscribe to some feeds.</center>
 			{% endfor %}
 		</ul>
     </div>

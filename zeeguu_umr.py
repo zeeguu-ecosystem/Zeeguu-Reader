@@ -1,11 +1,9 @@
 from flask import Flask, render_template, request, make_response, send_from_directory
-from feed import FeedEntry, getFeed;
+from feed import getFeed;
+from zeeguuRequests import ZEEGUU_SERVER, STATUS_ACCEPT
 import article
 import requests
 import os
-
-ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch"
-STATUS_WRONGUSER  = 401; STATUS_WRONGPASS = 400; STATUS_ACCEPT = 200;
 
 app = Flask(__name__)
 
