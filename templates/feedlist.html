@@ -20,6 +20,7 @@
     <span class="mdl-layout-title">Settings</span>
     <nav class="mdl-navigation">
 	  <div class="options">
+			<!-- List of feeds currently subscribed to. -->
 		  <b>My sources:</b><br /><br />
 		  {% for feed in feeds %}
 		  <span class="mdl-chip mdl-chip--deletable">
@@ -27,10 +28,9 @@
 			<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
 		  </span> <BR />
 		  {% endfor %}
-		  <span class="mdl-chip mdl-chip--deletable mdl-color--blue">
-			<span class="mdl-chip__text">Add new source</span>
-			<button type="button" class="mdl-chip__action"><i class="material-icons">add</i></button>
-		  </span>
+			<!-- Dialog window for adding a feed. -->
+			{% include 'addFeedDialog.html' %}
+
 	  </div>
     </nav>
   </div>
