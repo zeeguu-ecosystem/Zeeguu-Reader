@@ -28,9 +28,10 @@
 			<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
 		  </span> <BR />
 		  {% endfor %}
-			<!-- Dialog window for adding a feed. -->
-			{% include 'addFeedDialog.html' %}
-
+			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white">
+			<span class="mdl-chip__text">Add new source</span>
+			<button type="button" class="mdl-chip__action show-modal"><i class="material-icons md-light">add_circle</i></button>
+			</span>
 	  </div>
     </nav>
   </div>
@@ -47,4 +48,6 @@
     </div>
   </main>
 </div>
+<!-- Dialog window for adding a feed. -->
+{% include 'addFeedDialog.html' %}
 </HTML>
