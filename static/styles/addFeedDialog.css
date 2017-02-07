@@ -1,3 +1,18 @@
+#addableFeedList {
+  display:block;
+  height: 40vh;
+}
+
+.addableTitle {
+  text-overflow: ellipsis;
+}
+
+.feedIcon {
+  background: white;
+  width: 20%;
+  height: 20%;
+}
+
 .material-icons.md-light {
   color: white;
 }

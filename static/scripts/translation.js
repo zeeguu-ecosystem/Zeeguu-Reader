@@ -1,10 +1,7 @@
-var ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch";
-var HTML_ZEEGUUTAG = "ZEEGUU";
-
 // User control event listeners appended to document here.
 $(document).ready(function() {
 	disable_href();
-	$("#toggle_translate").change(function() 
+	$("#toggle_translate").change(function()
 	{
 		if (this.checked)
 			disable_href();
@@ -14,14 +11,14 @@ $(document).ready(function() {
 			enable_href();
 		}
 	});
-	
-	$(".translatable").click(function(event) 
+
+	$(".translatable").click(function(event)
 	{
 		if ($('#toggle_translate').is(':checked'))
 		{
 			if ($("#alterMenu").is(":visible"))
 				closeAlterMenu();
-			else if (event.target.nodeName == HTML_ZEEGUUTAG) 
+			else if (event.target.nodeName == HTML_ZEEGUUTAG)
 			{
 			  var zeeguuTag = event.target;
 			  var transCount = parseInt(zeeguuTag.getAttribute("transCount"));
@@ -32,38 +29,38 @@ $(document).ready(function() {
 			}
 			else
 				tagText();
-		} 
+		}
 	});
 });
 
 $(window).on("resize", function() {
 	var zeeguuTag = $("#alterMenu").parent();
-	if ($("#alterMenu").is(":visible")) 
+	if ($("#alterMenu").is(":visible"))
 	{
 		placeAlterMenu(zeeguuTag);
 		$("#alterMenu").show();
 	}
 });
 
-// Disable or enable links. 
+// Disable or enable links.
 // Done in this peculiar way as default link disabling methods do not
 // pass a proper text selection.
 function disable_href()
 {
-	$('.translatable').find('a').each(function() 
+	$('.translatable').find('a').each(function()
 	{
 		this.setAttribute('href_disabled',this.getAttribute('href'));
 		this.removeAttribute('href');
-	});	
+	});
 }
 
 function enable_href()
 {
-	$('.translatable').find('a').each(function() 
+	$('.translatable').find('a').each(function()
 	{
 		this.setAttribute('href',this.getAttribute('href_disabled'));
 		this.removeAttribute('href_disabled');
-	});	
+	});
 }
 
 function notifyUser(message)
@@ -80,7 +77,7 @@ function openAlterMenu(zeeguuTag)
 {
 	var transCount = parseInt(zeeguuTag.getAttribute("transCount"));
 	$("#alterMenu").empty();
-	
+
 	// Add buttons with click listeners that replace the translation.
 	for (var i = 0; i < transCount; i++)
 	{
@@ -124,7 +121,7 @@ function placeAlterMenu(zeeguuTag)
 
 function closeAlterMenu()
 {
-	$("#alterMenu").slideUp(function() 
+	$("#alterMenu").slideUp(function()
 	{
     	$("#alterMenuContainer").append($("#alterMenu"));
 	});
@@ -132,33 +129,33 @@ function closeAlterMenu()
 
 
 // Wraps a zeeguutag including translation around the selected content.
-function tagText() 
+function tagText()
 {
 	// Get the current selection.
 	var selection = window.getSelection();
-	
+
 	// Properly select content
 	selection.modify('move','backward','word');
 	selection.modify('extend','forward','word');
 	coverTag(selection, HTML_ZEEGUUTAG);
-	
+
 	// Check if selection has been tagged already, if not tag it.
 	if (!isTagged(selection, HTML_ZEEGUUTAG)) {
-		var range = selection.getRangeAt(0);	
+		var range = selection.getRangeAt(0);
 		var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
 		var contents = range.extractContents();
 		clearTags(contents, HTML_ZEEGUUTAG);
 		zeeguuTag.appendChild(contents);
 		range.insertNode(zeeguuTag);
 		mergeZeeguu(zeeguuTag);
-		
+
 		var text = escape(zeeguuTag.textContent);
 		var context = escape(getContext(selection));
 		var url = "zeeguu-mr-core.herokuapp.com";
-		requestZeeguu("/get_possible_translations/nl/en", text, context, url,
+		requestZeeguuPOST("/get_possible_translations/nl/en", text, context, url,
 					  setTranslations, zeeguuTag);
 	}
-	
+
 	// Undo selection.
     selection.modify('move','backward','character');
 }
@@ -183,17 +180,17 @@ function setTranslations(zeeguuTag, translations)
 }
 
 // Launch request to Zeeguu API.
-function requestZeeguu(endpoint, word, context, url, responseHandler, zeeguuTag)
+function requestZeeguuPOST(endpoint, word, context, url, responseHandler, zeeguuTag)
 {
 	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = function() { 
+	xmlHttp.onreadystatechange = function() {
 		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
 			responseHandler(zeeguuTag, xmlHttp.responseText);
 	}
 	var postData = "context=" + context;
 	postData += "&url=" + url;
-	postData += "&word=" + word; 
-	xmlHttp.open("POST", ZEEGUU_SERVER + endpoint + "?session=" + SESSION_ID, true); 
+	postData += "&word=" + word;
+	xmlHttp.open("POST", ZEEGUU_SERVER + endpoint + "?session=" + SESSION_ID, true);
 	xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlHttp.send(postData);
 }
@@ -219,7 +216,7 @@ function mergeZeeguu(zeeguuTag)
 	{
 		node = node.nextSibling;
 		spaces += ' ';
-		
+
 	}
 	if (node.nodeName == HTML_ZEEGUUTAG)
 	{
@@ -261,5 +258,5 @@ function clearTags(contents, tag) {
 		$(tags[length]).contents().unwrap();
 
 	while (temp.firstChild)
-		contents.appendChild(temp.firstChild);	
+		contents.appendChild(temp.firstChild);
 }
