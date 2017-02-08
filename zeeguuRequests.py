@@ -10,7 +10,7 @@ def requestZeeguuGet(endpoint, sessionID, items = []):
     result = requests.get(url)
     content = None;
     if (result.status_code != STATUS_ACCEPT):
-        print('Request endpoint ' + endpoint + ' error:'+result.status_code);
+        print('Request endpoint ' + endpoint + ' error:'+ str(result.status_code));
     else:
 	content = result.content
     return content

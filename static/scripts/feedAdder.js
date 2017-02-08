@@ -2,18 +2,25 @@
  * a HTML dialog window. */
 var dialog = document.querySelector('dialog');
 var showModalButton = document.querySelector('.show-modal');
-if (! dialog.showModal) {
+
+// Some browsers do not support dialog, for that we use Polyfill.
+if (! dialog.showModal)
   dialogPolyfill.registerDialog(dialog);
-}
-showModalButton.addEventListener('click', function() {
+
+// Open and closing of the dialog is handled here.
+showModalButton.addEventListener('click', function()
+{
   requestZeeguuGET(RECCOMENDED_FEED_ENDPOINT, {session : SESSION_ID}, loadFeedOptions)
   dialog.showModal();
 });
-dialog.querySelector('.close').addEventListener('click', function() {
+dialog.querySelector('.close').addEventListener('click', function()
+{
   dialog.close();
 });
 
-function loadFeedOptions(data) {
+/* Fills the dialog's list with all the addable feeds. */
+function loadFeedOptions(data)
+{
   var template = $("#feedAddable-template").html();
   for (var i=0; i < data.length; i++) {
     var addableData = {
@@ -35,6 +42,15 @@ function requestZeeguuGET(endpoint, requestData, responseHandler)
   );
 }
 
-function noAvatar(image) {
+// Called when no image could be loaded as an article avatar.
+function noAvatar(image)
+{
     image.src = noAvatarURL;
 }
+
+/* Called when an addable feed has been clicked,
+ * this function will try to add the feed to the user's list. */
+ function addFeed(addableID)
+ {
+   console.log(addableID);
+ }

@@ -19,7 +19,7 @@
       <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar" onerror="noAvatar(this)"/>
       <span class="addableTitle">{% raw %}{{addableTitle}}{% endraw %}</span>
     </span>
-    <a class="mdl-list__item-secondary-action" href="{% raw %} {{addableID}} {% endraw %}">
+    <a class="mdl-list__item-secondary-action" onclick="addFeed({% raw %}{{addableID}}{% endraw %})">
       <i class="material-icons ">add_circle</i>
     </a>
   </div>
