@@ -18,9 +18,13 @@ def getFeed(sessionID):
     feeds = []
     articles = []
     for feed in jsonFeeds:
-	feeds += [FeedEntry(feed['title'], feed['id'])]
-        jsonArticles = json.loads(requestZeeguuGet('get_feed_items/'+str(feed['id']),sessionID));
-        for article in jsonArticles:
-	    articles += [ArticleEntry(article['title'], article['url'])]
+        feeds += [FeedEntry(feed['title'], feed['id'])]
+        requestResult = requestZeeguuGet('get_feed_items/'+str(feed['id']),sessionID)
+        if (requestResult != None):
+            jsonArticles = json.loads(requestResult)
+            for article in jsonArticles:
+	               articles += [ArticleEntry(article['title'], article['url'])]
+        else:
+            print("Problem reading feed: "+str(feed['title']) + ", id:" + str(feed['id']));
 
     return render_template('feedlist.html', sessionID=sessionID, articles=articles, feeds=feeds);

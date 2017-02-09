@@ -14,12 +14,12 @@
 
 <!-- Template for feed items -->
 <script id="feedAddable-template" type="text/template">
-  <div class="mdl-list__item">
+  <div addableID="{% raw %}{{addableID}}{% endraw %}" class="mdl-list__item">
     <span class="mdl-list__item-primary-content">
       <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar" onerror="noAvatar(this)"/>
       <span class="addableTitle">{% raw %}{{addableTitle}}{% endraw %}</span>
     </span>
-    <a class="mdl-list__item-secondary-action" onclick="followFeed({% raw %}{{addableID}}{% endraw %})">
+    <a class="mdl-list__item-secondary-action" onclick="followFeed($(this).parent())">
       <i class="material-icons ">add_circle</i>
     </a>
   </div>

@@ -37,19 +37,22 @@ function loadFeedOptions(data)
 
 /* Called when an addable feed has been clicked,
  * this function will try to add the feed to the user's list. */
-function followFeed(addableID)
+function followFeed(addable)
 {
- requestZeeguuPOST(FOLLOW_FEED_ENDPOINT, {feed_id : addableID}, _.partial(onFeedHandled, 51));
+ var addableID = $(addable).attr('addableID');
+ requestZeeguuPOST(FOLLOW_FEED_ENDPOINT, {feed_id : addableID}, _.partial(onFeedHandled, addable));
 }
 
-function unfollowFeed(removableID)
+function unfollowFeed(removable)
 {
-  requestZeeguuGET(UNFOLLOW_FEED_ENDPOINT+"/"+removableID, {session : SESSION_ID}, _.partial(onFeedHandled, 51));
+  var removableID = $(removable).attr('removableID');
+  requestZeeguuGET(UNFOLLOW_FEED_ENDPOINT+"/"+removableID, {session : SESSION_ID}, _.partial(onFeedHandled, removable));
 }
 
-function onFeedHandled(id, data) {
- console.log(id);
- console.log(data);
+function onFeedHandled(feed, data) {
+ if (data == "OK") {
+   $(feed).slideUp();
+ }
 }
 
 // Launch request to Zeeguu API.

@@ -30,11 +30,11 @@
 			<!-- List of feeds currently subscribed to. -->
 		  <b>My sources:</b><br /><br />
 		  {% for feed in feeds %}
-		  <span class="mdl-chip mdl-chip--deletable">
-			<span class="mdl-chip__text">{{feed.title}}</span>
-			<button type="button" class="mdl-chip__action" onclick="unfollowFeed({{feed.identifier}})">
-				<i class="material-icons">cancel</i>
-			</button>
+		  <span removableID="{{feed.identifier}}" class="mdl-chip mdl-chip--deletable">
+				<span class="mdl-chip__text">{{feed.title}}</span>
+				<button type="button" class="mdl-chip__action" onclick="unfollowFeed($(this).parent())">
+					<i class="material-icons">cancel</i>
+				</button>
 		  </span> <BR />
 		  {% endfor %}
 			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white">
