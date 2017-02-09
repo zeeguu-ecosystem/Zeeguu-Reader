@@ -7,6 +7,13 @@
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/login.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/feedlist.css') }}" type= "text/css">
+	<SCRIPT src="{{ url_for('static',filename='scripts/constants.js') }}"></SCRIPT>
+	<SCRIPT src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/polyfill/dialog-polyfill.js') }}"></SCRIPT>
+	<SCRIPT> var noAvatarURL = "{{url_for('static',filename='images/noAvatar.png')}}";</SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/mustache/mustache.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/underscore/underscore-min.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/feedManager.js') }}"></SCRIPT>
 	<SCRIPT src="/static/styles/mdl/material.min.js"></SCRIPT>
 	<SCRIPT>var SESSION_ID =  {{ sessionID }}</SCRIPT>
 </HEAD>
@@ -25,7 +32,9 @@
 		  {% for feed in feeds %}
 		  <span class="mdl-chip mdl-chip--deletable">
 			<span class="mdl-chip__text">{{feed.title}}</span>
-			<button type="button" class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+			<button type="button" class="mdl-chip__action" onclick="unfollowFeed({{feed.identifier}})">
+				<i class="material-icons">cancel</i>
+			</button>
 		  </span> <BR />
 		  {% endfor %}
 			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white">

@@ -19,15 +19,8 @@
       <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar" onerror="noAvatar(this)"/>
       <span class="addableTitle">{% raw %}{{addableTitle}}{% endraw %}</span>
     </span>
-    <a class="mdl-list__item-secondary-action" onclick="addFeed({% raw %}{{addableID}}{% endraw %})">
+    <a class="mdl-list__item-secondary-action" onclick="followFeed({% raw %}{{addableID}}{% endraw %})">
       <i class="material-icons ">add_circle</i>
     </a>
   </div>
 </script>
-
-<SCRIPT> var noAvatarURL = "{{url_for('static',filename='images/noAvatar.png')}}";</SCRIPT>
-<SCRIPT src="{{ url_for('static',filename='scripts/constants.js') }}"></SCRIPT>
-<SCRIPT src="{{ url_for('static',filename='scripts/mustache/mustache.js') }}"></SCRIPT>
-<SCRIPT src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></SCRIPT>
-<SCRIPT src="{{ url_for('static',filename='scripts/polyfill/dialog-polyfill.js') }}"></SCRIPT>
-<SCRIPT src="{{ url_for('static',filename='scripts/feedAdder.js') }}"></SCRIPT>
