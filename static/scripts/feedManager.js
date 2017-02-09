@@ -51,7 +51,7 @@ function unfollowFeed(removable)
 
 function onFeedHandled(feed, data) {
  if (data == "OK") {
-   $(feed).slideUp();
+   $(feed).fadeOut();
  }
 }
 
