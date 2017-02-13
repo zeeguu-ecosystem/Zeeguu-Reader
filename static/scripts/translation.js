@@ -152,8 +152,10 @@ function tagText()
 		var text = escape(zeeguuTag.textContent);
 		var context = escape(getContext(selection));
 		var url = "zeeguu-mr-core.herokuapp.com";
-		requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT, text, context, url,
-					  setTranslations, zeeguuTag);
+		// Launch zeeguu request to fill translation options.
+		requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT,
+			{word : text, context : context, url : url},
+			_.partial(setTranslations, zeeguuTag));
 	}
 
 	// Undo selection.
@@ -172,27 +174,12 @@ function getContext(selection)
 }
 
 function setTranslations(zeeguuTag, translations)
-{	translations = JSON.parse(translations).translations;
+{
+	translations = translations.translations;
 	var transCount = Math.min(translations.length, 3);
 	zeeguuTag.setAttribute("transCount", transCount);
 	for (var i = 0; i < transCount; i++)
 		zeeguuTag.setAttribute("translation"+i, translations[i].translation);
-}
-
-// Launch request to Zeeguu API.
-function requestZeeguuPOST(endpoint, word, context, url, responseHandler, zeeguuTag)
-{
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.onreadystatechange = function() {
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-			responseHandler(zeeguuTag, xmlHttp.responseText);
-	}
-	var postData = "context=" + context;
-	postData += "&url=" + url;
-	postData += "&word=" + word;
-	xmlHttp.open("POST", ZEEGUU_SERVER + endpoint + "?session=" + SESSION_ID, true);
-	xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlHttp.send(postData);
 }
 
 // Merges the zeeguutags surrounding the given zeeguutag.

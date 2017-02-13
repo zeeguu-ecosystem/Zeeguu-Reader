@@ -27,4 +27,4 @@ def getFeed(sessionID):
         else:
             print("Problem reading feed: "+str(feed['title']) + ", id:" + str(feed['id']));
 
-    return render_template('feedlist.html', sessionID=sessionID, articles=articles, feeds=feeds);
+    return render_template('feedlist.html', sessionID=sessionID, articles=articles);

@@ -13,6 +13,7 @@
 	<SCRIPT> var noAvatarURL = "{{url_for('static',filename='images/noAvatar.png')}}";</SCRIPT>
 	<SCRIPT src="{{ url_for('static',filename='scripts/mustache/mustache.js') }}"></SCRIPT>
 	<SCRIPT src="{{ url_for('static',filename='scripts/underscore/underscore-min.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/zeeguuRequests.js') }}"></SCRIPT>
 	<SCRIPT src="{{ url_for('static',filename='scripts/feedManager.js') }}"></SCRIPT>
 	<SCRIPT src="/static/styles/mdl/material.min.js"></SCRIPT>
 	<SCRIPT>var SESSION_ID =  {{ sessionID }}</SCRIPT>
@@ -27,16 +28,9 @@
     <span class="mdl-layout-title">Settings</span>
     <nav class="mdl-navigation">
 	  <div class="options">
-			<!-- List of feeds currently subscribed to. -->
 		  <b>My sources:</b><br /><br />
-		  {% for feed in feeds %}
-		  <span removableID="{{feed.identifier}}" class="mdl-chip mdl-chip--deletable">
-				<span class="mdl-chip__text">{{feed.title}}</span>
-				<button type="button" class="mdl-chip__action" onclick="unfollowFeed($(this).parent())">
-					<i class="material-icons">cancel</i>
-				</button>
-		  </span>
-		  {% endfor %}
+			<!-- List of feeds currently subscribed to. -->
+		  <div id="subscriptionList"></div>
 			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white">
 			<span class="mdl-chip__text">Add new source</span>
 			<button type="button" class="mdl-chip__action show-modal"><i class="material-icons md-light">add_circle</i></button>
@@ -57,6 +51,17 @@
     </div>
   </main>
 </div>
+
+<!-- Template for subscribed feed items -->
+<script id="subscription-template" type="text/template">
+	<span removableID="{% raw %}{{subscriptionID}}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+		<span class="mdl-chip__text">{% raw %}{{subscriptionTitle}}{% endraw %}</span>
+		<button type="button" class="mdl-chip__action" onclick="unfollowFeed($(this).parent())">
+			<i class="material-icons">cancel</i>
+		</button>
+	</span>
+</script>
+
 <!-- Dialog window for adding a feed. -->
 {% include 'addFeedDialog.html' %}
 </HTML>

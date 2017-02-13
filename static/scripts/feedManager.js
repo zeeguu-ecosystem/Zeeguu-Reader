@@ -1,6 +1,9 @@
 /* Script that allows the user to add a new feed to their feed list using
  * a HTML dialog window, or remove a feed from their subscribed feed list. */
  $(document).ready(function() {
+  // Load the subscribed feeds.
+  requestZeeguuGET(GET_FEEDS_BEING_FOLLOWED, {session : SESSION_ID}, loadSubscriptions);
+
   var dialog = document.querySelector('dialog');
   var showModalButton = document.querySelector('.show-modal');
 
@@ -11,7 +14,7 @@
   // Open and closing of the dialog is handled here.
   showModalButton.addEventListener('click', function()
   {
-    requestZeeguuGET(RECCOMENDED_FEED_ENDPOINT, {session : SESSION_ID}, loadFeedOptions)
+    requestZeeguuGET(RECCOMENDED_FEED_ENDPOINT, {session : SESSION_ID}, loadFeedOptions);
     dialog.showModal();
   });
   dialog.querySelector('.close').addEventListener('click', function()
@@ -19,6 +22,20 @@
     dialog.close();
   });
 });
+
+/* Fills the subscription list with all the subscribed feeds. */
+function loadSubscriptions(data)
+{
+  $("#subscriptionList").empty();
+  var template = $("#subscription-template").html();
+  for (var i=0; i < data.length; i++) {
+    var subscriptionData = {
+      subscriptionTitle: data[i]['title'],
+      subscriptionID: data[i]['id'],
+    }
+    $("#subscriptionList").append(Mustache.render(template, subscriptionData));
+  }
+}
 
 /* Fills the dialog's list with all the addable feeds. */
 function loadFeedOptions(data)
@@ -40,39 +57,34 @@ function loadFeedOptions(data)
 function followFeed(addable)
 {
  var addableID = $(addable).attr('addableID');
- requestZeeguuPOST(FOLLOW_FEED_ENDPOINT, {feed_id : addableID}, _.partial(onFeedHandled, addable));
+ requestZeeguuPOST(FOLLOW_FEED_ENDPOINT, {feed_id : addableID}, _.partial(onFeedFollowed, addable));
 }
 
 function unfollowFeed(removable)
 {
   var removableID = $(removable).attr('removableID');
-  requestZeeguuGET(UNFOLLOW_FEED_ENDPOINT+"/"+removableID, {session : SESSION_ID}, _.partial(onFeedHandled, removable));
+  requestZeeguuGET(UNFOLLOW_FEED_ENDPOINT+"/"+removableID, {session : SESSION_ID}, _.partial(onFeedUnfollowed, removable));
 }
 
-function onFeedHandled(feed, data) {
- if (data == "OK") {
+function onFeedFollowed(feed, data)
+{
+  if (data == "OK") {
+    // Refresh the feed list.
+    requestZeeguuGET(GET_FEEDS_BEING_FOLLOWED, {session : SESSION_ID}, loadSubscriptions);
+    onFeedHandled(feed);
+  }
+}
+
+function onFeedUnfollowed(feed, data)
+{
+  if (data == "OK") {
+    onFeedHandled(feed);
+  }
+}
+
+function onFeedHandled(feed)
+{
    $(feed).fadeOut();
- }
-}
-
-// Launch request to Zeeguu API.
-function requestZeeguuGET(endpoint, requestData, responseHandler)
-{
-  $.get(
-    ZEEGUU_SERVER + endpoint,
-    requestData,
-    responseHandler
-  );
-}
-
-// Launch request to Zeeguu API.
-function requestZeeguuPOST(endpoint, requestData, responseHandler)
-{
-  $.post(
-    ZEEGUU_SERVER + endpoint + "?session=" + SESSION_ID,
-    requestData,
-    responseHandler
-  );
 }
 
 // Called when no image could be loaded as an article avatar.
