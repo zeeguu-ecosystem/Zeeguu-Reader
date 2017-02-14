@@ -33,6 +33,7 @@ function loadSubscriptions(data)
     var subscriptionData = {
       subscriptionTitle: data[i]['title'],
       subscriptionID: data[i]['id'],
+      subscriptionLanguage: data[i]['language']
     }
     $("#subscriptionList").append(Mustache.render(template, subscriptionData));
     requestZeeguuGET(GET_FEED_ITEMS + '/' + subscriptionData['subscriptionID'],
@@ -48,7 +49,8 @@ function loadArticleLinks(subscriptionData, data)
     var articleLinkData = {
       articleLinkTitle: data[i]['title'],
       articleLinkURL : data[i]['url'],
-      articleLinkFeedID : subscriptionData['subscriptionID']
+      articleLinkFeedID : subscriptionData['subscriptionID'],
+      articleLinkLanguage : subscriptionData['subscriptionLanguage']
     }
     $("#articleLinkList").append(Mustache.render(template, articleLinkData));
   }

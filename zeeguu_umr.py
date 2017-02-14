@@ -52,6 +52,7 @@ def getFeedList(sessionID):
 def getArticle():
     sessionID  = request.args.get('sessionID')
     articleURL = request.args.get('articleURL')
+    articleLanguage = request.args.get('articleLanguage')
     response = requests.get(articleURL)
     print "User with session " + sessionID + " retrieved " + articleURL;
-    return article.makeArticle(sessionID, response.text)
+    return article.makeArticle(sessionID, response.text, articleLanguage)

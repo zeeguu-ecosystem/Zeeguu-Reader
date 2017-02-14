@@ -61,7 +61,8 @@
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
 	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-		<a href="/article?sessionID={{ sessionID }}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
+		<a href="/article?sessionID={{ sessionID }}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}
+						&articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}">
 			{% raw %}{{ articleLinkTitle }}{% endraw %}
 		</a>
 	</li>

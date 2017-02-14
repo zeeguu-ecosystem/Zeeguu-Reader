@@ -6,7 +6,10 @@
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/article.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<SCRIPT src="{{ url_for('static',filename='scripts/constants.js') }}"></SCRIPT>
-	<SCRIPT>var SESSION_ID =  {{ sessionID }}</SCRIPT>
+	<SCRIPT>
+		var SESSION_ID =  {{ sessionID }};
+		var FROM_LANGUAGE = '{{ fromLanguage }}';
+	</SCRIPT>
 	<SCRIPT src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></SCRIPT>
 	<SCRIPT src="/static/styles/mdl/material.min.js"></SCRIPT>
 	<SCRIPT src="{{ url_for('static',filename='scripts/underscore/underscore-min.js') }}"></SCRIPT>

@@ -153,7 +153,7 @@ function tagText()
 		var context = escape(getContext(selection));
 		var url = "zeeguu-mr-core.herokuapp.com";
 		// Launch zeeguu request to fill translation options.
-		requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT,
+		requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT+'/'+FROM_LANGUAGE+'/'+TO_LANGUAGE,
 			{word : text, context : context, url : url},
 			_.partial(setTranslations, zeeguuTag));
 	}
