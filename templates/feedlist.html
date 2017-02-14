@@ -41,14 +41,10 @@
   <main class="mdl-layout__content">
     <div class="page-content">
 		<!-- List of articles -->
-		<ul class="articleList">
-			{% for article in articles %}
-			<li class="articleEntry"><a href="/article?sessionID={{ sessionID }}&articleURL={{ article.url }}">{{ article.title }}</a></li>
-			{% else %}
-			<center>Unbelievable.  No entries here so far! Please subscribe to some feeds.</center>
-			{% endfor %}
-		</ul>
+		<ul id="articleLinkList"></ul>
     </div>
+		<BR />
+		<center>Please subscribe to some feeds to get (more) articles.</center>
   </main>
 </div>
 
@@ -60,6 +56,15 @@
 			<i class="material-icons">cancel</i>
 		</button>
 	</span>
+</script>
+
+<!-- Template for an article link. -->
+<script id="articleLink-template" type="text/template">
+	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+		<a href="/article?sessionID={{ sessionID }}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
+			{% raw %}{{ articleLinkTitle }}{% endraw %}
+		</a>
+	</li>
 </script>
 
 <!-- Dialog window for adding a feed. -->

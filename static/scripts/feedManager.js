@@ -27,6 +27,7 @@
 function loadSubscriptions(data)
 {
   $("#subscriptionList").empty();
+  $("#articleLinkList").empty();
   var template = $("#subscription-template").html();
   for (var i=0; i < data.length; i++) {
     var subscriptionData = {
@@ -34,6 +35,22 @@ function loadSubscriptions(data)
       subscriptionID: data[i]['id'],
     }
     $("#subscriptionList").append(Mustache.render(template, subscriptionData));
+    requestZeeguuGET(GET_FEED_ITEMS + '/' + subscriptionData['subscriptionID'],
+                    {session : SESSION_ID}, _.partial(loadArticleLinks, subscriptionData));
+  }
+}
+
+/* Loads all the article links from a particular feed. */
+function loadArticleLinks(subscriptionData, data)
+{
+  var template = $("#articleLink-template").html();
+  for (var i=0; i < data.length; i++) {
+    var articleLinkData = {
+      articleLinkTitle: data[i]['title'],
+      articleLinkURL : data[i]['url'],
+      articleLinkFeedID : subscriptionData['subscriptionID']
+    }
+    $("#articleLinkList").append(Mustache.render(template, articleLinkData));
   }
 }
 
@@ -78,6 +95,8 @@ function onFeedFollowed(feed, data)
 function onFeedUnfollowed(feed, data)
 {
   if (data == "OK") {
+    var removableID = $(feed).attr('removableID')
+    $('li[articleLinkFeedID="' + removableID + '"]').remove();
     onFeedHandled(feed);
   }
 }
