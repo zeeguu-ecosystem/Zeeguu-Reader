@@ -21,6 +21,7 @@
   {
     getFeedOptionsForLanguage(lastSearchedLanguage);
     dialog.showModal();
+    $('#'+lastSearchedLanguage).focus();
   });
   dialog.querySelector('.close').addEventListener('click', function()
   {
