@@ -70,7 +70,6 @@ function loadLanguageOptions(data)
   options.sort();
   for (i=0; i<options.length; ++i)
   {
-    console.log(options[i]);
     var languageOptionData = {
       languageOptionCode: options[i]
     }

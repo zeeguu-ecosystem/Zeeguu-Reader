@@ -4,9 +4,9 @@
 <dialog class="mdl-dialog">
   <h4 class="mdl-dialog__title feedAddTitle">Available Feeds</h4>
   <center><span class="feedAddSubTitle">(Tap the '+' to add a feed to your list)</span></center>
-   <!-- List of all available languages -->
-    <div id="languageOptionList"></div>
   <div class="mdl-dialog__content">
+    <!-- List of all available languages -->
+    <div id="languageOptionList"></div>
     <!-- List of all available feeds. -->
     <div id="addableFeedList" class="list-control list-action mdl-list"></div>
   </div>
@@ -17,10 +17,13 @@
 
 <!-- Template for language option -->
 <script id="languageOption-template" type="text/template">
-  <button class="mdl-button mdl-button--raised mdl-js-button mdl-button--icon" 
-          onclick="getFeedOptionsForLanguage('{% raw %}{{ languageOptionCode }}{% endraw %}')">
-    <span class="flag-icon flag-icon-squared flag-icon-{% raw %}{{ languageOptionCode }}{% endraw %}"></span>
-  </button>
+  <span class="langButton">
+    <button id="{% raw %}{{ languageOptionCode }}{% endraw %}"
+            class="mdl-button mdl-button--raised mdl-js-button mdl-button--icon" 
+            onclick="getFeedOptionsForLanguage('{% raw %}{{ languageOptionCode }}{% endraw %}')">
+      <span class="flag-icon flag-icon-squared flag-icon-{% raw %}{{ languageOptionCode }}{% endraw %}"></span>
+    </button>
+  </span>
 </script>
 
 

@@ -3,6 +3,10 @@
   height: 40vh;
 }
 
+#languageOptionList {
+  text-align:center;
+}
+
 .addableTitle {
   display:block;
   max-width: 13vw;
