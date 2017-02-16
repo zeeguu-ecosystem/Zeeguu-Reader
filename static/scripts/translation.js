@@ -149,8 +149,8 @@ function tagText()
 		range.insertNode(zeeguuTag);
 		mergeZeeguu(zeeguuTag);
 
-		var text = escape(zeeguuTag.textContent);
-		var context = escape(getContext(selection));
+		var text = zeeguuTag.textContent;
+		var context = getContext(selection);
 		var url = "zeeguu-mr-core.herokuapp.com";
 		// Launch zeeguu request to fill translation options.
 		requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT+'/'+FROM_LANGUAGE+'/'+TO_LANGUAGE,
