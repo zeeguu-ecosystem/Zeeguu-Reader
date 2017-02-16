@@ -1,8 +1,13 @@
 /* Script that allows the user to add a new feed to their feed list using
  * a HTML dialog window, or remove a feed from their subscribed feed list. */
+ var lastSearchedLanguage = 'nl';
+ 
  $(document).ready(function() {
   // Load the subscribed feeds.
   requestZeeguuGET(GET_FEEDS_BEING_FOLLOWED, {session : SESSION_ID}, loadSubscriptions);
+  
+  // Load the available languages for the dialog.
+  requestZeeguuGET(GET_AVAILABLE_LANGUAGES, {}, loadLanguageOptions);
 
   var dialog = document.querySelector('dialog');
   var showModalButton = document.querySelector('.show-modal');
@@ -14,7 +19,7 @@
   // Open and closing of the dialog is handled here.
   showModalButton.addEventListener('click', function()
   {
-    requestZeeguuGET(RECCOMENDED_FEED_ENDPOINT, {session : SESSION_ID}, loadFeedOptions);
+    getFeedOptionsForLanguage(lastSearchedLanguage);
     dialog.showModal();
   });
   dialog.querySelector('.close').addEventListener('click', function()
@@ -23,7 +28,8 @@
   });
 });
 
-/* Fills the subscription list with all the subscribed feeds. */
+/* Fills the subscription list with all the subscribed feeds,
+ * and makes a call to load the feed's associated articles. */
 function loadSubscriptions(data)
 {
   $("#subscriptionList").empty();
@@ -54,6 +60,30 @@ function loadArticleLinks(subscriptionData, data)
     }
     $("#articleLinkList").append(Mustache.render(template, articleLinkData));
   }
+}
+
+/* Loads all the available language options as buttons in the dialog. */
+function loadLanguageOptions(data)
+{
+  var options = JSON.parse(data);
+  var template = $("#languageOption-template").html();
+  options.sort();
+  for (i=0; i<options.length; ++i)
+  {
+    console.log(options[i]);
+    var languageOptionData = {
+      languageOptionCode: options[i]
+    }
+    $("#languageOptionList").append(Mustache.render(template, languageOptionData));
+  }
+}
+
+/* Requests Zeeguu for addable feeds of a certain provided language. */
+function getFeedOptionsForLanguage(languageOptionCode)
+{
+  requestZeeguuGET(RECCOMENDED_FEED_ENDPOINT+'/'+languageOptionCode, 
+                   {session : SESSION_ID}, loadFeedOptions);
+  lastSearchedLanguage = languageOptionCode;
 }
 
 /* Fills the dialog's list with all the addable feeds. */
