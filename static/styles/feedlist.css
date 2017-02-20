@@ -26,6 +26,18 @@
   border-bottom: none
 }
 
+.articleLinkTitle
+{
+  background:none!important;
+  border:none;
+  cursor:pointer;
+}
+
+.articleLinkTitle:hover
+{
+  font-weight: bold!important;
+}
+
 .options
 {
   padding: 0;

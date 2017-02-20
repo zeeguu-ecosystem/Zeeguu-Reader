@@ -61,10 +61,12 @@
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
 	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-		<a href="/article?sessionID={{ sessionID }}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}
-						&articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}">
-			{% raw %}{{ articleLinkTitle }}{% endraw %}
-		</a>
+		<form action="{{ url_for('getArticle') }}" method="post">
+			<input type="hidden" name="sessionID" value="{{ sessionID }}" /> 
+			<input type="hidden" name="articleURL" value="{% raw %}{{ articleLinkURL }}{% endraw %}" /> 
+			<input type="hidden" name="articleLanguage" value="{% raw %}{{ articleLinkLanguage }}{% endraw %}" /> 
+			<input class="articleLinkTitle" type="submit" value="{% raw %}{{ articleLinkTitle }}{% endraw %}" />
+		</form>
 	</li>
 </script>
 

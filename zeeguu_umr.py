@@ -48,11 +48,12 @@ def getFeedList(sessionID):
     return render_template('feedlist.html', sessionID=sessionID)
 
 # Returns a zeeguu enhanced article.
-@app.route('/article', methods=['GET'])
+@app.route('/article/', methods=['POST'])
 def getArticle():
-    sessionID  = request.args.get('sessionID')
-    articleURL = request.args.get('articleURL')
-    articleLanguage = request.args.get('articleLanguage')
+    sessionID  = request.form['sessionID']
+    articleURL = request.form['articleURL']
+    articleLanguage = request.form['articleLanguage']
+    print(articleLanguage)
     response = requests.get(articleURL)
     print "User with session " + sessionID + " retrieved " + articleURL;
     return article.makeArticle(sessionID, response.text, articleLanguage)
