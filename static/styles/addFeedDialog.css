@@ -5,11 +5,26 @@
 
 #languageOptionList {
   text-align:center;
+  margin-bottom: 1em;
+}
+
+.langButton {
+  margin-bottom: 1em;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
+.langButton:focus {
+  background-color: lightgrey;
 }
 
 .addableTitle {
   display:block;
-  max-width: 13vw;
+  max-width: 6em;
   text-overflow: ellipsis;
   overflow: hidden;
 }

@@ -17,13 +17,11 @@
 
 <!-- Template for language option -->
 <script id="languageOption-template" type="text/template">
-  <span class="langButton">
     <button id="{% raw %}{{ languageOptionCode }}{% endraw %}"
-            class="mdl-button mdl-button--raised mdl-js-button mdl-button--icon" 
+            class="langButton" 
             onclick="getFeedOptionsForLanguage('{% raw %}{{ languageOptionCode }}{% endraw %}')">
       <span class="flag-icon flag-icon-squared flag-icon-{% raw %}{{ languageOptionCode }}{% endraw %}"></span>
     </button>
-  </span>
 </script>
 
 
