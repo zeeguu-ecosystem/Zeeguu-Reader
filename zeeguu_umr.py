@@ -4,7 +4,7 @@ import requests
 import os
 
 ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch"
-STATUS_WRONGUSER  = 401; STATUS_WRONGPASS = 400; STATUS_ACCEPT = 200;
+STATUS_ACCEPT = 200;
 
 app = Flask(__name__)
 
@@ -12,7 +12,8 @@ app = Flask(__name__)
 def getFavicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'images/favicon.ico')
 
-# Main entrypoint, asks the user to login before continuing.
+
+# Main entry-point, asks the user to login before continuing.
 @app.route('/', methods=['GET', 'POST'])
 def handleEntry():
     if 'sessionID' in request.cookies:
@@ -24,9 +25,11 @@ def handleEntry():
         else:
             return getLoginForm()
 
+
 # Ask the user to fill in login credentials.
 def getLoginForm():
     return render_template('login.html')
+
 
 # Handle login request.
 def handleLoginForm():
@@ -35,17 +38,19 @@ def handleLoginForm():
     result = requests.post(ZEEGUU_SERVER+'/session/'+username, password)
 
     # Check for login succces, sends the user back to login or continues.
-    if (result.status_code == STATUS_ACCEPT):
+    if result.status_code == STATUS_ACCEPT:
         sessionID = result.content
         response = make_response(getFeedList(sessionID))
         response.set_cookie('sessionID', sessionID)
     else:
-	response = make_response(getLoginForm())
+        response = make_response(getLoginForm())
     return response;
+
 
 # Return the main page where the articles and feeds are listed.
 def getFeedList(sessionID):
     return render_template('feedlist.html', sessionID=sessionID)
+
 
 # Returns a zeeguu enhanced article.
 @app.route('/article/', methods=['POST'])
