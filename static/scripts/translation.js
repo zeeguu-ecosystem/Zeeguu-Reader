@@ -135,7 +135,7 @@ function insertTranslation(zeeguuTag)
 {
 	mergeZeeguu(zeeguuTag);
 	var text = zeeguuTag.textContent;
-	var context = "";//getContext(zeeguuTag);
+	var context = getContext(zeeguuTag);
 	var url = "zeeguu-mr-core.herokuapp.com";
 	// Launch zeeguu request to fill translation options.
 	requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT+'/'+FROM_LANGUAGE+'/'+TO_LANGUAGE,
@@ -145,13 +145,7 @@ function insertTranslation(zeeguuTag)
 
 function getContext(zeeguuTag)
 {
-	if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-		// TODO Implement firefox alternative.
-    } else {
-	    selection.modify('move','backward','sentence');
-		selection.modify('extend','forward','sentence');
-	}
-	return selection.toString();
+	return zeeguuTag.parentElement.textContent;
 }
 
 function setTranslations(zeeguuTag, translations)
