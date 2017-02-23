@@ -21,14 +21,16 @@ $(document).ready(function() {
 			else if (event.target.nodeName == HTML_ZEEGUUTAG)
 			{
 			  var zeeguuTag = event.target;
-			  var transCount = parseInt(zeeguuTag.getAttribute("transCount"));
-			  if (transCount > 1)
-			    openAlterMenu(zeeguuTag);
+			  if (zeeguuTag.hasAttribute("transCount")) {
+				var transCount = parseInt(zeeguuTag.getAttribute("transCount"));
+				if (transCount > 1)
+					openAlterMenu(zeeguuTag);
+				else
+					notifyUser("Sorry, no alternatives.");
+				}
 			  else
-			    notifyUser("Sorry, no alternatives.");
+			  	insertTranslation(zeeguuTag);
 			}
-			else
-				tagText();
 		}
 	});
 });
@@ -129,40 +131,19 @@ function closeAlterMenu()
 
 
 // Wraps a zeeguutag including translation around the selected content.
-function tagText()
+function insertTranslation(zeeguuTag)
 {
-	// Get the current selection.
-	var selection = window.getSelection();
-
-	// Properly select content
-	selection.modify('move','backward','word');
-	selection.modify('extend','forward','word');
-	coverTag(selection, HTML_ZEEGUUTAG);
-
-	// Check if selection has been tagged already, if not tag it.
-	if (!isTagged(selection, HTML_ZEEGUUTAG)) {
-		var range = selection.getRangeAt(0);
-		var zeeguuTag = document.createElement(HTML_ZEEGUUTAG);
-		var contents = range.extractContents();
-		clearTags(contents, HTML_ZEEGUUTAG);
-		zeeguuTag.appendChild(contents);
-		range.insertNode(zeeguuTag);
-		mergeZeeguu(zeeguuTag);
-
-		var text = zeeguuTag.textContent;
-		var context = getContext(selection);
-		var url = "zeeguu-mr-core.herokuapp.com";
-		// Launch zeeguu request to fill translation options.
-		requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT+'/'+FROM_LANGUAGE+'/'+TO_LANGUAGE,
-			{word : text, context : context, url : url},
-			_.partial(setTranslations, zeeguuTag));
-	}
-
-	// Undo selection.
-    selection.modify('move','backward','character');
+	mergeZeeguu(zeeguuTag);
+	var text = zeeguuTag.textContent;
+	var context = "";//getContext(zeeguuTag);
+	var url = "zeeguu-mr-core.herokuapp.com";
+	// Launch zeeguu request to fill translation options.
+	requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT+'/'+FROM_LANGUAGE+'/'+TO_LANGUAGE,
+		{word : text, context : context, url : url},
+		_.partial(setTranslations, zeeguuTag));
 }
 
-function getContext(selection)
+function getContext(zeeguuTag)
 {
 	if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
 		// TODO Implement firefox alternative.
@@ -187,63 +168,27 @@ function mergeZeeguu(zeeguuTag)
 {
 	var spaces = '';
 	var node = zeeguuTag.previousSibling;
-	while (node.textContent == ' ')
+	while (node && node.textContent == ' ')
 	{
 		node = node.previousSibling;
 		spaces += ' ';
 	}
-	if (node.nodeName == HTML_ZEEGUUTAG)
+	if (node && node.nodeName == HTML_ZEEGUUTAG && node.hasAttribute('transCount'))
 	{
 		zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
 		node.parentNode.removeChild(node);
 	}
 	spaces = '';
     node = zeeguuTag.nextSibling;
-	while (node.textContent == ' ')
+	while (node && node.textContent == ' ')
 	{
 		node = node.nextSibling;
 		spaces += ' ';
 
 	}
-	if (node.nodeName == HTML_ZEEGUUTAG)
+	if (node && node.nodeName == HTML_ZEEGUUTAG && node.hasAttribute('transCount'))
 	{
 		zeeguuTag.textContent += spaces + node.textContent;
 		node.parentNode.removeChild(node);
 	}
-}
-
-// Fixes partial selection of 'tag' nodes.
-function coverTag(selection, tag)
-{
-	var range = selection.getRangeAt(0);
-	var parent = selection.anchorNode.parentElement;
-	if (parent && parent.nodeName == tag)
-		range.setStartBefore(selection.anchorNode.parentElement);
-	selection.addRange(range);
-}
-
-// Checks if the selection is tagged with tag.
-function isTagged(selection, tag) {
-	var range = selection.getRangeAt(0);
-	var contents = range.cloneContents();
-	var children = contents.children;
-	return (children.length == 1 && children[0].nodeName == tag)
-		    && (contents.textContent == children[0].textContent);
-}
-
-// Clears the given contents from tag.
-function clearTags(contents, tag) {
-	var temp = document.createElement('div');
-
-	while (contents.firstChild)
-		temp.appendChild(contents.firstChild);
-
-	var tags = temp.getElementsByTagName(tag);
-	var length = tags.length;
-
-	while (length--)
-		$(tags[length]).contents().unwrap();
-
-	while (temp.firstChild)
-		contents.appendChild(temp.firstChild);
 }
