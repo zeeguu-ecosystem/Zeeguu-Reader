@@ -1,6 +1,9 @@
 from flask import render_template
 from readability import Document
 from bs4 import BeautifulSoup as Soup
+import re
+
+ZEEGUU_TAG = "zeeguu";
 
 
 def make_article(sessionID, source, language):
@@ -11,9 +14,10 @@ def make_article(sessionID, source, language):
     # Insert article at div.
     doc = Document(source)
     soup.find('p', {'id': 'articleTitle'}).append(doc.short_title());
-    summary = doc.summary(True)
-    summary = remove_images(summary)
-    soup.find('div', {'id': 'articleContent'}).append(Soup(summary, 'html.parser'));
+    content = doc.summary(True)
+    content = remove_images(content)
+    content = wrap_zeeguu_words(content)
+    soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'));
 
     return unicode(soup)
 
@@ -25,3 +29,13 @@ def remove_images(summary):
     return unicode(soup)
 
 classBlackList = ["wp-caption-text"]
+
+
+def wrap_zeeguu_words(text):
+    soup = Soup(text)
+    for text in soup.findAll(text=True):
+        word = ur'([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_-]+)'
+        if re.search(word, text):
+            wrappedText = re.sub(word, '<'+ZEEGUU_TAG+'>' + r'\1' + "</"+ZEEGUU_TAG+'>', text)
+            text.replaceWith(Soup(wrappedText, 'html.parser'))
+    return unicode(soup)
