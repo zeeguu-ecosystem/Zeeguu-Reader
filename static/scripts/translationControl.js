@@ -1,3 +1,4 @@
+var translator = new Translator();
 var alterMenu = new AlterMenu();
 
 /* When the document has finished loading,
@@ -36,10 +37,10 @@ $(document).ready(function() {
 	    if (alterMenu.isOpen())
 	        return;
 
-        if (isTranslated(this)) {
+        if (translator.isTranslated(this)) {
             alterMenu.open(this);
         } else {
-            insertTranslation(this);
+            translator.translate(this);
         }
 	});
 });
