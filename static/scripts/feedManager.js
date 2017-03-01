@@ -81,7 +81,7 @@ function loadLanguageOptions(data)
 /* Requests Zeeguu for addable feeds of a certain provided language. */
 function getFeedOptionsForLanguage(languageOptionCode)
 {
-  requestZeeguuGET(RECCOMENDED_FEED_ENDPOINT+'/'+languageOptionCode, 
+  requestZeeguuGET(RECOMMENDED_FEED_ENDPOINT+'/'+languageOptionCode,
                    {session : SESSION_ID}, loadFeedOptions);
   lastSearchedLanguage = languageOptionCode;
 }
