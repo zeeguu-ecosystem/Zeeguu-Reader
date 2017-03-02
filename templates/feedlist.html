@@ -70,7 +70,8 @@
 			<input type="hidden" name="sessionID" value="{{ sessionID }}" /> 
 			<input type="hidden" name="articleURL" value="{% raw %}{{ articleLinkURL }}{% endraw %}" /> 
 			<input type="hidden" name="articleLanguage" value="{% raw %}{{ articleLinkLanguage }}{% endraw %}" /> 
-			<input class="articleLinkTitle" type="submit" value="{% raw %}{{ articleLinkTitle }}{% endraw %}" />
+			<input class="articleLinkTitle" type="submit" value="{% raw %}{{ articleLinkTitle }} ({{ articleDifficulty}}){% endraw %}" />
+
 		</form>
 	</li>
 </script>

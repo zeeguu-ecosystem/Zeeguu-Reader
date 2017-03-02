@@ -31,7 +31,8 @@ function ArticleList()
                 articleLinkTitle: data[i]['title'],
                 articleLinkURL : data[i]['url'],
                 articleLinkFeedID : subscriptionData['subscriptionID'],
-                articleLinkLanguage : subscriptionData['subscriptionLanguage']
+                articleLinkLanguage : subscriptionData['subscriptionLanguage'],
+                articleDifficulty: data[i]['difficulty']
             }
             $(HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, articleLinkData));
         }
