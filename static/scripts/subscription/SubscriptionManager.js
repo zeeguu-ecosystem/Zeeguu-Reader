@@ -5,6 +5,8 @@ function SubscriptionManager(subscriptionList)
 {
     var currentLanguage = 'nl';
 
+    /* Calls zeeguu and requests recommended feeds for the given 'language'.
+     * If the language is not given, it simply uses the last used language. */
     this.load = function(language) {
         language = typeof language !== 'undefined' ? language : currentLanguage;
         requestZeeguuGET(RECOMMENDED_FEED_ENDPOINT + '/' + language,
@@ -17,12 +19,16 @@ function SubscriptionManager(subscriptionList)
         $(HTML_ID_ADDSUBSCRIPTION_LIST).empty();
     }
 
+    /* Subscribe to a new feed, calls the zeeguu server.
+     * This function is called by an html element.*/
     this.follow = function(feed)
     {
         var feedID = $(feed).attr('addableID');
         requestZeeguuPOST(FOLLOW_FEED_ENDPOINT, {feed_id : feedID}, _.partial(onFeedFollowed, feed));
     }
 
+    /* Un-subscribe from a feed, calls the zeeguu server.
+     * This function is called bu an html element. */
     this.unfollow = function(feed)
     {
         var removableID = $(feed).attr('removableID');
@@ -33,7 +39,8 @@ function SubscriptionManager(subscriptionList)
         return currentLanguage;
     }
 
-    /* Fills the dialog's list with all the addable feeds. */
+    /* Callback function for zeeguu.
+     * Fills the dialog's list with all the addable feeds. */
     function loadFeedOptions(data)
     {
         var template = $(HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
@@ -47,6 +54,9 @@ function SubscriptionManager(subscriptionList)
         }
     }
 
+    /* Callback function for zeeguu.
+     * A feed has just been followed, so we refresh the subscription list and remove the
+     * mentioned feed from the addable feed list. */
     function onFeedFollowed(feed, data)
     {
         if (data == "OK") {
@@ -55,6 +65,9 @@ function SubscriptionManager(subscriptionList)
         }
     }
 
+    /* Callback function for zeeguu.
+     * A feed has just been removed, so we remove the mentioned feed from the
+     * subscription list. */
     function onFeedUnfollowed(feed, data)
     {
         if (data == "OK") {

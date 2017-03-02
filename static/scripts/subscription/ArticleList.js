@@ -3,6 +3,7 @@
  */
 function ArticleList()
 {
+    /* Call zeeguu and get the articles for the given feed 'subscription'. */
     this.load = function(subscription)
     {
         requestZeeguuGET(GET_FEED_ITEMS + '/' + subscription['subscriptionID'],
@@ -14,12 +15,14 @@ function ArticleList()
         $(HTML_ID_ARTICLELINK_LIST).empty();
     }
 
+    /* Remove all articles from the list with 'feedID'. */
     this.remove = function(feedID)
     {
         $('li[articleLinkFeedID="' + feedID + '"]').remove();
     }
 
-    /* Loads all the article links from a particular feed. */
+    /* Callback function from the zeeguu request.
+     * Generates all the article links from a particular feed. */
     function loadArticleLinks(subscriptionData, data)
     {
         var template = $(HTML_ID_ARTICLELINK_TEMPLATE).html();

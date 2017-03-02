@@ -1,3 +1,4 @@
+/* These are all constants used in the UMR javascript. */
 var ZEEGUU_SERVER = 'https://www.zeeguu.unibe.ch';
 var RECOMMENDED_FEED_ENDPOINT = '/interesting_feeds';
 var FOLLOW_FEED_ENDPOINT = '/start_following_feed_with_id';

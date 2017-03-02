@@ -1,3 +1,5 @@
+/* Script that binds listeners to html events, such that the
+ * correct object is called to handle it. */
 var translator = new Translator();
 var alterMenu = new AlterMenu();
 

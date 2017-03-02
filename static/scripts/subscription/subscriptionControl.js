@@ -1,10 +1,12 @@
-/* Script that allows the user to add a new feed to their feed list using
- * a HTML dialog window, or remove a feed from their subscribed feed list. */
+/* Script that binds listeners to html events, such that the
+ * correct object is called to handle it. */
 var articleList = new ArticleList();
 var subscriptionList = new SubscriptionList(articleList);
 var subscriptionManager = new SubscriptionManager(subscriptionList);
 var languageMenu = new LanguageMenu();
- 
+
+/* When the document has finished loading,
+ * bind all necessary listeners. */
 $(document).ready(function() {
   subscriptionList.load();
   subscriptionManager.load();
@@ -30,7 +32,7 @@ $(document).ready(function() {
   });
 });
 
-// Called when no image could be loaded as an article avatar.
+/* Called when no image could be loaded as an article avatar. */
 function noAvatar(image)
 {
     image.src = noAvatarURL;
