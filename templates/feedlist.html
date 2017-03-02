@@ -13,8 +13,12 @@
 	<SCRIPT> var noAvatarURL = "{{url_for('static',filename='images/noAvatar.png')}}";</SCRIPT>
 	<SCRIPT src="{{ url_for('static',filename='scripts/mustache/mustache.js') }}"></SCRIPT>
 	<SCRIPT src="{{ url_for('static',filename='scripts/underscore/underscore-min.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/zeeguuRequests.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/feedManager.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/zeeguuRequests/zeeguuRequests.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/ArticleList.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/SubscriptionList.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/LanguageMenu.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/SubscriptionManager.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/subscriptionControl.js') }}"></SCRIPT>
 	<SCRIPT src="/static/styles/mdl/material.min.js"></SCRIPT>
 	<SCRIPT>var SESSION_ID =  {{ sessionID }}</SCRIPT>
 </HEAD>
@@ -52,7 +56,7 @@
 <script id="subscription-template" type="text/template">
 	<span removableID="{% raw %}{{subscriptionID}}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{subscriptionTitle}}{% endraw %}</span>
-		<button type="button" class="mdl-chip__action" onclick="unfollowFeed($(this).parent())">
+		<button type="button" class="mdl-chip__action" onclick="subscriptionManager.unfollow($(this).parent())">
 			<i class="material-icons">cancel</i>
 		</button>
 	</span>

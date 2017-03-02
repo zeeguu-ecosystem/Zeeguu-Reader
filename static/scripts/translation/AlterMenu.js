@@ -3,7 +3,6 @@
  */
 function AlterMenu()
 {
-    var anchor;
     var menuOpen = false;
     var notifier = new Notifier();
 
@@ -36,14 +35,13 @@ function AlterMenu()
                 zeeguuTag.setAttribute(HTML_ATTRIBUTE_TRANSLATION+choice, oldText);
             });
         }
-        this.place(zeeguuTag);
+        place(zeeguuTag);
         $(HTML_ID_ALTERMENU).slideDown(function() {menuOpen = true});
     }
 
     /* Places the alter menu below the to-be-altered word. */
-    this.place = function(zeeguuTag)
+    function place(zeeguuTag)
     {
-        anchor = zeeguuTag;
         var position = $(zeeguuTag).position();
         var tagHeight = $(zeeguuTag).outerHeight();
         var tagWidth = $(zeeguuTag).outerWidth();
@@ -60,19 +58,19 @@ function AlterMenu()
         $(HTML_ID_ALTERMENU).hide();
     }
 
+    this.reposition = function() {
+        place($(HTML_ID_ALTERMENU).parent());
+        $(HTML_ID_ALTERMENU).show();
+    }
+
     /* Hides the alter menu. */
     this.close = function()
     {
         $(HTML_ID_ALTERMENU).slideUp(function()
         {
             $(HTML_ID_ALTERMENUCONTAINER).append($(HTML_ID_ALTERMENU));
-            anchor = $(HTML_ID_ALTERMENUCONTAINER);
             menuOpen = false;
         });
-    }
-
-    this.getAnchor = function () {
-        return anchor;
     }
 
     this.isOpen = function()

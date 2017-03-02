@@ -50,11 +50,7 @@ $(document).ready(function() {
  * position. */
 $(window).on("resize", function() {
 	if (alterMenu.isOpen())
-	{
-        var zeeguuTag = alterMenu.getAnchor();
-		alterMenu.place(zeeguuTag);
-		$(HTML_ID_ALTERMENU).show();
-	}
+       alterMenu.reposition();
 });
 
 // Disable or enable links.

@@ -59,7 +59,6 @@ def get_article():
     sessionID  = request.form['sessionID']
     articleURL = request.form['articleURL']
     articleLanguage = request.form['articleLanguage']
-    print(articleLanguage)
     response = requests.get(articleURL)
     print "User with session " + sessionID + " retrieved " + articleURL;
     return article.make_article(sessionID, response.text, articleLanguage)
