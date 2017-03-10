@@ -3,7 +3,7 @@ import article
 import requests
 import os
 
-ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch"
+ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch/api"
 STATUS_ACCEPT = 200;
 
 app = Flask(__name__)
