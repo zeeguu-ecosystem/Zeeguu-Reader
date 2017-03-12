@@ -66,7 +66,7 @@
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
 	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-	<div class="articleLinkDifficulty {% raw %}{{articleDifficulty}}{% endraw %}">
+	<div class="articleLinkDifficulty {% raw %}{{articleDifficultyDiscrete}}{% endraw %}">
 	{% raw %}{{articleDifficulty}}{% endraw %}
 	</div>
 		<form action="{{ url_for('get_article') }}" method="post">
