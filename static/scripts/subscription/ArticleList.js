@@ -32,7 +32,7 @@ function ArticleList()
                 articleLinkURL : data[i]['url'],
                 articleLinkFeedID : subscriptionData['subscriptionID'],
                 articleLinkLanguage : subscriptionData['subscriptionLanguage'],
-                articleDifficulty: data[i]['difficulty']
+                articleDifficulty: data[i]['metrics']['difficulty']['discrete']
             }
             $(HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, articleLinkData));
         }

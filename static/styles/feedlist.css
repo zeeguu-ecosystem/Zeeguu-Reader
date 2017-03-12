@@ -26,6 +26,32 @@
   border-bottom: none
 }
 
+.articleLinkDifficulty 
+{
+	font-weight: bold;
+	font-size: x-small;
+	width: 4.5em;
+	height: 2em;
+	padding: 0.3em;
+	border-radius: 0.5em;
+    float: right;
+}
+
+.articleLinkDifficulty.EASY 
+{
+    background: #d3ffb2;
+}
+
+.articleLinkDifficulty.MEDIUM
+{
+    background: #fff9b2;
+}
+
+.articleLinkDifficulty.HARD
+{
+    background: #ff7070;
+}
+
 .articleLinkTitle
 {
   background:none!important;
