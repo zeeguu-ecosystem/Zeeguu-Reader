@@ -7,7 +7,7 @@ function ArticleList()
     this.load = function(subscription)
     {
         requestZeeguuGET(GET_FEED_ITEMS + '/' + subscription['subscriptionID'],
-            {session : SESSION_ID}, _.partial(loadArticleLinks, subscription));
+            {}, _.partial(loadArticleLinks, subscription));
     };
 
     this.clear = function()

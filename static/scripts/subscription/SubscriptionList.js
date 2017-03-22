@@ -6,7 +6,7 @@ function SubscriptionList(articleList)
     /* Call zeeguu and retrieve all currently subscribed feeds. */
     this.load = function ()
     {
-        requestZeeguuGET(GET_FEEDS_BEING_FOLLOWED, {session : SESSION_ID}, loadSubscriptions);
+        requestZeeguuGET(GET_FEEDS_BEING_FOLLOWED, {}, loadSubscriptions);
     }
 
     this.clear = function()
