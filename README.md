@@ -26,6 +26,7 @@ If you intend to deploy on this platform as well, the repository has the require
 Zeeguu UMR is in its core a University project (Rijksuniversiteit Groningen, Netherlands), developed by two students:
 - Dan Chirtoaca
 - Luc van den Brand
+
 Under the supervision of Dr. Mircea Lungu.
 
 ## Licence
