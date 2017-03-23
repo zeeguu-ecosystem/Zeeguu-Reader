@@ -29,8 +29,7 @@ function AlterMenu()
             var button = document.createElement('button');
             var alternative = zeeguuTag.getAttribute(HTML_ATTRIBUTE_TRANSLATION+i);
             button.textContent = alternative;
-            $(button).addClass("mdl-button").addClass("mdl-js-button")
-                .addClass("mdl-js-ripple-effect");
+            $(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
             $(HTML_ID_ALTERMENU).append($(button));
             $(button).click({zeeguuTag: zeeguuTag, alternative: i}, swapPrimaryTranslation);
         }
