@@ -40,7 +40,7 @@ $(document).ready(function() {
 	        return;
 
         if (translator.isTranslated(this)) {
-            alterMenu.open(this);
+            alterMenu.constructAndOpen(this);
         } else {
             translator.translate(this);
         }
