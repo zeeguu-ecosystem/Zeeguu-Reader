@@ -7,36 +7,43 @@ function AlterMenu()
     var notifier = new Notifier();
 
     /* Creates and opens the alternative translation menu. */
-    this.open = function(zeeguuTag)
+    this.constructAndOpen = function(zeeguuTag)
     {
-        // Check how many alternatives there are.
+        // Check how many alternatives there are, if less than 2: abort.
         var transCount = parseInt(zeeguuTag.getAttribute(HTML_ATTRIBUTE_TRANSCOUNT));
-        if (transCount <= 1) {
+        if (transCount < 2) {
             notifier.notify("Sorry, no alternatives.");
             return;
         }
+        construct(zeeguuTag, transCount);
+        place(zeeguuTag);
+        $(HTML_ID_ALTERMENU).slideDown(function() {menuOpen = true});
+    }
 
-        // Add buttons with click listeners that replace the translation.
+    /* Add buttons with click listeners that replace the translation. */
+    function construct(zeeguuTag, transCount)
+    {
         $(HTML_ID_ALTERMENU).empty();
         for (var i = 0; i < transCount; i++)
         {
             var button = document.createElement('button');
             var alternative = zeeguuTag.getAttribute(HTML_ATTRIBUTE_TRANSLATION+i);
             button.textContent = alternative;
-            $(button).addClass("mdl-button").addClass("mdl-js-button")
-                .addClass("mdl-js-ripple-effect");
+            $(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
             $(HTML_ID_ALTERMENU).append($(button));
-            $(button).click({zeeguuTag: zeeguuTag, choice: i}, function(event) {
-                var zeeguuTag =  event.data.zeeguuTag;
-                var choice = event.data.choice;
-                var oldText = zeeguuTag.getAttribute(HTML_ATTRIBUTE_TRANSLATION+'0');
-                var newText = zeeguuTag.getAttribute(HTML_ATTRIBUTE_TRANSLATION+choice);
-                zeeguuTag.setAttribute(HTML_ATTRIBUTE_TRANSLATION+'0',newText);
-                zeeguuTag.setAttribute(HTML_ATTRIBUTE_TRANSLATION+choice, oldText);
-            });
+            $(button).click({zeeguuTag: zeeguuTag, alternative: i}, swapPrimaryTranslation);
         }
-        place(zeeguuTag);
-        $(HTML_ID_ALTERMENU).slideDown(function() {menuOpen = true});
+    }
+
+    /* Swaps the HTML_ATTRIBUTE_TRANSLATION 0 with the new preferred translation attribute. */
+    function swapPrimaryTranslation(selectedAlternative)
+    {
+        var zeeguuTag =  selectedAlternative.data.zeeguuTag;
+        var alternative = selectedAlternative.data.alternative;
+        var oldText = zeeguuTag.getAttribute(HTML_ATTRIBUTE_TRANSLATION + '0');
+        var newText = zeeguuTag.getAttribute(HTML_ATTRIBUTE_TRANSLATION + alternative);
+        zeeguuTag.setAttribute(HTML_ATTRIBUTE_TRANSLATION + '0', newText);
+        zeeguuTag.setAttribute(HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
     }
 
     /* Places the alter menu below the to-be-altered word. */
