@@ -23,7 +23,7 @@ There are many methods and services that allow you to launch Zeeguu UMR on a non
 If you intend to deploy on this platform as well, the repository has the required *Procfile* already included. Make sure you describe *zeeguu_umr.py* as the flask executable in the required environment variable.
 
 ## Authors
-Zeeguu UMR is in its core a University project (Rijksuniversiteit Groningen, Netherlands), developed by two students:
+Zeeguu UMR is at its core a University project (Rijksuniversiteit Groningen, Netherlands), developed by two students:
 - Dan Chirtoaca
 - Luc van den Brand
 
@@ -34,9 +34,9 @@ The Zeeguu UMR project is open-source according to the definitions of the MIT-Li
 
 ## Acknowledgments
 Many thanks to the creators of the following libraries and frameworks, on which our project depends heavily. From where we stand their shoulders are truly giant.
-- Flask
-- Beautiful Soup
-- Readability
-- MDL
-- Moustache
-- Underscore
+- [Flask](http://flask.pocoo.org/)
+- [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)
+- [Readability](https://github.com/timbertson/python-readability)
+- [MDL](https://getmdl.io)
+- [Moustache.js](https://github.com/janl/mustache.js)
+- [Underscore.js](http://underscorejs.org/)
