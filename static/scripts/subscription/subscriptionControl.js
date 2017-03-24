@@ -2,33 +2,33 @@
  * correct object is called to handle it. */
 var articleList = new ArticleList();
 var subscriptionList = new SubscriptionList(articleList);
-var subscriptionManager = new SubscriptionManager(subscriptionList);
+var feedSubscriber = new FeedSubscriber(subscriptionList);
 var languageMenu = new LanguageMenu();
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function() {
     subscriptionList.load();
-    subscriptionManager.load();
+    feedSubscriber.load();
     languageMenu.load();
 
-    var dialog = document.querySelector('dialog');
-    var showModalButton = document.querySelector('.show-modal');
+    var addFeedDialog = document.querySelector('dialog');
+    var showAddFeedDialogButton = document.querySelector('.show-modal');
 
     // Some browsers do not support dialog, for that we use Polyfill.
-    if (! dialog.showModal)
-        dialogPolyfill.registerDialog(dialog);
+    if (!addFeedDialog.showModal)
+        dialogPolyfill.registerDialog(addFeedDialog);
 
     // Open and closing of the dialog is handled here.
-    showModalButton.addEventListener('click', function()
+    showAddFeedDialogButton.addEventListener('click', function()
     {
-        dialog.showModal();
-        $('#' + subscriptionManager.getCurrentLanguage()).focus();
+        addFeedDialog.showModal();
+        $('#' + feedSubscriber.getCurrentLanguage()).focus();
     });
 
-    dialog.querySelector('.close').addEventListener('click', function()
+    addFeedDialog.querySelector('.close').addEventListener('click', function()
     {
-        dialog.close();
+        addFeedDialog.close();
     });
 });
 

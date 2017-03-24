@@ -1,7 +1,7 @@
 /**
  * Allows the user to add or remove feed subscriptions.
  */
-function SubscriptionManager(subscriptionList)
+function FeedSubscriber(subscriptionList)
 {
     var currentLanguage = 'nl';
 
