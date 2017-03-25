@@ -1,0 +1,66 @@
+zeeguu[transCount]
+{
+	background-color:#eaf2ff;
+}
+
+zeeguu[translation0]:after 
+{
+	content: " (" attr(translation0) ") ";
+}
+
+#altermenu
+{
+	display: none;
+	z-index:1;
+	color: #000000;
+	text-align: center;
+	padding: 0px;
+	background: #eaf2ff;
+	border-radius: 3px;
+	box-shadow: 0px -14px 39px 0px rgba(0, 0, 0, 0.2);
+}
+
+#altermenu .mdl-button
+{
+	width:100%;
+	display: block;
+	text-transform: none;
+	word-wrap: break-word !important;
+}
+
+.mdl-layout__header,
+.mdl-layout__drawer-button 
+{
+  color: black;
+}
+
+P.title
+{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+h1, h2, h3, h4
+{
+  font-size: 1.4em;
+}
+
+h5,h6
+{
+  font-size: 0.7em;
+}
+
+a[href_disabled]
+{
+  color: grey;
+  text-decoration: underline;
+  cursor: default;
+}
+
+.page-content
+{
+  margin-left: auto;
+  margin-right: auto;
+  width:80%;
+  text-align:justify;
+}

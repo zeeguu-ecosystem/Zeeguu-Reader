@@ -1,0 +1,56 @@
+#addableFeedList {
+  display:block;
+  height: 40vh;
+}
+
+#languageOptionList {
+  text-align:center;
+  margin-bottom: 1em;
+}
+
+.langButton {
+  margin-bottom: 1em;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
+.langButton:focus {
+  background-color: lightgrey;
+}
+
+.addableTitle {
+  display:block;
+  max-width: 6em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.feedIcon {
+  background: white;
+  width: 32px;
+  height: 32px;
+}
+
+.material-icons.md-light {
+  color: white;
+}
+
+.feedAddTitle {
+  font-size: 2.3em;
+  text-align: center;
+}
+
+.feedAddSubTitle {
+  font-size: 1em;
+  font-style: italic;
+  text-align: center;
+}
+
+.list-control {
+  max-height: 45vh;
+  overflow-y: scroll;
+}
