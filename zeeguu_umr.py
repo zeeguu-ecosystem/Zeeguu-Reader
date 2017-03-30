@@ -11,12 +11,13 @@ app = Flask(__name__)
 
 @app.route('/favicon.ico')
 def get_favicon():
+    """Return the favicon icon."""
     return send_from_directory(os.path.join(app.root_path, 'static'), 'images/favicon.ico')
 
 
-# Main entry-point, asks the user to login before continuing.
 @app.route('/', methods=['GET', 'POST'])
 def handle_entry():
+    """Handle a Zeeguu Login request on POST, on GET return a login form."""
     if 'sessionID' in request.cookies:
         session = request.cookies.get('sessionID')
         return get_feed_page(session)
@@ -27,13 +28,16 @@ def handle_entry():
             return get_login_form()
 
 
-# Ask the user to fill in login credentials.
 def get_login_form():
+    """Return the login form."""
     return render_template('login.html')
 
 
-# Handle login request.
 def handle_login_form():
+    """Send user credentials to Zeeguu and store the session on succes,
+    then return the article and feed page.
+    On failure to authenticate, return the login form.
+    """
     username = request.form['username']
     password = {'password': request.form['password']}
     result = requests.post(ZEEGUU_SERVER+'/session/'+username, password)
@@ -48,14 +52,17 @@ def handle_login_form():
     return response
 
 
-# Return the main page where the articles and feeds are listed.
 def get_feed_page(session):
+    """Return the template that shows all available articles and feeds."""
     return render_template('feedlist.html', sessionID=session)
 
 
 # Returns a zeeguu enhanced article.
 @app.route('/article/', methods=['POST'])
 def get_article():
+    """Retrieve the supplied article link of the supplied language,
+    and return a properly processed version of the article.
+    """
     session = request.form['sessionID']
     article_url = request.form['articleURL']
     article_language = request.form['articleLanguage']

@@ -5,8 +5,15 @@ import re
 
 ZEEGUU_TAG = "zeeguu"
 
-# Takes an article text as input, and returns a neatly formatted translatable article page version of it.
+
 def make_article(session, source, language):
+    """Create a neatly formatted translatable article html page.
+
+    Keyword arguments:
+    session  -- a valid Zeeguu session key
+    source   -- the article text to format
+    language -- the language the article is written in
+    """
     # Create our article using Soup.
     soup = Soup(render_template('article.html', sessionID=session, fromLanguage=language), 'html.parser')
 
@@ -22,8 +29,12 @@ def make_article(session, source, language):
     return unicode(soup)
 
 
-# Removes images and related classes by use of a blacklist.
 def remove_images(summary):
+    """Remove images and related classes by use of a blacklist.
+
+    Keyword arguments:
+    summary -- html-formatted text
+    """
     css_class_blacklist = ["wp-caption-text"]
     soup = Soup(summary, 'html.parser')
     [s.extract() for s in soup(['img', 'hr'])]
@@ -31,8 +42,12 @@ def remove_images(summary):
     return unicode(soup)
 
 
-# Takes a pieve of text and uses a regular expression to wrap each word with a zeeguu tag.
 def wrap_zeeguu_words(text):
+    """Use a regular expression to wrap all words with a Zeeguu tag.
+
+    Keyword arguments:
+    text -- html-formatted text
+    """
     soup = Soup(text, 'html.parser')
     for text in soup.findAll(text=True):
         word = ur'([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_-]+)'
