@@ -69,9 +69,9 @@ def articles():
 
 
 # Returns a zeeguu enhanced article.
-@app.route('/article/<title>', methods=['POST'])
+@app.route('/article', methods=['POST'])
 @with_session
-def get_article(title):
+def get_article():
     session = request.sessionID
     article_url = request.form['articleURL']
     article_language = request.form['articleLanguage']
