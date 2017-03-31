@@ -47,12 +47,13 @@ def with_session(view):
 
 @app.route('/favicon.ico')
 def get_favicon():
+    """Return the favicon icon."""
     return send_from_directory(os.path.join(app.root_path, 'static'), 'images/favicon.ico')
 
 
-# Main entry-point, asks the user to login before continuing.
 @app.route('/', methods=['GET', 'POST'])
 def handle_entry():
+    """Handle a Zeeguu Login request on POST, on GET return a login form."""
     if 'sessionID' in request.cookies:
         return redirect(url_for('articles'))
     if request.method == 'POST':
@@ -61,17 +62,19 @@ def handle_entry():
         return get_login_form()
 
 
-# Return the main page where the articles and feeds are listed.
 @app.route('/articles', methods=['GET'])
 @with_session
 def articles():
+    """Return the main page where the articles and feeds are listed."""
     return get_feed_page(request.sessionID)
 
 
-# Returns a zeeguu enhanced article.
 @app.route('/article', methods=['POST'])
 @with_session
 def get_article():
+    """Retrieve the supplied article link of the supplied language,
+    and return a properly processed version of the article.
+    """
     session = request.sessionID
     article_url = request.form['articleURL']
     article_language = request.form['articleLanguage']
@@ -80,13 +83,16 @@ def get_article():
     return article.make_article(session, response.text, article_language)
 
 
-# Ask the user to fill in login credentials.
 def get_login_form():
+    """Return the login form."""
     return render_template('login.html')
 
 
-# Handle login request.
 def handle_login_form():
+    """Send user credentials to Zeeguu and store the session on succes,
+    then return the article and feed page.
+    On failure to authenticate, return the login form.
+    """
     username = request.form['username']
     password = {'password': request.form['password']}
     result = requests.post(ZEEGUU_SERVER+'/session/'+username, password)
@@ -102,6 +108,6 @@ def handle_login_form():
 
 
 def get_feed_page(session):
+    """Return the template that shows all available articles and feeds."""
     return render_template('feedlist.html', sessionID=session)
-
 
