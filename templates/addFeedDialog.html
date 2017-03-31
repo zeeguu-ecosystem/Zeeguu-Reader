@@ -18,7 +18,7 @@
 <script id="languageOption-template" type="text/template">
     <button id="{% raw %}{{ languageOptionCode }}{% endraw %}"
             class="langButton" 
-            onclick="subscriptionManager.clear(); subscriptionManager.load('{% raw %}{{ languageOptionCode }}{% endraw %}');">
+            onclick="feedSubscriber.clear(); feedSubscriber.load('{% raw %}{{ languageOptionCode }}{% endraw %}');">
       <span class="flag-icon flag-icon-squared flag-icon-{% raw %}{{ languageOptionCode }}{% endraw %}"></span>
     </button>
 </script>
@@ -31,7 +31,7 @@
       <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar" onerror="noAvatar(this)"/>
       <span class="addableTitle">{% raw %}{{addableTitle}}{% endraw %}</span>
     </span>
-    <a class="mdl-list__item-secondary-action" onclick="subscriptionManager.follow($(this).parent())">
+    <a class="mdl-list__item-secondary-action" onclick="feedSubscriber.follow($(this).parent())">
       <i class="material-icons ">add_circle</i>
     </a>
   </div>

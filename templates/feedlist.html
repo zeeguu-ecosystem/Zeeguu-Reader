@@ -57,7 +57,7 @@
 <script id="subscription-template" type="text/template">
 	<span removableID="{% raw %}{{subscriptionID}}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{subscriptionTitle}}{% endraw %}</span>
-		<button type="button" class="mdl-chip__action" onclick="subscriptionManager.unfollow($(this).parent())">
+		<button type="button" class="mdl-chip__action" onclick="feedSubscriber.unfollow($(this).parent())">
 			<i class="material-icons">cancel</i>
 		</button>
 	</span>

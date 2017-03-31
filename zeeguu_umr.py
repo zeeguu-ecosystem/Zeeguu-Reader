@@ -69,7 +69,7 @@ def articles():
     return get_feed_page(request.sessionID)
 
 
-@app.route('/article/', methods=['POST'])
+@app.route('/article', methods=['POST'])
 @with_session
 def get_article():
     """Retrieve the supplied article link of the supplied language,
