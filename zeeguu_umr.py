@@ -70,6 +70,7 @@ def articles():
 
 
 @app.route('/article/', methods=['POST'])
+@with_session
 def get_article():
     """Retrieve the supplied article link of the supplied language,
     and return a properly processed version of the article.
