@@ -1,0 +1,50 @@
+.loader {
+  text-align:center;
+  margin: auto;
+  animation: colorshift 4s 0s infinite linear alternate, popup 0.3s 0s 1 linear; 
+}
+
+.eleph {
+  display: inline-block;
+  -webkit-animation-name: bounce;
+  -webkit-animation-delay: 1s;
+  -webkit-animation-duration: 1.2s;
+  -webkit-animation-iteration-count: infinite;
+  height: 5em;
+  width: 5em;
+}
+
+@-webkit-keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(23px);
+  }
+  60% {
+    transform: translateY(-25px);
+  }
+  80%{
+    transform: translateY(0);
+  }
+}
+
+@keyframes colorshift {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes popup {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  80% {
+     transform: scale(1.3);
+  }
+  100% {
+     opacity: 1;
+     transform: scale(1);
+  }
+}
