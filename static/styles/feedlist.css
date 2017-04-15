@@ -17,11 +17,14 @@
   animation: articleLinkShow 0.5s 0s 1 linear; 
 }
 
-@keyframes articleLinkShow {
-  0% {
+@keyframes articleLinkShow 
+{
+  0% 
+  {
     opacity: 0;
   }
-  100% {
+  100% 
+  {
      opacity: 1;
   }
 }
