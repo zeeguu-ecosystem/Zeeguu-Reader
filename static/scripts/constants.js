@@ -23,3 +23,4 @@ var HTML_ID_SUBSCRIPTION_LIST = "#subscriptionList";
 var HTML_ID_ADDSUBSCRIPTION_TEMPLATE = '#feedAddable-template';
 var HTML_ID_ADDSUBSCRIPTION_LIST = '#addableFeedList';
 var HTML_ID_LANGUAGEOPTION_TEMPLATE = '#languageOption-template';
+var HTML_CLASS_LOADER = '.loader';
