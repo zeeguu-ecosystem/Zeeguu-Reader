@@ -4,6 +4,7 @@
 	<TITLE>Zeeguu UMR</TITLE>
 	<META name="viewport" content="width=device-width, initial-scale=1">
 	<LINK rel="stylesheet" href="{{ url_for('static',filename='styles/mdl/material.min.css') }}">
+	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/loader.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/login.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/feedlist.css') }}" type= "text/css">
@@ -49,7 +50,9 @@
 		<ul id="articleLinkList"></ul>
     </div>
 		<BR />
-		<center>Please wait... while we search for articles that are interesting for you </center>
+		<div class="loader">
+			 <img class="eleph" src="{{ url_for('static',filename='images/elephlogo.png') }}" alt="Loading..."/>
+		</div>
   </main>
 </div>
 

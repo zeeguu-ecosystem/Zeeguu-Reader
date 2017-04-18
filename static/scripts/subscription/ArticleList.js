@@ -6,6 +6,7 @@ function ArticleList()
     /* Call zeeguu and get the articles for the given feed 'subscription'. */
     this.load = function(subscription)
     {
+	$(HTML_CLASS_LOADER).show();
         requestZeeguuGET(GET_FEED_ITEMS + '/' + subscription['subscriptionID'],
             {}, _.partial(loadArticleLinks, subscription));
     };
@@ -39,5 +40,6 @@ function ArticleList()
             };
             $(HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, articleLinkData));
         }
+	$(HTML_CLASS_LOADER).fadeOut('slow');
     }
 }
