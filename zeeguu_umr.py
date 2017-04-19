@@ -66,7 +66,7 @@ def handle_entry():
 @with_session
 def articles():
     """Return the main page where the articles and feeds are listed."""
-    return get_feed_page(request.sessionID)
+    return get_articles_page(request.sessionID)
 
 
 @app.route('/article', methods=['POST'])
@@ -100,14 +100,14 @@ def handle_login_form():
     # Check for login success, sends the user back to login or continues.
     if result.status_code == STATUS_ACCEPT:
         session = result.content
-        response = make_response(get_feed_page(session))
+        response = make_response(get_articles_page(session))
         response.set_cookie('sessionID', session)
     else:
         response = make_response(get_login_form())
     return response
 
 
-def get_feed_page(session):
+def get_articles_page(session):
     """Return the template that shows all available articles and feeds."""
-    return render_template('feedlist.html', sessionID=session)
+    return render_template('articles.html', sessionID=session)
 
