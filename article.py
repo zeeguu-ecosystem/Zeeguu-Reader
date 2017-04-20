@@ -1,9 +1,28 @@
-from flask import render_template
+from flask import Blueprint, request, render_template
 from readability import Document
 from bs4 import BeautifulSoup as Soup
 import re
+import requests
+
+from session import with_session
+
+article_page = Blueprint('article_page', __name__, template_folder='templates')
 
 ZEEGUU_TAG = "zeeguu"
+
+
+@article_page.route('/article', methods=['POST'])
+@with_session
+def get_article():
+    """Retrieve the supplied article link of the supplied language,
+    and return a properly processed version of the article.
+    """
+    session = request.sessionID
+    article_url = request.form['articleURL']
+    article_language = request.form['articleLanguage']
+    response = requests.get(article_url)
+    print "User with session " + session + " retrieved " + article_url
+    return make_article(session, response.text, article_language)
 
 
 def make_article(session, source, language):

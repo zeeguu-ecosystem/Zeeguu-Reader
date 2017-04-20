@@ -1,48 +1,17 @@
-import functools
+import os
+import requests
 
-import flask
 from flask import Flask, render_template, request, make_response, send_from_directory
 from flask import redirect
 from flask import url_for
-
-import article
-import requests
-import os
+from session import with_session
+from article import article_page
 
 ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch/api"
 STATUS_ACCEPT = 200
 
 app = Flask(__name__)
-
-
-def with_session(view):
-    """
-    Decorator checks whether a session is available either in
-     - as a cookie
-     - as a GET or POST parameter
-    If it is, it sets the sessionID field on the request object
-    which can be used within the decorated functions.
-
-    In case of no session, user is redirected to login form.
-    """
-
-    @functools.wraps(view)
-    def wrapped_view(*args, **kwargs):
-
-        request.sessionID = None
-
-        if request.args.get('sessionID', None):
-            request.sessionID = int(request.args['sessionID'])
-        elif 'sessionID' in request.cookies:
-            request.sessionID = request.cookies.get('sessionID')
-        elif request.form.get('sessionID', None):
-            request.sessionID = request.form['sessionID']
-        else:
-            flask.abort(401)
-
-        return view(*args, **kwargs)
-
-    return wrapped_view
+app.register_blueprint(article_page)
 
 
 @app.route('/favicon.ico')
@@ -67,20 +36,6 @@ def handle_entry():
 def articles():
     """Return the main page where the articles and feeds are listed."""
     return get_feed_page(request.sessionID)
-
-
-@app.route('/article', methods=['POST'])
-@with_session
-def get_article():
-    """Retrieve the supplied article link of the supplied language,
-    and return a properly processed version of the article.
-    """
-    session = request.sessionID
-    article_url = request.form['articleURL']
-    article_language = request.form['articleLanguage']
-    response = requests.get(article_url)
-    print "User with session " + session + " retrieved " + article_url
-    return article.make_article(session, response.text, article_language)
 
 
 def get_login_form():
