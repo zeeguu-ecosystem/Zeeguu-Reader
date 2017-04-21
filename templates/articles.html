@@ -72,7 +72,7 @@
 	<div class="articleLinkDifficulty {% raw %}{{articleDifficultyDiscrete}}{% endraw %}">
 	{% raw %}{{articleDifficulty}}{% endraw %}
 	</div>
-		<form action="{{ url_for('article_page.get_article') }}" method="post">
+		<form action="{{ url_for('endpoints_article.get_article') }}" method="post">
 			<input type="hidden" name="sessionID" value="{{ sessionID }}" /> 
 			<input type="hidden" name="articleURL" value="{% raw %}{{ articleLinkURL }}{% endraw %}" /> 
 			<input type="hidden" name="articleLanguage" value="{% raw %}{{ articleLinkLanguage }}{% endraw %}" /> 

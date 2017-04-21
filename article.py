@@ -1,17 +1,16 @@
 from flask import Blueprint, request, render_template
 from readability import Document
 from bs4 import BeautifulSoup as Soup
+from session import with_session
 import re
 import requests
 
-from session import with_session
+WORD_TAG = "zeeguu"
 
-article_page = Blueprint('article_page', __name__, template_folder='templates')
-
-ZEEGUU_TAG = "zeeguu"
+endpoints_article = Blueprint('endpoints_article', __name__, template_folder='templates')
 
 
-@article_page.route('/article', methods=['POST'])
+@endpoints_article.route('/article', methods=['POST'])
 @with_session
 def get_article():
     """Retrieve the supplied article link of the supplied language,
@@ -71,6 +70,6 @@ def wrap_zeeguu_words(text):
     for text in soup.findAll(text=True):
         word = ur'([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_-]+)'
         if re.search(word, text):
-            wrapped_text = re.sub(word, '<'+ZEEGUU_TAG+'>' + r'\1' + "</"+ZEEGUU_TAG+'>', text)
+            wrapped_text = re.sub(word, '<' + WORD_TAG + '>' + r'\1' + "</" + WORD_TAG + '>', text)
             text.replaceWith(Soup(wrapped_text, 'html.parser'))
     return unicode(soup)
