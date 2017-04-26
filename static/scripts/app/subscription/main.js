@@ -4,6 +4,7 @@ define(function (require) {
         ArticleList = require('./ArticleList'),
         SubscriptionList = require('./SubscriptionList'),
         FeedSubscriber = require('./FeedSubscriber'),
+        dialogPolyfill = require('polyfill/dialog-polyfill'),
         LanguageMenu = require('./LanguageMenu');
 
     /* Script that binds listeners to html events, such that the

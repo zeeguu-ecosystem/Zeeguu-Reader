@@ -3,6 +3,9 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
      * Shows a list of all subscribed feeds, and updates the article list accordingly.
      */
     return function SubscriptionList(articleList) {
+
+        var feedList = new Set(); 
+
         /* Call zeeguu and retrieve all currently subscribed feeds. */
         this.load = function () {
             zeeguuRequests.requestZeeguuGET(config.GET_FEEDS_BEING_FOLLOWED, {}, loadSubscriptions);
