@@ -16,13 +16,12 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
             var options = JSON.parse(data);
             var template = $(config.HTML_ID_LANGUAGEOPTION_TEMPLATE).html();
             options.sort();
-            for (i=0; i<options.length; ++i)
+            for (var i=0; i < options.length; ++i)
             {
                 var languageOptionData = {
                     languageOptionCode: options[i]
                 }
                 var languageOption = $(Mustache.render(template, languageOptionData));
-                console.log(languageOption);
                 languageOption.click( function () {
                     feedSubscriber.clear();
                     feedSubscriber.load(languageOptionData.languageOptionCode);

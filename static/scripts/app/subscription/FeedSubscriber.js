@@ -37,6 +37,10 @@ define(['app/config', 'app/zeeguuRequests', 'mustache', 'jquery'], function (con
                 subscribeButton.click(function () {
                     follow($(this).parent());
                 });
+                var feedIcon = $(feedOption.find(".feedIcon"));
+                feedIcon.on( "error", function () {
+                    $(this).unbind("error").attr("src", "static/images/noAvatar.png");
+                });
                 $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
             }
         }
@@ -46,9 +50,7 @@ define(['app/config', 'app/zeeguuRequests', 'mustache', 'jquery'], function (con
         function follow(feed) {
             var feedID = $(feed).attr('addableID');
             zeeguuRequests.requestZeeguuPOST(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, _.partial(onFeedFollowed, feed));
-            console.log("Subscribe request send");
         }
-
 
         /* Callback function for zeeguu.
          * A feed has just been followed, so we refresh the subscription list and remove the
@@ -58,7 +60,6 @@ define(['app/config', 'app/zeeguuRequests', 'mustache', 'jquery'], function (con
                 subscriptionList.refresh();
                 $(feed).fadeOut();
             }
-            console.log("Subscribe reply recieved:" + data);
         }
     };
 });

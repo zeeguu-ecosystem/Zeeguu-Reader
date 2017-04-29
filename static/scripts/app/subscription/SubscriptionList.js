@@ -48,7 +48,6 @@ define(['app/config', 'app/zeeguuRequests', 'mustache', 'jquery'], function (con
             var removableID = $(feed).attr('removableID');
             zeeguuRequests.requestZeeguuGET(config.UNFOLLOW_FEED_ENDPOINT + "/" + removableID,
                                             {session: SESSION_ID}, _.partial(onFeedUnfollowed, feed));
-            console.log("Unsubscribe request send");
         }
 
         /* Callback function for zeeguu.
@@ -58,7 +57,6 @@ define(['app/config', 'app/zeeguuRequests', 'mustache', 'jquery'], function (con
             if (data == "OK") {
                 remove(feed);
             }
-            console.log("Unsubscribe reply recieved:" + data);
         }
 
         /* Remove a mentioned feed from the local list (not from the zeeguu list).
