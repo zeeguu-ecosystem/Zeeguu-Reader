@@ -3,7 +3,7 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
      * Retrieves the available languages of Zeeguu and fills
      * the Subscription Manager's dialog with these options.
      */
-    return function LanguageMenu() {
+    return function LanguageMenu(feedSubscriber) {
         /* Load the available languages for the dialog. */
         this.load = function() {
             zeeguuRequests.requestZeeguuGET(config.GET_AVAILABLE_LANGUAGES, {}, loadLanguageOptions);
@@ -21,7 +21,13 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
                 var languageOptionData = {
                     languageOptionCode: options[i]
                 }
-                $("#languageOptionList").append(Mustache.render(template, languageOptionData));
+                var languageOption = $(Mustache.render(template, languageOptionData));
+                console.log(languageOption);
+                languageOption.click( function () {
+                    feedSubscriber.clear();
+                    feedSubscriber.load(languageOptionData.languageOptionCode);
+                });
+                $("#languageOptionList").append(languageOption);
             }
         }
     };

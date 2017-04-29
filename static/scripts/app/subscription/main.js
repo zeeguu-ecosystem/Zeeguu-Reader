@@ -12,7 +12,7 @@ define(function (require) {
     var articleList = new ArticleList();
     var subscriptionList = new SubscriptionList(articleList);
     var feedSubscriber = new FeedSubscriber(subscriptionList);
-    var languageMenu = new LanguageMenu();
+    var languageMenu = new LanguageMenu(feedSubscriber);
 
     /* When the document has finished loading,
      * bind all necessary listeners. */

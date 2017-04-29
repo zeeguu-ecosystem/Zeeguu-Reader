@@ -16,13 +16,10 @@
 
 <!-- Template for language option -->
 <script id="languageOption-template" type="text/template">
-    <button id="{% raw %}{{ languageOptionCode }}{% endraw %}"
-            class="langButton" 
-            onclick="feedSubscriber.clear(); feedSubscriber.load('{% raw %}{{ languageOptionCode }}{% endraw %}');">
+    <button id="{% raw %}{{ languageOptionCode }}{% endraw %}" class="langButton">
       <span class="flag-icon flag-icon-squared flag-icon-{% raw %}{{ languageOptionCode }}{% endraw %}"></span>
     </button>
 </script>
-
 
 <!-- Template for feed items -->
 <script id="feedAddable-template" type="text/template">
