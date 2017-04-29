@@ -1,4 +1,4 @@
-define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeeguuRequests, Mustache) {
+define(['app/config', 'app/zeeguuRequests', 'mustache', 'jquery'], function (config, zeeguuRequests, Mustache, $) {
     /**
      * Allows the user to add or remove feed subscriptions.
      */
@@ -18,20 +18,6 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
             $(config.HTML_ID_ADDSUBSCRIPTION_LIST).empty();
         };
 
-        /* Subscribe to a new feed, calls the zeeguu server.
-         * This function is called by an html element.*/
-        this.follow = function (feed) {
-            var feedID = $(feed).attr('addableID');
-            zeeguuRequests.requestZeeguuPOST(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, _.partial(onFeedFollowed, feed));
-        };
-
-        /* Un-subscribe from a feed, calls the zeeguu server.
-         * This function is called bu an html element. */
-        this.unfollow = function (feed) {
-            var removableID = $(feed).attr('removableID');
-            zeeguuRequests.requestZeeguuGET(config.UNFOLLOW_FEED_ENDPOINT + "/" + removableID, {session: SESSION_ID}, _.partial(onFeedUnfollowed, feed));
-        };
-
         this.getCurrentLanguage = function () {
             return currentLanguage;
         };
@@ -46,9 +32,23 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
                     addableID: data[i]['id'],
                     addableImage: data[i]['image_url']
                 };
-                $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(Mustache.render(template, addableData));
+                var feedOption = $(Mustache.render(template, addableData));
+                var subscribeButton = $(feedOption.find(".subscribeButton"));
+                subscribeButton.click(function () {
+                    follow($(this).parent());
+                });
+                $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
             }
         }
+
+        /* Subscribe to a new feed, calls the zeeguu server.
+         * This function is called by an html element.*/
+        function follow(feed) {
+            var feedID = $(feed).attr('addableID');
+            zeeguuRequests.requestZeeguuPOST(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, _.partial(onFeedFollowed, feed));
+            console.log("Subscribe request send");
+        }
+
 
         /* Callback function for zeeguu.
          * A feed has just been followed, so we refresh the subscription list and remove the
@@ -58,15 +58,7 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
                 subscriptionList.refresh();
                 $(feed).fadeOut();
             }
-        }
-
-        /* Callback function for zeeguu.
-         * A feed has just been removed, so we remove the mentioned feed from the
-         * subscription list. */
-        function onFeedUnfollowed(feed, data) {
-            if (data == "OK") {
-                subscriptionList.remove(feed);
-            }
+            console.log("Subscribe reply recieved:" + data);
         }
     };
 });

@@ -1,4 +1,4 @@
-define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeeguuRequests, Mustache) {
+define(['app/config', 'app/zeeguuRequests', 'mustache', 'jquery'], function (config, zeeguuRequests, Mustache, $) {
     /**
      * Shows a list of all subscribed feeds, and updates the article list accordingly.
      */
@@ -21,13 +21,6 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
             this.load();
         };
 
-        /* Remove a mentioned feed from the local list (not from the zeeguu list).
-         * Makes sure the associated articles are removed as well by notifying articleList. */
-        this.remove = function (feedNode) {
-            articleList.remove($(feedNode).attr('removableID'));
-            $(feedNode).fadeOut();
-        };
-
         /* Callback function for the zeeguu request.
          * Fills the subscription list with all the subscribed feeds,
          * and makes a call to articleList in order to load the feed's associated articles. */
@@ -39,9 +32,40 @@ define(['app/config', 'app/zeeguuRequests', 'mustache'], function (config, zeegu
                     subscriptionID: data[i]['id'],
                     subscriptionLanguage: data[i]['language']
                 };
-                $(config.HTML_ID_SUBSCRIPTION_LIST).append(Mustache.render(template, subscriptionData));
+                var subscription = $(Mustache.render(template, subscriptionData));
+                var removeButton = $(subscription.find(".removeButton"));
+                removeButton.click(function() {
+                    unfollow($(this).parent());
+                });
+                $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
                 articleList.load(subscriptionData);
             }
+        }
+
+        /* Un-subscribe from a feed, calls the zeeguu server.
+         * This function is called bu an html element. */
+        function unfollow(feed) {
+            var removableID = $(feed).attr('removableID');
+            zeeguuRequests.requestZeeguuGET(config.UNFOLLOW_FEED_ENDPOINT + "/" + removableID,
+                                            {session: SESSION_ID}, _.partial(onFeedUnfollowed, feed));
+            console.log("Unsubscribe request send");
+        }
+
+        /* Callback function for zeeguu.
+         * A feed has just been removed, so we remove the mentioned feed from the
+         * subscription list. */
+        function onFeedUnfollowed(feed, data) {
+            if (data == "OK") {
+                remove(feed);
+            }
+            console.log("Unsubscribe reply recieved:" + data);
+        }
+
+        /* Remove a mentioned feed from the local list (not from the zeeguu list).
+         * Makes sure the associated articles are removed as well by notifying articleList. */
+        function remove(feedNode) {
+            articleList.remove($(feedNode).attr('removableID'));
+            $(feedNode).fadeOut();
         }
     };
 });
