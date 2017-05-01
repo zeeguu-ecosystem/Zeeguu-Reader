@@ -1,1 +1,1 @@
-web: flask run --host=0.0.0.0 --port=$PORT
+web: python src/zeeguu_umr.py

@@ -9,7 +9,4 @@ if [ ! -d ${VIRTUALENV_ROOT} ]; then
 fi
 
 source ${VIRTUALENV_ROOT}/bin/activate
-export FLASK_APP=zeeguu_umr.py
-# in debug mode there's no need to restart if one changes files
-export FLASK_DEBUG=1
-flask run --host=0.0.0.0 --port=8800
+python src/zeeguu_umr.py

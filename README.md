@@ -1,4 +1,7 @@
 # Zeeguu Unified-Multilanguage-Reader :closed_book:
+
+[![Build Status](https://travis-ci.org/mircealungu/Unified-Multilanguage-Reader.svg?branch=master)](https://travis-ci.org/mircealungu/Unified-Multilanguage-Reader)
+
 The Zeeguu Unified-Multilanguage-Reader (UMR) is a Python-based web application that implements a multilingual article reading and language learning service that can be deployed amoungst multiple platforms (such as android and IOS). It makes use of (and shares ties with) [the Zeeguu API](https://github.com/mircealungu/Zeeguu-API), for which an account can be requested on [the Zeeguu website](https://www.zeeguu.unibe.ch).
 
 The core system is a Flask based REST service. When a web article is requested from this system, it will perform the following modifications before returning this article:
