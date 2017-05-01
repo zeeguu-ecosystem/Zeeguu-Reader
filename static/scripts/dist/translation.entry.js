@@ -10081,7 +10081,7 @@ var AlterMenu = function () {
             this._place(zeeguuTag);
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideDown(function () {
                 this.menuOpen = true;
-            });
+            }.bind(this));
         }
     }, {
         key: 'construct',
@@ -10148,11 +10148,12 @@ var AlterMenu = function () {
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideUp(function () {
                 (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENUCONTAINER).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
                 this.menuOpen = false;
-            });
+            }.bind(this));
         }
     }, {
         key: 'isOpen',
         value: function isOpen() {
+            console.log(this.menuOpen);
             return this.menuOpen;
         }
     }]);

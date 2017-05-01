@@ -11653,17 +11653,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _this;
-
 /**
  * Shows a list of all subscribed feeds, and updates the article list accordingly.
  */
-
 var SubscriptionList = function () {
     function SubscriptionList(articleList) {
         _classCallCheck(this, SubscriptionList);
 
-        _this = this;
         this.articleList = articleList;
         this.feedList = new Set();
     }
@@ -11721,11 +11717,11 @@ var SubscriptionList = function () {
     }, {
         key: '_unfollow',
         value: function _unfollow(feed) {
-            var _this2 = this;
+            var _this = this;
 
             var removableID = (0, _jquery2.default)(feed).attr('removableID');
             var callback = function (data) {
-                return _this2._onFeedUnfollowed(feed, data);
+                return _this._onFeedUnfollowed(feed, data);
             }.bind(this);
             _zeeguuRequests2.default.get(_config2.default.UNFOLLOW_FEED_ENDPOINT + "/" + removableID, { session: SESSION_ID }, callback);
         }

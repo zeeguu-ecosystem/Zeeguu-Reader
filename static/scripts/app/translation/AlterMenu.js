@@ -23,7 +23,7 @@ export default class AlterMenu {
         this._place(zeeguuTag);
         $(config.HTML_ID_ALTERMENU).slideDown(function () {
             this.menuOpen = true
-        });
+        }.bind(this));
     };
 
     /* Add buttons with click listeners that replace the translation. */
@@ -77,7 +77,7 @@ export default class AlterMenu {
         $(config.HTML_ID_ALTERMENU).slideUp(function () {
             $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
             this.menuOpen = false;
-        });
+        }.bind(this));
     };
 
     isOpen() {
