@@ -10153,7 +10153,6 @@ var AlterMenu = function () {
     }, {
         key: 'isOpen',
         value: function isOpen() {
-            console.log(this.menuOpen);
             return this.menuOpen;
         }
     }]);
