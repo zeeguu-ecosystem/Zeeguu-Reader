@@ -45,8 +45,11 @@ export default class SubscriptionList {
             removeButton.click(function() {
                 _unfollow($(this).parent());
             });
-            $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-            this.articleList.load(subscriptionData);
+            if (!this.feedList.has(Number(subscriptionData['subscriptionID']))) {                
+                $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+                this.articleList.load(subscriptionData);
+            }             
+            this.feedList.add(Number(subscriptionData['subscriptionID']));
         }
     }
 
@@ -71,7 +74,9 @@ export default class SubscriptionList {
     /* Remove a mentioned feed from the local list (not from the zeeguu list).
      * Makes sure the associated articles are removed as well by notifying articleList. */
     _remove(feedNode) {
-        this.articleList.remove($(feedNode).attr('removableID'));
+        var feedID = $(feedNode).attr('removableID');
+        this.articleList.remove(feedID);
+        if (!this.feedList.delete(Number(feedID)))  { console.log("Error"); }
         $(feedNode).fadeOut();
     }
 };

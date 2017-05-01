@@ -66,7 +66,7 @@ export default class FeedSubscriber {
      * mentioned feed from the addable feed list. */
     _onFeedFollowed(feed, data) {
         if (data == "OK") {
-            this.subscriptionList.refresh();
+            this.subscriptionList.load();
             $(feed).fadeOut();
         }
     }
