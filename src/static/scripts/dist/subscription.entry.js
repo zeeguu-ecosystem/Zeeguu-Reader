@@ -11525,7 +11525,7 @@ var FeedSubscriber = function () {
         key: '_onFeedFollowed',
         value: function _onFeedFollowed(feed, data) {
             if (data == "OK") {
-                this.subscriptionList.refresh();
+                this.subscriptionList.load();
                 (0, _jquery2.default)(feed).fadeOut();
             }
         }
@@ -11706,8 +11706,11 @@ var SubscriptionList = function () {
                 removeButton.click(function () {
                     _unfollow((0, _jquery2.default)(this).parent());
                 });
-                (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-                this.articleList.load(subscriptionData);
+                if (!this.feedList.has(Number(subscriptionData['subscriptionID']))) {
+                    (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+                    this.articleList.load(subscriptionData);
+                }
+                this.feedList.add(Number(subscriptionData['subscriptionID']));
             }
         }
 
@@ -11744,7 +11747,11 @@ var SubscriptionList = function () {
     }, {
         key: '_remove',
         value: function _remove(feedNode) {
-            this.articleList.remove((0, _jquery2.default)(feedNode).attr('removableID'));
+            var feedID = (0, _jquery2.default)(feedNode).attr('removableID');
+            this.articleList.remove(feedID);
+            if (!this.feedList.delete(Number(feedID))) {
+                console.log("Error");
+            }
             (0, _jquery2.default)(feedNode).fadeOut();
         }
     }]);
