@@ -3,7 +3,7 @@ import config from './config'
 
 // Launch request to Zeeguu API.
 export default class ZeeguuRequests {
-    get (endpoint, requestData, responseHandler) {
+    static get (endpoint, requestData, responseHandler) {
         requestData.session = SESSION_ID;
         $.get(
             config.ZEEGUU_SERVER + endpoint,
@@ -12,7 +12,7 @@ export default class ZeeguuRequests {
         );
     }
 
-    post (endpoint, requestData, responseHandler) {
+    static post (endpoint, requestData, responseHandler) {
         $.post(
             config.ZEEGUU_SERVER + endpoint + "?session=" + SESSION_ID,
             requestData,

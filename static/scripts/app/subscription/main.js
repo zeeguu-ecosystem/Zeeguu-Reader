@@ -2,7 +2,7 @@ import $ from 'jquery';
 import ArticleList from './ArticleList';
 import SubscriptionList from './SubscriptionList';
 import FeedSubscriber from './FeedSubscriber';
-import dialogPolyFill from 'dialog-polyfill';
+import dialogPolyfill from 'dialog-polyfill';
 import LanguageMenu from './LanguageMenu';
 
 /* Script that binds listeners to html events, such that the

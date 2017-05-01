@@ -10,9 +10,7 @@
 		var SESSION_ID =  {{ sessionID }};
 		var FROM_LANGUAGE = '{{ fromLanguage }}';
 	</SCRIPT>
-	<script data-main="{{url_for('static',filename='scripts/article.js')}}"
-			src="{{url_for('static',filename='scripts/lib/require.js')}}">
-	</script>
+	<script src="{{url_for('static',filename='scripts/dist/translation.entry.js')}}"></script>
 </HEAD>
 <BODY>
 <!-- Top bar -->

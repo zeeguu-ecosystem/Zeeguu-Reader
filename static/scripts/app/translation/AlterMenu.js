@@ -40,7 +40,7 @@ export default class AlterMenu {
     }
 
     /* Swaps the HTML_ATTRIBUTE_TRANSLATION 0 with the new preferred translation attribute. */
-    static _swapPrimaryTranslation(selectedAlternative) {
+    _swapPrimaryTranslation(selectedAlternative) {
         var zeeguuTag = selectedAlternative.data.zeeguuTag;
         var alternative = selectedAlternative.data.alternative;
         var oldText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + '0');
@@ -50,7 +50,7 @@ export default class AlterMenu {
     }
 
     /* Places the alter menu below the to-be-altered word. */
-    static _place(zeeguuTag) {
+    _place(zeeguuTag) {
         var position = $(zeeguuTag).position();
         var tagHeight = $(zeeguuTag).outerHeight();
         var tagWidth = $(zeeguuTag).outerWidth();

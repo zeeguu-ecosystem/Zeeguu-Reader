@@ -10,17 +10,16 @@ import ZeeguuRequests from '../zeeguuRequests';
 export default class LanguageMenu {
     constructor(feedSubscriber) {
         this.feedSubscriber = feedSubscriber;
-        this.zeeguuRequests = new ZeeguuRequests();
     }
 
     /* Load the available languages for the dialog. */
     load() {
-        this.zeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions);
+        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions);
     }
 
     /* Callback function from the zeeguu request.
      * Generates all the available language options as buttons in the dialog. */
-    static _loadLanguageOptions(data)
+    _loadLanguageOptions(data)
     {
         var options = JSON.parse(data);
         var template = $(config.HTML_ID_LANGUAGEOPTION_TEMPLATE).html();

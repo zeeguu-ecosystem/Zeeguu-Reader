@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import Mustache from 'mustache';
-import _ from 'underscore';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 
@@ -11,16 +10,15 @@ export default class FeedSubscriber {
     constructor(subscriptionList) {
         this.subscriptionList = subscriptionList;
         this.currentLanguage = 'nl';
-        this.zeeguuRequests = new ZeeguuRequests();
     }
 
     /* Calls zeeguu and requests recommended feeds for the given 'language'.
      * If the language is not given, it simply uses the last used language. */
     load(language) {
-        language = typeof language !== 'undefined' ? language : currentLanguage;
-        this.zeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
+        language = typeof language !== 'undefined' ? language : this.currentLanguage;
+        ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
                                 {session: SESSION_ID}, this._loadFeedOptions);
-        currentLanguage = language;
+        this.currentLanguage = language;
     };
 
     clear() {
@@ -33,7 +31,7 @@ export default class FeedSubscriber {
 
     /* Callback function for zeeguu.
      * Fills the dialog's list with all the addable feeds. */
-    static _loadFeedOptions(data) {
+    _loadFeedOptions(data) {
         var template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
         for (var i = 0; i < data.length; i++) {
             var addableData = {
@@ -56,15 +54,16 @@ export default class FeedSubscriber {
 
     /* Subscribe to a new feed, calls the zeeguu server.
      * This function is called by an html element.*/
-    static _follow(feed) {
+    _follow(feed) {
         var feedID = $(feed).attr('addableID');
-        this.zeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, _.partial(this._onFeedFollowed, feed));
+        var callback = (data) => this._onFeedFollowed(feed, data);
+        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, callback);
     }
 
     /* Callback function for zeeguu.
      * A feed has just been followed, so we refresh the subscription list and remove the
      * mentioned feed from the addable feed list. */
-    static _onFeedFollowed(feed, data) {
+    _onFeedFollowed(feed, data) {
         if (data == "OK") {
             this.subscriptionList.refresh();
             $(feed).fadeOut();
