@@ -11586,7 +11586,7 @@ var LanguageMenu = function () {
     _createClass(LanguageMenu, [{
         key: 'load',
         value: function load() {
-            _zeeguuRequests2.default.get(_config2.default.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions);
+            _zeeguuRequests2.default.get(_config2.default.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
         }
 
         /* Callback function from the zeeguu request.
@@ -11603,9 +11603,10 @@ var LanguageMenu = function () {
                     languageOptionCode: options[i]
                 };
                 var languageOption = (0, _jquery2.default)(_mustache2.default.render(template, languageOptionData));
-                languageOption.click(function () {
-                    this.feedSubscriber.clear();
-                    this.feedSubscriber.load(languageOptionData.languageOptionCode);
+                var feedSubscriber = this.feedSubscriber;
+                languageOption.on('click', function () {
+                    feedSubscriber.clear();
+                    feedSubscriber.load((0, _jquery2.default)(this).attr('id'));
                 });
                 (0, _jquery2.default)("#languageOptionList").append(languageOption);
             }
@@ -11664,7 +11665,6 @@ var SubscriptionList = function () {
         _this = this;
         this.articleList = articleList;
         this.feedList = new Set();
-        console.log(articleList);
     }
 
     /* Call zeeguu and retrieve all currently subscribed feeds. */
@@ -11673,7 +11673,7 @@ var SubscriptionList = function () {
     _createClass(SubscriptionList, [{
         key: 'load',
         value: function load() {
-            _zeeguuRequests2.default.get(_config2.default.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions);
+            _zeeguuRequests2.default.get(_config2.default.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
         }
     }, {
         key: 'clear',
@@ -11709,9 +11709,7 @@ var SubscriptionList = function () {
                     this._unfollow((0, _jquery2.default)(this).parent());
                 });
                 (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-                console.log(_this);
-                console.log(data);
-                _this.articleList.load(subscriptionData);
+                this.articleList.load(subscriptionData);
             }
         }
 

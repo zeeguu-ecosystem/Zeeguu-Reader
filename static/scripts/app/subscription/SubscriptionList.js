@@ -17,7 +17,7 @@ export default class SubscriptionList {
 
     /* Call zeeguu and retrieve all currently subscribed feeds. */
     load() {
-        ZeeguuRequests.get(config.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions);
+        ZeeguuRequests.get(config.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
     };
 
     clear() {
@@ -48,7 +48,7 @@ export default class SubscriptionList {
                 this._unfollow($(this).parent());
             });
             $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-            _this.articleList.load(subscriptionData);
+            this.articleList.load(subscriptionData);
         }
     }
 

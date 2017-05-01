@@ -14,7 +14,7 @@ export default class LanguageMenu {
 
     /* Load the available languages for the dialog. */
     load() {
-        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions);
+        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
     }
 
     /* Callback function from the zeeguu request.
@@ -30,9 +30,10 @@ export default class LanguageMenu {
                 languageOptionCode: options[i]
             }
             var languageOption = $(Mustache.render(template, languageOptionData));
-            languageOption.click( function () {
-                this.feedSubscriber.clear();
-                this.feedSubscriber.load(languageOptionData.languageOptionCode);
+            var feedSubscriber = this.feedSubscriber;
+            languageOption.on('click', function () {
+                feedSubscriber.clear();
+                feedSubscriber.load($(this).attr('id'));
             });
             $("#languageOptionList").append(languageOption);
         }
