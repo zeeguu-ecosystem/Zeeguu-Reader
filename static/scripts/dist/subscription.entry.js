@@ -11461,7 +11461,7 @@ var FeedSubscriber = function () {
         key: 'load',
         value: function load(language) {
             language = typeof language !== 'undefined' ? language : this.currentLanguage;
-            _zeeguuRequests2.default.get(_config2.default.RECOMMENDED_FEED_ENDPOINT + '/' + language, { session: SESSION_ID }, this._loadFeedOptions);
+            _zeeguuRequests2.default.get(_config2.default.RECOMMENDED_FEED_ENDPOINT + '/' + language, { session: SESSION_ID }, this._loadFeedOptions.bind(this));
             this.currentLanguage = language;
         }
     }, {
@@ -11490,8 +11490,9 @@ var FeedSubscriber = function () {
                 };
                 var feedOption = (0, _jquery2.default)(_mustache2.default.render(template, addableData));
                 var subscribeButton = (0, _jquery2.default)(feedOption.find(".subscribeButton"));
+                var _follow = this._follow.bind(this);
                 subscribeButton.click(function () {
-                    this._follow((0, _jquery2.default)(this).parent());
+                    _follow((0, _jquery2.default)(this).parent());
                 });
                 var feedIcon = (0, _jquery2.default)(feedOption.find(".feedIcon"));
                 feedIcon.on("error", function () {
@@ -11510,9 +11511,9 @@ var FeedSubscriber = function () {
             var _this = this;
 
             var feedID = (0, _jquery2.default)(feed).attr('addableID');
-            var callback = function callback(data) {
+            var callback = function (data) {
                 return _this._onFeedFollowed(feed, data);
-            };
+            }.bind(this);
             _zeeguuRequests2.default.post(_config2.default.FOLLOW_FEED_ENDPOINT, { feed_id: feedID }, callback);
         }
 
@@ -11705,8 +11706,9 @@ var SubscriptionList = function () {
                 };
                 var subscription = (0, _jquery2.default)(_mustache2.default.render(template, subscriptionData));
                 var removeButton = (0, _jquery2.default)(subscription.find(".removeButton"));
+                var _unfollow = this._unfollow.bind(this);
                 removeButton.click(function () {
-                    this._unfollow((0, _jquery2.default)(this).parent());
+                    _unfollow((0, _jquery2.default)(this).parent());
                 });
                 (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
                 this.articleList.load(subscriptionData);
@@ -11722,9 +11724,9 @@ var SubscriptionList = function () {
             var _this2 = this;
 
             var removableID = (0, _jquery2.default)(feed).attr('removableID');
-            var callback = function callback(data) {
+            var callback = function (data) {
                 return _this2._onFeedUnfollowed(feed, data);
-            };
+            }.bind(this);
             _zeeguuRequests2.default.get(_config2.default.UNFOLLOW_FEED_ENDPOINT + "/" + removableID, { session: SESSION_ID }, callback);
         }
 

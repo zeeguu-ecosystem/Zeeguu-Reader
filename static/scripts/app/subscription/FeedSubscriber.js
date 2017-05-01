@@ -17,7 +17,7 @@ export default class FeedSubscriber {
     load(language) {
         language = typeof language !== 'undefined' ? language : this.currentLanguage;
         ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
-                                {session: SESSION_ID}, this._loadFeedOptions);
+                                {session: SESSION_ID}, this._loadFeedOptions.bind(this));
         this.currentLanguage = language;
     };
 
@@ -41,8 +41,9 @@ export default class FeedSubscriber {
             };
             var feedOption = $(Mustache.render(template, addableData));
             var subscribeButton = $(feedOption.find(".subscribeButton"));
+            var _follow = this._follow.bind(this);
             subscribeButton.click(function () {
-                this._follow($(this).parent());
+                _follow($(this).parent());
             });
             var feedIcon = $(feedOption.find(".feedIcon"));
             feedIcon.on( "error", function () {
@@ -56,7 +57,7 @@ export default class FeedSubscriber {
      * This function is called by an html element.*/
     _follow(feed) {
         var feedID = $(feed).attr('addableID');
-        var callback = (data) => this._onFeedFollowed(feed, data);
+        var callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
         ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, callback);
     }
 

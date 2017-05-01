@@ -3,14 +3,11 @@ import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 
-var _this;
-
 /**
  * Shows a list of all subscribed feeds, and updates the article list accordingly.
  */
 export default class SubscriptionList {
     constructor(articleList) {
-        _this = this;
         this.articleList = articleList;
         this.feedList = new Set();
     }
@@ -44,8 +41,9 @@ export default class SubscriptionList {
             };
             var subscription = $(Mustache.render(template, subscriptionData));
             var removeButton = $(subscription.find(".removeButton"));
+            var _unfollow = this._unfollow.bind(this);
             removeButton.click(function() {
-                this._unfollow($(this).parent());
+                _unfollow($(this).parent());
             });
             $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
             this.articleList.load(subscriptionData);
@@ -56,7 +54,7 @@ export default class SubscriptionList {
      * This function is called bu an html element. */
     _unfollow(feed) {
         var removableID = $(feed).attr('removableID');
-        var callback = (data) => this._onFeedUnfollowed(feed, data);
+        var callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
         ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + removableID,
                             {session: SESSION_ID}, callback);
     }
