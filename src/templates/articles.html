@@ -8,21 +8,10 @@
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/login.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/articles.css') }}" type= "text/css">
-	<LINK rel="stylesheet" href= "{{ url_for('static',filename='scripts/dependencies/polyfill/dialog-polyfill.css') }}" type= "text/css">
-	<SCRIPT src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></SCRIPT>
+	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
 	<SCRIPT> var noAvatarURL = "{{url_for('static',filename='images/noAvatar.png')}}";</SCRIPT>
 	<SCRIPT>var SESSION_ID = {{ sessionID }}</SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/constants.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/dependencies/polyfill/dialog-polyfill.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/dependencies/mustache/mustache.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/dependencies/underscore/underscore-min.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/zeeguuRequests/zeeguuRequests.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/ArticleList.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/SubscriptionList.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/LanguageMenu.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/FeedSubscriber.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/subscription/subscriptionControl.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
+	<script src="{{url_for('static',filename='scripts/dist/subscription.entry.js')}}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
@@ -60,9 +49,9 @@
 <script id="subscription-template" type="text/template">
 	<span removableID="{% raw %}{{subscriptionID}}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{subscriptionTitle}}{% endraw %}</span>
-		<button type="button" class="mdl-chip__action" onclick="feedSubscriber.unfollow($(this).parent())">
+		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
-		</button>
+		</a>
 	</span>
 </script>
 

@@ -16,22 +16,19 @@
 
 <!-- Template for language option -->
 <script id="languageOption-template" type="text/template">
-    <button id="{% raw %}{{ languageOptionCode }}{% endraw %}"
-            class="langButton" 
-            onclick="feedSubscriber.clear(); feedSubscriber.load('{% raw %}{{ languageOptionCode }}{% endraw %}');">
+    <button id="{% raw %}{{ languageOptionCode }}{% endraw %}" class="langButton">
       <span class="flag-icon flag-icon-squared flag-icon-{% raw %}{{ languageOptionCode }}{% endraw %}"></span>
     </button>
 </script>
-
 
 <!-- Template for feed items -->
 <script id="feedAddable-template" type="text/template">
   <div addableID="{% raw %}{{addableID}}{% endraw %}" class="mdl-list__item">
     <span class="mdl-list__item-primary-content">
-      <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar" onerror="noAvatar(this)"/>
+      <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
       <span class="addableTitle">{% raw %}{{addableTitle}}{% endraw %}</span>
     </span>
-    <a class="mdl-list__item-secondary-action" onclick="feedSubscriber.follow($(this).parent())">
+    <a class="mdl-list__item-secondary-action subscribeButton">
       <i class="material-icons ">add_circle</i>
     </a>
   </div>

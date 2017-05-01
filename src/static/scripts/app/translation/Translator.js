@@ -1,41 +1,49 @@
+import $ from 'jquery';
+import ZeeguuRequests from '../zeeguuRequests'
+import config from '../config'
+
 /* Class that allows for translating zeeguu tags. */
-function Translator() {
+export default class Translator {
     /* Merges the zeeguutag with the surrounding translated
      * zeeguutags, and then inserts translations for the tag's content.*/
-    this.translate = function(zeeguuTag) {
-        mergeZeeguu(zeeguuTag);
+    translate(zeeguuTag) {
+        this._mergeZeeguu(zeeguuTag);
         var text = zeeguuTag.textContent;
-        var context = getContext(zeeguuTag);
-        var url = ARTICLE_FROM_URL;
+        var context = this._getContext(zeeguuTag);
+        var url = config.ARTICLE_FROM_URL;
+        var callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch zeeguu request to fill translation options.
-        requestZeeguuPOST(GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
-            {word: text, context: context, url: url},
-            _.partial(setTranslations, zeeguuTag));
+        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
+                            {word: text, context: context, url: url}, callback);
+    }
+
+    isTranslated(zeeguuTag) {
+        return zeeguuTag.hasAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT);
     }
 
     /* This method handles the zeeguu request returned values,
      * and thus actually inserts the returned translations. */
-    function setTranslations(zeeguuTag, translations) {
+    _setTranslations(zeeguuTag, translations) {
         translations = translations.translations;
         var transCount = Math.min(translations.length, 3);
-        zeeguuTag.setAttribute(HTML_ATTRIBUTE_TRANSCOUNT, transCount);
+        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
         for (var i = 0; i < transCount; i++)
-            zeeguuTag.setAttribute(HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+            zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
     }
 
-    function getContext(zeeguuTag) {
+    _getContext(zeeguuTag) {
         return zeeguuTag.parentElement.textContent;
     }
 
     /* Merges the translated zeeguutags surrounding the given zeeguutag. */
-    function mergeZeeguu(zeeguuTag) {
+    _mergeZeeguu(zeeguuTag) {
         var spaces = '';
         var node = zeeguuTag.previousSibling;
         while (node && node.textContent == ' ') {
             node = node.previousSibling;
             spaces += ' ';
         }
-        if (node && node.nodeName == HTML_ZEEGUUTAG && isTranslated(node)) {
+        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {
             zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
             node.parentNode.removeChild(node);
         }
@@ -46,17 +54,9 @@ function Translator() {
             spaces += ' ';
 
         }
-        if (node && node.nodeName == HTML_ZEEGUUTAG && isTranslated(node)) {
+        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {
             zeeguuTag.textContent += spaces + node.textContent;
             node.parentNode.removeChild(node);
         }
     }
-
-    function isTranslated(zeeguuTag) {
-        return zeeguuTag.hasAttribute(HTML_ATTRIBUTE_TRANSCOUNT);
-    }
-
-    this.isTranslated = function(zeeguuTag) {
-        return isTranslated(zeeguuTag);
-    }
-}
+};

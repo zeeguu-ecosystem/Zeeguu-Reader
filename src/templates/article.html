@@ -5,19 +5,12 @@
 	<LINK rel="stylesheet" href="{{ url_for('static',filename='styles/mdl/material.min.css') }}">
 	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/article.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
 	<SCRIPT>
 		var SESSION_ID =  {{ sessionID }};
 		var FROM_LANGUAGE = '{{ fromLanguage }}';
 	</SCRIPT>
-	<SCRIPT src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/constants.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/dependencies/underscore/underscore-min.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/zeeguuRequests/zeeguuRequests.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/translation/Translator.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/translation/Notifier.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/translation/AlterMenu.js') }}"></SCRIPT>
-	<SCRIPT src="{{ url_for('static',filename='scripts/translation/translationControl.js') }}"></SCRIPT>
+	<script src="{{url_for('static',filename='scripts/dist/translation.entry.js')}}"></script>
 </HEAD>
 <BODY>
 <!-- Top bar -->
