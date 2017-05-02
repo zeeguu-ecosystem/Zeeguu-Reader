@@ -18,7 +18,7 @@ TOP=$(cd $(dirname $0) && pwd -L)
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Generate documentation.
-if [ "$BRANCH" = "development_core"]
+if [[ "$BRANCH" = "development_core" ]]
 then
 	echo "Making gh-pages documentation"
 	git checkout gh-pages
