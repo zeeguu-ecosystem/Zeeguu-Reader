@@ -59,7 +59,7 @@ export default class SubscriptionList {
         var removableID = $(feed).attr('removableID');
         var callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
         ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + removableID,
-                            {session: SESSION_ID}, callback);
+                            {}, callback);
     }
 
     /* Callback function for zeeguu.

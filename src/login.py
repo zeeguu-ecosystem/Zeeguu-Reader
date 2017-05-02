@@ -8,7 +8,7 @@ STATUS_ACCEPT = 200
 endpoints_login = Blueprint('endpoints_login', __name__, template_folder='templates')
 
 
-@endpoints_login.route('/', methods=['GET', 'POST'])
+@endpoints_login.route('/debug_login', methods=['GET', 'POST'])
 def handle_entry():
     """Handle a Zeeguu Login request on POST, on GET return a login form."""
     if 'sessionID' in request.cookies:

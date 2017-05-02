@@ -2,6 +2,7 @@ import functools
 import flask
 from flask import request
 
+ZEEGUU_LOGIN = "https://www.zeeguu.unibe.ch/login"
 
 def with_session(view):
     """
@@ -16,7 +17,6 @@ def with_session(view):
 
     @functools.wraps(view)
     def wrapped_view(*args, **kwargs):
-
         request.sessionID = None
 
         if request.args.get('sessionID', None):
@@ -26,8 +26,8 @@ def with_session(view):
         elif request.form.get('sessionID', None):
             request.sessionID = request.form['sessionID']
         else:
+            print 'session not found'
             flask.abort(401)
-
         return view(*args, **kwargs)
 
     return wrapped_view
