@@ -29,5 +29,21 @@
     "jquery": "^3.2.1",
     "mustache": "^2.3.0",
     "underscore": "^1.8.3"
+  },
+  "esdoc": {
+	"source": "./src/static/scripts/app", 
+	"destination": "./doc/dist",
+	"index": "./doc/index.md",
+	"title": "Zeeguu UMR Client",
+		"experimentalProposal": {
+		"classProperties": true,
+		"objectRestSpread": true,
+		"decorators": true,
+		"doExpressions": true,
+		"functionBind": true,
+		"asyncGenerators": true,
+		"exportExtensions": true,
+		"dynamicImport": true
+	}
   }
 }
