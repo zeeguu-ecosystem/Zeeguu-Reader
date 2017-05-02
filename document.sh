@@ -14,7 +14,7 @@ TOP=$(cd $(dirname $0) && pwd -L)
 git checkout gh-pages
 git merge \#50-autodoc --no-commit --no-ff
 esdoc
-ls -A | grep -v '^doc$\|^document.sh$' | xargs rm -r
+ls -A | grep -v '^doc$\|^document.sh$\|.git$' | xargs rm -r
 mv -v ./doc/dist/* .
 rm doc -r
 rm document.sh
