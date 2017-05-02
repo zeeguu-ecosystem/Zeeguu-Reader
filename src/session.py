@@ -19,14 +19,9 @@ def with_session(view):
     def wrapped_view(*args, **kwargs):
         request.sessionID = None
 
-        if request.args.get('sessionID', None):
-            request.sessionID = int(request.args['sessionID'])
-        elif 'sessionID' in request.cookies:
+        if 'sessionID' in request.cookies:
             request.sessionID = request.cookies.get('sessionID')
-        elif request.form.get('sessionID', None):
-            request.sessionID = request.form['sessionID']
         else:
-            print 'session not found'
             flask.abort(401)
         return view(*args, **kwargs)
 
