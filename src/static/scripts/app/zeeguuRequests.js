@@ -4,7 +4,6 @@ import config from './config'
 // Launch request to Zeeguu API.
 export default class ZeeguuRequests {
     static session () {
-        console.debug("identifying session");
         return this._readCookie(config.ZEEGUU_SESSION);
     }
 

@@ -16,15 +16,14 @@ def get_article():
     """Retrieve the supplied article link of the supplied language,
     and return a properly processed version of the article.
     """
-    session = request.sessionID
     article_url = request.form['articleURL']
     article_language = request.form['articleLanguage']
     response = requests.get(article_url)
-    print "User with session " + session + " retrieved " + article_url
-    return make_article(session, response.text, article_language)
+    print "User with session " + request.sessionID + " retrieved " + article_url
+    return make_article(response.text, article_language)
 
 
-def make_article(session, source, language):
+def make_article(source, language):
     """Create a neatly formatted translatable article html page.
 
     Keyword arguments:
@@ -33,7 +32,7 @@ def make_article(session, source, language):
     language -- the language the article is written in
     """
     # Create our article using Soup.
-    soup = Soup(render_template('article.html', sessionID=session, fromLanguage=language), 'html.parser')
+    soup = Soup(render_template('article.html', fromLanguage=language), 'html.parser')
 
     # Insert article at div.
     doc = Document(source)

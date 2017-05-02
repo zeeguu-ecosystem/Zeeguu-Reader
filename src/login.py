@@ -36,7 +36,7 @@ def handle_login_form():
     # Check for login success, sends the user back to login or continues.
     if result.status_code == STATUS_ACCEPT:
         session = result.content
-        response = make_response(get_articles_page(session))
+        response = make_response(get_articles_page())
         response.set_cookie('sessionID', session)
     else:
         response = make_response(get_login_form())
