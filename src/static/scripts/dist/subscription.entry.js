@@ -9975,7 +9975,6 @@ var ZeeguuRequests = function () {
     _createClass(ZeeguuRequests, null, [{
         key: 'session',
         value: function session() {
-            console.debug("identifying session");
             return this._readCookie(_config2.default.ZEEGUU_SESSION);
         }
     }, {
