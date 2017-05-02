@@ -8,18 +8,31 @@ if [ "$(id -u)" == "0" ]; then
    exit 1
 fi
 
+if [[ -n $(git status --porcelain) ]]
+then
+	echo "Repository is not clean!"
+	exit 1
+fi
+
 TOP=$(cd $(dirname $0) && pwd -L)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Generate documentation.
-git checkout gh-pages
-git merge development_core --no-commit --no-ff
-git reset HEAD
-esdoc
-ls -A | grep -v '^doc$\|^autodoc.sh$\|.git$' | xargs rm -r
-mv -v ./doc/dist/* .
-rm doc -r
-rm autodoc.sh
-git add --all
-DATE=`date +%Y-%m-%d:%H:%M:%S`
-git commit -m "AUTODOC: Documentation updated on $DATE"
-git push
+if [ "$BRANCH" = "development_core"]
+then
+	echo "Making gh-pages documentation"
+	git checkout gh-pages
+	git merge $BRANCH --no-commit --no-ff
+	git reset HEAD
+	esdoc
+	ls -A | grep -v '^doc$\|.git$' | xargs rm -r
+	mv -v ./doc/dist/* .
+	rm doc -r
+	git add --all
+	DATE=`date +%Y-%m-%d:%H:%M:%S`
+	git commit -m "AUTODOC: Documentation updated on $DATE"
+	git push
+	git checkout $BRANCH
+else
+	echo "Not development, not building documentation."
+fi
