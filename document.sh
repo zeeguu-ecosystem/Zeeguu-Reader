@@ -18,3 +18,6 @@ ls -A | grep -v '^doc$\|^document.sh$\|.git$' | xargs rm -r
 mv -v ./doc/dist/* .
 rm doc -r
 rm document.sh
+git add --all
+DATE=`date +%Y-%m-%d:%H:%M:%S`
+git commit -m "Documentation updated on $DATE"
