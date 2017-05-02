@@ -17,7 +17,7 @@ export default class FeedSubscriber {
     load(language) {
         language = typeof language !== 'undefined' ? language : this.currentLanguage;
         ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
-                                {session: SESSION_ID}, this._loadFeedOptions.bind(this));
+                                {}, this._loadFeedOptions.bind(this));
         this.currentLanguage = language;
     };
 

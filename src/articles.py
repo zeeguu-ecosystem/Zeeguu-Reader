@@ -8,9 +8,9 @@ endpoints_articles = Blueprint('endpoints_articles', __name__, template_folder='
 @with_session
 def articles():
     """Return the main page where the articles and feeds are listed."""
-    return get_articles_page(request.sessionID)
+    return get_articles_page()
 
 
-def get_articles_page(session):
+def get_articles_page():
     """Return the template that shows all available articles and feeds."""
-    return render_template('articles.html', sessionID=session)
+    return render_template('articles.html')

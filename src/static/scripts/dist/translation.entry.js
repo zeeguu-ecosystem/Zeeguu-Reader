@@ -9915,6 +9915,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     /* These are all constants used in the UMR javascript. */
     ZEEGUU_SERVER: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SESSION: 'sessionID',
     RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',
     FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',
     UNFOLLOW_FEED_ENDPOINT: '/stop_following_feed',
@@ -9972,15 +9973,33 @@ var ZeeguuRequests = function () {
     }
 
     _createClass(ZeeguuRequests, null, [{
+        key: 'session',
+        value: function session() {
+            return this._readCookie(_config2.default.ZEEGUU_SESSION);
+        }
+    }, {
+        key: '_readCookie',
+        value: function _readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1, c.length);
+                }if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return '';
+        }
+    }, {
         key: 'get',
         value: function get(endpoint, requestData, responseHandler) {
-            requestData.session = SESSION_ID;
+            requestData.session = this.session();
             _jquery2.default.get(_config2.default.ZEEGUU_SERVER + endpoint, requestData, responseHandler);
         }
     }, {
         key: 'post',
         value: function post(endpoint, requestData, responseHandler) {
-            _jquery2.default.post(_config2.default.ZEEGUU_SERVER + endpoint + "?session=" + SESSION_ID, requestData, responseHandler);
+            _jquery2.default.post(_config2.default.ZEEGUU_SERVER + endpoint + "?session=" + this.session(), requestData, responseHandler);
         }
     }]);
 

@@ -7,7 +7,6 @@
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
 	<SCRIPT>
-		var SESSION_ID =  {{ sessionID }};
 		var FROM_LANGUAGE = '{{ fromLanguage }}';
 	</SCRIPT>
 	<script src="{{url_for('static',filename='scripts/dist/translation.entry.js')}}"></script>
@@ -16,7 +15,7 @@
 <!-- Top bar -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
-	  <button onclick="window.location.href='/'" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+	  <button onclick="window.location.href='/articles'" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
           <i class="material-icons">arrow_back</i>
       </button>
       <div class="mdl-layout__header-row">

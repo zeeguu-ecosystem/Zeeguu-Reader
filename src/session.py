@@ -2,6 +2,7 @@ import functools
 import flask
 from flask import request
 
+ZEEGUU_LOGIN = "https://www.zeeguu.unibe.ch/login"
 
 def with_session(view):
     """
@@ -16,18 +17,12 @@ def with_session(view):
 
     @functools.wraps(view)
     def wrapped_view(*args, **kwargs):
-
         request.sessionID = None
 
-        if request.args.get('sessionID', None):
-            request.sessionID = int(request.args['sessionID'])
-        elif 'sessionID' in request.cookies:
+        if 'sessionID' in request.cookies:
             request.sessionID = request.cookies.get('sessionID')
-        elif request.form.get('sessionID', None):
-            request.sessionID = request.form['sessionID']
         else:
-            flask.abort(401)
-
+            return flask.redirect(ZEEGUU_LOGIN)
         return view(*args, **kwargs)
 
     return wrapped_view

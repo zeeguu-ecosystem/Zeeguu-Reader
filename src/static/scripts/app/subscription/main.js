@@ -4,6 +4,8 @@ import SubscriptionList from './SubscriptionList';
 import FeedSubscriber from './FeedSubscriber';
 import dialogPolyfill from 'dialog-polyfill';
 import LanguageMenu from './LanguageMenu';
+import config from '../config';
+import ZeeguuRequests from '../zeeguuRequests';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
@@ -11,6 +13,7 @@ var articleList = new ArticleList();
 var subscriptionList = new SubscriptionList(articleList);
 var feedSubscriber = new FeedSubscriber(subscriptionList);
 var languageMenu = new LanguageMenu(feedSubscriber);
+
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
