@@ -15,10 +15,10 @@ git checkout gh-pages
 git merge development_core --no-commit --no-ff
 git reset HEAD
 esdoc
-ls -A | grep -v '^doc$\|^document.sh$\|.git$' | xargs rm -r
+ls -A | grep -v '^doc$\|^autodoc.sh$\|.git$' | xargs rm -r
 mv -v ./doc/dist/* .
 rm doc -r
-rm document.sh
+rm autodoc.sh
 git add --all
 DATE=`date +%Y-%m-%d:%H:%M:%S`
 git commit -m "AUTODOC: Documentation updated on $DATE"
