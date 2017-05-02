@@ -12,7 +12,7 @@ TOP=$(cd $(dirname $0) && pwd -L)
 
 # Generate documentation.
 git checkout gh-pages
-git merge development_core --no-commit --no-ff
+git merge \#50-autodoc --no-commit --no-ff
 esdoc
 ls -A | grep -v '^doc$\|^document.sh$' | xargs rm -r
 mv -v ./doc/dist/* .
