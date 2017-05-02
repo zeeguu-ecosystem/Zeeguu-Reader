@@ -2,3 +2,5 @@
 .idea/
 .cache
 node_modules
+doc/dist
+npm-debug.log
