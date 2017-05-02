@@ -33,9 +33,6 @@ then
 	git push
 	git checkout $BRANCH
 else
-	echo "Not master => Pushing local documentation to $BRANCH."
+	echo "Not master => Building local documentation of $BRANCH."
 	esdoc
-	git add --all
-	git commit -m "AUTODOC: Documentation updated on $DATE"
-	git push
 fi
