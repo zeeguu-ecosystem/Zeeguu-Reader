@@ -28,14 +28,15 @@ export default class ArticleList {
     _loadArticleLinks(subscriptionData, data) {
         var template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
         for (var i = 0; i < data.length; i++) {
-            var difficulty = Math.round(parseFloat(data[i]['metrics']['difficulty']['normalized']) * 100) / 10;
+            var difficulty = Math.round(parseFloat(data[i].metrics.difficulty.normalized) * 100) / 10;
             var articleLinkData = {
-                articleLinkTitle: data[i]['title'],
-                articleLinkURL: data[i]['url'],
-                articleLinkFeedID: subscriptionData['subscriptionID'],
-                articleLinkLanguage: subscriptionData['subscriptionLanguage'],
-                articleDifficultyDiscrete: data[i]['metrics']['difficulty']['discrete'],
-                articleDifficulty: difficulty
+                articleLinkTitle: data[i].title,
+                articleLinkURL: data[i].url,
+                articleLinkFeedID: subscriptionData.subscriptionID,
+                articleLinkLanguage: subscriptionData.subscriptionLanguage,
+                articleDifficultyDiscrete: data[i].metrics.difficulty.discrete,
+                articleDifficulty: difficulty,
+                articeIcon: subscriptionData.subscriptionIcon
             };
             $(config.HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, articleLinkData));
         }
