@@ -11406,15 +11406,17 @@ var ArticleList = function () {
          * Generates all the article links from a particular feed. */
         value: function _loadArticleLinks(subscriptionData, data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_TEMPLATE).html();
+            console.log(subscriptionData.subscriptionIcon);
             for (var i = 0; i < data.length; i++) {
-                var difficulty = Math.round(parseFloat(data[i]['metrics']['difficulty']['normalized']) * 100) / 10;
+                var difficulty = Math.round(parseFloat(data[i].metrics.difficulty.normalized) * 100) / 10;
                 var articleLinkData = {
-                    articleLinkTitle: data[i]['title'],
-                    articleLinkURL: data[i]['url'],
-                    articleLinkFeedID: subscriptionData['subscriptionID'],
-                    articleLinkLanguage: subscriptionData['subscriptionLanguage'],
-                    articleDifficultyDiscrete: data[i]['metrics']['difficulty']['discrete'],
-                    articleDifficulty: difficulty
+                    articleLinkTitle: data[i].title,
+                    articleLinkURL: data[i].url,
+                    articleLinkFeedID: subscriptionData.subscriptionID,
+                    articleLinkLanguage: subscriptionData.subscriptionLanguage,
+                    articleDifficultyDiscrete: data[i].metrics.difficulty.discrete,
+                    articleDifficulty: difficulty,
+                    articeIcon: subscriptionData.subscriptionIcon
                 };
                 (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(_mustache2.default.render(template, articleLinkData));
             }
@@ -11717,7 +11719,8 @@ var SubscriptionList = function () {
                 var subscriptionData = {
                     subscriptionTitle: data[i]['title'],
                     subscriptionID: data[i]['id'],
-                    subscriptionLanguage: data[i]['language']
+                    subscriptionLanguage: data[i]['language'],
+                    subscriptionIcon: data[i]['image_url']
                 };
                 var subscription = (0, _jquery2.default)(_mustache2.default.render(template, subscriptionData));
                 var removeButton = (0, _jquery2.default)(subscription.find(".removeButton"));
@@ -11813,14 +11816,6 @@ var _dialogPolyfill2 = _interopRequireDefault(_dialogPolyfill);
 var _LanguageMenu = __webpack_require__(8);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
-
-var _config = __webpack_require__(1);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _zeeguuRequests = __webpack_require__(2);
-
-var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

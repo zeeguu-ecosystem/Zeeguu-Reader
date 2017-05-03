@@ -37,7 +37,8 @@ export default class SubscriptionList {
             var subscriptionData = {
                 subscriptionTitle: data[i]['title'],
                 subscriptionID: data[i]['id'],
-                subscriptionLanguage: data[i]['language']
+                subscriptionLanguage: data[i]['language'],
+                subscriptionIcon: data[i]['image_url']
             };
             var subscription = $(Mustache.render(template, subscriptionData));
             var removeButton = $(subscription.find(".removeButton"));
