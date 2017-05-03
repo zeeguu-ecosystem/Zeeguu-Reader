@@ -11406,7 +11406,6 @@ var ArticleList = function () {
          * Generates all the article links from a particular feed. */
         value: function _loadArticleLinks(subscriptionData, data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_TEMPLATE).html();
-            console.log(subscriptionData.subscriptionIcon);
             for (var i = 0; i < data.length; i++) {
                 var difficulty = Math.round(parseFloat(data[i].metrics.difficulty.normalized) * 100) / 10;
                 var articleLinkData = {

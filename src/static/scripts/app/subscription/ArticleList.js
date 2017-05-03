@@ -27,7 +27,6 @@ export default class ArticleList {
      * Generates all the article links from a particular feed. */
     _loadArticleLinks(subscriptionData, data) {
         var template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
-        console.log(subscriptionData.subscriptionIcon)
         for (var i = 0; i < data.length; i++) {
             var difficulty = Math.round(parseFloat(data[i].metrics.difficulty.normalized) * 100) / 10;
             var articleLinkData = {
