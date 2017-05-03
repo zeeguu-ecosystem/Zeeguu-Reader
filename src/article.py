@@ -20,16 +20,17 @@ def get_article():
     article_language = request.form['articleLanguage']
     response = requests.get(article_url)
     print "User with session " + request.sessionID + " retrieved " + article_url
-    return make_article(response.text, article_language)
+    return make_article(response.text, article_language, article_url)
 
 
-def make_article(source, language):
+def make_article(source, language, url):
     """Create a neatly formatted translatable article html page.
 
     Keyword arguments:
     session  -- a valid Zeeguu session key
     source   -- the article text to format
     language -- the language the article is written in
+    url      -- the url of the article
     """
     # Create our article using Soup.
     soup = Soup(render_template('article.html', fromLanguage=language), 'html.parser')
@@ -42,6 +43,7 @@ def make_article(source, language):
     content = wrap_zeeguu_words(content)
     soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'))
     soup.find('p', {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
+    soup.find('p', {'id': 'articleURL'}).append(Soup(url, 'html.parser'))
 
     return unicode(soup)
 
