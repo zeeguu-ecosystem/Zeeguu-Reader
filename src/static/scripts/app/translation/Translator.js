@@ -8,13 +8,16 @@ export default class Translator {
      * zeeguutags, and then inserts translations for the tag's content.*/
     translate(zeeguuTag) {
         this._mergeZeeguu(zeeguuTag);
+        
         var text = zeeguuTag.textContent;
         var context = this._getContext(zeeguuTag);
-        var url = config.ARTICLE_FROM_URL;
+        var url = $(config.HTML_ID_ARTICLE_URL).text();
+        var title = $(config.HTML_ID_ARTICLE_TITLE).text();
+
         var callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch zeeguu request to fill translation options.
         ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
-                            {word: text, context: context, url: url}, callback);
+                            {word: text, context: context, url: url, title: title}, callback);
     }
 
     isTranslated(zeeguuTag) {

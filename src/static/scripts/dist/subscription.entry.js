@@ -9928,6 +9928,8 @@ exports.default = {
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
+    HTML_ID_ARTICLE_URL: '#articleURL',
+    HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',

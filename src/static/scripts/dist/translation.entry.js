@@ -9928,6 +9928,8 @@ exports.default = {
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
+    HTML_ID_ARTICLE_URL: '#articleURL',
+    HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
@@ -10226,14 +10228,17 @@ var Translator = function () {
             var _this = this;
 
             this._mergeZeeguu(zeeguuTag);
+
             var text = zeeguuTag.textContent;
             var context = this._getContext(zeeguuTag);
-            var url = _config2.default.ARTICLE_FROM_URL;
+            var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
+            var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
+
             var callback = function callback(data) {
                 return _this._setTranslations(zeeguuTag, data);
             };
             // Launch zeeguu request to fill translation options.
-            _zeeguuRequests2.default.post(_config2.default.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + _config2.default.TO_LANGUAGE, { word: text, context: context, url: url }, callback);
+            _zeeguuRequests2.default.post(_config2.default.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + _config2.default.TO_LANGUAGE, { word: text, context: context, url: url, title: title }, callback);
         }
     }, {
         key: 'isTranslated',
