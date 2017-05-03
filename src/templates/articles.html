@@ -13,10 +13,7 @@
 	<script src="{{url_for('static',filename='scripts/dist/subscription.entry.js')}}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Zeeguu UMR</span>
-    </div>
+  <header class="mdl-layout__header mdl-layout__header--transparent">
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Settings</span>
@@ -57,16 +54,18 @@
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
 	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-	<div class="articleLinkDifficulty {% raw %}{{articleDifficultyDiscrete}}{% endraw %}">
-	{% raw %}{{articleDifficulty}}{% endraw %}
-	</div>
+		<div class="articleLinkImage">
+			<img src="{% raw %}{{articeIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+		</div>
 		<form action="{{ url_for('endpoints_article.get_article') }}" method="post">
 			<input type="hidden" name="sessionID" value="{{ sessionID }}" /> 
 			<input type="hidden" name="articleURL" value="{% raw %}{{ articleLinkURL }}{% endraw %}" /> 
 			<input type="hidden" name="articleLanguage" value="{% raw %}{{ articleLinkLanguage }}{% endraw %}" /> 
 			<input class="articleLinkTitle" type="submit" value="{% raw %}{{ articleLinkTitle }}{% endraw %}" />
-
 		</form>
+		<div class="articleLinkDifficulty {% raw %}{{articleDifficultyDiscrete}}{% endraw %}">
+			{% raw %}{{articleDifficulty}}{% endraw %}
+		</div>
 	</li>
 </script>
 
