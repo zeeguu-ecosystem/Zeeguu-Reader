@@ -9,6 +9,8 @@ export default class Translator {
     translate(zeeguuTag) {
         this._mergeZeeguu(zeeguuTag);
         
+        $(zeeguuTag).addClass('loading'); // adds it to the loading animation class
+        
         var text = zeeguuTag.textContent;
         var context = this._getContext(zeeguuTag);
         var url = $(config.HTML_ID_ARTICLE_URL).text();
@@ -17,7 +19,7 @@ export default class Translator {
         var callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch zeeguu request to fill translation options.
         ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
-                            {word: text, context: context, url: url, title: title}, callback);
+                           {word: text, context: context, url: url, title: title}, callback);
     }
 
     isTranslated(zeeguuTag) {
@@ -32,6 +34,8 @@ export default class Translator {
         zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
         for (var i = 0; i < transCount; i++)
             zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+
+        $(zeeguuTag).removeClass('loading'); // removes the animation class
     }
 
     _getContext(zeeguuTag) {

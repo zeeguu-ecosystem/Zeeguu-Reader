@@ -10229,6 +10229,8 @@ var Translator = function () {
 
             this._mergeZeeguu(zeeguuTag);
 
+            (0, _jquery2.default)(zeeguuTag).addClass('loading'); // adds it to the loading animation class
+
             var text = zeeguuTag.textContent;
             var context = this._getContext(zeeguuTag);
             var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
@@ -10257,7 +10259,7 @@ var Translator = function () {
             zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
             for (var i = 0; i < transCount; i++) {
                 zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            }
+            }(0, _jquery2.default)(zeeguuTag).removeClass('loading'); // removes the animation class
         }
     }, {
         key: '_getContext',

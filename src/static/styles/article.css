@@ -1,3 +1,9 @@
+zeeguu[class='loading']
+{
+	animation: fadein 1s 0s infinite linear alternate;
+}
+
+
 zeeguu[transCount]
 {
 	background-color:#eaf2ff;
@@ -7,6 +13,7 @@ zeeguu[translation0]:after
 {
 	content: " (" attr(translation0) ") ";
 }
+
 
 #altermenu
 {
@@ -63,4 +70,17 @@ a[href_disabled]
   margin-right: auto;
   width:80%;
   text-align:justify;
+}
+
+
+@keyframes fadein 
+{
+  0% 
+  {
+    opacity: 0;
+  }
+  100% 
+  {
+     opacity: 1;
+  }
 }
