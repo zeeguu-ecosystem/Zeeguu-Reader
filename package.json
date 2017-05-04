@@ -35,7 +35,12 @@
 	"destination": "./doc/dist",
 	"index": "./doc/index.md",
 	"title": "Zeeguu UMR Client",
-		"experimentalProposal": {
+	"manual": {
+		"overview": ["./doc/manual/overview.md"],
+		"usage": ["./doc/manual/usage.md"],
+		"design": ["./doc/manual/design/general.md", "./doc/manual/design/frontend.md", "./doc/manual/design/UI.md"]
+	},
+	"experimentalProposal": {
 		"classProperties": true,
 		"objectRestSpread": true,
 		"decorators": true,

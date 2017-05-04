@@ -55,18 +55,18 @@
 <script id="articleLink-template" type="text/template">
 	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
 		<div class="articleLinkImage">
-			<img src="{% raw %}{{articeIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+			<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
 		</div>
-		<form action="{{ url_for('endpoints_article.get_article') }}" method="post">
-			<input type="hidden" name="sessionID" value="{{ sessionID }}" /> 
-			<input type="hidden" name="articleURL" value="{% raw %}{{ articleLinkURL }}{% endraw %}" /> 
-			<input type="hidden" name="articleLanguage" value="{% raw %}{{ articleLinkLanguage }}{% endraw %}" /> 
-			<input class="articleLinkTitle" type="submit" value="{% raw %}{{ articleLinkTitle }}{% endraw %}" />
-		</form>
+        <a class="articleLinkTitle" href="{{ url_for('endpoints_article.get_article') }}?articleURL={% raw %}{{ articleLinkURL }}{% endraw %}&articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}">
+            {% raw %}{{ articleLinkTitle }}{% endraw %}
+        </a>
 		<div class="articleLinkDifficulty {% raw %}{{articleDifficultyDiscrete}}{% endraw %}">
 			{% raw %}{{articleDifficulty}}{% endraw %}
 		</div>
 	</li>
+    <div class="articleLinkSummary">
+        {% raw %}{{articleSummary}}{% endraw %}
+    </div>
 </script>
 
 <!-- Dialog window for adding a feed. -->
