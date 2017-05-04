@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 # Run this script to host on your machine.
 
-VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${HOME}/.virtualenvs/zeeguu_umr"}
-# Expects that you already setup your environment, so we check.
-if [ ! -d ${VIRTUALENV_ROOT} ]; then
-   echo "Could not find virtual environment, plese run dev_setup.sh first." 1>&2
-   exit 1
+if [ -z ${ZEEGUU_UMR_VENV_ROOT+x} ]
+then
+    ZEEGUU_UMR_VENV_ROOT="$HOME/.virtualenvs/zeeguu_umr"
+    echo "ZEEGUU_UMR_VENV_ROOT not set, using default ($ZEEGUU_UMR_VENV_ROOT)." 
 fi
 
-source ${VIRTUALENV_ROOT}/bin/activate
+source ${ZEEGUU_UMR_VENV_ROOT}/bin/activate
 python src/zeeguu_umr.py
