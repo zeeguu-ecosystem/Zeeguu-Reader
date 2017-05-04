@@ -55,7 +55,7 @@
 <script id="articleLink-template" type="text/template">
 	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
 		<div class="articleLinkImage">
-			<img src="{% raw %}{{articeIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+			<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
 		</div>
         <a class="articleLinkTitle" href="{{ url_for('endpoints_article.get_article') }}?articleURL={% raw %}{{ articleLinkURL }}{% endraw %}&articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}">
             {% raw %}{{ articleLinkTitle }}{% endraw %}
@@ -64,6 +64,9 @@
 			{% raw %}{{articleDifficulty}}{% endraw %}
 		</div>
 	</li>
+    <div class="articleLinkSummary">
+        {% raw %}{{articleSummary}}{% endraw %}
+    </div>
 </script>
 
 <!-- Dialog window for adding a feed. -->
