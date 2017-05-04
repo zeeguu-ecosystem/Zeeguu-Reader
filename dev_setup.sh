@@ -34,19 +34,18 @@ fi
 
 # create virtualenv, consistent with virtualenv-wrapper conventions
 echo "Setting up virtual environment..."
-
 if [ -z ${ZEEGUU_UMR_VENV_ROOT+x} ]
 then
-	echo "ZEEGUU_UMR_VENV_ROOT not set, using default." 
-	ZEEGUU_UMR_VENV_ROOT="$HOME/.virtualenvs/zeeguu_umr"
+    ZEEGUU_UMR_VENV_ROOT="$HOME/.virtualenvs/zeeguu_umr"
+    echo "ZEEGUU_UMR_VENV_ROOT not set, using default ($ZEEGUU_UMR_VENV_ROOT)." 
 fi
 
 if [ ! -d ${ZEEGUU_UMR_VENV_ROOT} ]; then
-   mkdir -p $(dirname ${ZEEGUU_UMR_VENV_ROOT})
-  virtualenv -p python2.7 ${ZEEGUU_UMR_VENV_ROOT}
+    mkdir -p $(dirname ${ZEEGUU_UMR_VENV_ROOT})
+    virtualenv -p python2.7 ${ZEEGUU_UMR_VENV_ROOT}
 fi
 source ${ZEEGUU_UMR_VENV_ROOT}/bin/activate
-cd ${TOP}
+cd "${TOP}"
 
 # install requirements
 pip install -r requirements.txt 
