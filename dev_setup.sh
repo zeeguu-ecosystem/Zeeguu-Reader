@@ -2,7 +2,6 @@
 # Run this script to setup your development environment.
 
 TOP=$(cd $(dirname $0) && pwd -L)
-VIRTUALENV_ROOT=${VIRTUALENV_ROOT:-"${HOME}/.virtualenvs/zeeguu_umr"}
 
 if [ "$(id -u)" == "0" ]; then
    echo "This script should not be run as root. " 1>&2
@@ -30,17 +29,23 @@ then
     sudo npm install -g webpack
     sudo npm install -g esdoc
 else
-    echo "Skipping apt-get install..."
+    echo "Skipping apt-get install."
 fi
 
 # create virtualenv, consistent with virtualenv-wrapper conventions
 echo "Setting up virtual environment..."
-if [ ! -d ${VIRTUALENV_ROOT} ]; then
-   mkdir -p $(dirname ${VIRTUALENV_ROOT})
-  virtualenv -p python2.7 ${VIRTUALENV_ROOT}
+if [ -z ${ZEEGUU_UMR_VENV_ROOT+x} ]
+then
+    ZEEGUU_UMR_VENV_ROOT="$HOME/.virtualenvs/zeeguu_umr"
+    echo "ZEEGUU_UMR_VENV_ROOT not set, using default ($ZEEGUU_UMR_VENV_ROOT)." 
 fi
-source ${VIRTUALENV_ROOT}/bin/activate
-cd ${TOP}
+
+if [ ! -d ${ZEEGUU_UMR_VENV_ROOT} ]; then
+    mkdir -p $(dirname ${ZEEGUU_UMR_VENV_ROOT})
+    virtualenv -p python2.7 ${ZEEGUU_UMR_VENV_ROOT}
+fi
+source ${ZEEGUU_UMR_VENV_ROOT}/bin/activate
+cd "${TOP}"
 
 # install requirements
 pip install -r requirements.txt 
