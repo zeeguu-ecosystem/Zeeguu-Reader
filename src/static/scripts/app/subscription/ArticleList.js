@@ -36,7 +36,8 @@ export default class ArticleList {
                 articleLinkLanguage: subscriptionData.subscriptionLanguage,
                 articleDifficultyDiscrete: data[i].metrics.difficulty.discrete,
                 articleDifficulty: difficulty,
-                articeIcon: subscriptionData.subscriptionIcon
+                articleSummary: $('<p>' + data[i].summary + '</p>').text(),
+                articleIcon: subscriptionData.subscriptionIcon
             };
             $(config.HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, articleLinkData));
         }

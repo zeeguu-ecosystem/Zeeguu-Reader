@@ -10,14 +10,14 @@ WORD_TAG = "zeeguu"
 endpoints_article = Blueprint('endpoints_article', __name__, template_folder='templates')
 
 
-@endpoints_article.route('/article', methods=['POST'])
+@endpoints_article.route('/articles/article', methods=['GET'])
 @with_session
 def get_article():
     """Retrieve the supplied article link of the supplied language,
     and return a properly processed version of the article.
     """
-    article_url = request.form['articleURL']
-    article_language = request.form['articleLanguage']
+    article_url = request.args['articleURL']
+    article_language = request.args['articleLanguage']
     response = requests.get(article_url)
     print "User with session " + request.sessionID + " retrieved " + article_url
     return make_article(response.text, article_language, article_url)

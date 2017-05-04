@@ -11417,7 +11417,8 @@ var ArticleList = function () {
                     articleLinkLanguage: subscriptionData.subscriptionLanguage,
                     articleDifficultyDiscrete: data[i].metrics.difficulty.discrete,
                     articleDifficulty: difficulty,
-                    articeIcon: subscriptionData.subscriptionIcon
+                    articleSummary: (0, _jquery2.default)('<p>' + data[i].summary + '</p>').text(),
+                    articleIcon: subscriptionData.subscriptionIcon
                 };
                 (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(_mustache2.default.render(template, articleLinkData));
             }
