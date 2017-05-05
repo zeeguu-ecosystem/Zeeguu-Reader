@@ -9914,7 +9914,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     /* These are all constants used in the UMR javascript. */
-    ZEEGUU_SERVER: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SERVER: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION: 'sessionID',
     RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',
     FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',
@@ -9968,7 +9968,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// Launch request to Zeeguu API.
+/**
+ * Abstracts request to the Zeeguu API.
+ * @see https://www.zeeguu.unibe.ch
+ */
 var ZeeguuRequests = function () {
     function ZeeguuRequests() {
         _classCallCheck(this, ZeeguuRequests);
@@ -9976,9 +9979,21 @@ var ZeeguuRequests = function () {
 
     _createClass(ZeeguuRequests, null, [{
         key: 'session',
+
+        /**
+         * Retrieve the Zeeguu sessionID.
+         * @returns {?string} session - The session ID of the user, if present.
+         */
         value: function session() {
             return this._readCookie(_config2.default.ZEEGUU_SESSION);
         }
+
+        /**
+         * Read a cookie, search for the attribute of a particular name and retrieve it.
+         * @param {string} name - The name of the attribute.
+         * @returns {?string} session - The session ID of the user, if present.
+         */
+
     }, {
         key: '_readCookie',
         value: function _readCookie(name) {
@@ -9992,12 +10007,28 @@ var ZeeguuRequests = function () {
             }
             return '';
         }
+
+        /**
+         * Send a GET request to the Zeeguu API.
+         * @param {string} endpoint - The endpoint to use.
+         * @param {string[]} requestData - Parameters to append.
+         * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.
+         */
+
     }, {
         key: 'get',
         value: function get(endpoint, requestData, responseHandler) {
             requestData.session = this.session();
             _jquery2.default.get(_config2.default.ZEEGUU_SERVER + endpoint, requestData, responseHandler);
         }
+
+        /**
+         * Send a POST request to the Zeeguu API.
+         * @param {string} endpoint - The endpoint to use.
+         * @param {string[]} requestData - Parameters to append.
+         * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.
+         */
+
     }, {
         key: 'post',
         value: function post(endpoint, requestData, responseHandler) {
@@ -11367,7 +11398,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Manages a list of articles that can be viewed.
+ * Manages a list of article links.
  */
 var ArticleList = function () {
     function ArticleList() {
@@ -11377,7 +11408,11 @@ var ArticleList = function () {
     _createClass(ArticleList, [{
         key: 'load',
 
-        /* Call zeeguu and get the articles for the given feed 'subscription'. */
+        /**
+         * Call zeeguu and get the articles for the given feed 'subscription'.
+         * Uses {@link ZeeguuRequests}.
+         * @param {Object} subscription - The feed to retrieve articles from.
+         */
         value: function load(subscription) {
             var _this = this;
 
@@ -11385,10 +11420,15 @@ var ArticleList = function () {
             var callback = function callback(data) {
                 return _this._loadArticleLinks(subscription, data);
             };
-            _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription['subscriptionID'], {}, callback);
+            _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
         }
     }, {
         key: 'clear',
+
+
+        /**
+         * Remove all articles from the list.
+         */
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).empty();
         }
@@ -11396,7 +11436,10 @@ var ArticleList = function () {
         key: 'remove',
 
 
-        /* Remove all articles from the list with 'feedID'. */
+        /**
+         * Remove all articles from the list associated with the given feed.
+         * @param {string} feedID - The identification code associated with the feed.
+         */
         value: function remove(feedID) {
             (0, _jquery2.default)('li[articleLinkFeedID="' + feedID + '"]').remove();
         }
@@ -11404,8 +11447,12 @@ var ArticleList = function () {
         key: '_loadArticleLinks',
 
 
-        /* Callback function from the zeeguu request.
-         * Generates all the article links from a particular feed. */
+        /**
+         * Generate all the article links from a particular feed.
+         * Callback function for the zeeguu request.
+         * @param {Object} subscriptionData - The feed the articles are from.
+         * @param {Object[]} data - List containing the articles for the feed.
+         */
         value: function _loadArticleLinks(subscriptionData, data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
@@ -11466,9 +11513,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Allows the user to add or remove feed subscriptions.
+ * Allows the user to add feed subscriptions.
  */
 var FeedSubscriber = function () {
+    /**
+     * Link the {@link SubscriptionList} with this instance so we can update it on change.
+     * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.
+     */
     function FeedSubscriber(subscriptionList) {
         _classCallCheck(this, FeedSubscriber);
 
@@ -11476,8 +11527,13 @@ var FeedSubscriber = function () {
         this.currentLanguage = 'nl';
     }
 
-    /* Calls zeeguu and requests recommended feeds for the given 'language'.
-     * If the language is not given, it simply uses the last used language. */
+    /**
+     * Call Zeeguu and requests recommended feeds for the given language.
+     * If the language is not given, it simply uses the last used language.
+     * Uses {@link ZeeguuRequests}.
+     * @param {string} language - Language code.
+     * @example load('nl');
+     */
 
 
     _createClass(FeedSubscriber, [{
@@ -11489,11 +11545,22 @@ var FeedSubscriber = function () {
         }
     }, {
         key: 'clear',
+
+
+        /**
+         * Clear the list of feed options.
+         */
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_LIST).empty();
         }
     }, {
         key: 'getCurrentLanguage',
+
+
+        /**
+         * Return the language for the feed options currently displayed.
+         * @return {string} - The language of feed options currently on display.
+         */
         value: function getCurrentLanguage() {
             return this.currentLanguage;
         }
@@ -11501,8 +11568,11 @@ var FeedSubscriber = function () {
         key: '_loadFeedOptions',
 
 
-        /* Callback function for zeeguu.
-         * Fills the dialog's list with all the addable feeds. */
+        /**
+         * Fills the dialog's list with all the addable feeds.
+         * Callback function for zeeguu.
+         * @param {Object[]} data - A list of feeds the user can subscribe to.
+         */
         value: function _loadFeedOptions(data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
@@ -11525,8 +11595,11 @@ var FeedSubscriber = function () {
             }
         }
 
-        /* Subscribe to a new feed, calls the zeeguu server.
-         * This function is called by an html element.*/
+        /**
+         * Subscribe to a new feed, calls the zeeguu server.
+         * Uses {@link ZeeguuRequests}.
+         * @param {Element} feed - Document element containing the id of the feed.
+         */
 
     }, {
         key: '_follow',
@@ -11540,9 +11613,13 @@ var FeedSubscriber = function () {
             _zeeguuRequests2.default.post(_config2.default.FOLLOW_FEED_ENDPOINT, { feed_id: feedID }, callback);
         }
 
-        /* Callback function for zeeguu.
-         * A feed has just been followed, so we refresh the subscription list and remove the
-         * mentioned feed from the addable feed list. */
+        /**
+         * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
+         * mentioned feed from the addable feed list.
+         * Callback function for Zeeguu.
+         * @param {Element} feed - Document element containing the id of the feed.
+         * @param {string} data - Reply from the server.
+         */
 
     }, {
         key: '_onFeedFollowed',
@@ -11595,16 +11672,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * Retrieves the available languages of Zeeguu and fills
- * the Subscription Manager's dialog with these options.
+ * the {@link FeedSubscriber}'s dialog with these options.
  */
 var LanguageMenu = function () {
+    /**
+     * Link the {@link FeedSubscriber} to this instance.
+     * @param {FeedSubcriber} feedSubscriber - List of non-subscribed feeds to update.
+     */
     function LanguageMenu(feedSubscriber) {
         _classCallCheck(this, LanguageMenu);
 
         this.feedSubscriber = feedSubscriber;
     }
 
-    /* Load the available languages for the dialog. */
+    /**
+     * Load the available languages for the dialog.
+     * Uses {@link ZeeguuRequests}.
+     */
 
 
     _createClass(LanguageMenu, [{
@@ -11613,8 +11697,11 @@ var LanguageMenu = function () {
             _zeeguuRequests2.default.get(_config2.default.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
         }
 
-        /* Callback function from the zeeguu request.
-         * Generates all the available language options as buttons in the dialog. */
+        /**
+         * Generates all the available language options as buttons in the dialog.
+         * Callback function from the zeeguu request.
+         * @param {string} data - JSON string of an array of language codes.
+         */
 
     }, {
         key: '_loadLanguageOptions',
@@ -11677,9 +11764,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Shows a list of all subscribed feeds, and updates the article list accordingly.
+ * Shows a list of all subscribed feeds, allows the user to remove them.
+ * It updates the {@link ArticleList} accordingly.
  */
 var SubscriptionList = function () {
+    /**
+     * Bind with the {@link ArticleList} and initialise an empty list of feeds.
+     * @param {ArticleList} articleList - List of all articles available to the user.
+     */
     function SubscriptionList(articleList) {
         _classCallCheck(this, SubscriptionList);
 
@@ -11687,7 +11779,10 @@ var SubscriptionList = function () {
         this.feedList = new Set();
     }
 
-    /* Call zeeguu and retrieve all currently subscribed feeds. */
+    /**
+     *  Call zeeguu and retrieve all currently subscribed feeds.
+     *  Uses {@link ZeeguuRequests}.
+     */
 
 
     _createClass(SubscriptionList, [{
@@ -11697,12 +11792,22 @@ var SubscriptionList = function () {
         }
     }, {
         key: 'clear',
+
+
+        /**
+         * Remove all feeds from the list, clear {@link ArticleList} as well.
+         */
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).empty();
             this.articleList.clear();
         }
     }, {
         key: 'refresh',
+
+
+        /**
+         * Call clear and load successively.
+         */
         value: function refresh() {
             // Refresh the feed list.
             this.clear();
@@ -11712,9 +11817,12 @@ var SubscriptionList = function () {
         key: '_loadSubscriptions',
 
 
-        /* Callback function for the zeeguu request.
-         * Fills the subscription list with all the subscribed feeds,
-         * and makes a call to articleList in order to load the feed's associated articles. */
+        /**
+         * Fills the subscription list with all the subscribed feeds.
+         * Callback function for the zeeguu request,
+         * makes a call to {@link ArticleList} in order to load the feed's associated articles.
+         * @param {Object[]} data - List containing the feeds the user is subscribed to.
+         */
         value: function _loadSubscriptions(data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
@@ -11738,8 +11846,11 @@ var SubscriptionList = function () {
             }
         }
 
-        /* Un-subscribe from a feed, calls the zeeguu server.
-         * This function is called bu an html element. */
+        /**
+         * Un-subscribe from a feed, call the zeeguu server.
+         * Uses {@link ZeeguuRequests}.
+         * @param {Element} feed - Feed element of the list to un-subscribe from.
+         */
 
     }, {
         key: '_unfollow',
@@ -11753,9 +11864,12 @@ var SubscriptionList = function () {
             _zeeguuRequests2.default.get(_config2.default.UNFOLLOW_FEED_ENDPOINT + "/" + removableID, {}, callback);
         }
 
-        /* Callback function for zeeguu.
-         * A feed has just been removed, so we remove the mentioned feed from the
-         * subscription list. */
+        /**
+         * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+         * Callback function for zeeguu.
+         * @param {Element} feed - Feed element of the list that is to be removed.
+         * @param {string} data - Server reply.
+         */
 
     }, {
         key: '_onFeedUnfollowed',
@@ -11765,8 +11879,11 @@ var SubscriptionList = function () {
             }
         }
 
-        /* Remove a mentioned feed from the local list (not from the zeeguu list).
-         * Makes sure the associated articles are removed as well by notifying articleList. */
+        /**
+         * Remove a mentioned feed from the local list (not from the zeeguu list).
+         * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
+         * @param {Element} feedNode - The document element (feed) to remove.
+         */
 
     }, {
         key: '_remove',

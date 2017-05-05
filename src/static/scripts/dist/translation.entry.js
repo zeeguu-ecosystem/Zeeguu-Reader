@@ -9914,7 +9914,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
     /* These are all constants used in the UMR javascript. */
-    ZEEGUU_SERVER: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SERVER: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION: 'sessionID',
     RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',
     FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',
@@ -9968,7 +9968,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// Launch request to Zeeguu API.
+/**
+ * Abstracts request to the Zeeguu API.
+ * @see https://www.zeeguu.unibe.ch
+ */
 var ZeeguuRequests = function () {
     function ZeeguuRequests() {
         _classCallCheck(this, ZeeguuRequests);
@@ -9976,9 +9979,21 @@ var ZeeguuRequests = function () {
 
     _createClass(ZeeguuRequests, null, [{
         key: 'session',
+
+        /**
+         * Retrieve the Zeeguu sessionID.
+         * @returns {?string} session - The session ID of the user, if present.
+         */
         value: function session() {
             return this._readCookie(_config2.default.ZEEGUU_SESSION);
         }
+
+        /**
+         * Read a cookie, search for the attribute of a particular name and retrieve it.
+         * @param {string} name - The name of the attribute.
+         * @returns {?string} session - The session ID of the user, if present.
+         */
+
     }, {
         key: '_readCookie',
         value: function _readCookie(name) {
@@ -9992,12 +10007,28 @@ var ZeeguuRequests = function () {
             }
             return '';
         }
+
+        /**
+         * Send a GET request to the Zeeguu API.
+         * @param {string} endpoint - The endpoint to use.
+         * @param {string[]} requestData - Parameters to append.
+         * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.
+         */
+
     }, {
         key: 'get',
         value: function get(endpoint, requestData, responseHandler) {
             requestData.session = this.session();
             _jquery2.default.get(_config2.default.ZEEGUU_SERVER + endpoint, requestData, responseHandler);
         }
+
+        /**
+         * Send a POST request to the Zeeguu API.
+         * @param {string} endpoint - The endpoint to use.
+         * @param {string[]} requestData - Parameters to append.
+         * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.
+         */
+
     }, {
         key: 'post',
         value: function post(endpoint, requestData, responseHandler) {
