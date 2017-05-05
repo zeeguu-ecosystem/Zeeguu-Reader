@@ -7,7 +7,9 @@ import ZeeguuRequests from '../zeeguuRequests';
  * Manages a list of article links.
  */
 export default class ArticleList {
-    /** Call zeeguu and get the articles for the given feed 'subscription'.
+    /**
+     * Call zeeguu and get the articles for the given feed 'subscription'.
+     * Uses {@link ZeeguuRequests}.
      * @param {Object} subscription - The feed to retrieve articles from.
      */
     load(subscription) {

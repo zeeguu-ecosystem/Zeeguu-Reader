@@ -1,6 +1,6 @@
 {
   "title": "Zeeguu UMR Client",
-  "source": "./src/static/scripts/app", 
+  "source": "./src/static/scripts/app",
   "destination": "./doc/dist",
   "index": "./doc/index.md",
   "access": ["public", "private", "protected"],
