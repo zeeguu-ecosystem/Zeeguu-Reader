@@ -1,0 +1,56 @@
+.loader 
+{
+  position: absolute;
+  text-align:center;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  animation: colorshift 4s 0s infinite linear alternate, fadein 1s 0s 1 linear; 
+}
+
+.eleph 
+{
+  display: inline-block;
+  animation: bounce 1.2s 1s infinite;
+  height: 5em;
+  width: 5em;
+}
+
+@keyframes bounce {
+  0% 
+  {
+    transform: translateY(0);
+  }
+  40% 
+  {
+    transform: translateY(23px);
+  }
+  60% 
+  {
+    transform: translateY(-25px);
+  }
+  80%
+  {
+    transform: translateY(0);
+  }
+}
+
+@keyframes colorshift 
+{
+  to 
+  {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes fadein 
+{
+  0% 
+  {
+    opacity: 0;
+  }
+  100% 
+  {
+     opacity: 1;
+  }
+}

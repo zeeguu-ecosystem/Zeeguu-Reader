@@ -1,0 +1,35 @@
+<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/addFeedDialog.css') }}" type= "text/css">
+<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/flag-icon/flag-icon.css') }}" type= "text/css">
+<dialog class="mdl-dialog">
+  <h4 class="mdl-dialog__title feedAddTitle">Available Feeds</h4>
+  <center><span class="feedAddSubTitle">Tap '+' to subscribe!</span></center>
+  <div class="mdl-dialog__content">
+    <!-- List of all available languages -->
+    <div id="languageOptionList"></div>
+    <!-- List of all available feeds. -->
+    <div id="addableFeedList" class="list-control list-action mdl-list"></div>
+  </div>
+  <div class="mdl-dialog__actions mdl-dialog__actions">
+    <button type="button" class="mdl-button close">Close</button>
+  </div>
+</dialog>
+
+<!-- Template for language option -->
+<script id="languageOption-template" type="text/template">
+    <button id="{% raw %}{{ languageOptionCode }}{% endraw %}" class="langButton">
+      <span class="flag-icon flag-icon-squared flag-icon-{% raw %}{{ languageOptionCode }}{% endraw %}"></span>
+    </button>
+</script>
+
+<!-- Template for feed items -->
+<script id="feedAddable-template" type="text/template">
+  <div addableID="{% raw %}{{addableID}}{% endraw %}" class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+      <span class="addableTitle">{% raw %}{{addableTitle}}{% endraw %}</span>
+    </span>
+    <a class="mdl-list__item-secondary-action subscribeButton">
+      <i class="material-icons ">add_circle</i>
+    </a>
+  </div>
+</script>

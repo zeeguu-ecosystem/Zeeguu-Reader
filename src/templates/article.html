@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+	<TITLE>Zeeguu UMR</TITLE>
+	<META name="viewport" content="width=device-width, initial-scale=1">
+	<LINK rel="stylesheet" href="{{ url_for('static',filename='styles/mdl/material.min.css') }}">
+	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/article.css') }}" type= "text/css">
+	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
+	<SCRIPT>
+		var FROM_LANGUAGE = '{{ fromLanguage }}';
+	</SCRIPT>
+	<script src="{{url_for('static',filename='scripts/dist/translation.entry.js')}}"></script>
+</HEAD>
+<BODY>
+<!-- Top bar -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+	  <button onclick="window.history.back()" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+          <i class="material-icons">arrow_back</i>
+      </button>
+      <div class="mdl-layout__header-row">
+		  <div class="mdl-layout-spacer"></div>
+		  <div class="material-icons">translate</div>
+		  &nbsp;&nbsp;&nbsp;
+		  <div>
+			  <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="toggle_translate">
+				  <input type="checkbox" id="toggle_translate" class="mdl-switch__input" checked>
+			  </label>
+		  </div>
+	  </div>
+  </header>
+
+<!-- Article content. -->
+  <main class="mdl-layout__content">
+    <div class="page-content">
+		<P hidden id="articleURL"></P><BR />
+		<P id="articleTitle" class="title translatable"></P><BR />
+		<DIV id="articleContent" class="translatable"></DIV>
+    </div>
+  </main>
+  <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar"><P id="articleTitle" class="title translatable"></P><BR />
+	  <div class="mdl-snackbar__text"></div>
+	  <button class="mdl-snackbar__action" type="button"></button>
+  </div>
+</div>
+
+<!-- Menu to change the translation -->
+<div id="alterMenuContainer">
+	<div id="alterMenu"></div>
+</div>
+
+</BODY>
+</HTML>
