@@ -1,8 +1,11 @@
 {
-  "name": "untitled",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "zeeguu-umr",
+  "version": "0.2.0",
+  "description": "Multilanguage Article Reader for the Zeeguu platform",
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/mircealungu/Unified-Multilanguage-Reader.git"
+  },
   "scripts": {
     "dev": "./node_modules/.bin/webpack",
     "production": "NODE_ENV=production webpack",
@@ -29,26 +32,5 @@
     "jquery": "^3.2.1",
     "mustache": "^2.3.0",
     "underscore": "^1.8.3"
-  },
-  "esdoc": {
-	"source": "./src/static/scripts/app", 
-	"destination": "./doc/dist",
-	"index": "./doc/index.md",
-	"title": "Zeeguu UMR Client",
-	"manual": {
-		"overview": ["./doc/manual/overview.md"],
-		"usage": ["./doc/manual/usage.md"],
-		"design": ["./doc/manual/design/general.md", "./doc/manual/design/frontend.md", "./doc/manual/design/UI.md"]
-	},
-	"experimentalProposal": {
-		"classProperties": true,
-		"objectRestSpread": true,
-		"decorators": true,
-		"doExpressions": true,
-		"functionBind": true,
-		"asyncGenerators": true,
-		"exportExtensions": true,
-		"dynamicImport": true
-	}
   }
 }
