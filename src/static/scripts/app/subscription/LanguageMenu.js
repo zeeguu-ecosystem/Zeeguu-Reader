@@ -5,20 +5,30 @@ import ZeeguuRequests from '../zeeguuRequests';
 
 /**
  * Retrieves the available languages of Zeeguu and fills
- * the Subscription Manager's dialog with these options.
+ * the {@link FeedSubscriber}'s dialog with these options.
  */
 export default class LanguageMenu {
+    /**
+     * Link the {@link FeedSubscriber} to this instance.
+     * @param {FeedSubcriber} feedSubscriber - List of non-subscribed feeds to update.
+     */
     constructor(feedSubscriber) {
         this.feedSubscriber = feedSubscriber;
     }
 
-    /* Load the available languages for the dialog. */
+    /**
+     * Load the available languages for the dialog.
+     * Uses {@link ZeeguuRequests}.
+     */
     load() {
         ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
     }
 
-    /* Callback function from the zeeguu request.
-     * Generates all the available language options as buttons in the dialog. */
+    /**
+     * Generates all the available language options as buttons in the dialog.
+     * Callback function from the zeeguu request.
+     * @param {string} data - JSON string of an array of language codes.
+     */
     _loadLanguageOptions(data)
     {
         var options = JSON.parse(data);

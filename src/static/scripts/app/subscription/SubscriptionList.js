@@ -4,33 +4,50 @@ import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 
 /**
- * Shows a list of all subscribed feeds, and updates the article list accordingly.
+ * Shows a list of all subscribed feeds, allows the user to remove them.
+ * It updates the {@link ArticleList} accordingly.
  */
 export default class SubscriptionList {
+    /**
+     * Bind with the {@link ArticleList} and initialise an empty list of feeds.
+     * @param {ArticleList} articleList - List of all articles available to the user.
+     */
     constructor(articleList) {
         this.articleList = articleList;
         this.feedList = new Set();
     }
 
-    /* Call zeeguu and retrieve all currently subscribed feeds. */
+    /**
+     *  Call zeeguu and retrieve all currently subscribed feeds.
+     *  Uses {@link ZeeguuRequests}.
+     */
     load() {
         ZeeguuRequests.get(config.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
     };
 
+    /**
+     * Remove all feeds from the list, clear {@link ArticleList} as well.
+     */
     clear() {
         $(config.HTML_ID_SUBSCRIPTION_LIST).empty();
         this.articleList.clear();
     };
 
+    /**
+     * Call clear and load successively.
+     */
     refresh() {
         // Refresh the feed list.
         this.clear();
         this.load();
     };
 
-    /* Callback function for the zeeguu request.
-     * Fills the subscription list with all the subscribed feeds,
-     * and makes a call to articleList in order to load the feed's associated articles. */
+    /**
+     * Fills the subscription list with all the subscribed feeds.
+     * Callback function for the zeeguu request,
+     * makes a call to {@link ArticleList} in order to load the feed's associated articles.
+     * @param {Object[]} data - List containing the feeds the user is subscribed to.
+     */
     _loadSubscriptions(data) {
         var template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         for (var i = 0; i < data.length; i++) {
@@ -54,8 +71,11 @@ export default class SubscriptionList {
         }
     }
 
-    /* Un-subscribe from a feed, calls the zeeguu server.
-     * This function is called bu an html element. */
+    /**
+     * Un-subscribe from a feed, call the zeeguu server.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Element} feed - Feed element of the list to un-subscribe from.
+     */
     _unfollow(feed) {
         var removableID = $(feed).attr('removableID');
         var callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
@@ -63,17 +83,23 @@ export default class SubscriptionList {
                             {}, callback);
     }
 
-    /* Callback function for zeeguu.
-     * A feed has just been removed, so we remove the mentioned feed from the
-     * subscription list. */
+    /**
+     * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+     * Callback function for zeeguu.
+     * @param {Element} feed - Feed element of the list that is to be removed.
+     * @param {string} data - Server reply.
+     */
     _onFeedUnfollowed(feed, data) {
         if (data == "OK") {
             this._remove(feed);
         }
     }
 
-    /* Remove a mentioned feed from the local list (not from the zeeguu list).
-     * Makes sure the associated articles are removed as well by notifying articleList. */
+    /**
+     * Remove a mentioned feed from the local list (not from the zeeguu list).
+     * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
+     * @param {Element} feedNode - The document element (feed) to remove.
+     */
     _remove(feedNode) {
         var feedID = $(feedNode).attr('removableID');
         this.articleList.remove(feedID);
