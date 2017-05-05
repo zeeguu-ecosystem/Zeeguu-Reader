@@ -4,27 +4,39 @@ import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 
 /**
- * Manages a list of articles that can be viewed.
+ * Manages a list of article links.
  */
 export default class ArticleList {
-    /* Call zeeguu and get the articles for the given feed 'subscription'. */
+    /** Call zeeguu and get the articles for the given feed 'subscription'.
+     * @param {Object} subscription - The feed to retrieve articles from.
+     */
     load(subscription) {
         $(config.HTML_CLASS_LOADER).show();
         var callback = (data) => this._loadArticleLinks(subscription, data);
-        ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription['subscriptionID'], {}, callback);
+        ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
     };
 
+    /**
+     * Remove all articles from the list.
+     */
     clear() {
         $(config.HTML_ID_ARTICLELINK_LIST).empty();
     };
 
-    /* Remove all articles from the list with 'feedID'. */
+    /**
+     * Remove all articles from the list associated with the given feed.
+     * @param {string} feedID - The identification code associated with the feed.
+     */
     remove(feedID) {
         $('li[articleLinkFeedID="' + feedID + '"]').remove();
     };
 
-    /* Callback function from the zeeguu request.
-     * Generates all the article links from a particular feed. */
+    /**
+     * Generate all the article links from a particular feed.
+     * Callback function for the zeeguu request.
+     * @param {Object} subscriptionData - The feed the articles are from.
+     * @param {Object[]} data - List containing the articles for the feed.
+     */
     _loadArticleLinks(subscriptionData, data) {
         var template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
         for (var i = 0; i < data.length; i++) {

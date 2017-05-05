@@ -3,6 +3,7 @@
   "source": "./src/static/scripts/app", 
   "destination": "./doc/dist",
   "index": "./doc/index.md",
+  "access": ["public", "private", "protected"],
   "manual": 
   {
     "overview": ["./doc/manual/overview.md"],
