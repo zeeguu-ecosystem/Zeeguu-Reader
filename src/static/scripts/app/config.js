@@ -1,6 +1,6 @@
 export default {
     /* These are all constants used in the UMR javascript. */
-    ZEEGUU_SERVER: 'https://www.zeeguu.unibe.ch/api',
+    ZEEGUU_SERVER: 'https://zeeguu.unibe.ch/api',
     ZEEGUU_SESSION: 'sessionID',
     RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',
     FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',

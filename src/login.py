@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, request, render_template, redirect, url_for, make_response
 from articles import  get_articles_page
 
-ZEEGUU_SERVER = "https://www.zeeguu.unibe.ch/api"
+ZEEGUU_SERVER = "https://zeeguu.unibe.ch/api"
 STATUS_ACCEPT = 200
 
 endpoints_login = Blueprint('endpoints_login', __name__, template_folder='templates')
