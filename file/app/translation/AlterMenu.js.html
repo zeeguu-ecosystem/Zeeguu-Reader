@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">app/translation/AlterMenu.js | Zeeguu UMR Client API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/translation/AlterMenu.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
+import config from &apos;../config&apos;
+import Notifier from &apos;./Notifier&apos;
+
+/**
+ * Class that allows for choosing alternative zeeguu translations.
+ */
+export default class AlterMenu {
+    constructor() {
+        this.menuOpen = false;
+        this.notifier = new Notifier();
+    }
+
+    /* Creates and opens the alternative translation menu. */
+    constructAndOpen(zeeguuTag) {
+        // Check how many alternatives there are, if less than 2: abort.
+        var transCount = parseInt(zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT));
+        if (transCount &lt; 2) {
+            this.notifier.notify(&quot;Sorry, no alternatives.&quot;);
+            return;
+        }
+        this.construct(zeeguuTag, transCount);
+        this._place(zeeguuTag);
+        $(config.HTML_ID_ALTERMENU).slideDown(function () {
+            this.menuOpen = true
+        }.bind(this));
+    };
+
+    /* Add buttons with click listeners that replace the translation. */
+    construct(zeeguuTag, transCount) {
+        $(config.HTML_ID_ALTERMENU).empty();
+        for (var i = 0; i &lt; transCount; i++) {
+            var button = document.createElement(&apos;button&apos;);
+            var alternative = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i);
+            button.textContent = alternative;
+            $(button).addClass(&quot;mdl-button&quot;).addClass(&quot;mdl-js-button&quot;).addClass(&quot;mdl-js-ripple-effect&quot;);
+            $(config.HTML_ID_ALTERMENU).append($(button));
+            $(button).click({zeeguuTag: zeeguuTag, alternative: i}, this._swapPrimaryTranslation);
+        }
+    }
+
+    /* Swaps the HTML_ATTRIBUTE_TRANSLATION 0 with the new preferred translation attribute. */
+    _swapPrimaryTranslation(selectedAlternative) {
+        var zeeguuTag = selectedAlternative.data.zeeguuTag;
+        var alternative = selectedAlternative.data.alternative;
+        var oldText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + &apos;0&apos;);
+        var newText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative);
+        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + &apos;0&apos;, newText);
+        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
+    }
+
+    /* Places the alter menu below the to-be-altered word. */
+    _place(zeeguuTag) {
+        var position = $(zeeguuTag).position();
+        var tagHeight = $(zeeguuTag).outerHeight();
+        var tagWidth = $(zeeguuTag).outerWidth();
+        var menuWidth = $(config.HTML_ID_ALTERMENU).outerWidth();
+        var topScroll = $(&quot;.mdl-layout__content&quot;).scrollTop();
+        $(zeeguuTag).append($(config.HTML_ID_ALTERMENU));
+        $(config.HTML_ID_ALTERMENU).css({
+            position: &quot;absolute&quot;,
+            maxWidth: &quot;80%&quot;,
+            display: &quot;inline-block&quot;,
+            left: position.left + (tagWidth - menuWidth) / 2 + &quot;px&quot;,
+            top: position.top + tagHeight + topScroll + &quot;px&quot;
+        });
+        $(config.HTML_ID_ALTERMENU).hide();
+    }
+
+    reposition() {
+        this._place($(config.HTML_ID_ALTERMENU).parent());
+        $(config.HTML_ID_ALTERMENU).show();
+    };
+
+    /* Hides the alter menu. */
+    close() {
+        $(config.HTML_ID_ALTERMENU).slideUp(function () {
+            $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
+            this.menuOpen = false;
+        }.bind(this));
+    };
+
+    isOpen() {
+        return this.menuOpen;
+    };
+};
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

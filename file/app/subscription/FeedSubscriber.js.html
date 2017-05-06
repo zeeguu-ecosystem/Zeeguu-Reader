@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">app/subscription/FeedSubscriber.js | Zeeguu UMR Client API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/subscription/FeedSubscriber.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
+import Mustache from &apos;mustache&apos;;
+import config from &apos;../config&apos;;
+import ZeeguuRequests from &apos;../zeeguuRequests&apos;;
+
+/**
+ * Allows the user to add feed subscriptions.
+ */
+export default class FeedSubscriber {
+    /**
+     * Link the {@link SubscriptionList} with this instance so we can update it on change.
+     * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.
+     */
+    constructor(subscriptionList) {
+        this.subscriptionList = subscriptionList;
+        this.currentLanguage = &apos;nl&apos;;
+    }
+
+    /**
+     * Call Zeeguu and requests recommended feeds for the given language.
+     * If the language is not given, it simply uses the last used language.
+     * Uses {@link ZeeguuRequests}.
+     * @param {string} language - Language code.
+     * @example load(&apos;nl&apos;);
+     */
+    load(language) {
+        language = typeof language !== &apos;undefined&apos; ? language : this.currentLanguage;
+        ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + &apos;/&apos; + language,
+                                {}, this._loadFeedOptions.bind(this));
+        this.currentLanguage = language;
+    };
+
+    /**
+     * Clear the list of feed options.
+     */
+    clear() {
+        $(config.HTML_ID_ADDSUBSCRIPTION_LIST).empty();
+    };
+
+    /**
+     * Return the language for the feed options currently displayed.
+     * @return {string} - The language of feed options currently on display.
+     */
+    getCurrentLanguage() {
+        return this.currentLanguage;
+    };
+
+    /**
+     * Fills the dialog&apos;s list with all the addable feeds.
+     * Callback function for zeeguu.
+     * @param {Object[]} data - A list of feeds the user can subscribe to.
+     */
+    _loadFeedOptions(data) {
+        var template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
+        for (var i = 0; i &lt; data.length; i++) {
+            var addableData = {
+                addableTitle: data[i][&apos;title&apos;],
+                addableID: data[i][&apos;id&apos;],
+                addableImage: data[i][&apos;image_url&apos;]
+            };
+            var feedOption = $(Mustache.render(template, addableData));
+            var subscribeButton = $(feedOption.find(&quot;.subscribeButton&quot;));
+            var _follow = this._follow.bind(this);
+            subscribeButton.click(function () {
+                _follow($(this).parent());
+            });
+            var feedIcon = $(feedOption.find(&quot;.feedIcon&quot;));
+            feedIcon.on( &quot;error&quot;, function () {
+                $(this).unbind(&quot;error&quot;).attr(&quot;src&quot;, &quot;static/images/noAvatar.png&quot;);
+            });
+            $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
+        }
+    }
+
+    /**
+     * Subscribe to a new feed, calls the zeeguu server.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Element} feed - Document element containing the id of the feed.
+     */
+    _follow(feed) {
+        var feedID = $(feed).attr(&apos;addableID&apos;);
+        var callback = ((data) =&gt; this._onFeedFollowed(feed, data)).bind(this);
+        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, callback);
+    }
+
+    /**
+     * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
+     * mentioned feed from the addable feed list.
+     * Callback function for Zeeguu.
+     * @param {Element} feed - Document element containing the id of the feed.
+     * @param {string} data - Reply from the server.
+     */
+    _onFeedFollowed(feed, data) {
+        if (data == &quot;OK&quot;) {
+            this.subscriptionList.load();
+            $(feed).fadeOut();
+        }
+    }
+};
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

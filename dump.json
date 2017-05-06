@@ -1,0 +1,2509 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "app/config.js",
+    "content": "export default {\n    /* These are all constants used in the UMR javascript. */\n    ZEEGUU_SERVER: 'https://zeeguu.unibe.ch/api',\n    ZEEGUU_SESSION: 'sessionID',\n    RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',\n    FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',\n    UNFOLLOW_FEED_ENDPOINT: '/stop_following_feed',\n    GET_TRANSLATIONS_ENDPOINT: '/get_possible_translations',\n    GET_FEEDS_BEING_FOLLOWED: '/get_feeds_being_followed',\n    GET_FEED_ITEMS: '/get_feed_items_with_metrics',\n    GET_AVAILABLE_LANGUAGES: '/available_languages',\n    TO_LANGUAGE: 'en',\n    ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',\n    HTML_ZEEGUUTAG: 'ZEEGUU',\n    HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',\n    HTML_ATTRIBUTE_TRANSLATION: 'translation',\n    HTML_ID_ARTICLE_URL: '#articleURL',\n    HTML_ID_ARTICLE_TITLE: '#articleTitle',\n    HTML_ID_TOGGLETRANSLATE: '#toggle_translate',\n    HTML_ID_ALTERMENU: '#alterMenu',\n    HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',\n    HTML_ID_ARTICLELINK_TEMPLATE: '#articleLink-template',\n    HTML_ID_ARTICLELINK_LIST: '#articleLinkList',\n    HTML_ID_SUBSCRIPTION_TEMPLATE: '#subscription-template',\n    HTML_ID_SUBSCRIPTION_LIST: \"#subscriptionList\",\n    HTML_ID_ADDSUBSCRIPTION_TEMPLATE: '#feedAddable-template',\n    HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',\n    HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',\n    HTML_CLASS_LOADER: '.loader'\n};\n",
+    "static": true,
+    "longname": "app/config.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "file",
+    "name": "app/subscription/ArticleList.js",
+    "content": "import $ from 'jquery';\nimport Mustache from 'mustache';\nimport config from '../config';\nimport ZeeguuRequests from '../zeeguuRequests';\n\n/**\n * Manages a list of article links.\n */\nexport default class ArticleList {\n    /**\n     * Call zeeguu and get the articles for the given feed 'subscription'.\n     * Uses {@link ZeeguuRequests}.\n     * @param {Object} subscription - The feed to retrieve articles from.\n     */\n    load(subscription) {\n        $(config.HTML_CLASS_LOADER).show();\n        var callback = (data) => this._loadArticleLinks(subscription, data);\n        ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);\n    };\n\n    /**\n     * Remove all articles from the list.\n     */\n    clear() {\n        $(config.HTML_ID_ARTICLELINK_LIST).empty();\n    };\n\n    /**\n     * Remove all articles from the list associated with the given feed.\n     * @param {string} feedID - The identification code associated with the feed.\n     */\n    remove(feedID) {\n        $('li[articleLinkFeedID=\"' + feedID + '\"]').remove();\n    };\n\n    /**\n     * Generate all the article links from a particular feed.\n     * Callback function for the zeeguu request.\n     * @param {Object} subscriptionData - The feed the articles are from.\n     * @param {Object[]} data - List containing the articles for the feed.\n     */\n    _loadArticleLinks(subscriptionData, data) {\n        var template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();\n        for (var i = 0; i < data.length; i++) {\n            var difficulty = Math.round(parseFloat(data[i].metrics.difficulty.normalized) * 100) / 10;\n            var articleLinkData = {\n                articleLinkTitle: data[i].title,\n                articleLinkURL: data[i].url,\n                articleLinkFeedID: subscriptionData.subscriptionID,\n                articleLinkLanguage: subscriptionData.subscriptionLanguage,\n                articleDifficultyDiscrete: data[i].metrics.difficulty.discrete,\n                articleDifficulty: difficulty,\n                articleSummary: $('<p>' + data[i].summary + '</p>').text(),\n                articleIcon: subscriptionData.subscriptionIcon\n            };\n            $(config.HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, articleLinkData));\n        }\n        $(config.HTML_CLASS_LOADER).fadeOut('slow');\n    }\n};\n",
+    "static": true,
+    "longname": "app/subscription/ArticleList.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 2,
+    "kind": "class",
+    "name": "ArticleList",
+    "memberof": "app/subscription/ArticleList.js",
+    "static": true,
+    "longname": "app/subscription/ArticleList.js~ArticleList",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/subscription/ArticleList.js",
+    "importStyle": "ArticleList",
+    "description": "Manages a list of article links.",
+    "lineNumber": 9,
+    "interface": false
+  },
+  {
+    "__docId__": 3,
+    "kind": "method",
+    "name": "load",
+    "memberof": "app/subscription/ArticleList.js~ArticleList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/ArticleList.js~ArticleList#load",
+    "access": null,
+    "description": "Call zeeguu and get the articles for the given feed 'subscription'.\nUses {@link ZeeguuRequests}.",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "subscription",
+        "description": "The feed to retrieve articles from."
+      }
+    ]
+  },
+  {
+    "__docId__": 4,
+    "kind": "method",
+    "name": "clear",
+    "memberof": "app/subscription/ArticleList.js~ArticleList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/ArticleList.js~ArticleList#clear",
+    "access": null,
+    "description": "Remove all articles from the list.",
+    "lineNumber": 24,
+    "params": []
+  },
+  {
+    "__docId__": 5,
+    "kind": "method",
+    "name": "remove",
+    "memberof": "app/subscription/ArticleList.js~ArticleList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/ArticleList.js~ArticleList#remove",
+    "access": null,
+    "description": "Remove all articles from the list associated with the given feed.",
+    "lineNumber": 32,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feedID",
+        "description": "The identification code associated with the feed."
+      }
+    ]
+  },
+  {
+    "__docId__": 6,
+    "kind": "method",
+    "name": "_loadArticleLinks",
+    "memberof": "app/subscription/ArticleList.js~ArticleList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/ArticleList.js~ArticleList#_loadArticleLinks",
+    "access": null,
+    "description": "Generate all the article links from a particular feed.\nCallback function for the zeeguu request.",
+    "lineNumber": 42,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "subscriptionData",
+        "description": "The feed the articles are from."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "List containing the articles for the feed."
+      }
+    ]
+  },
+  {
+    "__docId__": 7,
+    "kind": "file",
+    "name": "app/subscription/FeedSubscriber.js",
+    "content": "import $ from 'jquery';\nimport Mustache from 'mustache';\nimport config from '../config';\nimport ZeeguuRequests from '../zeeguuRequests';\n\n/**\n * Allows the user to add feed subscriptions.\n */\nexport default class FeedSubscriber {\n    /**\n     * Link the {@link SubscriptionList} with this instance so we can update it on change.\n     * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.\n     */\n    constructor(subscriptionList) {\n        this.subscriptionList = subscriptionList;\n        this.currentLanguage = 'nl';\n    }\n\n    /**\n     * Call Zeeguu and requests recommended feeds for the given language.\n     * If the language is not given, it simply uses the last used language.\n     * Uses {@link ZeeguuRequests}.\n     * @param {string} language - Language code.\n     * @example load('nl');\n     */\n    load(language) {\n        language = typeof language !== 'undefined' ? language : this.currentLanguage;\n        ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,\n                                {}, this._loadFeedOptions.bind(this));\n        this.currentLanguage = language;\n    };\n\n    /**\n     * Clear the list of feed options.\n     */\n    clear() {\n        $(config.HTML_ID_ADDSUBSCRIPTION_LIST).empty();\n    };\n\n    /**\n     * Return the language for the feed options currently displayed.\n     * @return {string} - The language of feed options currently on display.\n     */\n    getCurrentLanguage() {\n        return this.currentLanguage;\n    };\n\n    /**\n     * Fills the dialog's list with all the addable feeds.\n     * Callback function for zeeguu.\n     * @param {Object[]} data - A list of feeds the user can subscribe to.\n     */\n    _loadFeedOptions(data) {\n        var template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();\n        for (var i = 0; i < data.length; i++) {\n            var addableData = {\n                addableTitle: data[i]['title'],\n                addableID: data[i]['id'],\n                addableImage: data[i]['image_url']\n            };\n            var feedOption = $(Mustache.render(template, addableData));\n            var subscribeButton = $(feedOption.find(\".subscribeButton\"));\n            var _follow = this._follow.bind(this);\n            subscribeButton.click(function () {\n                _follow($(this).parent());\n            });\n            var feedIcon = $(feedOption.find(\".feedIcon\"));\n            feedIcon.on( \"error\", function () {\n                $(this).unbind(\"error\").attr(\"src\", \"static/images/noAvatar.png\");\n            });\n            $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);\n        }\n    }\n\n    /**\n     * Subscribe to a new feed, calls the zeeguu server.\n     * Uses {@link ZeeguuRequests}.\n     * @param {Element} feed - Document element containing the id of the feed.\n     */\n    _follow(feed) {\n        var feedID = $(feed).attr('addableID');\n        var callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);\n        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, callback);\n    }\n\n    /**\n     * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the\n     * mentioned feed from the addable feed list.\n     * Callback function for Zeeguu.\n     * @param {Element} feed - Document element containing the id of the feed.\n     * @param {string} data - Reply from the server.\n     */\n    _onFeedFollowed(feed, data) {\n        if (data == \"OK\") {\n            this.subscriptionList.load();\n            $(feed).fadeOut();\n        }\n    }\n};\n",
+    "static": true,
+    "longname": "app/subscription/FeedSubscriber.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 8,
+    "kind": "class",
+    "name": "FeedSubscriber",
+    "memberof": "app/subscription/FeedSubscriber.js",
+    "static": true,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/subscription/FeedSubscriber.js",
+    "importStyle": "FeedSubscriber",
+    "description": "Allows the user to add feed subscriptions.",
+    "lineNumber": 9,
+    "interface": false
+  },
+  {
+    "__docId__": 9,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#constructor",
+    "access": null,
+    "description": "Link the {@link SubscriptionList} with this instance so we can update it on change.",
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "SubscriptionList"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "subscriptionList",
+        "description": "Local (!) list of currently subscribed-to feeds."
+      }
+    ]
+  },
+  {
+    "__docId__": 10,
+    "kind": "member",
+    "name": "subscriptionList",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#subscriptionList",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 11,
+    "kind": "member",
+    "name": "currentLanguage",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#currentLanguage",
+    "access": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "name": "load",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#load",
+    "access": null,
+    "description": "Call Zeeguu and requests recommended feeds for the given language.\nIf the language is not given, it simply uses the last used language.\nUses {@link ZeeguuRequests}.",
+    "examples": [
+      "load('nl');"
+    ],
+    "lineNumber": 26,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "language",
+        "description": "Language code."
+      }
+    ]
+  },
+  {
+    "__docId__": 13,
+    "kind": "member",
+    "name": "currentLanguage",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#currentLanguage",
+    "access": null,
+    "description": null,
+    "lineNumber": 30,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "name": "clear",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#clear",
+    "access": null,
+    "description": "Clear the list of feed options.",
+    "lineNumber": 36,
+    "params": []
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "name": "getCurrentLanguage",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#getCurrentLanguage",
+    "access": null,
+    "description": "Return the language for the feed options currently displayed.",
+    "lineNumber": 44,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "The language of feed options currently on display."
+    }
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "name": "_loadFeedOptions",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#_loadFeedOptions",
+    "access": null,
+    "description": "Fills the dialog's list with all the addable feeds.\nCallback function for zeeguu.",
+    "lineNumber": 53,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "A list of feeds the user can subscribe to."
+      }
+    ]
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "name": "_follow",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#_follow",
+    "access": null,
+    "description": "Subscribe to a new feed, calls the zeeguu server.\nUses {@link ZeeguuRequests}.",
+    "lineNumber": 80,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feed",
+        "description": "Document element containing the id of the feed."
+      }
+    ]
+  },
+  {
+    "__docId__": 18,
+    "kind": "method",
+    "name": "_onFeedFollowed",
+    "memberof": "app/subscription/FeedSubscriber.js~FeedSubscriber",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/FeedSubscriber.js~FeedSubscriber#_onFeedFollowed",
+    "access": null,
+    "description": "A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the\nmentioned feed from the addable feed list.\nCallback function for Zeeguu.",
+    "lineNumber": 93,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feed",
+        "description": "Document element containing the id of the feed."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Reply from the server."
+      }
+    ]
+  },
+  {
+    "__docId__": 19,
+    "kind": "file",
+    "name": "app/subscription/LanguageMenu.js",
+    "content": "import $ from 'jquery';\nimport config from '../config';\nimport Mustache from 'mustache';\nimport ZeeguuRequests from '../zeeguuRequests';\n\n/**\n * Retrieves the available languages of Zeeguu and fills\n * the {@link FeedSubscriber}'s dialog with these options.\n */\nexport default class LanguageMenu {\n    /**\n     * Link the {@link FeedSubscriber} to this instance.\n     * @param {FeedSubcriber} feedSubscriber - List of non-subscribed feeds to update.\n     */\n    constructor(feedSubscriber) {\n        this.feedSubscriber = feedSubscriber;\n    }\n\n    /**\n     * Load the available languages for the dialog.\n     * Uses {@link ZeeguuRequests}.\n     */\n    load() {\n        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));\n    }\n\n    /**\n     * Generates all the available language options as buttons in the dialog.\n     * Callback function from the zeeguu request.\n     * @param {string} data - JSON string of an array of language codes.\n     */\n    _loadLanguageOptions(data)\n    {\n        var options = JSON.parse(data);\n        var template = $(config.HTML_ID_LANGUAGEOPTION_TEMPLATE).html();\n        options.sort();\n        for (var i=0; i < options.length; ++i)\n        {\n            var languageOptionData = {\n                languageOptionCode: options[i]\n            }\n            var languageOption = $(Mustache.render(template, languageOptionData));\n            var feedSubscriber = this.feedSubscriber;\n            languageOption.on('click', function () {\n                feedSubscriber.clear();\n                feedSubscriber.load($(this).attr('id'));\n            });\n            $(\"#languageOptionList\").append(languageOption);\n        }\n    }\n};\n",
+    "static": true,
+    "longname": "app/subscription/LanguageMenu.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 20,
+    "kind": "class",
+    "name": "LanguageMenu",
+    "memberof": "app/subscription/LanguageMenu.js",
+    "static": true,
+    "longname": "app/subscription/LanguageMenu.js~LanguageMenu",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/subscription/LanguageMenu.js",
+    "importStyle": "LanguageMenu",
+    "description": "Retrieves the available languages of Zeeguu and fills\nthe {@link FeedSubscriber}'s dialog with these options.",
+    "lineNumber": 10,
+    "interface": false
+  },
+  {
+    "__docId__": 21,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/subscription/LanguageMenu.js~LanguageMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/LanguageMenu.js~LanguageMenu#constructor",
+    "access": null,
+    "description": "Link the {@link FeedSubscriber} to this instance.",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "FeedSubcriber"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feedSubscriber",
+        "description": "List of non-subscribed feeds to update."
+      }
+    ]
+  },
+  {
+    "__docId__": 22,
+    "kind": "member",
+    "name": "feedSubscriber",
+    "memberof": "app/subscription/LanguageMenu.js~LanguageMenu",
+    "static": false,
+    "longname": "app/subscription/LanguageMenu.js~LanguageMenu#feedSubscriber",
+    "access": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "name": "load",
+    "memberof": "app/subscription/LanguageMenu.js~LanguageMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/LanguageMenu.js~LanguageMenu#load",
+    "access": null,
+    "description": "Load the available languages for the dialog.\nUses {@link ZeeguuRequests}.",
+    "lineNumber": 23,
+    "params": []
+  },
+  {
+    "__docId__": 24,
+    "kind": "method",
+    "name": "_loadLanguageOptions",
+    "memberof": "app/subscription/LanguageMenu.js~LanguageMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/LanguageMenu.js~LanguageMenu#_loadLanguageOptions",
+    "access": null,
+    "description": "Generates all the available language options as buttons in the dialog.\nCallback function from the zeeguu request.",
+    "lineNumber": 32,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "JSON string of an array of language codes."
+      }
+    ]
+  },
+  {
+    "__docId__": 25,
+    "kind": "file",
+    "name": "app/subscription/SubscriptionList.js",
+    "content": "import $ from 'jquery'\nimport Mustache from 'mustache';\nimport config from '../config';\nimport ZeeguuRequests from '../zeeguuRequests';\n\n/**\n * Shows a list of all subscribed feeds, allows the user to remove them.\n * It updates the {@link ArticleList} accordingly.\n */\nexport default class SubscriptionList {\n    /**\n     * Bind with the {@link ArticleList} and initialise an empty list of feeds.\n     * @param {ArticleList} articleList - List of all articles available to the user.\n     */\n    constructor(articleList) {\n        this.articleList = articleList;\n        this.feedList = new Set();\n    }\n\n    /**\n     *  Call zeeguu and retrieve all currently subscribed feeds.\n     *  Uses {@link ZeeguuRequests}.\n     */\n    load() {\n        ZeeguuRequests.get(config.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));\n    };\n\n    /**\n     * Remove all feeds from the list, clear {@link ArticleList} as well.\n     */\n    clear() {\n        $(config.HTML_ID_SUBSCRIPTION_LIST).empty();\n        this.articleList.clear();\n    };\n\n    /**\n     * Call clear and load successively.\n     */\n    refresh() {\n        // Refresh the feed list.\n        this.clear();\n        this.load();\n    };\n\n    /**\n     * Fills the subscription list with all the subscribed feeds.\n     * Callback function for the zeeguu request,\n     * makes a call to {@link ArticleList} in order to load the feed's associated articles.\n     * @param {Object[]} data - List containing the feeds the user is subscribed to.\n     */\n    _loadSubscriptions(data) {\n        var template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();\n        for (var i = 0; i < data.length; i++) {\n            var subscriptionData = {\n                subscriptionTitle: data[i]['title'],\n                subscriptionID: data[i]['id'],\n                subscriptionLanguage: data[i]['language'],\n                subscriptionIcon: data[i]['image_url']\n            };\n            var subscription = $(Mustache.render(template, subscriptionData));\n            var removeButton = $(subscription.find(\".removeButton\"));\n            var _unfollow = this._unfollow.bind(this);\n            removeButton.click(function() {\n                _unfollow($(this).parent());\n            });\n            if (!this.feedList.has(Number(subscriptionData['subscriptionID']))) {                \n                $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);\n                this.articleList.load(subscriptionData);\n            }             \n            this.feedList.add(Number(subscriptionData['subscriptionID']));\n        }\n    }\n\n    /**\n     * Un-subscribe from a feed, call the zeeguu server.\n     * Uses {@link ZeeguuRequests}.\n     * @param {Element} feed - Feed element of the list to un-subscribe from.\n     */\n    _unfollow(feed) {\n        var removableID = $(feed).attr('removableID');\n        var callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);\n        ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + \"/\" + removableID,\n                            {}, callback);\n    }\n\n    /**\n     * A feed has just been removed, so we remove the mentioned feed from the subscription list.\n     * Callback function for zeeguu.\n     * @param {Element} feed - Feed element of the list that is to be removed.\n     * @param {string} data - Server reply.\n     */\n    _onFeedUnfollowed(feed, data) {\n        if (data == \"OK\") {\n            this._remove(feed);\n        }\n    }\n\n    /**\n     * Remove a mentioned feed from the local list (not from the zeeguu list).\n     * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.\n     * @param {Element} feedNode - The document element (feed) to remove.\n     */\n    _remove(feedNode) {\n        var feedID = $(feedNode).attr('removableID');\n        this.articleList.remove(feedID);\n        if (!this.feedList.delete(Number(feedID)))  { console.log(\"Error\"); }\n        $(feedNode).fadeOut();\n    }\n};",
+    "static": true,
+    "longname": "app/subscription/SubscriptionList.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 26,
+    "kind": "class",
+    "name": "SubscriptionList",
+    "memberof": "app/subscription/SubscriptionList.js",
+    "static": true,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/subscription/SubscriptionList.js",
+    "importStyle": "SubscriptionList",
+    "description": "Shows a list of all subscribed feeds, allows the user to remove them.\nIt updates the {@link ArticleList} accordingly.",
+    "lineNumber": 10,
+    "interface": false
+  },
+  {
+    "__docId__": 27,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#constructor",
+    "access": null,
+    "description": "Bind with the {@link ArticleList} and initialise an empty list of feeds.",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "ArticleList"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "articleList",
+        "description": "List of all articles available to the user."
+      }
+    ]
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "name": "articleList",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#articleList",
+    "access": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "member",
+    "name": "feedList",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#feedList",
+    "access": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "name": "load",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#load",
+    "access": null,
+    "description": " Call zeeguu and retrieve all currently subscribed feeds.\n Uses {@link ZeeguuRequests}.",
+    "lineNumber": 24,
+    "params": []
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "name": "clear",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#clear",
+    "access": null,
+    "description": "Remove all feeds from the list, clear {@link ArticleList} as well.",
+    "lineNumber": 31,
+    "params": []
+  },
+  {
+    "__docId__": 32,
+    "kind": "method",
+    "name": "refresh",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#refresh",
+    "access": null,
+    "description": "Call clear and load successively.",
+    "lineNumber": 39,
+    "params": []
+  },
+  {
+    "__docId__": 33,
+    "kind": "method",
+    "name": "_loadSubscriptions",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#_loadSubscriptions",
+    "access": null,
+    "description": "Fills the subscription list with all the subscribed feeds.\nCallback function for the zeeguu request,\nmakes a call to {@link ArticleList} in order to load the feed's associated articles.",
+    "lineNumber": 51,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "List containing the feeds the user is subscribed to."
+      }
+    ]
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "name": "_unfollow",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#_unfollow",
+    "access": null,
+    "description": "Un-subscribe from a feed, call the zeeguu server.\nUses {@link ZeeguuRequests}.",
+    "lineNumber": 79,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feed",
+        "description": "Feed element of the list to un-subscribe from."
+      }
+    ]
+  },
+  {
+    "__docId__": 35,
+    "kind": "method",
+    "name": "_onFeedUnfollowed",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#_onFeedUnfollowed",
+    "access": null,
+    "description": "A feed has just been removed, so we remove the mentioned feed from the subscription list.\nCallback function for zeeguu.",
+    "lineNumber": 92,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feed",
+        "description": "Feed element of the list that is to be removed."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "data",
+        "description": "Server reply."
+      }
+    ]
+  },
+  {
+    "__docId__": 36,
+    "kind": "method",
+    "name": "_remove",
+    "memberof": "app/subscription/SubscriptionList.js~SubscriptionList",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/subscription/SubscriptionList.js~SubscriptionList#_remove",
+    "access": null,
+    "description": "Remove a mentioned feed from the local list (not from the zeeguu list).\nMakes sure the associated articles are removed as well by notifying {@link ArticleList}.",
+    "lineNumber": 103,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Element"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "feedNode",
+        "description": "The document element (feed) to remove."
+      }
+    ]
+  },
+  {
+    "__docId__": 37,
+    "kind": "file",
+    "name": "app/subscription/main.js",
+    "content": "import $ from 'jquery';\nimport ArticleList from './ArticleList';\nimport SubscriptionList from './SubscriptionList';\nimport FeedSubscriber from './FeedSubscriber';\nimport dialogPolyfill from 'dialog-polyfill';\nimport LanguageMenu from './LanguageMenu';\n\n/* Script that binds listeners to html events, such that the\n * correct object is called to handle it. */\nvar articleList = new ArticleList();\nvar subscriptionList = new SubscriptionList(articleList);\nvar feedSubscriber = new FeedSubscriber(subscriptionList);\nvar languageMenu = new LanguageMenu(feedSubscriber);\n\n\n/* When the document has finished loading,\n * bind all necessary listeners. */\n$(document).ready(function() {\n    subscriptionList.load();\n    feedSubscriber.load();\n    languageMenu.load();\n\n    var addFeedDialog = document.querySelector('dialog');\n    var showAddFeedDialogButton = document.querySelector('.show-modal');\n\n    // Some browsers do not support dialog, for that we use Polyfill.\n    if (!addFeedDialog.showModal)\n        dialogPolyfill.registerDialog(addFeedDialog);\n\n    // Open and closing of the dialog is handled here.\n    showAddFeedDialogButton.addEventListener('click', function () {\n        addFeedDialog.showModal();\n        $('#' + feedSubscriber.getCurrentLanguage()).focus();\n    });\n\n    addFeedDialog.querySelector('.close').addEventListener('click', function () {\n        addFeedDialog.close();\n    });\n});\n\n/* Called when no image could be loaded as an article avatar. */\nfunction noAvatar(image) {\n    image.src = noAvatarURL;\n}",
+    "static": true,
+    "longname": "app/subscription/main.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 38,
+    "kind": "variable",
+    "name": "articleList",
+    "memberof": "app/subscription/main.js",
+    "static": true,
+    "longname": "app/subscription/main.js~articleList",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/subscription/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "app/subscription/ArticleList.js~ArticleList"
+      ]
+    }
+  },
+  {
+    "__docId__": 39,
+    "kind": "variable",
+    "name": "subscriptionList",
+    "memberof": "app/subscription/main.js",
+    "static": true,
+    "longname": "app/subscription/main.js~subscriptionList",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/subscription/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "app/subscription/SubscriptionList.js~SubscriptionList"
+      ]
+    }
+  },
+  {
+    "__docId__": 40,
+    "kind": "variable",
+    "name": "feedSubscriber",
+    "memberof": "app/subscription/main.js",
+    "static": true,
+    "longname": "app/subscription/main.js~feedSubscriber",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/subscription/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "app/subscription/FeedSubscriber.js~FeedSubscriber"
+      ]
+    }
+  },
+  {
+    "__docId__": 41,
+    "kind": "variable",
+    "name": "languageMenu",
+    "memberof": "app/subscription/main.js",
+    "static": true,
+    "longname": "app/subscription/main.js~languageMenu",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/subscription/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "app/subscription/LanguageMenu.js~LanguageMenu"
+      ]
+    }
+  },
+  {
+    "__docId__": 42,
+    "kind": "function",
+    "name": "noAvatar",
+    "memberof": "app/subscription/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/subscription/main.js~noAvatar",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/subscription/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 42,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "image",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 43,
+    "kind": "file",
+    "name": "app/translation/AlterMenu.js",
+    "content": "import $ from 'jquery';\nimport config from '../config'\nimport Notifier from './Notifier'\n\n/**\n * Class that allows for choosing alternative zeeguu translations.\n */\nexport default class AlterMenu {\n    constructor() {\n        this.menuOpen = false;\n        this.notifier = new Notifier();\n    }\n\n    /* Creates and opens the alternative translation menu. */\n    constructAndOpen(zeeguuTag) {\n        // Check how many alternatives there are, if less than 2: abort.\n        var transCount = parseInt(zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT));\n        if (transCount < 2) {\n            this.notifier.notify(\"Sorry, no alternatives.\");\n            return;\n        }\n        this.construct(zeeguuTag, transCount);\n        this._place(zeeguuTag);\n        $(config.HTML_ID_ALTERMENU).slideDown(function () {\n            this.menuOpen = true\n        }.bind(this));\n    };\n\n    /* Add buttons with click listeners that replace the translation. */\n    construct(zeeguuTag, transCount) {\n        $(config.HTML_ID_ALTERMENU).empty();\n        for (var i = 0; i < transCount; i++) {\n            var button = document.createElement('button');\n            var alternative = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i);\n            button.textContent = alternative;\n            $(button).addClass(\"mdl-button\").addClass(\"mdl-js-button\").addClass(\"mdl-js-ripple-effect\");\n            $(config.HTML_ID_ALTERMENU).append($(button));\n            $(button).click({zeeguuTag: zeeguuTag, alternative: i}, this._swapPrimaryTranslation);\n        }\n    }\n\n    /* Swaps the HTML_ATTRIBUTE_TRANSLATION 0 with the new preferred translation attribute. */\n    _swapPrimaryTranslation(selectedAlternative) {\n        var zeeguuTag = selectedAlternative.data.zeeguuTag;\n        var alternative = selectedAlternative.data.alternative;\n        var oldText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + '0');\n        var newText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative);\n        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + '0', newText);\n        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);\n    }\n\n    /* Places the alter menu below the to-be-altered word. */\n    _place(zeeguuTag) {\n        var position = $(zeeguuTag).position();\n        var tagHeight = $(zeeguuTag).outerHeight();\n        var tagWidth = $(zeeguuTag).outerWidth();\n        var menuWidth = $(config.HTML_ID_ALTERMENU).outerWidth();\n        var topScroll = $(\".mdl-layout__content\").scrollTop();\n        $(zeeguuTag).append($(config.HTML_ID_ALTERMENU));\n        $(config.HTML_ID_ALTERMENU).css({\n            position: \"absolute\",\n            maxWidth: \"80%\",\n            display: \"inline-block\",\n            left: position.left + (tagWidth - menuWidth) / 2 + \"px\",\n            top: position.top + tagHeight + topScroll + \"px\"\n        });\n        $(config.HTML_ID_ALTERMENU).hide();\n    }\n\n    reposition() {\n        this._place($(config.HTML_ID_ALTERMENU).parent());\n        $(config.HTML_ID_ALTERMENU).show();\n    };\n\n    /* Hides the alter menu. */\n    close() {\n        $(config.HTML_ID_ALTERMENU).slideUp(function () {\n            $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));\n            this.menuOpen = false;\n        }.bind(this));\n    };\n\n    isOpen() {\n        return this.menuOpen;\n    };\n};\n",
+    "static": true,
+    "longname": "app/translation/AlterMenu.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 44,
+    "kind": "class",
+    "name": "AlterMenu",
+    "memberof": "app/translation/AlterMenu.js",
+    "static": true,
+    "longname": "app/translation/AlterMenu.js~AlterMenu",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/translation/AlterMenu.js",
+    "importStyle": "AlterMenu",
+    "description": "Class that allows for choosing alternative zeeguu translations.",
+    "lineNumber": 8,
+    "interface": false
+  },
+  {
+    "__docId__": 45,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 46,
+    "kind": "member",
+    "name": "menuOpen",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#menuOpen",
+    "access": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 47,
+    "kind": "member",
+    "name": "notifier",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#notifier",
+    "access": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 48,
+    "kind": "method",
+    "name": "constructAndOpen",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#constructAndOpen",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 49,
+    "kind": "member",
+    "name": "menuOpen",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#menuOpen",
+    "access": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 50,
+    "kind": "method",
+    "name": "construct",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#construct",
+    "access": null,
+    "description": null,
+    "lineNumber": 30,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "transCount",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 51,
+    "kind": "method",
+    "name": "_swapPrimaryTranslation",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#_swapPrimaryTranslation",
+    "access": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "selectedAlternative",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 52,
+    "kind": "method",
+    "name": "_place",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#_place",
+    "access": null,
+    "description": null,
+    "lineNumber": 53,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 53,
+    "kind": "method",
+    "name": "reposition",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#reposition",
+    "access": null,
+    "description": null,
+    "lineNumber": 70,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 54,
+    "kind": "method",
+    "name": "close",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#close",
+    "access": null,
+    "description": null,
+    "lineNumber": 76,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 55,
+    "kind": "member",
+    "name": "menuOpen",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#menuOpen",
+    "access": null,
+    "description": null,
+    "lineNumber": 79,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 56,
+    "kind": "method",
+    "name": "isOpen",
+    "memberof": "app/translation/AlterMenu.js~AlterMenu",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/AlterMenu.js~AlterMenu#isOpen",
+    "access": null,
+    "description": null,
+    "lineNumber": 83,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "file",
+    "name": "app/translation/Notifier.js",
+    "content": "import $ from 'jquery';\n\n/**\n * Allows for small pop-up messages.\n * Does not repeat the same message if it is still displaying it.\n */\nexport default class Notifier {\n    constructor() {\n        this.lastMessage = \"\";\n    };\n\n    /* Notify the user of <message>. */\n    notify (message) {\n        var snackbar = document.querySelector('.mdl-js-snackbar');\n        if (this.lastMessage == message && $(snackbar).hasClass('mdl-snackbar--active'))\n            return;\n        snackbar.MaterialSnackbar.showSnackbar({message: message});\n        this.lastMessage = message;\n    };\n};",
+    "static": true,
+    "longname": "app/translation/Notifier.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 58,
+    "kind": "class",
+    "name": "Notifier",
+    "memberof": "app/translation/Notifier.js",
+    "static": true,
+    "longname": "app/translation/Notifier.js~Notifier",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/translation/Notifier.js",
+    "importStyle": "Notifier",
+    "description": "Allows for small pop-up messages.\nDoes not repeat the same message if it is still displaying it.",
+    "lineNumber": 7,
+    "interface": false
+  },
+  {
+    "__docId__": 59,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "app/translation/Notifier.js~Notifier",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/Notifier.js~Notifier#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 60,
+    "kind": "member",
+    "name": "lastMessage",
+    "memberof": "app/translation/Notifier.js~Notifier",
+    "static": false,
+    "longname": "app/translation/Notifier.js~Notifier#lastMessage",
+    "access": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "method",
+    "name": "notify",
+    "memberof": "app/translation/Notifier.js~Notifier",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/Notifier.js~Notifier#notify",
+    "access": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "message",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 62,
+    "kind": "member",
+    "name": "lastMessage",
+    "memberof": "app/translation/Notifier.js~Notifier",
+    "static": false,
+    "longname": "app/translation/Notifier.js~Notifier#lastMessage",
+    "access": null,
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 63,
+    "kind": "file",
+    "name": "app/translation/Translator.js",
+    "content": "import $ from 'jquery';\nimport ZeeguuRequests from '../zeeguuRequests'\nimport config from '../config'\n\n/* Class that allows for translating zeeguu tags. */\nexport default class Translator {\n    /* Merges the zeeguutag with the surrounding translated\n     * zeeguutags, and then inserts translations for the tag's content.*/\n    translate(zeeguuTag) {\n        this._mergeZeeguu(zeeguuTag);\n        \n        $(zeeguuTag).addClass('loading'); // adds it to the loading animation class\n        \n        var text = zeeguuTag.textContent;\n        var context = this._getContext(zeeguuTag);\n        var url = $(config.HTML_ID_ARTICLE_URL).text();\n        var title = $(config.HTML_ID_ARTICLE_TITLE).text();\n\n        var callback = (data) => this._setTranslations(zeeguuTag, data);\n        // Launch zeeguu request to fill translation options.\n        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,\n                           {word: text, context: context, url: url, title: title}, callback);\n    }\n\n    isTranslated(zeeguuTag) {\n        return zeeguuTag.hasAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT);\n    }\n\n    /* This method handles the zeeguu request returned values,\n     * and thus actually inserts the returned translations. */\n    _setTranslations(zeeguuTag, translations) {\n        translations = translations.translations;\n        var transCount = Math.min(translations.length, 3);\n        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);\n        for (var i = 0; i < transCount; i++)\n            zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);\n\n        $(zeeguuTag).removeClass('loading'); // removes the animation class\n    }\n\n    _getContext(zeeguuTag) {\n        return zeeguuTag.parentElement.textContent;\n    }\n\n    /* Merges the translated zeeguutags surrounding the given zeeguutag. */\n    _mergeZeeguu(zeeguuTag) {\n        var spaces = '';\n        var node = zeeguuTag.previousSibling;\n        while (node && node.textContent == ' ') {\n            node = node.previousSibling;\n            spaces += ' ';\n        }\n        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {\n            zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;\n            node.parentNode.removeChild(node);\n        }\n        spaces = '';\n        node = zeeguuTag.nextSibling;\n        while (node && node.textContent == ' ') {\n            node = node.nextSibling;\n            spaces += ' ';\n\n        }\n        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {\n            zeeguuTag.textContent += spaces + node.textContent;\n            node.parentNode.removeChild(node);\n        }\n    }\n};",
+    "static": true,
+    "longname": "app/translation/Translator.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 64,
+    "kind": "class",
+    "name": "Translator",
+    "memberof": "app/translation/Translator.js",
+    "static": true,
+    "longname": "app/translation/Translator.js~Translator",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/translation/Translator.js",
+    "importStyle": "Translator",
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 65,
+    "kind": "method",
+    "name": "translate",
+    "memberof": "app/translation/Translator.js~Translator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/Translator.js~Translator#translate",
+    "access": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 66,
+    "kind": "method",
+    "name": "isTranslated",
+    "memberof": "app/translation/Translator.js~Translator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/Translator.js~Translator#isTranslated",
+    "access": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "method",
+    "name": "_setTranslations",
+    "memberof": "app/translation/Translator.js~Translator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/Translator.js~Translator#_setTranslations",
+    "access": null,
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "translations",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 68,
+    "kind": "method",
+    "name": "_getContext",
+    "memberof": "app/translation/Translator.js~Translator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/Translator.js~Translator#_getContext",
+    "access": null,
+    "description": null,
+    "lineNumber": 41,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "method",
+    "name": "_mergeZeeguu",
+    "memberof": "app/translation/Translator.js~Translator",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "app/translation/Translator.js~Translator#_mergeZeeguu",
+    "access": null,
+    "description": null,
+    "lineNumber": 46,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "zeeguuTag",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 70,
+    "kind": "file",
+    "name": "app/translation/main.js",
+    "content": "import $ from 'jquery';\nimport config from '../config';\nimport Translator from './Translator';\nimport AlterMenu from './AlterMenu'\n\n/* Script that binds listeners to html events, such that the\n * correct object is called to handle it. */\nvar translator = new Translator();\nvar alterMenu = new AlterMenu();\n\n/* When the document has finished loading,\n * bind all necessary listeners. */\n$(document).ready(function() {\n    disableHREF();\n\n    /* If you click anywhere in the translatable window,\n     * and the alterMenu is open, we close it. */\n    $('.translatable').click(function() {\n        if (alterMenu.isOpen())\n            alterMenu.close();\n    });\n\n    /* When the translate toggle is changed, we\n     * make sure that we disable or enable hyperlinks\n     * and close all translation tools. */\n    $(config.HTML_ID_TOGGLETRANSLATE).change(function()\n    {\n        if (this.checked)\n            disableHREF();\n        else\n        {\n            alterMenu.close();\n            enableHREF();\n        }\n    });\n\n    /* When a translatable word has been clicked,\n     * either try to translate it or open an alternative\n     * translation window.  */\n    $(config.HTML_ZEEGUUTAG).click(function() {\n        if (!$(config.HTML_ID_TOGGLETRANSLATE).is(':checked'))\n            return;\n\n        if (alterMenu.isOpen())\n            return;\n\n        if (translator.isTranslated(this)) {\n            alterMenu.constructAndOpen(this);\n        } else {\n            translator.translate(this);\n        }\n    });\n});\n\n/* Every time the screen changes, we need to\n * reposition the alter menu to be at the correct word\n * position. */\n$(window).on(\"resize\", function() {\n    if (alterMenu.isOpen())\n        alterMenu.reposition();\n});\n\n// Disable or enable links.\n// Done in this peculiar way as default link disabling methods do not\n// pass a proper text selection.\nfunction disableHREF()\n{\n    $('.translatable').find('a').each(function()\n    {\n        this.setAttribute('href_disabled',this.getAttribute('href'));\n        this.removeAttribute('href');\n    });\n}\n\nfunction enableHREF()\n{\n    $('.translatable').find('a').each(function()\n    {\n        this.setAttribute('href',this.getAttribute('href_disabled'));\n        this.removeAttribute('href_disabled');\n    });\n}",
+    "static": true,
+    "longname": "app/translation/main.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 71,
+    "kind": "variable",
+    "name": "translator",
+    "memberof": "app/translation/main.js",
+    "static": true,
+    "longname": "app/translation/main.js~translator",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/translation/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "app/translation/Translator.js~Translator"
+      ]
+    }
+  },
+  {
+    "__docId__": 72,
+    "kind": "variable",
+    "name": "alterMenu",
+    "memberof": "app/translation/main.js",
+    "static": true,
+    "longname": "app/translation/main.js~alterMenu",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/translation/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "app/translation/AlterMenu.js~AlterMenu"
+      ]
+    }
+  },
+  {
+    "__docId__": 73,
+    "kind": "function",
+    "name": "disableHREF",
+    "memberof": "app/translation/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/translation/main.js~disableHREF",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/translation/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 66,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 74,
+    "kind": "function",
+    "name": "enableHREF",
+    "memberof": "app/translation/main.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/translation/main.js~enableHREF",
+    "access": null,
+    "export": false,
+    "importPath": "zeeguu-umr/app/translation/main.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 75,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": []
+  },
+  {
+    "__docId__": 75,
+    "kind": "file",
+    "name": "app/zeeguuRequests.js",
+    "content": "import $ from 'jquery';\nimport config from './config'\n\n/**\n * Abstracts request to the Zeeguu API.\n * @see https://www.zeeguu.unibe.ch\n */\nexport default class ZeeguuRequests {\n    /**\n     * Retrieve the Zeeguu sessionID.\n     * @returns {?string} session - The session ID of the user, if present.\n     */\n    static session () {\n        return this._readCookie(config.ZEEGUU_SESSION);\n    }\n\n    /**\n     * Read a cookie, search for the attribute of a particular name and retrieve it.\n     * @param {string} name - The name of the attribute.\n     * @returns {?string} session - The session ID of the user, if present.\n     */\n    static _readCookie(name) {\n            var nameEQ = name + \"=\";\n            var ca = document.cookie.split(';');\n            for (var i = 0; i < ca.length; i++) {\n                var c = ca[i];\n                while (c.charAt(0) == ' ') c = c.substring(1, c.length);\n                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);\n            }\n            return '';\n        }\n\n    /**\n     * Send a GET request to the Zeeguu API.\n     * @param {string} endpoint - The endpoint to use.\n     * @param {string[]} requestData - Parameters to append.\n     * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.\n     */\n    static get (endpoint, requestData, responseHandler) {\n        requestData.session = this.session();\n        $.get(\n            config.ZEEGUU_SERVER + endpoint,\n            requestData,\n            responseHandler\n        );\n    }\n\n    /**\n     * Send a POST request to the Zeeguu API.\n     * @param {string} endpoint - The endpoint to use.\n     * @param {string[]} requestData - Parameters to append.\n     * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.\n     */\n    static post (endpoint, requestData, responseHandler) {\n        $.post(\n            config.ZEEGUU_SERVER + endpoint + \"?session=\" + this.session(),\n            requestData,\n            responseHandler\n        );\n    }\n}\n\n\n",
+    "static": true,
+    "longname": "app/zeeguuRequests.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 76,
+    "kind": "class",
+    "name": "ZeeguuRequests",
+    "memberof": "app/zeeguuRequests.js",
+    "static": true,
+    "longname": "app/zeeguuRequests.js~ZeeguuRequests",
+    "access": null,
+    "export": true,
+    "importPath": "zeeguu-umr/app/zeeguuRequests.js",
+    "importStyle": "ZeeguuRequests",
+    "description": "Abstracts request to the Zeeguu API.",
+    "see": [
+      "https://www.zeeguu.unibe.ch"
+    ],
+    "lineNumber": 8,
+    "interface": false
+  },
+  {
+    "__docId__": 77,
+    "kind": "method",
+    "name": "session",
+    "memberof": "app/zeeguuRequests.js~ZeeguuRequests",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/zeeguuRequests.js~ZeeguuRequests.session",
+    "access": null,
+    "description": "Retrieve the Zeeguu sessionID.",
+    "lineNumber": 13,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{?string} session - The session ID of the user, if present."
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "session - The session ID of the user, if present."
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "method",
+    "name": "_readCookie",
+    "memberof": "app/zeeguuRequests.js~ZeeguuRequests",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/zeeguuRequests.js~ZeeguuRequests._readCookie",
+    "access": null,
+    "description": "Read a cookie, search for the attribute of a particular name and retrieve it.",
+    "lineNumber": 22,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{?string} session - The session ID of the user, if present."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "The name of the attribute."
+      }
+    ],
+    "return": {
+      "nullable": true,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "session - The session ID of the user, if present."
+    }
+  },
+  {
+    "__docId__": 79,
+    "kind": "method",
+    "name": "get",
+    "memberof": "app/zeeguuRequests.js~ZeeguuRequests",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/zeeguuRequests.js~ZeeguuRequests.get",
+    "access": null,
+    "description": "Send a GET request to the Zeeguu API.",
+    "lineNumber": 39,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "endpoint",
+        "description": "The endpoint to use."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "requestData",
+        "description": "Parameters to append."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(data : string)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseHandler",
+        "description": "A function that can asynchronously handle the reply."
+      }
+    ]
+  },
+  {
+    "__docId__": 80,
+    "kind": "method",
+    "name": "post",
+    "memberof": "app/zeeguuRequests.js~ZeeguuRequests",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "app/zeeguuRequests.js~ZeeguuRequests.post",
+    "access": null,
+    "description": "Send a POST request to the Zeeguu API.",
+    "lineNumber": 54,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "endpoint",
+        "description": "The endpoint to use."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "requestData",
+        "description": "Parameters to append."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(data : string)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "responseHandler",
+        "description": "A function that can asynchronously handle the reply."
+      }
+    ]
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 95,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 96,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 97,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 98,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 99,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 100,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 101,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 102,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 103,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 104,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 105,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 106,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 107,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 108,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 109,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 110,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 111,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 112,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 113,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 114,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 115,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 116,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 117,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 118,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 119,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 120,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 121,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 122,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 123,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 124,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 125,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 126,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 127,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 128,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 130,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 131,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 132,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 133,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 134,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 135,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 136,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 137,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  }
+]

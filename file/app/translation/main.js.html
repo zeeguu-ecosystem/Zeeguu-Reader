@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl">
-  <title data-ice="title">Zeeguu UMR Client API Document</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">app/translation/main.js | Zeeguu UMR Client API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -44,36 +44,90 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="zeeguu-unified-multilanguage-reader">Zeeguu Unified-Multilanguage-Reader</h1>
-<p><a href="https://travis-ci.org/mircealungu/Unified-Multilanguage-Reader"><img src="https://travis-ci.org/mircealungu/Unified-Multilanguage-Reader.svg?branch=development_core" alt="Build Status"></a></p>
-<p>The Zeeguu Unified-Multilanguage-Reader (UMR) is a Python-based web application that implements a multilingual article reading and language learning service that can be deployed amoungst multiple platforms (such as android and IOS). It makes use of (and shares ties with) <a href="https://github.com/mircealungu/Zeeguu-API">the Zeeguu API</a>, for which an account can be requested on <a href="https://www.zeeguu.unibe.ch">the Zeeguu website</a>.</p>
-<p>The core system is a Flask based REST service. When a web article is requested from this system, it will perform the following modifications before returning this article:</p>
-<ul>
-<li>Format the article into a neatly readable form.</li>
-<li>Insert zeeguu javascript that allows users to translate words.</li>
-</ul>
-<h2 id="client-side-code-documentation">Client-side code documentation</h2>
-<p><img src="badge.svg" alt="Documentation Coverage"></p>
-<p>This document descibes the client side of the application, the javascript files served to the user&apos;s browser as part of a reply to certain REST calls.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Allow the user to manage their RSS feeds.</li>
-<li>Provide the user with a list of suggested articles.</li>
-<li>Allow the user with translation tools for these articles.</li>
-</ul>
-<h2 id="authors">Authors</h2>
-<p>Zeeguu UMR is at its core a University project (Rijksuniversiteit Groningen, Netherlands), developed by two students:</p>
-<ul>
-<li>Dan Chirtoaca</li>
-<li>Luc van den Brand</li>
-</ul>
-<p>Under the supervision of Dr. Mircea Lungu.</p>
-<h2 id="licence">Licence</h2>
-<p>The Zeeguu UMR project is open-source according to the definitions of the MIT-Licence.</p>
-<h1 id="dependencies-">Dependencies.</h1>
-<p>All javascript dependencies are listed in our package.js file on our repository, which can
-be used to easily setup your development environment.</p>
-</div>
+<div class="content" data-ice="content"><h1 data-ice="title">app/translation/main.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
+import config from &apos;../config&apos;;
+import Translator from &apos;./Translator&apos;;
+import AlterMenu from &apos;./AlterMenu&apos;
+
+/* Script that binds listeners to html events, such that the
+ * correct object is called to handle it. */
+var translator = new Translator();
+var alterMenu = new AlterMenu();
+
+/* When the document has finished loading,
+ * bind all necessary listeners. */
+$(document).ready(function() {
+    disableHREF();
+
+    /* If you click anywhere in the translatable window,
+     * and the alterMenu is open, we close it. */
+    $(&apos;.translatable&apos;).click(function() {
+        if (alterMenu.isOpen())
+            alterMenu.close();
+    });
+
+    /* When the translate toggle is changed, we
+     * make sure that we disable or enable hyperlinks
+     * and close all translation tools. */
+    $(config.HTML_ID_TOGGLETRANSLATE).change(function()
+    {
+        if (this.checked)
+            disableHREF();
+        else
+        {
+            alterMenu.close();
+            enableHREF();
+        }
+    });
+
+    /* When a translatable word has been clicked,
+     * either try to translate it or open an alternative
+     * translation window.  */
+    $(config.HTML_ZEEGUUTAG).click(function() {
+        if (!$(config.HTML_ID_TOGGLETRANSLATE).is(&apos;:checked&apos;))
+            return;
+
+        if (alterMenu.isOpen())
+            return;
+
+        if (translator.isTranslated(this)) {
+            alterMenu.constructAndOpen(this);
+        } else {
+            translator.translate(this);
+        }
+    });
+});
+
+/* Every time the screen changes, we need to
+ * reposition the alter menu to be at the correct word
+ * position. */
+$(window).on(&quot;resize&quot;, function() {
+    if (alterMenu.isOpen())
+        alterMenu.reposition();
+});
+
+// Disable or enable links.
+// Done in this peculiar way as default link disabling methods do not
+// pass a proper text selection.
+function disableHREF()
+{
+    $(&apos;.translatable&apos;).find(&apos;a&apos;).each(function()
+    {
+        this.setAttribute(&apos;href_disabled&apos;,this.getAttribute(&apos;href&apos;));
+        this.removeAttribute(&apos;href&apos;);
+    });
+}
+
+function enableHREF()
+{
+    $(&apos;.translatable&apos;).find(&apos;a&apos;).each(function()
+    {
+        this.setAttribute(&apos;href&apos;,this.getAttribute(&apos;href_disabled&apos;));
+        this.removeAttribute(&apos;href_disabled&apos;);
+    });
+}</code></pre>
+
 </div>
 
 <footer class="footer">
