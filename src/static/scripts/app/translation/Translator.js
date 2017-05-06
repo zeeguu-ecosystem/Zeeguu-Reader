@@ -66,4 +66,5 @@ export default class Translator {
             node.parentNode.removeChild(node);
         }
     }
+
 };

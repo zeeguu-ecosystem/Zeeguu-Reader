@@ -11,6 +11,7 @@ export default {
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
     ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',
+    SPEECH_DELAY: 300,
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
