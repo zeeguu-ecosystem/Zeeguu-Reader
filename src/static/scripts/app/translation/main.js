@@ -60,9 +60,9 @@ $(window).on("resize", function() {
         alterMenu.reposition();
 });
 
-// Disable or enable links.
-// Done in this peculiar way as default link disabling methods do not
-// pass a proper text selection.
+/* Disable links.
+ * Done in this peculiar way as default link disabling methods do not
+ * pass a proper text selection. */
 function disableHREF()
 {
     $('.translatable').find('a').each(function()
@@ -72,6 +72,7 @@ function disableHREF()
     });
 }
 
+/* Enable links. */
 function enableHREF()
 {
     $('.translatable').find('a').each(function()
