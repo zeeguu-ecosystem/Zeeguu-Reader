@@ -58,7 +58,7 @@
 			<div class="articleLinkImage">
 				<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
 			</div>
-			<a class="articleLinkTitle" href="{{ url_for('endpoints_article.get_article') }}?articleURL={% raw %}{{ articleLinkURL }}{% endraw %}&articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}">
+			<a class="articleLinkTitle" href="{{ url_for('endpoints_article.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
 				{% raw %}{{ articleLinkTitle }}{% endraw %}
 			</a>
 			<div class="articleLinkDifficulty {% raw %}{{articleDifficultyDiscrete}}{% endraw %}">

@@ -17,6 +17,7 @@ def get_article():
     """Retrieve the supplied article link of the supplied language,
     and return a properly processed version of the article.
     """
+    print request.args
     article_url = request.args['articleURL']
     article_language = request.args['articleLanguage']
     response = requests.get(article_url)
