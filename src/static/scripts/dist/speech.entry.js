@@ -9992,13 +9992,23 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/* Class that allows for text to speech of zeeguu tags. */
+/* Class that allows text to speech for supplied text and language. */
 var Speaker = function () {
+    /**
+     * Initializes the utterance object for the speech synthesis.
+     */
     function Speaker() {
         _classCallCheck(this, Speaker);
 
         this.utterance = new SpeechSynthesisUtterance();
     }
+
+    /**
+     * Performs the speech synthesis of the supplied parameters.
+     * @param {string} text - Text to be transformed to speech.
+     * @param {string} language - Language code to be used for synthesis. 
+     */
+
 
     _createClass(Speaker, [{
         key: "speak",
@@ -10007,11 +10017,23 @@ var Speaker = function () {
             this._setText(text);
             speechSynthesis.speak(this.utterance);
         }
+
+        /**
+         * Set the language for the utterance object.
+         * @param {string} langauge - Language code.
+         */
+
     }, {
         key: "_setLanguage",
         value: function _setLanguage(language) {
             this.utterance.lang = language;
         }
+
+        /**
+         * Set the text context to be synthesized.
+         * @param {string} text - Text to be transformed to speech.
+         */
+
     }, {
         key: "_setText",
         value: function _setText(text) {
@@ -10052,8 +10074,11 @@ var _Speaker2 = _interopRequireDefault(_Speaker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* Script that binds listeners to identify the text to speech event. */
 var speaker = new _Speaker2.default();
 
+/* When the document has finished loading,
+ * bind all necessary listeners. */
 (0, _jquery2.default)(document).ready(function () {
     var start;
 

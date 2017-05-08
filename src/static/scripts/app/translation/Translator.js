@@ -30,7 +30,7 @@ export default class Translator {
     }
 
     /**
-     *  Checks whether given zeeguuTag is already translated.
+     * Checks whether given zeeguuTag is already translated.
      * @param {Element} zeeguuTag - Document element that wraps translatable content. 
      * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
      */
@@ -65,8 +65,8 @@ export default class Translator {
     }
 
     /**
-     *  Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-     *  @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+     * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
+     * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
      */
     _mergeZeeguu(zeeguuTag) {
         var spaces = '';

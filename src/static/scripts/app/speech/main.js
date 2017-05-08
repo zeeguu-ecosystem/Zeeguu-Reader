@@ -2,8 +2,11 @@ import $ from 'jquery';
 import config from '../config';
 import Speaker from './Speaker';
 
+/* Script that binds listeners to identify the text to speech event. */
 var speaker = new Speaker();
 
+/* When the document has finished loading,
+ * bind all necessary listeners. */
 $(document).ready(function() {
     var start;
 

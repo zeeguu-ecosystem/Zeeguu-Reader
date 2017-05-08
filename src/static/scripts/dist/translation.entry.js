@@ -10316,7 +10316,7 @@ var Translator = function () {
         }
 
         /**
-         *  Checks whether given zeeguuTag is already translated.
+         * Checks whether given zeeguuTag is already translated.
          * @param {Element} zeeguuTag - Document element that wraps translatable content. 
          * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
          */
@@ -10359,8 +10359,8 @@ var Translator = function () {
         }
 
         /**
-         *  Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-         *  @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+         * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
+         * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
          */
 
     }, {
