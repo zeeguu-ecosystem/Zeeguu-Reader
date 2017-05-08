@@ -6,7 +6,7 @@ import re
 import requests
 
 WORD_TAG = "zeeguu"
-UTF8_ENCODING = "UTF-8"
+ENCODING = "UTF-8"
 
 endpoints_article = Blueprint('endpoints_article', __name__, template_folder='templates')
 
@@ -17,11 +17,10 @@ def get_article():
     """Retrieve the supplied article link of the supplied language,
     and return a properly processed version of the article.
     """
-    print request.args
     article_url = request.args['articleURL']
     article_language = request.args['articleLanguage']
     response = requests.get(article_url)
-    response.encoding = UTF8_ENCODING
+    response.encoding = ENCODING
 
     print "User with session " + request.sessionID + " retrieved " + article_url
     return make_article(response.text, article_language, article_url)
