@@ -17,7 +17,7 @@ The Zeeguu UMR project is open-source according to the definitions of the MIT-Li
 
 ## Deployment locations.
 The deployed version of UMR can be found on:
-- **Development:** [Heroku](https://zeeguu-umr.herokuapp.com/articles).
+- **Development:** [Heroku](https://zeeguu-umr.herokuapp.com/debug_login).
 - **Master:** [Zeeguu](https://www.zeeguu.unibe.ch/reader/articles).
 
 ## Further reading
