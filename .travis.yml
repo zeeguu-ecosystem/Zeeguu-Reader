@@ -1,7 +1,11 @@
 language: python
 python:
-  - "2.7"
-# command to install dependencies
-install: "pip install -r requirements.txt"
-# command to run tests
+- '2.7'
+install: pip install -r requirements.txt
 script: pytest
+deploy:
+  provider: heroku
+  api_key:
+    secure: USuGvEFKYoQfvCwBOjgeddMNMzhhN5fMgfkKPi51bSMCm1LAX4Nh6O5Mb3cSi6uZLax5Tq1DVYelVWh0S3VJndxhzHbjSvVcl0h6Ih/UZDECP3BslIQtXW6v0Mug0zbWrccfIdSXsPUBh98NtZ0ymnjfovPiFmjl0ZAvj7e/KlNtiQk1COmYIkbafJfvlhtDr8wneeqkDrtOZ5FEfrKqZUKNZTZgdqDPBkG8gL3E8wq1h0r68e21Bx5NTCOduVEisP7zsJdnDPYkiZ25MrHm3e4iZuZJdfc0vCCD9UydrCnyTGIaEoMIPFP9Or9oFLqLe6SZi3Xw9pVMISk01+rcUEtADpYyhm0i/3VXLwHVZkFFs7bIN/jTVSf3gVu12uW5xwQhBEjweL/Cqw5EkZmpQmSQoxnuBqYqqLHPK+sOKCNLB+mLwBgUc2gljX/1vwMF1mnY5tF4aHWq3FPD/l3TF/GJ1Er35frw/1eHflZEwUVFZyHK9WSroNSBrp4Bqymv2pOuN2GoZUcPuYY6LskOxb2JLoIGz0FpOr0oBvIkQfKJQXYMSpMJmz+lqQBXnnIWW0X5O/ZGeQDnUU3SSMZszE1crwW9pTzbur5UncPsU5NBkXYeLngYkzM+D2eVejIGhCDW+FZoss5pxdM03f46CCIOE0Pmvas6AXCI7Tmuzwo=
+  on: development_core
+  app: zeeguu-umr
