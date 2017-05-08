@@ -3,15 +3,23 @@ import config from '../config'
 import Notifier from './Notifier'
 
 /**
- * Class that allows for choosing alternative zeeguu translations.
+ * Class that allows for choosing alternative zeeguu translations from
+ * a drop-down alter menu.
  */
 export default class AlterMenu {
+    /**
+     * Initialize the notifier field and the control field for the state of the
+     * alter menu (i.e. open or closed).
+     */
     constructor() {
         this.menuOpen = false;
         this.notifier = new Notifier();
     }
 
-    /* Creates and opens the alternative translation menu. */
+    /**
+     * Create and open the alternative translation menu. 
+     * @param {Element} zeeguuTag - Document element for which to present the alter menu.
+     */
     constructAndOpen(zeeguuTag) {
         // Check how many alternatives there are, if less than 2: abort.
         var transCount = parseInt(zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT));
@@ -26,7 +34,12 @@ export default class AlterMenu {
         }.bind(this));
     };
 
-    /* Add buttons with click listeners that replace the translation. */
+    /**
+     * Add buttons with click listeners that replace the translation and
+     * append these to the alter menu. 
+     * @param {Element} zeeguuTag - Tag from which the alternative transaltions are retrieved.
+     * @param {int} transCount - Number of present alternative translations. 
+     */
     construct(zeeguuTag, transCount) {
         $(config.HTML_ID_ALTERMENU).empty();
         for (var i = 0; i < transCount; i++) {
@@ -39,7 +52,10 @@ export default class AlterMenu {
         }
     }
 
-    /* Swaps the HTML_ATTRIBUTE_TRANSLATION 0 with the new preferred translation attribute. */
+    /**
+     * Swap the currently set translation (config.HTML_ATTRIBUTE_TRANSLATION 0) with the selected alternative.
+     * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
+     */
     _swapPrimaryTranslation(selectedAlternative) {
         var zeeguuTag = selectedAlternative.data.zeeguuTag;
         var alternative = selectedAlternative.data.alternative;
@@ -49,7 +65,10 @@ export default class AlterMenu {
         zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
     }
 
-    /* Places the alter menu below the to-be-altered word. */
+    /**
+     * Place the alter menu below the supplied zeeguuTag.
+     * @param {Element} zeeguuTag - Reference tag for the placement of the alter menu.
+     */
     _place(zeeguuTag) {
         var position = $(zeeguuTag).position();
         var tagHeight = $(zeeguuTag).outerHeight();
@@ -67,12 +86,17 @@ export default class AlterMenu {
         $(config.HTML_ID_ALTERMENU).hide();
     }
 
+    /**
+     * Update the position of the alter menu.
+     */
     reposition() {
         this._place($(config.HTML_ID_ALTERMENU).parent());
         $(config.HTML_ID_ALTERMENU).show();
     };
 
-    /* Hides the alter menu. */
+    /**
+     *  Hide the alter menu. 
+     */
     close() {
         $(config.HTML_ID_ALTERMENU).slideUp(function () {
             $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
@@ -80,6 +104,10 @@ export default class AlterMenu {
         }.bind(this));
     };
 
+    /**
+     * Check whether the alter menu is an open state.
+     * @return {boolean} - True only if the alter menu is open.
+     */
     isOpen() {
         return this.menuOpen;
     };
