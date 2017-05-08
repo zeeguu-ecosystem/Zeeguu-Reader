@@ -10065,7 +10065,13 @@ var speaker = new _Speaker2.default();
     });
     (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).on('mouseup', function (e) {
         if (new Date().getTime() >= start + _config2.default.SPEECH_DELAY) {
-            speaker.speak((0, _jquery2.default)(this).text(), FROM_LANGUAGE);
+            /* Retrieve textual content of the parent only. */
+            var text = (0, _jquery2.default)(this).clone() //clone element
+            .children() //select all children
+            .remove() //remove all children
+            .end() //back to selected element
+            .text(); //retrieve text
+            speaker.speak(text, FROM_LANGUAGE);
         }
     });
 });
