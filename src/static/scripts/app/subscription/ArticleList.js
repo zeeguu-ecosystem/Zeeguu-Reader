@@ -2,6 +2,10 @@ import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
+import ArticleLink from './ArticleLink';
+import Cache from '../Cache';
+
+const KEY_LINKS = "feeds";
 
 /**
  * Manages a list of article links.
@@ -13,9 +17,14 @@ export default class ArticleList {
      * @param {Object} subscription - The feed to retrieve articles from.
      */
     load(subscription) {
-        $(config.HTML_CLASS_LOADER).show();
-        var callback = (data) => this._loadArticleLinks(subscription, data);
-        ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
+        if (!Cache.has(KEY_LINKS) || !Cache.retrieve(KEY_LINKS)[subscription.subscriptionID]) {
+            $(config.HTML_CLASS_LOADER).show();
+            let callback = (data) => this._loadArticleLinks(subscription, data);
+            ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
+        } else {
+            let articleLinks = Cache.retrieve(KEY_LINKS)[subscription.subscriptionID];
+            this._renderArticleLinks(subscription.subscriptionID, articleLinks);
+        }
     };
 
     /**
@@ -23,6 +32,7 @@ export default class ArticleList {
      */
     clear() {
         $(config.HTML_ID_ARTICLELINK_LIST).empty();
+        Cache.remove(KEY_LINKS);
     };
 
     /**
@@ -31,6 +41,9 @@ export default class ArticleList {
      */
     remove(feedID) {
         $('li[articleLinkFeedID="' + feedID + '"]').remove();
+        if (!Cache.has(KEY_LINKS)) {
+            Cache.retrieve(KEY_LINKS)[feedID] = undefined;
+        }
     };
 
     /**
@@ -40,21 +53,41 @@ export default class ArticleList {
      * @param {Object[]} data - List containing the articles for the feed.
      */
     _loadArticleLinks(subscriptionData, data) {
-        var template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
+        let articleLinks = [];
         for (var i = 0; i < data.length; i++) {
-            var difficulty = Math.round(parseFloat(data[i].metrics.difficulty.normalized) * 100) / 10;
-            var articleLinkData = {
-                articleLinkTitle: data[i].title,
-                articleLinkURL: data[i].url,
-                articleLinkFeedID: subscriptionData.subscriptionID,
-                articleLinkLanguage: subscriptionData.subscriptionLanguage,
-                articleDifficultyDiscrete: data[i].metrics.difficulty.discrete,
-                articleDifficulty: difficulty,
-                articleSummary: $('<p>' + data[i].summary + '</p>').text(),
-                articleIcon: subscriptionData.subscriptionIcon
-            };
-            $(config.HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, articleLinkData));
+            let article = data[i];
+            let difficulty = Math.round(parseFloat(article.metrics.difficulty.normalized) * 100) / 10;
+            articleLinks[i] = new ArticleLink(article.title, article.url, subscriptionData.subscriptionLanguage,
+                                              difficulty, article.metrics.difficulty.discrete,
+                                              $('<p>' + article.summary + '</p>').text(),
+                                              subscriptionData.subscriptionIcon);
         }
+        this._renderArticleLinks(subscriptionData.subscriptionID, articleLinks);
         $(config.HTML_CLASS_LOADER).fadeOut('slow');
+
+        // Cache the article links.
+        let feedMap = {};
+        if (Cache.has(KEY_LINKS))
+            feedMap = Cache.retrieve(KEY_LINKS);
+        feedMap[subscriptionData.subscriptionID] = articleLinks;
+        Cache.store(KEY_LINKS, feedMap);
+    }
+
+    _renderArticleLinks(feedID, articleLinks) {
+        let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
+        for (var i = 0; i < articleLinks.length; i++) {
+            let articleLink = articleLinks[i];
+            let templateAttributes = {
+                articleLinkFeedID: feedID,
+                articleLinkTitle: articleLink.title,
+                articleLinkURL: articleLink.url,
+                articleLinkLanguage: articleLink.language,
+                articleDifficultyDiscrete: articleLink.difficultyDiscrete,
+                articleDifficulty: articleLink.difficulty,
+                articleSummary: articleLink.summary,
+                articleIcon: articleLink.icon
+            };
+            $(config.HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, templateAttributes));
+        }
     }
 };

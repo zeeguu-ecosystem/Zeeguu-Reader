@@ -43,4 +43,13 @@ export default class Cache {
         }
         return object;
     }
+
+    /**
+     * Remove the object at key, if it exists.
+     * @param {string} key - The key for which the object can be retrieved.
+     */
+    static remove(key) {
+        if (this.isAvailable())
+            sessionStorage.removeItem(key);
+    }
 }
