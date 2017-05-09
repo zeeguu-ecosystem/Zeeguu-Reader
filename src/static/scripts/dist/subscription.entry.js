@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9924,7 +9924,6 @@ exports.default = {
     GET_FEED_ITEMS: '/get_feed_items_with_metrics',
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
-    ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
@@ -11348,7 +11347,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
 
-  if ("function" === 'function' && 'amd' in __webpack_require__(15)) {
+  if ("function" === 'function' && 'amd' in __webpack_require__(16)) {
     // AMD support
     !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
       return dialogPolyfill;
@@ -11393,13 +11392,20 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
+var _Cache = __webpack_require__(12);
+
+var _Cache2 = _interopRequireDefault(_Cache);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var KEY_MAP_FEED_ARTICLE = "feed_article_map";
+
 /**
- * Manages a list of article links.
+ * Manages a list of article links, stores them in {@link Cache} if possible.
  */
+
 var ArticleList = function () {
     function ArticleList() {
         _classCallCheck(this, ArticleList);
@@ -11410,27 +11416,34 @@ var ArticleList = function () {
 
         /**
          * Call zeeguu and get the articles for the given feed 'subscription'.
+         * If the articles are already in {@link Cache}, load them instead.
          * Uses {@link ZeeguuRequests}.
          * @param {Object} subscription - The feed to retrieve articles from.
          */
         value: function load(subscription) {
             var _this = this;
 
-            (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
-            var callback = function callback(data) {
-                return _this._loadArticleLinks(subscription, data);
-            };
-            _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
+            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE) && _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID]) {
+                var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID];
+                this._renderArticleLinks(subscription, articleLinks);
+            } else {
+                (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
+                var callback = function callback(articleLinks) {
+                    return _this._loadArticleLinks(subscription, articleLinks);
+                };
+                _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
+            }
         }
     }, {
         key: 'clear',
 
 
         /**
-         * Remove all articles from the list.
+         * Remove all articles from the list, clears the cached articles.
          */
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).empty();
+            _Cache2.default.remove(KEY_MAP_FEED_ARTICLE);
         }
     }, {
         key: 'remove',
@@ -11442,34 +11455,55 @@ var ArticleList = function () {
          */
         value: function remove(feedID) {
             (0, _jquery2.default)('li[articleLinkFeedID="' + feedID + '"]').remove();
+            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE)) {
+                _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[feedID] = undefined;
+            }
         }
     }, {
         key: '_loadArticleLinks',
 
 
         /**
-         * Generate all the article links from a particular feed.
+         * Store all the article links from a particular feed if possible, makes sure they are rendered.
          * Callback function for the zeeguu request.
-         * @param {Object} subscriptionData - The feed the articles are from.
-         * @param {Object[]} data - List containing the articles for the feed.
+         * @param {Object} subscription - The feed the articles are from.
+         * @param {Object[]} articleLinks - List containing the articles for the feed.
          */
-        value: function _loadArticleLinks(subscriptionData, data) {
-            var template = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_TEMPLATE).html();
-            for (var i = 0; i < data.length; i++) {
-                var difficulty = Math.round(parseFloat(data[i].metrics.difficulty.normalized) * 100) / 10;
-                var articleLinkData = {
-                    articleLinkTitle: data[i].title,
-                    articleLinkURL: data[i].url,
-                    articleLinkFeedID: subscriptionData.subscriptionID,
-                    articleLinkLanguage: subscriptionData.subscriptionLanguage,
-                    articleDifficultyDiscrete: data[i].metrics.difficulty.discrete,
-                    articleDifficulty: difficulty,
-                    articleSummary: (0, _jquery2.default)('<p>' + data[i].summary + '</p>').text(),
-                    articleIcon: subscriptionData.subscriptionIcon
-                };
-                (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(_mustache2.default.render(template, articleLinkData));
-            }
+        value: function _loadArticleLinks(subscription, articleLinks) {
+            this._renderArticleLinks(subscription, articleLinks);
             (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).fadeOut('slow');
+
+            // Cache the article links.
+            var feedMap = {};
+            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE)) feedMap = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE);
+            feedMap[subscription.subscriptionID] = articleLinks;
+            _Cache2.default.store(KEY_MAP_FEED_ARTICLE, feedMap);
+        }
+
+        /**
+         * Generate all the article links from a particular feed.
+         * @param {Object} subscription - The feed the articles are from.
+         * @param {Object[]} articleLinks - List containing the articles for the feed.
+         */
+
+    }, {
+        key: '_renderArticleLinks',
+        value: function _renderArticleLinks(subscription, articleLinks) {
+            var template = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_TEMPLATE).html();
+            for (var i = 0; i < articleLinks.length; i++) {
+                var articleLink = articleLinks[i];
+                var templateAttributes = {
+                    articleLinkTitle: articleLink.title,
+                    articleLinkURL: articleLink.url,
+                    articleLinkFeedID: subscription.subscriptionID,
+                    articleLinkLanguage: subscription.subscriptionLanguage,
+                    articleDifficultyDiscrete: articleLink.metrics.difficulty.discrete,
+                    articleDifficulty: Math.round(parseFloat(articleLink.metrics.difficulty.normalized) * 100) / 10,
+                    articleSummary: (0, _jquery2.default)('<p>' + articleLink.summary + '</p>').text(),
+                    articleIcon: subscription.subscriptionIcon
+                };
+                (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(_mustache2.default.render(template, templateAttributes));
+            }
         }
     }]);
 
@@ -11912,6 +11946,98 @@ exports.default = SubscriptionList;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Interface to the {@link Storage} features that allows for storing and retrieving of objects by marshalling them.
+ */
+var Cache = function () {
+    function Cache() {
+        _classCallCheck(this, Cache);
+    }
+
+    _createClass(Cache, null, [{
+        key: "isAvailable",
+
+        /**
+         * Check if sessionStorage is available for use.
+         * @returns {boolean} availability - Whether or not caching features are available for use.
+         */
+        value: function isAvailable() {
+            return typeof Storage !== "undefined";
+        }
+
+        /**
+         * Store an object in cache, will not do anything of Cache is not available.
+         * @param {string} key - The key for which the object can be retrieved.
+         * @param {Object} object - The object to store.
+         */
+
+    }, {
+        key: "store",
+        value: function store(key, object) {
+            if (this.isAvailable()) window.sessionStorage.setItem(key, JSON.stringify(object));
+        }
+
+        /**
+         * Check if an object is stored under key.
+         * @param {string} key - The key for which the object can be retrieved.
+         * @returns {boolean} isStored - Whether or not the object is stored.
+         */
+
+    }, {
+        key: "has",
+        value: function has(key) {
+            return this.retrieve(key) !== null;
+        }
+
+        /**
+         * Return the object stored.
+         * @param {string} key - The key for which the object can be retrieved.
+         * @returns {?Object} object - The stored object, null if storage not available or not stored under key.
+         */
+
+    }, {
+        key: "retrieve",
+        value: function retrieve(key) {
+            var object = null;
+            if (this.isAvailable()) {
+                object = sessionStorage.getItem(key);
+                if (object !== null) object = JSON.parse(object);
+            }
+            return object;
+        }
+
+        /**
+         * Remove the object at key, if it exists.
+         * @param {string} key - The key for which the object can be retrieved.
+         */
+
+    }, {
+        key: "remove",
+        value: function remove(key) {
+            if (this.isAvailable()) sessionStorage.removeItem(key);
+        }
+    }]);
+
+    return Cache;
+}();
+
+exports.default = Cache;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -11975,9 +12101,9 @@ function noAvatar(image) {
 }
 
 /***/ }),
-/* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
