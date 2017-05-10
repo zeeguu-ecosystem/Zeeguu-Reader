@@ -10376,15 +10376,15 @@ var Translator = function () {
             var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
             var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
 
-            // Add tag to the loading animation class.
-            //$(zeeguuTag).addClass('loading'); Turned off for now!!!!!
             (0, _jquery2.default)(zeeguuTag).empty(); // clear tag up for insertion
-            var orig = (0, _jquery2.default)("<orig></orig>").text('\xA0' + text + '\xA0'); // ugly for now, but the unicode is a non-break space
+            var orig = document.createElement(_config2.default.HTML_ORIGINAL);
             var tran = document.createElement(_config2.default.HTML_TRANSLATED);
+            (0, _jquery2.default)(orig).text('\xA0' + text + '\xA0');
+            (0, _jquery2.default)(orig).addClass('loading');
             (0, _jquery2.default)(zeeguuTag).append(orig, tran);
 
             var callback = function callback(data) {
-                return _this._setTranslations(tran, data);
+                return _this._setTranslations(orig, tran, data);
             };
             // Launch Zeeguu request to fill translation options.
             _zeeguuRequests2.default.post(_config2.default.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + _config2.default.TO_LANGUAGE, { word: text, context: context, url: url, title: title }, callback);
@@ -10410,13 +10410,13 @@ var Translator = function () {
 
     }, {
         key: '_setTranslations',
-        value: function _setTranslations(htmlTag, translations) {
+        value: function _setTranslations(orig, htmlTag, translations) {
             translations = translations.translations;
             var transCount = Math.min(translations.length, 3);
             htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
             for (var i = 0; i < transCount; i++) {
                 htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            }
+            }(0, _jquery2.default)(orig).removeClass('loading');
         }
 
         /**
@@ -10584,7 +10584,7 @@ var speaker = new _Speaker2.default();
     });
 
     /* When a translatable word has been clicked,
-     * either try to translate it or open an alternative
+     * either try to translate it, speak it, or open an alternative
      * translation window.  */
     (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
         if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).is(':checked')) return;

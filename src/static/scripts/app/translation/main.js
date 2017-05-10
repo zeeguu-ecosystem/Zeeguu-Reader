@@ -37,7 +37,7 @@ $(document).ready(function() {
     });
 
     /* When a translatable word has been clicked,
-     * either try to translate it or open an alternative
+     * either try to translate it, speak it, or open an alternative
      * translation window.  */
     $(config.HTML_ZEEGUUTAG).click(function(event) {
         if (!$(config.HTML_ID_TOGGLETRANSLATE).is(':checked'))

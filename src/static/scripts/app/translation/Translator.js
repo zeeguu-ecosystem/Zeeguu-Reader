@@ -20,15 +20,15 @@ export default class Translator {
         var url = $(config.HTML_ID_ARTICLE_URL).text();
         var title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
-        // Add tag to the loading animation class.
-        //$(zeeguuTag).addClass('loading'); Turned off for now!!!!!
         $(zeeguuTag).empty(); // clear tag up for insertion
-        var orig = $("<orig></orig>").text("\u00A0" + text + "\u00A0"); // ugly for now, but the unicode is a non-break space
+        var orig = document.createElement(config.HTML_ORIGINAL);
         var tran = document.createElement(config.HTML_TRANSLATED);
+        $(orig).text("\u00A0" + text + "\u00A0");
+        $(orig).addClass('loading');
         $(zeeguuTag).append(orig, tran);
 
 
-        var callback = (data) => this._setTranslations(tran, data);
+        var callback = (data) => this._setTranslations(orig, tran, data);
         // Launch Zeeguu request to fill translation options.
         ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
@@ -48,12 +48,14 @@ export default class Translator {
      * @param {Element} htmlTag - Document element processed for translation.
      * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
      */
-    _setTranslations(htmlTag, translations) {
+    _setTranslations(orig, htmlTag, translations) {
         translations = translations.translations;
         var transCount = Math.min(translations.length, 3);
         htmlTag.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
         for (var i = 0; i < transCount; i++)
             htmlTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+
+        $(orig).removeClass('loading');
     }
 
     /**

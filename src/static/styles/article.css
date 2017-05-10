@@ -1,6 +1,6 @@
-zeeguu.loading
+zeeguu orig.loading
 {
-	animation: fadein 1s 0s infinite linear alternate;
+	animation: fadein 1s 0s 4 linear alternate;
 }
 
 zeeguu orig
