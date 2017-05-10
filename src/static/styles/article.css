@@ -1,27 +1,31 @@
 zeeguu orig.loading
 {
-	animation: fadein 1s 0s 4 linear alternate;
+	animation: fadein 1s 0s infinite linear alternate;
 }
 
 zeeguu orig
 {
-	background-color:#129793;
+	background-color:#2F4987;
   color: white;
   text-shadow: 1px 1px #505050;
   border-radius: 4px 0px 0px 4px;
+  background-clip: border-box;
+  padding: 3px;
 }
 
 zeeguu tran[transCount]
 {
-	background-color:#9BD7D5;
+	background-color:#A2BBE0;
   color: white;
   text-shadow: 1px 1px #505050;
   border-radius: 0px 4px 4px 0px;
+  background-clip: border-box;
+  padding: 3px;
 }
 
 zeeguu tran[translation0]:after 
 {
-	content: " (" attr(translation0) ") ";
+	content: attr(translation0);
 }
 
 

@@ -15,7 +15,7 @@ export default class Translator {
     translate(zeeguuTag) {
         this._mergeZeeguu(zeeguuTag);
         
-        var text = zeeguuTag.textContent;
+        var text = zeeguuTag.textContent.trim();
         var context = this._getContext(zeeguuTag);
         var url = $(config.HTML_ID_ARTICLE_URL).text();
         var title = $(config.HTML_ID_ARTICLE_TITLE).text();

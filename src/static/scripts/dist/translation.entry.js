@@ -10371,7 +10371,7 @@ var Translator = function () {
 
             this._mergeZeeguu(zeeguuTag);
 
-            var text = zeeguuTag.textContent;
+            var text = zeeguuTag.textContent.trim();
             var context = this._getContext(zeeguuTag);
             var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
             var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
