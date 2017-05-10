@@ -14,44 +14,48 @@ export default class Translator {
      */
     translate(zeeguuTag) {
         this._mergeZeeguu(zeeguuTag);
-
-        // Add tag to the loading animation class.
-        $(zeeguuTag).addClass('loading'); 
         
-        var text = zeeguuTag.textContent;
+        var text = zeeguuTag.textContent.trim();
         var context = this._getContext(zeeguuTag);
         var url = $(config.HTML_ID_ARTICLE_URL).text();
         var title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
-        var callback = (data) => this._setTranslations(zeeguuTag, data);
+        $(zeeguuTag).empty(); // clear tag up for insertion
+        var orig = document.createElement(config.HTML_ORIGINAL);
+        var tran = document.createElement(config.HTML_TRANSLATED);
+        $(orig).text(text);
+        $(orig).addClass('loading');
+        $(zeeguuTag).append(orig, tran);
+
+
+        var callback = (data) => this._setTranslations(orig, tran, data);
         // Launch Zeeguu request to fill translation options.
         ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
     }
 
     /**
-     *  Checks whether given zeeguuTag is already translated.
+     * Checks whether given zeeguuTag is already translated.
      * @param {Element} zeeguuTag - Document element that wraps translatable content. 
      * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
      */
     isTranslated(zeeguuTag) {
-        return zeeguuTag.hasAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT);
+        return $(zeeguuTag).has(config.HTML_TRANSLATED).length;
     }
 
     /**
      * Handle the Zeeguu request returned values. Append the returned translations.
-     * @param {Element} zeeguuTag - Document element processed for translation.
-     * @param {Object[]} translations - A list of translations for the given zeeguuTag content. 
+     * @param {Element} htmlTag - Document element processed for translation.
+     * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
      */
-    _setTranslations(zeeguuTag, translations) {
+    _setTranslations(orig, htmlTag, translations) {
         translations = translations.translations;
         var transCount = Math.min(translations.length, 3);
-        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
+        htmlTag.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
         for (var i = 0; i < transCount; i++)
-            zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+            htmlTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
 
-        // Remove the loading animation class.
-        $(zeeguuTag).removeClass('loading');
+        $(orig).removeClass('loading');
     }
 
     /**
@@ -65,8 +69,8 @@ export default class Translator {
     }
 
     /**
-     *  Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-     *  @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+     * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
+     * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
      */
     _mergeZeeguu(zeeguuTag) {
         var spaces = '';
@@ -91,4 +95,5 @@ export default class Translator {
             node.parentNode.removeChild(node);
         }
     }
+
 };

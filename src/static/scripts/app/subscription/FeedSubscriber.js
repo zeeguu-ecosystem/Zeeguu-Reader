@@ -28,14 +28,14 @@ export default class FeedSubscriber {
         ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
                                 {}, this._loadFeedOptions.bind(this));
         this.currentLanguage = language;
-    };
+    }
 
     /**
      * Clear the list of feed options.
      */
     clear() {
         $(config.HTML_ID_ADDSUBSCRIPTION_LIST).empty();
-    };
+    }
 
     /**
      * Return the language for the feed options currently displayed.
@@ -43,7 +43,7 @@ export default class FeedSubscriber {
      */
     getCurrentLanguage() {
         return this.currentLanguage;
-    };
+    }
 
     /**
      * Fills the dialog's list with all the addable feeds.
@@ -96,4 +96,5 @@ export default class FeedSubscriber {
             $(feed).fadeOut();
         }
     }
+
 };

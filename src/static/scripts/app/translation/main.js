@@ -2,11 +2,13 @@ import $ from 'jquery';
 import config from '../config';
 import Translator from './Translator';
 import AlterMenu from './AlterMenu'
+import Speaker from '../Speaker';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 var translator = new Translator();
 var alterMenu = new AlterMenu();
+var speaker = new Speaker();
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -35,19 +37,26 @@ $(document).ready(function() {
     });
 
     /* When a translatable word has been clicked,
-     * either try to translate it or open an alternative
+     * either try to translate it, speak it, or open an alternative
      * translation window.  */
-    $(config.HTML_ZEEGUUTAG).click(function() {
+    $(config.HTML_ZEEGUUTAG).click(function(event) {
         if (!$(config.HTML_ID_TOGGLETRANSLATE).is(':checked'))
             return;
 
-        if (alterMenu.isOpen())
+        if (alterMenu.isOpen()) {
+            alterMenu.close();
             return;
+        }
 
-        if (translator.isTranslated(this)) {
-            alterMenu.constructAndOpen(this);
-        } else {
-            translator.translate(this);
+        var target = $(event.target);
+        if ( target.is(config.HTML_ZEEGUUTAG) ) {
+            if (!translator.isTranslated(this)) {
+                translator.translate(this);
+            }
+        } else if (target.is(config.HTML_ORIGINAL) ) {
+            speaker.speak($(this).find(config.HTML_ORIGINAL).text(), FROM_LANGUAGE);
+        } else if (target.is(config.HTML_TRANSLATED) ) {
+            alterMenu.constructAndOpen(this.children[1]);
         }
     });
 });

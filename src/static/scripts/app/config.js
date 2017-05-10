@@ -11,6 +11,8 @@ export default {
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
     HTML_ZEEGUUTAG: 'ZEEGUU',
+    HTML_ORIGINAL: 'orig',
+    HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ID_ARTICLE_URL: '#articleURL',

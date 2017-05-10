@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9925,6 +9925,8 @@ exports.default = {
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
     HTML_ZEEGUUTAG: 'ZEEGUU',
+    HTML_ORIGINAL: 'orig',
+    HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ID_ARTICLE_URL: '#articleURL',
@@ -11347,7 +11349,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
 
-  if ("function" === 'function' && 'amd' in __webpack_require__(16)) {
+  if ("function" === 'function' && 'amd' in __webpack_require__(17)) {
     // AMD support
     !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
       return dialogPolyfill;
@@ -11364,7 +11366,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11392,7 +11395,7 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _Cache = __webpack_require__(12);
+var _Cache = __webpack_require__(13);
 
 var _Cache2 = _interopRequireDefault(_Cache);
 
@@ -11514,7 +11517,7 @@ exports.default = ArticleList;
 ;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11577,36 +11580,36 @@ var FeedSubscriber = function () {
             _zeeguuRequests2.default.get(_config2.default.RECOMMENDED_FEED_ENDPOINT + '/' + language, {}, this._loadFeedOptions.bind(this));
             this.currentLanguage = language;
         }
-    }, {
-        key: 'clear',
-
 
         /**
          * Clear the list of feed options.
          */
+
+    }, {
+        key: 'clear',
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_LIST).empty();
         }
-    }, {
-        key: 'getCurrentLanguage',
-
 
         /**
          * Return the language for the feed options currently displayed.
          * @return {string} - The language of feed options currently on display.
          */
+
+    }, {
+        key: 'getCurrentLanguage',
         value: function getCurrentLanguage() {
             return this.currentLanguage;
         }
-    }, {
-        key: '_loadFeedOptions',
-
 
         /**
          * Fills the dialog's list with all the addable feeds.
          * Callback function for zeeguu.
          * @param {Object[]} data - A list of feeds the user can subscribe to.
          */
+
+    }, {
+        key: '_loadFeedOptions',
         value: function _loadFeedOptions(data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
@@ -11672,7 +11675,7 @@ exports.default = FeedSubscriber;
 ;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11765,7 +11768,7 @@ exports.default = LanguageMenu;
 ;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11938,9 +11941,9 @@ exports.default = SubscriptionList;
 ;
 
 /***/ }),
-/* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12032,7 +12035,7 @@ var Cache = function () {
 exports.default = Cache;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12042,15 +12045,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ArticleList = __webpack_require__(6);
+var _ArticleList = __webpack_require__(7);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _SubscriptionList = __webpack_require__(9);
+var _SubscriptionList = __webpack_require__(10);
 
 var _SubscriptionList2 = _interopRequireDefault(_SubscriptionList);
 
-var _FeedSubscriber = __webpack_require__(7);
+var _FeedSubscriber = __webpack_require__(8);
 
 var _FeedSubscriber2 = _interopRequireDefault(_FeedSubscriber);
 
@@ -12058,7 +12061,7 @@ var _dialogPolyfill = __webpack_require__(5);
 
 var _dialogPolyfill2 = _interopRequireDefault(_dialogPolyfill);
 
-var _LanguageMenu = __webpack_require__(8);
+var _LanguageMenu = __webpack_require__(9);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
 
@@ -12101,9 +12104,9 @@ function noAvatar(image) {
 }
 
 /***/ }),
-/* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
