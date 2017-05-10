@@ -7,12 +7,13 @@
   {
 	"globalIndex": true,
     "index": "./doc/index.md",
+    "asset": "./doc/manual/asset",
     "overview": ["./doc/manual/overview/overview.md"],
     "design":   ["./doc/manual/design/architecture.md", 
                  "./doc/manual/design/UI.md",
                  "./doc/manual/design/dependencies.md"],
     "installation": ["./doc/manual/usage/build_and_run.md"],
-    "usage":    ["./doc/manual/usage/contributing.md",
+    "usage":    ["./doc/manual/usage/workflow.md",
 				 "./doc/manual/usage/tryit.md"]
   },
   "experimentalProposal": 
