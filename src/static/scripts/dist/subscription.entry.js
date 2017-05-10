@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9900,7 +9900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
 /* 1 */
@@ -9927,6 +9927,8 @@ exports.default = {
     ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',
     SPEECH_DELAY: 300,
     HTML_ZEEGUUTAG: 'ZEEGUU',
+    HTML_ORIGINAL: 'orig',
+    HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ID_ARTICLE_URL: '#articleURL',
@@ -9946,36 +9948,6 @@ exports.default = {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function () {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function get() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function get() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10073,7 +10045,7 @@ var ZeeguuRequests = function () {
 exports.default = ZeeguuRequests;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10691,6 +10663,36 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   return mustache;
 });
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function () {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function get() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function get() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
 
 /***/ }),
 /* 5 */
@@ -11349,7 +11351,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
 
-  if ("function" === 'function' && 'amd' in __webpack_require__(17)) {
+  if ("function" === 'function' && 'amd' in __webpack_require__(16)) {
     // AMD support
     !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
       return dialogPolyfill;
@@ -11363,11 +11365,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     window['dialogPolyfill'] = dialogPolyfill;
   }
 })();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 6 */,
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11383,7 +11384,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _mustache = __webpack_require__(4);
+var _mustache = __webpack_require__(3);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -11391,7 +11392,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _zeeguuRequests = __webpack_require__(3);
+var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
@@ -11482,7 +11483,7 @@ exports.default = ArticleList;
 ;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11498,7 +11499,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _mustache = __webpack_require__(4);
+var _mustache = __webpack_require__(3);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -11506,7 +11507,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _zeeguuRequests = __webpack_require__(3);
+var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
@@ -11640,7 +11641,7 @@ exports.default = FeedSubscriber;
 ;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11660,11 +11661,11 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _mustache = __webpack_require__(4);
+var _mustache = __webpack_require__(3);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
-var _zeeguuRequests = __webpack_require__(3);
+var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
@@ -11733,7 +11734,7 @@ exports.default = LanguageMenu;
 ;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11749,7 +11750,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _mustache = __webpack_require__(4);
+var _mustache = __webpack_require__(3);
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
@@ -11757,7 +11758,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _zeeguuRequests = __webpack_require__(3);
+var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
@@ -11906,10 +11907,10 @@ exports.default = SubscriptionList;
 ;
 
 /***/ }),
+/* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */,
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11919,15 +11920,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ArticleList = __webpack_require__(7);
+var _ArticleList = __webpack_require__(6);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _SubscriptionList = __webpack_require__(10);
+var _SubscriptionList = __webpack_require__(9);
 
 var _SubscriptionList2 = _interopRequireDefault(_SubscriptionList);
 
-var _FeedSubscriber = __webpack_require__(8);
+var _FeedSubscriber = __webpack_require__(7);
 
 var _FeedSubscriber2 = _interopRequireDefault(_FeedSubscriber);
 
@@ -11935,7 +11936,7 @@ var _dialogPolyfill = __webpack_require__(5);
 
 var _dialogPolyfill2 = _interopRequireDefault(_dialogPolyfill);
 
-var _LanguageMenu = __webpack_require__(9);
+var _LanguageMenu = __webpack_require__(8);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
 
@@ -11978,9 +11979,9 @@ function noAvatar(image) {
 }
 
 /***/ }),
+/* 14 */,
 /* 15 */,
-/* 16 */,
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = function() {

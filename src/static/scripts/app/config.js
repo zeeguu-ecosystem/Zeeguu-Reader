@@ -13,6 +13,8 @@ export default {
     ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',
     SPEECH_DELAY: 300,
     HTML_ZEEGUUTAG: 'ZEEGUU',
+    HTML_ORIGINAL: 'orig',
+    HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ID_ARTICLE_URL: '#articleURL',

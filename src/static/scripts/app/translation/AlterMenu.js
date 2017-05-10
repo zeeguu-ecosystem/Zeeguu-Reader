@@ -18,17 +18,17 @@ export default class AlterMenu {
 
     /**
      * Create and open the alternative translation menu. 
-     * @param {Element} zeeguuTag - Document element for which to present the alter menu.
+     * @param {Element} htmlTag - Document element for which to present the alter menu.
      */
-    constructAndOpen(zeeguuTag) {
+    constructAndOpen(htmlTag) {
         // Check how many alternatives there are, if less than 2: abort.
-        var transCount = parseInt(zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT));
+        var transCount = parseInt(htmlTag.getAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT));
         if (transCount < 2) {
             this.notifier.notify("Sorry, no alternatives.");
             return;
         }
-        this.construct(zeeguuTag, transCount);
-        this._place(zeeguuTag);
+        this.construct(htmlTag, transCount);
+        this._place(htmlTag);
         $(config.HTML_ID_ALTERMENU).slideDown(function () {
             this.menuOpen = true
         }.bind(this));

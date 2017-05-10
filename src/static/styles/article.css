@@ -3,13 +3,21 @@ zeeguu.loading
 	animation: fadein 1s 0s infinite linear alternate;
 }
 
-
-zeeguu[transCount]
+zeeguu orig
 {
-	background-color:#eaf2ff;
+	background-color:#129793;
+  color: white;
+  border-radius: 4px 0px 0px 4px;
 }
 
-zeeguu[translation0]:after 
+zeeguu tran[transCount]
+{
+	background-color:#9BD7D5;
+  color: #505050;
+  border-radius: 0px 4px 4px 0px;
+}
+
+zeeguu tran[translation0]:after 
 {
 	content: " (" attr(translation0) ") ";
 }

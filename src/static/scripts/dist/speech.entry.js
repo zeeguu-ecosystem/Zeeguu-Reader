@@ -9927,6 +9927,8 @@ exports.default = {
     ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',
     SPEECH_DELAY: 300,
     HTML_ZEEGUUTAG: 'ZEEGUU',
+    HTML_ORIGINAL: 'orig',
+    HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ID_ARTICLE_URL: '#articleURL',
@@ -9976,9 +9978,7 @@ module.exports = function (module) {
 
 /***/ }),
 /* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10048,6 +10048,8 @@ exports.default = Speaker;
 ;
 
 /***/ }),
+/* 5 */,
+/* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
@@ -10068,7 +10070,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Speaker = __webpack_require__(6);
+var _Speaker = __webpack_require__(4);
 
 var _Speaker2 = _interopRequireDefault(_Speaker);
 
