@@ -9,11 +9,11 @@ The required files to run this application locally are delivered trough the endp
 - Wrap all words with a Zeeguu tag.
 
 ## This documentation
-![Documentation Coverage](badge.svg) ![Manual Coverage](manual-badge.svg)
+![Documentation Coverage](badge.svg)
 
 ...should cover most of what you will find in the associated repository [here](https://github.com/mircealungu/Unified-Multilanguage-Reader). As the Flask server is quite minimal, this document will only discuss the client-side code in detail. The python sources should speak for themselves. Thus, this document descibes the javascript files served to the user's browser as part of a reply to certain REST calls, whilst also touching on the architecture and requirements of the entire project in general.
 
-At the top of this document you will find the three most important tabs:
+At the top of this document you will find the three important tabs:
 
 - **Reference:** a neat overfiew of all packages, methods, and classes. Here we discribe what they do and how they relate.
 - **Manual:** a description of the project from a requirements and architecture point of view, along with more practical information meant to get new contributors up and running with the sources.

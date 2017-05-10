@@ -2,15 +2,17 @@
   "title": "Zeeguu UMR Client",
   "source": "./src/static/scripts/app",
   "destination": "./doc/dist",
-  "index": "./doc/index.md",
   "access": ["public", "private", "protected"],
   "manual": 
   {
+	"globalIndex": true,
+    "index": "./doc/index.md",
     "overview": ["./doc/manual/overview/overview.md"],
     "design":   ["./doc/manual/design/architecture.md", 
-                 "./doc/manual/design/UI.md"],
-    "usage":    ["./doc/manual/usage/build_and_run.md",
-				 "./doc/manual/usage/contributing.md",
+                 "./doc/manual/design/UI.md",
+                 "./doc/manual/design/dependencies.md"],
+    "installation": ["./doc/manual/usage/build_and_run.md"],
+    "usage":    ["./doc/manual/usage/contributing.md",
 				 "./doc/manual/usage/tryit.md"]
   },
   "experimentalProposal": 
