@@ -10,8 +10,6 @@ export default {
     GET_FEED_ITEMS: '/get_feed_items_with_metrics',
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
-    ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',
-    SPEECH_DELAY: 300,
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
