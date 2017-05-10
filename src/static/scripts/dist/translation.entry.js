@@ -10369,7 +10369,7 @@ var Translator = function () {
         value: function translate(zeeguuTag) {
             var _this = this;
 
-            //this._mergeZeeguu(zeeguuTag); Turned off for now!!!!!!
+            this._mergeZeeguu(zeeguuTag);
 
             var text = zeeguuTag.textContent;
             var context = this._getContext(zeeguuTag);
@@ -10379,7 +10379,7 @@ var Translator = function () {
             (0, _jquery2.default)(zeeguuTag).empty(); // clear tag up for insertion
             var orig = document.createElement(_config2.default.HTML_ORIGINAL);
             var tran = document.createElement(_config2.default.HTML_TRANSLATED);
-            (0, _jquery2.default)(orig).text('\xA0' + text + '\xA0');
+            (0, _jquery2.default)(orig).text(text);
             (0, _jquery2.default)(orig).addClass('loading');
             (0, _jquery2.default)(zeeguuTag).append(orig, tran);
 

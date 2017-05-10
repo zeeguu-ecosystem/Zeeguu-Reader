@@ -13,7 +13,7 @@ export default class Translator {
      * @param {Element} zeeguuTag - Document element containing the content to be translated. 
      */
     translate(zeeguuTag) {
-        //this._mergeZeeguu(zeeguuTag); Turned off for now!!!!!!
+        this._mergeZeeguu(zeeguuTag);
         
         var text = zeeguuTag.textContent;
         var context = this._getContext(zeeguuTag);
@@ -23,7 +23,7 @@ export default class Translator {
         $(zeeguuTag).empty(); // clear tag up for insertion
         var orig = document.createElement(config.HTML_ORIGINAL);
         var tran = document.createElement(config.HTML_TRANSLATED);
-        $(orig).text("\u00A0" + text + "\u00A0");
+        $(orig).text(text);
         $(orig).addClass('loading');
         $(zeeguuTag).append(orig, tran);
 

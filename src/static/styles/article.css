@@ -7,13 +7,15 @@ zeeguu orig
 {
 	background-color:#129793;
   color: white;
+  text-shadow: 1px 1px #505050;
   border-radius: 4px 0px 0px 4px;
 }
 
 zeeguu tran[transCount]
 {
 	background-color:#9BD7D5;
-  color: #505050;
+  color: white;
+  text-shadow: 1px 1px #505050;
   border-radius: 0px 4px 4px 0px;
 }
 
