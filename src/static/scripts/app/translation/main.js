@@ -2,7 +2,7 @@ import $ from 'jquery';
 import config from '../config';
 import Translator from './Translator';
 import AlterMenu from './AlterMenu'
-import Speaker from './Speaker';
+import Speaker from '../Speaker';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
