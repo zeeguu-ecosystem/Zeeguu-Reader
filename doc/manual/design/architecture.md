@@ -39,7 +39,8 @@ The subscription package allows for modifying the users feeds and listing the av
 
 ### Translation
 ![Translation UML](asset/translation.png)
-TBD
+
+The translation package allows for translating context that is wrapped with the custom html tags ('zeeguu'). The translation is the result of **Translator** interfacing with the Zeeguu API via the **ZeeguuRequests**. The **AlterMenu** serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation. **Notifier** informs the user whenever alternative translations are unavailable. Context subject for translation is also available for text to speech functionality. This is achieved with the **Speaker** class, which contains a dynamic utterance object, for which parameters such as language and text are supplied upon text to speech request.
 
 ### ZeeguuRequests
 ![Subscription UML](asset/ZeeguuRequests.png)
