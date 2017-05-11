@@ -41,7 +41,11 @@ The subscription package allows for modifying the users feeds and listing the av
 TBD
 
 ### ZeeguuRequests
+![Subscription UML](asset/ZeeguuRequests.png)
+
 The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST and GET endpoints to communicate with. Communication is handled asynchronously to force responsiveness of the application. Thus, server reply messages need to be handled by a callback method that you supply yourselves.
 
 ### Cache
+![Subscription UML](asset/Cache.png)
+
 The Cache class abstracts the implementation of storing user data locally. It allows us, if supported by the browser, to not be forced in querying zeeguu about identical data we requested shortly before. This increases responsiveness of the application whilst decreasing server workload.
