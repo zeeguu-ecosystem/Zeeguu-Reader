@@ -31,7 +31,7 @@ The **/article** endpoint takes as its arguments the article that the user decid
 
 Both packages share a need to contact the Zeeguu API once in a while, and thus this functionality has been abstracted into a common class: `ZeeguuRequests`.
 
-## Individual modules
+## In more detail
 ### Subscription
 TBD
 
