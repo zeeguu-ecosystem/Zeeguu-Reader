@@ -38,6 +38,7 @@ Both packages share a need to contact the Zeeguu API once in a while, and thus t
 The subscription package allows for modifying the users feeds and listing the available articles for the feeds the user is currently subscribed to. The **LanguageMenu** class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. **FeedSubscriber** thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. **SubscriptionList** manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. A change to this class calls for a change to the ArticleList. **ArticleList** manages a list of all possible articles to read, and uses the **Cache** class to do this efficiently.
 
 ### Translation
+![Translation UML](asset/translation.png)
 TBD
 
 ### ZeeguuRequests
