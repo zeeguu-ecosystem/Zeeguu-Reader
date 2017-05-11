@@ -1,4 +1,4 @@
-# Overview
+# Introduction
 Reading is one of the most beneficial ways for a learner to improve their mastery of a foreign language. In fact, McCarthy argues that [extensive reading has the potential to improve the other skills by being a training ground for them](https://eric.ed.gov/?id=ED452737): writing, listening, and speaking. 
 
 However, the state of the art in supporting readers of foreign languages is lacking. On the one hand, traditional learning materials in textbooks are most often unattractive as they target the [non-existent](https://www.thestar.com/news/insight/2016/01/16/when-us-air-force-discovered-the-flaw-of-averages.html) generic learner. On the other hand, the majority of the materials available online are usually incompatible with the learner's current language skill level. Moreover, some learners are often trying to maintain a parallel learning process of multiple different foreign languages.
