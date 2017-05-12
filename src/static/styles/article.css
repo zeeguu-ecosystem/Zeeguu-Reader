@@ -10,7 +10,9 @@ zeeguu orig
   text-shadow: 1px 1px #505050;
   border-radius: 4px 0px 0px 4px;
   background-clip: border-box;
+  display: inline-block;
   padding: 3px;
+  border-top: 2px solid #FFFFFF;
 }
 
 zeeguu tran[transCount]
@@ -20,7 +22,9 @@ zeeguu tran[transCount]
   text-shadow: 1px 1px #505050;
   border-radius: 0px 4px 4px 0px;
   background-clip: border-box;
+  display: inline-block;
   padding: 3px;
+  border-top: 2px solid #FFFFFF;
 }
 
 zeeguu tran[translation0]:after 

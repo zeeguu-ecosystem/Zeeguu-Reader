@@ -37,6 +37,7 @@ def make_article(url, language):
 
     title = wrap_zeeguu_words(article.title)
     content = article.text
+    content = add_paragraphs(content)
     content = wrap_zeeguu_words(content)
 
     # Create our article using Soup.
@@ -45,7 +46,13 @@ def make_article(url, language):
     soup.find('p',   {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
     soup.find('p',   {'id': 'articleURL'}).append(Soup(url, 'html.parser'))
 
-    return soup.prettify()
+    return str(soup)
+
+
+def add_paragraphs(text):
+    text = text.replace('\n', '</p><p>')
+    soup = Soup(text, 'html.parser')
+    return str(soup)
 
 
 def wrap_zeeguu_words(text):
@@ -53,10 +60,10 @@ def wrap_zeeguu_words(text):
     Keyword arguments:
     text -- html-formatted text
     """
-
     soup = Soup(text, 'html.parser')
     for text in soup.findAll(text=True):
-        if re.search('([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_-]+)', text):
-            wrapped_text = re.sub('([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_-]+)', '<' + WORD_TAG + '>' + r'\1' + "</" + WORD_TAG + '>', text)
+        word = "([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_'-]+)"
+        if re.search(word, text):
+            wrapped_text = re.sub(word, '<' + WORD_TAG + '>' + r'\1' + "</" + WORD_TAG + '>', text)
             text.replaceWith(Soup(wrapped_text, 'html.parser'))
-    return soup.prettify()
+    return str(soup)
