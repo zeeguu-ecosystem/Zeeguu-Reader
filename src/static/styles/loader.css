@@ -67,6 +67,11 @@
   animation: upwards 1s 0s 1 linear, fadein 1s 0s 1 linear;
 }
 
+.sadEleph
+{
+  width:100%;
+}
+
 @keyframes upwards {
   0%
   {
