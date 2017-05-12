@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9924,8 +9924,9 @@ exports.default = {
     GET_FEED_ITEMS: '/get_feed_items_with_metrics',
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
-    ARTICLE_FROM_URL: 'zeeguu-umr-core.herokuapp.com',
     HTML_ZEEGUUTAG: 'ZEEGUU',
+    HTML_ORIGINAL: 'orig',
+    HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ID_ARTICLE_URL: '#articleURL',
@@ -10074,11 +10075,81 @@ module.exports = function (module) {
 
 /***/ }),
 /* 5 */,
-/* 6 */,
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/* Class that allows text to speech for supplied text and language. */
+var Speaker = function () {
+    /**
+     * Initializes the utterance object for the speech synthesis.
+     */
+    function Speaker() {
+        _classCallCheck(this, Speaker);
+
+        this.utterance = new SpeechSynthesisUtterance();
+    }
+
+    /**
+     * Performs the speech synthesis of the supplied parameters.
+     * @param {string} text - Text to be transformed to speech.
+     * @param {string} language - Language code to be used for synthesis. 
+     */
+
+
+    _createClass(Speaker, [{
+        key: "speak",
+        value: function speak(text, language) {
+            this._setLanguage(language);
+            this._setText(text);
+            speechSynthesis.speak(this.utterance);
+        }
+
+        /**
+         * Set the language for the utterance object.
+         * @param {string} langauge - Language code.
+         */
+
+    }, {
+        key: "_setLanguage",
+        value: function _setLanguage(language) {
+            this.utterance.lang = language;
+        }
+
+        /**
+         * Set the text context to be synthesized.
+         * @param {string} text - Text to be transformed to speech.
+         */
+
+    }, {
+        key: "_setText",
+        value: function _setText(text) {
+            this.utterance.text = text;
+        }
+    }]);
+
+    return Speaker;
+}();
+
+exports.default = Speaker;
+;
+
+/***/ }),
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10098,7 +10169,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Notifier = __webpack_require__(13);
+var _Notifier = __webpack_require__(15);
 
 var _Notifier2 = _interopRequireDefault(_Notifier);
 
@@ -10107,9 +10178,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Class that allows for choosing alternative zeeguu translations.
+ * Class that allows for choosing alternative zeeguu translations from
+ * a drop-down alter menu.
  */
 var AlterMenu = function () {
+    /**
+     * Initialize the notifier field and the control field for the state of the
+     * alter menu (i.e. open or closed).
+     */
     function AlterMenu() {
         _classCallCheck(this, AlterMenu);
 
@@ -10117,20 +10193,23 @@ var AlterMenu = function () {
         this.notifier = new _Notifier2.default();
     }
 
-    /* Creates and opens the alternative translation menu. */
+    /**
+     * Create and open the alternative translation menu. 
+     * @param {Element} htmlTag - Document element for which to present the alter menu.
+     */
 
 
     _createClass(AlterMenu, [{
         key: 'constructAndOpen',
-        value: function constructAndOpen(zeeguuTag) {
+        value: function constructAndOpen(htmlTag) {
             // Check how many alternatives there are, if less than 2: abort.
-            var transCount = parseInt(zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT));
+            var transCount = parseInt(htmlTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT));
             if (transCount < 2) {
                 this.notifier.notify("Sorry, no alternatives.");
                 return;
             }
-            this.construct(zeeguuTag, transCount);
-            this._place(zeeguuTag);
+            this.construct(htmlTag, transCount);
+            this._place(htmlTag);
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideDown(function () {
                 this.menuOpen = true;
             }.bind(this));
@@ -10139,7 +10218,12 @@ var AlterMenu = function () {
         key: 'construct',
 
 
-        /* Add buttons with click listeners that replace the translation. */
+        /**
+         * Add buttons with click listeners that replace the translation and
+         * append these to the alter menu. 
+         * @param {Element} zeeguuTag - Tag from which the alternative transaltions are retrieved.
+         * @param {int} transCount - Number of present alternative translations. 
+         */
         value: function construct(zeeguuTag, transCount) {
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).empty();
             for (var i = 0; i < transCount; i++) {
@@ -10152,7 +10236,10 @@ var AlterMenu = function () {
             }
         }
 
-        /* Swaps the HTML_ATTRIBUTE_TRANSLATION 0 with the new preferred translation attribute. */
+        /**
+         * Swap the currently set translation (config.HTML_ATTRIBUTE_TRANSLATION 0) with the selected alternative.
+         * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
+         */
 
     }, {
         key: '_swapPrimaryTranslation',
@@ -10165,7 +10252,10 @@ var AlterMenu = function () {
             zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
         }
 
-        /* Places the alter menu below the to-be-altered word. */
+        /**
+         * Place the alter menu below the supplied zeeguuTag.
+         * @param {Element} zeeguuTag - Reference tag for the placement of the alter menu.
+         */
 
     }, {
         key: '_place',
@@ -10185,6 +10275,11 @@ var AlterMenu = function () {
             });
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).hide();
         }
+
+        /**
+         * Update the position of the alter menu.
+         */
+
     }, {
         key: 'reposition',
         value: function reposition() {
@@ -10195,7 +10290,9 @@ var AlterMenu = function () {
         key: 'close',
 
 
-        /* Hides the alter menu. */
+        /**
+         *  Hide the alter menu. 
+         */
         value: function close() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideUp(function () {
                 (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENUCONTAINER).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
@@ -10204,6 +10301,12 @@ var AlterMenu = function () {
         }
     }, {
         key: 'isOpen',
+
+
+        /**
+         * Check whether the alter menu is an open state.
+         * @return {boolean} - True only if the alter menu is open.
+         */
         value: function isOpen() {
             return this.menuOpen;
         }
@@ -10216,7 +10319,7 @@ exports.default = AlterMenu;
 ;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10244,7 +10347,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/* Class that allows for translating zeeguu tags. */
+/**
+ *  Class that allows for translating zeeguu tags. 
+ */
 var Translator = function () {
     function Translator() {
         _classCallCheck(this, Translator);
@@ -10253,52 +10358,82 @@ var Translator = function () {
     _createClass(Translator, [{
         key: 'translate',
 
-        /* Merges the zeeguutag with the surrounding translated
-         * zeeguutags, and then inserts translations for the tag's content.*/
+        /**
+         * Merge the surrounding translated zeeguuTags
+         * and insert translations for the tag's content by calling Zeeguu.
+         * Uses {@link ZeeguuRequests}.
+         * @param {Element} zeeguuTag - Document element containing the content to be translated. 
+         */
         value: function translate(zeeguuTag) {
             var _this = this;
 
             this._mergeZeeguu(zeeguuTag);
 
-            (0, _jquery2.default)(zeeguuTag).addClass('loading'); // adds it to the loading animation class
-
-            var text = zeeguuTag.textContent;
+            var text = zeeguuTag.textContent.trim();
             var context = this._getContext(zeeguuTag);
             var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
             var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
 
+            (0, _jquery2.default)(zeeguuTag).empty(); // clear tag up for insertion
+            var orig = document.createElement(_config2.default.HTML_ORIGINAL);
+            var tran = document.createElement(_config2.default.HTML_TRANSLATED);
+            (0, _jquery2.default)(orig).text(text);
+            (0, _jquery2.default)(orig).addClass('loading');
+            (0, _jquery2.default)(zeeguuTag).append(orig, tran);
+
             var callback = function callback(data) {
-                return _this._setTranslations(zeeguuTag, data);
+                return _this._setTranslations(orig, tran, data);
             };
-            // Launch zeeguu request to fill translation options.
+            // Launch Zeeguu request to fill translation options.
             _zeeguuRequests2.default.post(_config2.default.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + _config2.default.TO_LANGUAGE, { word: text, context: context, url: url, title: title }, callback);
         }
+
+        /**
+         * Checks whether given zeeguuTag is already translated.
+         * @param {Element} zeeguuTag - Document element that wraps translatable content. 
+         * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
+         */
+
     }, {
         key: 'isTranslated',
         value: function isTranslated(zeeguuTag) {
-            return zeeguuTag.hasAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT);
+            return (0, _jquery2.default)(zeeguuTag).has(_config2.default.HTML_TRANSLATED).length;
         }
 
-        /* This method handles the zeeguu request returned values,
-         * and thus actually inserts the returned translations. */
+        /**
+         * Handle the Zeeguu request returned values. Append the returned translations.
+         * @param {Element} htmlTag - Document element processed for translation.
+         * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
+         */
 
     }, {
         key: '_setTranslations',
-        value: function _setTranslations(zeeguuTag, translations) {
+        value: function _setTranslations(orig, htmlTag, translations) {
             translations = translations.translations;
             var transCount = Math.min(translations.length, 3);
-            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
+            htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
             for (var i = 0; i < transCount; i++) {
-                zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            }(0, _jquery2.default)(zeeguuTag).removeClass('loading'); // removes the animation class
+                htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+            }(0, _jquery2.default)(orig).removeClass('loading');
         }
+
+        /**
+         * Returns surrounding textual context for a given zeeguuTag by extracting the text from 
+         * its wrapping parent element.
+         * @param {Element} zeeguuTag - Document element for which to extract textual context
+         * @return {string} - Textual context.
+         */
+
     }, {
         key: '_getContext',
         value: function _getContext(zeeguuTag) {
             return zeeguuTag.parentElement.textContent;
         }
 
-        /* Merges the translated zeeguutags surrounding the given zeeguutag. */
+        /**
+         * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
+         * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+         */
 
     }, {
         key: '_mergeZeeguu',
@@ -10333,8 +10468,9 @@ exports.default = Translator;
 ;
 
 /***/ }),
-/* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10355,10 +10491,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Allows for small pop-up messages.
- * Does not repeat the same message if it is still displaying it.
+ * Presents small pop-up messages (notifications).
+ * Does not repeat the same message if it currently displays it.
  */
 var Notifier = function () {
+    /**
+     * Initializes the previously displayed message field. Empty at creation.
+     */
     function Notifier() {
         _classCallCheck(this, Notifier);
 
@@ -10369,7 +10508,10 @@ var Notifier = function () {
         key: 'notify',
 
 
-        /* Notify the user of <message>. */
+        /**
+         * Notify the user with the supplied message.
+         * @param {string} message - Message to be displayed. 
+         */
         value: function notify(message) {
             var snackbar = document.querySelector('.mdl-js-snackbar');
             if (this.lastMessage == message && (0, _jquery2.default)(snackbar).hasClass('mdl-snackbar--active')) return;
@@ -10385,7 +10527,7 @@ exports.default = Notifier;
 ;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10399,13 +10541,17 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Translator = __webpack_require__(11);
+var _Translator = __webpack_require__(12);
 
 var _Translator2 = _interopRequireDefault(_Translator);
 
-var _AlterMenu = __webpack_require__(10);
+var _AlterMenu = __webpack_require__(11);
 
 var _AlterMenu2 = _interopRequireDefault(_AlterMenu);
+
+var _Speaker = __webpack_require__(6);
+
+var _Speaker2 = _interopRequireDefault(_Speaker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10413,6 +10559,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * correct object is called to handle it. */
 var translator = new _Translator2.default();
 var alterMenu = new _AlterMenu2.default();
+var speaker = new _Speaker2.default();
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -10436,17 +10583,25 @@ var alterMenu = new _AlterMenu2.default();
     });
 
     /* When a translatable word has been clicked,
-     * either try to translate it or open an alternative
+     * either try to translate it, speak it, or open an alternative
      * translation window.  */
-    (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function () {
+    (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
         if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).is(':checked')) return;
 
-        if (alterMenu.isOpen()) return;
+        if (alterMenu.isOpen()) {
+            alterMenu.close();
+            return;
+        }
 
-        if (translator.isTranslated(this)) {
-            alterMenu.constructAndOpen(this);
-        } else {
-            translator.translate(this);
+        var target = (0, _jquery2.default)(event.target);
+        if (target.is(_config2.default.HTML_ZEEGUUTAG)) {
+            if (!translator.isTranslated(this)) {
+                translator.translate(this);
+            }
+        } else if (target.is(_config2.default.HTML_ORIGINAL)) {
+            speaker.speak((0, _jquery2.default)(this).find(_config2.default.HTML_ORIGINAL).text(), FROM_LANGUAGE);
+        } else if (target.is(_config2.default.HTML_TRANSLATED)) {
+            alterMenu.constructAndOpen(this.children[1]);
         }
     });
 });
@@ -10458,9 +10613,9 @@ var alterMenu = new _AlterMenu2.default();
     if (alterMenu.isOpen()) alterMenu.reposition();
 });
 
-// Disable or enable links.
-// Done in this peculiar way as default link disabling methods do not
-// pass a proper text selection.
+/* Disable links.
+ * Done in this peculiar way as default link disabling methods do not
+ * pass a proper text selection. */
 function disableHREF() {
     (0, _jquery2.default)('.translatable').find('a').each(function () {
         this.setAttribute('href_disabled', this.getAttribute('href'));
@@ -10468,6 +10623,7 @@ function disableHREF() {
     });
 }
 
+/* Enable links. */
 function enableHREF() {
     (0, _jquery2.default)('.translatable').find('a').each(function () {
         this.setAttribute('href', this.getAttribute('href_disabled'));
