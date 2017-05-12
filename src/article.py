@@ -50,6 +50,7 @@ def make_article(url, language):
 
 
 def add_paragraphs(text):
+    text = "<p>" + text
     text = text.replace('\n', '</p><p>')
     soup = Soup(text, 'html.parser')
     return str(soup)
