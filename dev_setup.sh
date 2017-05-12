@@ -17,8 +17,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo "Apt-get installing..."
     sudo apt-get install -y \
-    python \
-    python-dev \
+    python3.6 \
+    python3.6-dev \
     libxml2-dev \
     libxslt1-dev \
     zlib1g-dev \

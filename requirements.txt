@@ -1,15 +1,6 @@
 beautifulsoup4==4.6.0
-chardet==2.3.0
-click==6.6
-cssselect==1.0.0
 Flask==0.12
-itsdangerous==0.24
-Jinja2==2.8
-MarkupSafe==0.23
-readability-lxml==0.6.2
 requests==2.9.1
-Werkzeug==0.11.15
 pytest==3.0.7
 gunicorn==19.7.1
-newspaper3k
-html5lib==1.0b8
+newspaper3k==0.1.9
