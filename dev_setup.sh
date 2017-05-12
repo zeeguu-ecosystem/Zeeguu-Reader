@@ -17,8 +17,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo "Apt-get installing..."
     sudo apt-get install -y \
-    python \
-    python-dev \
+    python3.6 \
+    python3.6-dev \
     libxml2-dev \
     libxslt1-dev \
     zlib1g-dev \
@@ -42,7 +42,7 @@ fi
 
 if [ ! -d ${ZEEGUU_UMR_VENV_ROOT} ]; then
     mkdir -p $(dirname ${ZEEGUU_UMR_VENV_ROOT})
-    virtualenv -p python2.7 ${ZEEGUU_UMR_VENV_ROOT}
+    virtualenv -p python3.6 ${ZEEGUU_UMR_VENV_ROOT}
 fi
 source ${ZEEGUU_UMR_VENV_ROOT}/bin/activate
 cd "${TOP}"
