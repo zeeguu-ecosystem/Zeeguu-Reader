@@ -69,6 +69,11 @@ export default class SubscriptionList {
             }             
             this.feedList.add(Number(subscriptionData['subscriptionID']));
         }
+
+        if (this.feedList.size < 1)
+            $(config.HTML_CLASS_EMPTY_PAGE).show();
+        else
+            $(config.HTML_CLASS_EMPTY_PAGE).hide();
     }
 
     /**
@@ -105,5 +110,8 @@ export default class SubscriptionList {
         this.articleList.remove(feedID);
         if (!this.feedList.delete(Number(feedID)))  { console.log("Error"); }
         $(feedNode).fadeOut();
+
+        if (this.feedList.size < 1)
+            $(config.HTML_CLASS_EMPTY_PAGE).show();
     }
 };
