@@ -10092,50 +10092,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /* Class that allows text to speech for supplied text and language. */
 var Speaker = function () {
-    /**
-     * Initializes the utterance object for the speech synthesis.
-     */
     function Speaker() {
         _classCallCheck(this, Speaker);
-
-        this.utterance = new SpeechSynthesisUtterance();
     }
-
-    /**
-     * Performs the speech synthesis of the supplied parameters.
-     * @param {string} text - Text to be transformed to speech.
-     * @param {string} language - Language code to be used for synthesis. 
-     */
-
 
     _createClass(Speaker, [{
         key: "speak",
-        value: function speak(text, language) {
-            this._setLanguage(language);
-            this._setText(text);
-            speechSynthesis.speak(this.utterance);
-        }
 
         /**
-         * Set the language for the utterance object.
-         * @param {string} langauge - Language code.
-         */
-
-    }, {
-        key: "_setLanguage",
-        value: function _setLanguage(language) {
-            this.utterance.lang = language;
-        }
-
-        /**
-         * Set the text context to be synthesized.
+         * Performs the speech synthesis of the supplied parameters.
          * @param {string} text - Text to be transformed to speech.
+         * @param {string} language - Language code to be used for synthesis. 
          */
-
-    }, {
-        key: "_setText",
-        value: function _setText(text) {
-            this.utterance.text = text;
+        value: function speak(text, language) {
+            var utterance = new SpeechSynthesisUtterance();
+            utterance.lang = language;
+            utterance.text = text;
+            speechSynthesis.speak(utterance);
         }
     }]);
 
