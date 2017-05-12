@@ -1,11 +1,11 @@
 import article
 
 
-def test_remove_images():
-    """Assert if images are properly removed."""
-    text = "<img>image</img><div class='wp-caption-text'>Some caption</div> Text <hr />"
-    expected = " Text "
-    result = article.remove_images(text)
+def test_add_paragraphs():
+    """Assert if newlines are replaced with paragraphs."""
+    text = "\n"
+    expected = "<p></p>"
+    result = article.add_paragraphs(text)
     assert result == expected
 
 
