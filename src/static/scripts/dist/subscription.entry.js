@@ -9941,7 +9941,8 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_TEMPLATE: '#feedAddable-template',
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
-    HTML_CLASS_LOADER: '.loader'
+    HTML_CLASS_LOADER: '.loader',
+    HTML_CLASS_EMPTY_PAGE: '.emptyPage'
 };
 
 /***/ }),
@@ -11881,6 +11882,8 @@ var SubscriptionList = function () {
                 }
                 this.feedList.add(Number(subscriptionData['subscriptionID']));
             }
+
+            if (this.feedList.size < 1) (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();else (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).hide();
         }
 
         /**
@@ -11931,6 +11934,8 @@ var SubscriptionList = function () {
                 console.log("Error");
             }
             (0, _jquery2.default)(feedNode).fadeOut();
+
+            if (this.feedList.size < 1) (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();
         }
     }]);
 
