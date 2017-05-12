@@ -18,4 +18,4 @@ def get_favicon():
 
 if __name__ == "__main__":
     """ Launch our flask server. """
-    app.run()
+    app.run(host="0.0.0.0", debug=True)
