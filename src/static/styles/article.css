@@ -61,7 +61,7 @@ zeeguu tran[translation0]:after
 
 P.title
 {
-  font-size: 1.5em;
+  font-size: 36px;
   font-weight: bold;
 }
 
@@ -101,4 +101,9 @@ a[href_disabled]
   {
      opacity: 1;
   }
+}
+
+P {
+    font-size: 26px;
+    line-height: 40px;
 }

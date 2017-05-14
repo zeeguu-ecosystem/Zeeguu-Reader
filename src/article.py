@@ -31,12 +31,17 @@ def make_article(url, language):
     language -- the language the article is written in
     """
 
+    print (url)
+    print (language)
+
     article = Article(url=url, language=language)
     article.download()
     article.parse()
 
     title = wrap_zeeguu_words(article.title)
     content = article.text
+    import zeeguu
+    zeeguu.log(content)
     content = add_paragraphs(content)
     content = wrap_zeeguu_words(content)
 
