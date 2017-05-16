@@ -15,13 +15,6 @@ var speaker = new Speaker();
 $(document).ready(function() {
     disableHREF();
 
-    /* If you click anywhere in the translatable window,
-     * and the alterMenu is open, we close it. */
-    $('.translatable').click(function() {
-        if (alterMenu.isOpen())
-            alterMenu.close();
-    });
-
     /* When the translate toggle is changed, we
      * make sure that we disable or enable hyperlinks
      * and close all translation tools. */
@@ -63,7 +56,6 @@ $(document).click(function(event) {
     if (!target.is('input') && alterMenu.isOpen()) {
         alterMenu.close();
     }
-        
 });
 
 
