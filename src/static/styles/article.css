@@ -9,9 +9,10 @@ zeeguu orig
   color: #505050;
   border-radius: 0.3em 0em 0em 0.3em;
   background-clip: border-box;
-  display: inline-block;
+  display: inline;
   padding: 0.1em;
-  border-top: 0.2em solid #FFFFFF;
+  border-top: 0.1em solid #FFFFFF;
+  border-bottom: 0.1em solid #FFFFFF;
 }
 
 zeeguu tran[transCount]
@@ -20,9 +21,10 @@ zeeguu tran[transCount]
   color: #505050;
   border-radius: 0em 0.3em 0.3em 0em;
   background-clip: border-box;
-  display: inline-block;
+  display: inline;
   padding: 0.1em;
-  border-top: 0.2em solid #FFFFFF;
+  border-top: 0.1em solid #FFFFFF;
+  border-bottom: 0.1em solid #FFFFFF;
 }
 
 zeeguu tran[translation0]:after 
@@ -61,7 +63,7 @@ p.title
 {
   font-size: 2.2em;
   font-weight: bold;
-  line-height: 1.3em;
+  line-height: 1.5em;
 }
 
 p
