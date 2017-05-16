@@ -5,26 +5,24 @@ zeeguu orig.loading
 
 zeeguu orig
 {
-	background-color:#2F4987;
-  color: white;
-  text-shadow: 1px 1px #505050;
-  border-radius: 4px 0px 0px 4px;
+	background-color:#A3D6F5;
+  color: #505050;
+  border-radius: 0.3em 0em 0em 0.3em;
   background-clip: border-box;
   display: inline-block;
-  padding: 3px;
-  border-top: 2px solid #FFFFFF;
+  padding: 0.1em;
+  border-top: 0.2em solid #FFFFFF;
 }
 
 zeeguu tran[transCount]
 {
-	background-color:#A2BBE0;
-  color: white;
-  text-shadow: 1px 1px #505050;
-  border-radius: 0px 4px 4px 0px;
+	background-color:#CEEBFB;
+  color: #505050;
+  border-radius: 0em 0.3em 0.3em 0em;
   background-clip: border-box;
   display: inline-block;
-  padding: 3px;
-  border-top: 2px solid #FFFFFF;
+  padding: 0.1em;
+  border-top: 0.2em solid #FFFFFF;
 }
 
 zeeguu tran[translation0]:after 
@@ -59,10 +57,18 @@ zeeguu tran[translation0]:after
   color: black;
 }
 
-P.title
+p.title
 {
-  font-size: 36px;
+  font-size: 2.2em;
   font-weight: bold;
+  line-height: 1.3em;
+}
+
+p
+{
+  font-size: 1.3em;
+  line-height: 1.8em;
+  padding: 0.2em;
 }
 
 h1, h2, h3, h4
@@ -101,9 +107,4 @@ a[href_disabled]
   {
      opacity: 1;
   }
-}
-
-P {
-    font-size: 26px;
-    line-height: 40px;
 }
