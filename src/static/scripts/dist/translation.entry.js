@@ -10540,12 +10540,6 @@ var speaker = new _Speaker2.default();
 (0, _jquery2.default)(document).ready(function () {
     disableHREF();
 
-    /* If you click anywhere in the translatable window,
-     * and the alterMenu is open, we close it. */
-    (0, _jquery2.default)('.translatable').click(function () {
-        if (alterMenu.isOpen()) alterMenu.close();
-    });
-
     /* When the translate toggle is changed, we
      * make sure that we disable or enable hyperlinks
      * and close all translation tools. */
@@ -10578,6 +10572,12 @@ var speaker = new _Speaker2.default();
             alterMenu.constructAndOpen(this.children[1]);
         }
     });
+});
+
+/* Clicking anywhere in the document when the 
+ * alter menu is open, will close it.*/
+(0, _jquery2.default)(document).click(function () {
+    if (alterMenu.isOpen()) alterMenu.close();
 });
 
 /* Every time the screen changes, we need to
