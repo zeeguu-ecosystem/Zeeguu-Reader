@@ -35,6 +35,8 @@ $(document).ready(function() {
     $(config.HTML_ZEEGUUTAG).click(function(event) {
         if (!$(config.HTML_ID_TOGGLETRANSLATE).is(':checked'))
             return;
+        if(alterMenu.isOpen())
+            return;
 
         var target = $(event.target);
         if ( target.is(config.HTML_ZEEGUUTAG) ) {
