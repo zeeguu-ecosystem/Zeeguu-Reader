@@ -84,7 +84,6 @@
 
 .articleLinkTitle
 {
-
   border:none;
   overflow: hidden;
   white-space: nowrap;
@@ -92,7 +91,7 @@
   text-overflow: ellipsis;
   text-align: center;
   text-decoration: none;
-  #outline: none;
+  outline: none;
   width:100%;
 }
 

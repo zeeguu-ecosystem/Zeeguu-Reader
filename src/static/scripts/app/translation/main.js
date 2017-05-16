@@ -43,11 +43,6 @@ $(document).ready(function() {
         if (!$(config.HTML_ID_TOGGLETRANSLATE).is(':checked'))
             return;
 
-        if (alterMenu.isOpen()) {
-            alterMenu.close();
-            return;
-        }
-
         var target = $(event.target);
         if ( target.is(config.HTML_ZEEGUUTAG) ) {
             if (!translator.isTranslated(this)) {
@@ -61,6 +56,20 @@ $(document).ready(function() {
     });
 });
 
+<<<<<<< Updated upstream
+=======
+/* Clicking anywhere in the document when the 
+ * alter menu is open, will close it.*/
+$(document).click(function(event) {
+    var target = $(event.target);
+    if (!target.is('input') && alterMenu.isOpen()) {
+        alterMenu.close();
+    }
+        
+});
+
+
+>>>>>>> Stashed changes
 /* Every time the screen changes, we need to
  * reposition the alter menu to be at the correct word
  * position. */

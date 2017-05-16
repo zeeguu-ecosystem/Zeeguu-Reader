@@ -50,6 +50,8 @@ export default class AlterMenu {
             $(config.HTML_ID_ALTERMENU).append($(button));
             $(button).click({zeeguuTag: zeeguuTag, alternative: i}, this._swapPrimaryTranslation);
         }
+        var user_alternative = document.createElement("input");
+        $(config.HTML_ID_ALTERMENU).append($(user_alternative));
     }
 
     /**
