@@ -56,8 +56,6 @@ $(document).ready(function() {
     });
 });
 
-<<<<<<< Updated upstream
-=======
 /* Clicking anywhere in the document when the 
  * alter menu is open, will close it.*/
 $(document).click(function(event) {
@@ -69,7 +67,6 @@ $(document).click(function(event) {
 });
 
 
->>>>>>> Stashed changes
 /* Every time the screen changes, we need to
  * reposition the alter menu to be at the correct word
  * position. */
