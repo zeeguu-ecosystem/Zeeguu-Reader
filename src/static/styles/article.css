@@ -8,9 +8,9 @@ zeeguu orig
 	background-color:#A3D6F5;
   color: #505050;
   border-radius: 0.3em 0em 0em 0.3em;
-  background-clip: border-box;
+  background-clip: padding-box;
   display: inline;
-  padding: 0.1em;
+  padding: 0.2em;
   border-top: 0.1em solid #FFFFFF;
   border-bottom: 0.1em solid #FFFFFF;
 }
@@ -20,9 +20,9 @@ zeeguu tran[transCount]
 	background-color:#CEEBFB;
   color: #505050;
   border-radius: 0em 0.3em 0.3em 0em;
-  background-clip: border-box;
+  background-clip: padding-box;
   display: inline;
-  padding: 0.1em;
+  padding: 0.2em;
   border-top: 0.1em solid #FFFFFF;
   border-bottom: 0.1em solid #FFFFFF;
 }
@@ -63,13 +63,13 @@ p.title
 {
   font-size: 2.2em;
   font-weight: bold;
-  line-height: 1.5em;
+  line-height: 1.7em;
 }
 
 p
 {
   font-size: 1.3em;
-  line-height: 1.8em;
+  line-height: 1.7em;
   padding: 0.2em;
 }
 
@@ -103,7 +103,7 @@ a[href_disabled]
 {
   0% 
   {
-    opacity: 0;
+    opacity: 0.4;
   }
   100% 
   {
