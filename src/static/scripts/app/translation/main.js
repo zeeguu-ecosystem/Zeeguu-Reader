@@ -2,7 +2,7 @@ import $ from 'jquery';
 import config from '../config';
 import Translator from './Translator';
 import AlterMenu from './AlterMenu'
-import Speaker from '../Speaker';
+import Speaker from './Speaker';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
@@ -23,10 +23,7 @@ $(document).ready(function() {
         if (this.checked)
             disableHREF();
         else
-        {
-            alterMenu.close();
             enableHREF();
-        }
     });
 
     /* When a translatable word has been clicked,
@@ -57,9 +54,18 @@ $(document).click(function(event) {
     var target = $(event.target);
     if (!target.is('input') && alterMenu.isOpen()) {
         alterMenu.close();
+    } else if (target.is('input')) {
+        target.attr('value', '');
     }
 });
 
+$(document).keypress(function(event) {
+    var target = $(event.target);
+    if (target.is('input') && event.which == 13) {
+        console.log(target.val());
+        alterMenu.close();
+    }
+});
 
 /* Every time the screen changes, we need to
  * reposition the alter menu to be at the correct word

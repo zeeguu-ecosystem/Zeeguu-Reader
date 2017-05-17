@@ -11367,8 +11367,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 6 */,
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11518,7 +11517,7 @@ exports.default = ArticleList;
 ;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11676,7 +11675,7 @@ exports.default = FeedSubscriber;
 ;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11769,7 +11768,7 @@ exports.default = LanguageMenu;
 ;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11946,6 +11945,7 @@ exports.default = SubscriptionList;
 ;
 
 /***/ }),
+/* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */
@@ -12050,15 +12050,15 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ArticleList = __webpack_require__(7);
+var _ArticleList = __webpack_require__(6);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _SubscriptionList = __webpack_require__(10);
+var _SubscriptionList = __webpack_require__(9);
 
 var _SubscriptionList2 = _interopRequireDefault(_SubscriptionList);
 
-var _FeedSubscriber = __webpack_require__(8);
+var _FeedSubscriber = __webpack_require__(7);
 
 var _FeedSubscriber2 = _interopRequireDefault(_FeedSubscriber);
 
@@ -12066,7 +12066,7 @@ var _dialogPolyfill = __webpack_require__(5);
 
 var _dialogPolyfill2 = _interopRequireDefault(_dialogPolyfill);
 
-var _LanguageMenu = __webpack_require__(9);
+var _LanguageMenu = __webpack_require__(8);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
 

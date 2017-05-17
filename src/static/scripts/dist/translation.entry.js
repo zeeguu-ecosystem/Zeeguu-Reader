@@ -10076,54 +10076,11 @@ module.exports = function (module) {
 
 /***/ }),
 /* 5 */,
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/* Class that allows text to speech for supplied text and language. */
-var Speaker = function () {
-    function Speaker() {
-        _classCallCheck(this, Speaker);
-    }
-
-    _createClass(Speaker, [{
-        key: "speak",
-
-        /**
-         * Performs the speech synthesis of the supplied parameters.
-         * @param {string} text - Text to be transformed to speech.
-         * @param {string} language - Language code to be used for synthesis. 
-         */
-        value: function speak(text, language) {
-            var utterance = new SpeechSynthesisUtterance();
-            utterance.lang = language;
-            utterance.text = text;
-            speechSynthesis.speak(utterance);
-        }
-    }]);
-
-    return Speaker;
-}();
-
-exports.default = Speaker;
-;
-
-/***/ }),
+/* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */,
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10208,8 +10165,22 @@ var AlterMenu = function () {
                 (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(button));
                 (0, _jquery2.default)(button).click({ zeeguuTag: zeeguuTag, alternative: i }, this._swapPrimaryTranslation);
             }
-            var user_alternative = document.createElement("input");
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(user_alternative));
+            this._appendInputField();
+        }
+
+        /** 
+         * Appends the input field for user alternative, to the alter menu.
+         */
+
+    }, {
+        key: '_appendInputField',
+        value: function _appendInputField() {
+            var input_field = document.createElement('input');
+            (0, _jquery2.default)(input_field).addClass('mdl-textfield__input');
+            (0, _jquery2.default)(input_field).attr('type', 'text');
+            (0, _jquery2.default)(input_field).attr('id', 'usr_alt');
+            (0, _jquery2.default)(input_field).attr('value', 'Suggestion...');
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(input_field));
         }
 
         /**
@@ -10292,6 +10263,49 @@ var AlterMenu = function () {
 }();
 
 exports.default = AlterMenu;
+;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/* Class that allows text to speech for supplied text and language. */
+var Speaker = function () {
+    function Speaker() {
+        _classCallCheck(this, Speaker);
+    }
+
+    _createClass(Speaker, [{
+        key: "speak",
+
+        /**
+         * Performs the speech synthesis of the supplied parameters.
+         * @param {string} text - Text to be transformed to speech.
+         * @param {string} language - Language code to be used for synthesis. 
+         */
+        value: function speak(text, language) {
+            var utterance = new SpeechSynthesisUtterance();
+            utterance.lang = language;
+            utterance.text = text;
+            speechSynthesis.speak(utterance);
+        }
+    }]);
+
+    return Speaker;
+}();
+
+exports.default = Speaker;
 ;
 
 /***/ }),
@@ -10521,11 +10535,11 @@ var _Translator = __webpack_require__(12);
 
 var _Translator2 = _interopRequireDefault(_Translator);
 
-var _AlterMenu = __webpack_require__(11);
+var _AlterMenu = __webpack_require__(10);
 
 var _AlterMenu2 = _interopRequireDefault(_AlterMenu);
 
-var _Speaker = __webpack_require__(6);
+var _Speaker = __webpack_require__(11);
 
 var _Speaker2 = _interopRequireDefault(_Speaker);
 
@@ -10546,10 +10560,7 @@ var speaker = new _Speaker2.default();
      * make sure that we disable or enable hyperlinks
      * and close all translation tools. */
     (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).change(function () {
-        if (this.checked) disableHREF();else {
-            alterMenu.close();
-            enableHREF();
-        }
+        if (this.checked) disableHREF();else enableHREF();
     });
 
     /* When a translatable word has been clicked,
@@ -10577,6 +10588,16 @@ var speaker = new _Speaker2.default();
 (0, _jquery2.default)(document).click(function (event) {
     var target = (0, _jquery2.default)(event.target);
     if (!target.is('input') && alterMenu.isOpen()) {
+        alterMenu.close();
+    } else if (target.is('input')) {
+        target.attr('value', '');
+    }
+});
+
+(0, _jquery2.default)(document).keypress(function (event) {
+    var target = (0, _jquery2.default)(event.target);
+    if (target.is('input') && event.which == 13) {
+        console.log(target.val());
         alterMenu.close();
     }
 });

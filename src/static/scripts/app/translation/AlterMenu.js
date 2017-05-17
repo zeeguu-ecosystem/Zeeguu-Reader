@@ -50,8 +50,19 @@ export default class AlterMenu {
             $(config.HTML_ID_ALTERMENU).append($(button));
             $(button).click({zeeguuTag: zeeguuTag, alternative: i}, this._swapPrimaryTranslation);
         }
-        var user_alternative = document.createElement("input");
-        $(config.HTML_ID_ALTERMENU).append($(user_alternative));
+        this._appendInputField();
+    }
+
+    /** 
+     * Appends the input field for user alternative, to the alter menu.
+     */
+    _appendInputField() {
+        var input_field = document.createElement('input');
+        $(input_field).addClass('mdl-textfield__input');
+        $(input_field).attr('type', 'text');
+        $(input_field).attr('id', 'usr_alt');
+        $(input_field).attr('value', 'Suggestion...');
+        $(config.HTML_ID_ALTERMENU).append($(input_field));
     }
 
     /**
