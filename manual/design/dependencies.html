@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">Design</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="overview">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-overview" data-section-count="&#x25A0;&#x25A0;" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html" data-ice="link">Introduction</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#core" data-ice="link">Core</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#extensions" data-ice="link">Extensions</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#non-functional-attributes" data-ice="link">Non-functional attributes</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="design">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;&#x25A0;" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html" data-ice="link">Architectural Design</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#making-modules" data-ice="link">Making modules</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#design-overview" data-ice="link">Design overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#in-more-detail" data-ice="link">In more detail</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#subscription" data-ice="link">Subscription</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#translation" data-ice="link">Translation</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#zeeguurequests" data-ice="link">ZeeguuRequests</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#cache" data-ice="link">Cache</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;" data-link="manual/design/UI.html"><a href="manual/design/UI.html" data-ice="link">UI Design</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#implementation" data-ice="link">Implementation</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;&#x25A0;&#x25A0;" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html" data-ice="link">Dependencies</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#python" data-ice="link">Python</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#flask" data-ice="link">Flask</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#newspaper" data-ice="link">Newspaper</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#beautifulsoup" data-ice="link">Beautifulsoup</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#pytest" data-ice="link">Pytest</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#gunicorn" data-ice="link">Gunicorn</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#javascript" data-ice="link">Javascript</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#mdl" data-ice="link">MDL</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#nodejs" data-ice="link">NodeJS</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#webpack" data-ice="link">WebPack</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#dialog-polyfill" data-ice="link">Dialog Polyfill</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#mustache" data-ice="link">Mustache</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="installation">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-installation" data-section-count="&#x25A0;&#x25A0;" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html" data-ice="link">How to Build and Run</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#sources" data-ice="link">Sources</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#setting-up-your-development-environment" data-ice="link">Setting up your development environment</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#local-deployment" data-ice="link">Local deployment</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#remote-deployment" data-ice="link">Remote deployment</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#heroku" data-ice="link">Heroku</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#apache" data-ice="link">Apache</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="usage">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;&#x25A0;" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html" data-ice="link">Workflow</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#automation" data-ice="link">Automation</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#continouous-integration" data-ice="link">Continouous Integration</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#automatic-documentation" data-ice="link">Automatic Documentation</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#contributing" data-ice="link">Contributing</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html" data-ice="link">Try it!</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#stable" data-ice="link">Stable</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#development" data-ice="link">Development</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-reference" data-section-count="&#x25A0;&#x25A0;&#x25A0;" data-link="identifiers.html"><a href="identifiers.html" data-ice="link">Reference</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="identifiers.html"><a href="identifiers.html#class" data-ice="link">Class</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown">
+  <div class="manual-breadcrumb-list">
+    <a href="./manual/./index.html">Manual</a>
+    <span>&#xBB;</span>
+    <span data-ice="title">Design</span>
+  </div>
+  <div data-ice="content"><h1 id="dependencies">Dependencies</h1>
+<p>Just like almost any other piece of code, it does not exist in isolation. Our project stands on the shoulders of giants, of we will discuss the biggest ones below (some dependencies require other dependencies, these are not mentioned).</p>
+<h2 id="python">Python</h2>
+<p>You can find a listing of <strong>all</strong> dependencies in our <code>requirements.txt</code> file. We use Python 3.6 in order to make use of the latest advancements in the dependencies we use (for example, Newspaper for Python 2 is depricated and does not parse webpages as well).</p>
+<h3 id="flask">Flask</h3>
+<p>A framework was needed to allow us to run a <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> server in Python. We decided on using the <a href="http://flask.pocoo.org/">Flask microframework</a> for its comprehensability, simplicity and its active community supporting it. Furthermore, it allows us to share and reuse code more easily between other services of Zeeguu which also implement most of their functionality using Flask.</p>
+<p>Flask (originally created as <a href="http://lucumr.pocoo.org/2010/4/3/april-1st-post-mortem/">an april-fools joke</a>) is, as of this moment in writing, the most popular Python web development framework on GitHub. </p>
+<h3 id="newspaper">Newspaper</h3>
+<p>We use the <a href="https://newspaper.readthedocs.io/en/latest/">Newspaper</a> library in order to intelligently filter cluttered web-pages and extract only the important parts: the title and the content.</p>
+<h3 id="beautifulsoup">Beautifulsoup</h3>
+<p><a href="https://www.crummy.com/software/BeautifulSoup/">Beautifulsoup</a> gives us the ability to easily query and modify elements of HTML on the server, which is needed in order to wrap words with the Zeeguu tag.</p>
+<h3 id="pytest">Pytest</h3>
+<p><a href="https://docs.pytest.org/en/latest/">Pytest</a> is a widely adopted testing framework for python. It&apos;s more simple and elegant than the build-in testing tools Python provides (decreasing the chance of bugs in our bug-testing tools).</p>
+<h3 id="gunicorn">Gunicorn</h3>
+<p><a href="http://gunicorn.org/">Gunicorn</a> is only used on the Heroku server. It allows it to handle multiple users concurrently.</p>
+<h2 id="javascript">Javascript</h2>
+<p>You can find a listing of <strong>all</strong> dependencies in our <code>package.json</code> file.</p>
+<h3 id="mdl">MDL</h3>
+<p>We use the <a href="https://getmdl.io/started/">Material Design Lite</a> (MDL) library to allow for cross-device Material Design styled web pages. These pages gracefully degrade in older browsers. MDL is very light weight, runs locally, and does not rely on any javascript frameworks.</p>
+<h3 id="nodejs">NodeJS</h3>
+<p><a href="https://nodejs.org/en/">NodeJS</a> is used to manage our dependencies and keeping everyting up-to-date. The <code>package.json</code> file lists these dependencies (where we define a difference between release and development requirements).</p>
+<h3 id="webpack">WebPack</h3>
+<p><a href="https://webpack.js.org/">Webpack</a>, as discussed earlier, allows us to transpile our Ecmascript 2015 code to backwards-compatible Javascript whilst minifying and compining the modules into neat and efficient files.</p>
+<h3 id="dialog-polyfill">Dialog Polyfill</h3>
+<p><a href="https://github.com/GoogleChrome/dialog-polyfill">Dialog Polyfill</a> fixes dialog window support for browsers that do not have it, such as Firefox.</p>
+<h3 id="mustache">Mustache</h3>
+<p><a href="https://mustache.github.io">Mustache</a> is a template rendering library. Templates can be reused to adaptivly modify the content of our pages based on user feedback. For example, we use it to generate the list of available articles.</p>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

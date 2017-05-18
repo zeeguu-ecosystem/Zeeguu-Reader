@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">Design</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="overview">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-overview" data-section-count="&#x25A0;&#x25A0;" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html" data-ice="link">Introduction</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#core" data-ice="link">Core</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#extensions" data-ice="link">Extensions</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview/overview.html"><a href="manual/overview/overview.html#non-functional-attributes" data-ice="link">Non-functional attributes</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="design">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;&#x25A0;" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html" data-ice="link">Architectural Design</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#making-modules" data-ice="link">Making modules</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#design-overview" data-ice="link">Design overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#in-more-detail" data-ice="link">In more detail</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#subscription" data-ice="link">Subscription</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#translation" data-ice="link">Translation</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#zeeguurequests" data-ice="link">ZeeguuRequests</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#cache" data-ice="link">Cache</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;" data-link="manual/design/UI.html"><a href="manual/design/UI.html" data-ice="link">UI Design</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#goals" data-ice="link">Goals</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#implementation" data-ice="link">Implementation</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;&#x25A0;&#x25A0;" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html" data-ice="link">Dependencies</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#python" data-ice="link">Python</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#flask" data-ice="link">Flask</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#newspaper" data-ice="link">Newspaper</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#beautifulsoup" data-ice="link">Beautifulsoup</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#pytest" data-ice="link">Pytest</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#gunicorn" data-ice="link">Gunicorn</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#javascript" data-ice="link">Javascript</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#mdl" data-ice="link">MDL</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#nodejs" data-ice="link">NodeJS</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#webpack" data-ice="link">WebPack</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#dialog-polyfill" data-ice="link">Dialog Polyfill</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#mustache" data-ice="link">Mustache</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="installation">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-installation" data-section-count="&#x25A0;&#x25A0;" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html" data-ice="link">How to Build and Run</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#sources" data-ice="link">Sources</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#setting-up-your-development-environment" data-ice="link">Setting up your development environment</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#local-deployment" data-ice="link">Local deployment</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#remote-deployment" data-ice="link">Remote deployment</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#heroku" data-ice="link">Heroku</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#apache" data-ice="link">Apache</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="usage">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;&#x25A0;" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html" data-ice="link">Workflow</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#automation" data-ice="link">Automation</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#continouous-integration" data-ice="link">Continouous Integration</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#automatic-documentation" data-ice="link">Automatic Documentation</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/workflow.html"><a href="manual/usage/workflow.html#contributing" data-ice="link">Contributing</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html" data-ice="link">Try it!</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#stable" data-ice="link">Stable</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#development" data-ice="link">Development</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1 manual-color manual-color-reference" data-section-count="&#x25A0;&#x25A0;&#x25A0;" data-link="identifiers.html"><a href="identifiers.html" data-ice="link">Reference</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="identifiers.html"><a href="identifiers.html#class" data-ice="link">Class</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown">
+  <div class="manual-breadcrumb-list">
+    <a href="./manual/./index.html">Manual</a>
+    <span>&#xBB;</span>
+    <span data-ice="title">Design</span>
+  </div>
+  <div data-ice="content"><h1 id="architectural-design">Architectural Design</h1>
+<p>The development of the Universal Multilingual Reader started off with the following design goals in mind:</p>
+<ul>
+<li>Aim for a clear separation of concerns in order to improve modularity of the system.</li>
+<li>Comprehensability of code.</li>
+<li>Compatability amoung most modern web browsers and platforms.</li>
+<li>Fault tolerance.</li>
+<li>Responsiveness.</li>
+<li>The implementation should strive for efficiency and avoid redundancy.</li>
+</ul>
+<p>In the following sections, we will show you how we tried to follow these goals.</p>
+<h2 id="making-modules">Making modules</h2>
+<p><a href="https://en.wikipedia.org/wiki/ECMAScript">Ecmascript</a> 2015 (ES2015) introduced a significant addition to the syntax Javascript implements, amoung which, most important to us, are <em>modules</em>. However, current browser support for ES2015 is low: we do not have the luxury of only deveoping for the possible future where compatability might increase. To resolve this issue, transpilers like <a href="https://babeljs.io/">Babel</a> exist: a program that convert next generation Javascript into current day ubiquitously compatible Javascript. </p>
+<p><a href="https://webpack.js.org/">Webpack</a> builds on top of Babel, which allows you to enerate a single (neatly minified) backwards compatible file for each entrypoint. Using Webpack we write all our code in the readable and modular ES2016 definition, define a <code>main.js</code> for every package as an entry point, and then transpile it to two single files.  These  minified files can be included into our HTML documents, which can invoke the files to allow them to perform their tasks.</p>
+<ul>
+<li><code>subscription.entry.js</code>.</li>
+<li><code>translation.entry.js</code>.</li>
+</ul>
+<h2 id="design-overview">Design overview</h2>
+<p>Using these tools, we will were able to define our system as follows:</p>
+<p><img src="./manual/asset/overview.png" alt="Overview Diagram"></p>
+<p>The Flask server defines two endpoints accessable if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. </p>
+<p>The <strong>/articles</strong> endpoint simply delivers the article.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, but all functionality is implemented by the package which it invokes. The subscription package make use of the Cache class in order to store article listings locally, but Caching is not specific to this package.</p>
+<p>The <strong>/article</strong> endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing but again all functionality (like tap-and-translate) is implemented by the package which it invokes. </p>
+<p>Both packages share a need to contact the Zeeguu API once in a while, and thus this functionality has been abstracted into a common class: <code>ZeeguuRequests</code>.</p>
+<h2 id="in-more-detail">In more detail</h2>
+<h3 id="subscription">Subscription</h3>
+<p><img src="./manual/asset/subscription.png" alt="Subscription UML"></p>
+<p>The subscription package allows for modifying the users feeds and listing the available articles for the feeds the user is currently subscribed to. The <strong>LanguageMenu</strong> class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. <strong>FeedSubscriber</strong> thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. <strong>SubscriptionList</strong> manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. A change to this class calls for a change to the ArticleList. <strong>ArticleList</strong> manages a list of all possible articles to read, and uses the <strong>Cache</strong> class to do this efficiently.</p>
+<h3 id="translation">Translation</h3>
+<p><img src="./manual/asset/translation.png" alt="Translation UML"></p>
+<p>The translation package allows for translating context that is wrapped with the custom html tags (&apos;zeeguu&apos;). The translation is the result of <strong>Translator</strong> interfacing with the Zeeguu API via the <strong>ZeeguuRequests</strong>. The <strong>AlterMenu</strong> serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation. <strong>Notifier</strong> informs the user whenever alternative translations are unavailable. Context subject for translation is also available for text to speech functionality. This is achieved with the <strong>Speaker</strong> class, which contains a dynamic utterance object, for which parameters such as language and text are supplied upon text to speech request.</p>
+<h3 id="zeeguurequests">ZeeguuRequests</h3>
+<p><img src="./manual/asset/ZeeguuRequests.png" alt="Subscription UML"></p>
+<p>The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST and GET endpoints to communicate with. Communication is handled asynchronously to force responsiveness of the application. Thus, server reply messages need to be handled by a callback method that you supply yourselves.</p>
+<h3 id="cache">Cache</h3>
+<p><img src="./manual/asset/Cache.png" alt="Subscription UML"></p>
+<p>The Cache class abstracts the implementation of storing user data locally. It allows us, if supported by the browser, to not be forced in querying zeeguu about identical data we requested shortly before. This increases responsiveness of the application whilst decreasing server workload.</p>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

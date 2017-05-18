@@ -15,7 +15,7 @@
 
 <header>
   <a href="./">Home</a>
-  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
@@ -32,7 +32,9 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
@@ -45,13 +47,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Translator from &apos;<span><a href="file/app/translation/Translator.js.html#lineNumber6">zeeguu-umr/app/translation/Translator.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Translator from &apos;<span><a href="file/app/translation/Translator.js.html#lineNumber8">zeeguu-umr/app/translation/Translator.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/translation/Translator.js.html#lineNumber6">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/translation/Translator.js.html#lineNumber8">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -71,7 +73,8 @@
 
   
   
-  
+  <div class="description" data-ice="description"><p> Class that allows for translating zeeguu tags. </p>
+</div>
   
 
   
@@ -104,13 +107,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-isTranslated">isTranslated</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-isTranslated">isTranslated</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Checks whether given zeeguuTag is already translated.</p>
+</div>
       </div>
     </td>
     <td>
@@ -131,13 +135,16 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-translate">translate</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-translate">translate</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Merge the surrounding translated zeeguuTags
+and insert translations for the tag&apos;s content by calling Zeeguu.
+Uses <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span>.</p>
+</div>
       </div>
     </td>
     <td>
@@ -164,13 +171,15 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-_getContext">_getContext</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-_getContext">_getContext</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns surrounding textual context for a given zeeguuTag by extracting the text from 
+its wrapping parent element.</p>
+</div>
       </div>
     </td>
     <td>
@@ -191,13 +200,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-_mergeZeeguu">_mergeZeeguu</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-_mergeZeeguu">_mergeZeeguu</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Merge the translated zeeguuTags surrounding the given zeeguuTag.</p>
+</div>
       </div>
     </td>
     <td>
@@ -218,13 +228,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-_setTranslations">_setTranslations</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>, translations: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html#instance-method-_setTranslations">_setTranslations</a></span></span><span data-ice="signature">(htmlTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, translations: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Handle the Zeeguu request returned values.</p>
+</div>
       </div>
     </td>
     <td>
@@ -252,18 +263,19 @@
     
     
     
-    <span data-ice="name">isTranslated</span><span data-ice="signature">(zeeguuTag: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">isTranslated</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber25">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber42">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Checks whether given zeeguuTag is already translated.</p>
+</div>
 
   
 
@@ -277,9 +289,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Document element that wraps translatable content.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -291,8 +304,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>True only if the passed zeeguuTag already has translation data.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -323,18 +337,21 @@
     
     
     
-    <span data-ice="name">translate</span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+    <span data-ice="name">translate</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber9">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber15">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Merge the surrounding translated zeeguuTags
+and insert translations for the tag&apos;s content by calling Zeeguu.
+Uses <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span>.</p>
+</div>
 
   
 
@@ -348,9 +365,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Document element containing the content to be translated.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -384,18 +402,20 @@
     
     
     
-    <span data-ice="name">_getContext</span><span data-ice="signature">(zeeguuTag: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">_getContext</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber41">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber67">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns surrounding textual context for a given zeeguuTag by extracting the text from 
+its wrapping parent element.</p>
+</div>
 
   
 
@@ -409,9 +429,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Document element for which to extract textual context</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -423,8 +444,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Textual context.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -455,18 +477,19 @@
     
     
     
-    <span data-ice="name">_mergeZeeguu</span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+    <span data-ice="name">_mergeZeeguu</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber46">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber75">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Merge the translated zeeguuTags surrounding the given zeeguuTag. </p>
+</div>
 
   
 
@@ -480,9 +503,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Tag for which to perform merge with the surrounding tags.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -514,18 +538,19 @@
     
     
     
-    <span data-ice="name">_setTranslations</span><span data-ice="signature">(zeeguuTag: <span>*</span>, translations: <span>*</span>)</span>
+    <span data-ice="name">_setTranslations</span><span data-ice="signature">(htmlTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, translations: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber31">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Translator.js.html#lineNumber51">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Handle the Zeeguu request returned values. Append the returned translations.</p>
+</div>
 
   
 
@@ -538,16 +563,18 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="name" data-depth="0">htmlTag</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Document element processed for translation.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">translations</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>A list of translations to be added to the given htmlTag content.</p>
+</td>
     </tr>
 </tbody>
   </table>

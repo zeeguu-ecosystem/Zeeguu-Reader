@@ -1,27 +1,24 @@
 {
-  "coverage": "57.89%",
-  "expectCount": 57,
-  "actualCount": 33,
+  "coverage": "86.36%",
+  "expectCount": 66,
+  "actualCount": 57,
   "files": {
     "app/translation/AlterMenu.js": {
       "expectCount": 11,
-      "actualCount": 1,
+      "actualCount": 9,
       "undocumentLines": [
-        53,
-        43,
-        76,
-        30,
         15,
-        9,
-        83,
-        10,
-        11,
-        70
+        16
       ]
     },
     "app/subscription/ArticleList.js": {
-      "expectCount": 5,
-      "actualCount": 5,
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "app/Cache.js": {
+      "expectCount": 6,
+      "actualCount": 6,
       "undocumentLines": []
     },
     "app/subscription/FeedSubscriber.js": {
@@ -41,11 +38,16 @@
     },
     "app/translation/Notifier.js": {
       "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        12
+      ]
+    },
+    "app/Speaker.js": {
+      "expectCount": 2,
       "actualCount": 1,
       "undocumentLines": [
-        8,
-        9,
-        13
+        3
       ]
     },
     "app/subscription/SubscriptionList.js": {
@@ -58,15 +60,8 @@
     },
     "app/translation/Translator.js": {
       "expectCount": 6,
-      "actualCount": 0,
-      "undocumentLines": [
-        6,
-        41,
-        46,
-        31,
-        25,
-        9
-      ]
+      "actualCount": 6,
+      "undocumentLines": []
     },
     "app/zeeguuRequests.js": {
       "expectCount": 5,

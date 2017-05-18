@@ -15,7 +15,7 @@
 
 <header>
   <a href="./">Home</a>
-  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
@@ -32,7 +32,9 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
@@ -49,11 +51,13 @@
 import config from &apos;../config&apos;;
 import Translator from &apos;./Translator&apos;;
 import AlterMenu from &apos;./AlterMenu&apos;
+import Speaker from &apos;../Speaker&apos;;
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 var translator = new Translator();
 var alterMenu = new AlterMenu();
+var speaker = new Speaker();
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -82,19 +86,26 @@ $(document).ready(function() {
     });
 
     /* When a translatable word has been clicked,
-     * either try to translate it or open an alternative
+     * either try to translate it, speak it, or open an alternative
      * translation window.  */
-    $(config.HTML_ZEEGUUTAG).click(function() {
+    $(config.HTML_ZEEGUUTAG).click(function(event) {
         if (!$(config.HTML_ID_TOGGLETRANSLATE).is(&apos;:checked&apos;))
             return;
 
-        if (alterMenu.isOpen())
+        if (alterMenu.isOpen()) {
+            alterMenu.close();
             return;
+        }
 
-        if (translator.isTranslated(this)) {
-            alterMenu.constructAndOpen(this);
-        } else {
-            translator.translate(this);
+        var target = $(event.target);
+        if ( target.is(config.HTML_ZEEGUUTAG) ) {
+            if (!translator.isTranslated(this)) {
+                translator.translate(this);
+            }
+        } else if (target.is(config.HTML_ORIGINAL) ) {
+            speaker.speak($(this).find(config.HTML_ORIGINAL).text(), FROM_LANGUAGE);
+        } else if (target.is(config.HTML_TRANSLATED) ) {
+            alterMenu.constructAndOpen(this.children[1]);
         }
     });
 });
@@ -107,9 +118,9 @@ $(window).on(&quot;resize&quot;, function() {
         alterMenu.reposition();
 });
 
-// Disable or enable links.
-// Done in this peculiar way as default link disabling methods do not
-// pass a proper text selection.
+/* Disable links.
+ * Done in this peculiar way as default link disabling methods do not
+ * pass a proper text selection. */
 function disableHREF()
 {
     $(&apos;.translatable&apos;).find(&apos;a&apos;).each(function()
@@ -119,6 +130,7 @@ function disableHREF()
     });
 }
 
+/* Enable links. */
 function enableHREF()
 {
     $(&apos;.translatable&apos;).find(&apos;a&apos;).each(function()

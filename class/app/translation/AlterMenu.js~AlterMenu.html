@@ -15,7 +15,7 @@
 
 <header>
   <a href="./">Home</a>
-  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
@@ -32,7 +32,9 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
@@ -45,13 +47,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import AlterMenu from &apos;<span><a href="file/app/translation/AlterMenu.js.html#lineNumber8">zeeguu-umr/app/translation/AlterMenu.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import AlterMenu from &apos;<span><a href="file/app/translation/AlterMenu.js.html#lineNumber9">zeeguu-umr/app/translation/AlterMenu.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/translation/AlterMenu.js.html#lineNumber8">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/translation/AlterMenu.js.html#lineNumber9">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -71,7 +73,8 @@
 
   
   
-  <div class="description" data-ice="description"><p>Class that allows for choosing alternative zeeguu translations.</p>
+  <div class="description" data-ice="description"><p>Class that allows for choosing alternative zeeguu translations from
+a drop-down alter menu.</p>
 </div>
   
 
@@ -109,7 +112,9 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Initialize the notifier field and the control field for the state of the
+alter menu (i.e.</p>
+</div>
       </div>
     </td>
     <td>
@@ -204,7 +209,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p> Hide the alter menu.</p>
+</div>
       </div>
     </td>
     <td>
@@ -225,13 +231,15 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-construct">construct</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>, transCount: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-construct">construct</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, transCount: <span>int</span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Add buttons with click listeners that replace the translation and
+append these to the alter menu.</p>
+</div>
       </div>
     </td>
     <td>
@@ -252,13 +260,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-constructAndOpen">constructAndOpen</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-constructAndOpen">constructAndOpen</a></span></span><span data-ice="signature">(htmlTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Create and open the alternative translation menu.</p>
+</div>
       </div>
     </td>
     <td>
@@ -279,13 +288,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-isOpen">isOpen</a></span></span><span data-ice="signature">(): <span>*</span></span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-isOpen">isOpen</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Check whether the alter menu is an open state.</p>
+</div>
       </div>
     </td>
     <td>
@@ -312,7 +322,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Update the position of the alter menu.</p>
+</div>
       </div>
     </td>
     <td>
@@ -339,13 +350,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_place">_place</a></span></span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_place">_place</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Place the alter menu below the supplied zeeguuTag.</p>
+</div>
       </div>
     </td>
     <td>
@@ -366,13 +378,14 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_swapPrimaryTranslation">_swapPrimaryTranslation</a></span></span><span data-ice="signature">(selectedAlternative: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_swapPrimaryTranslation">_swapPrimaryTranslation</a></span></span><span data-ice="signature">(selectedAlternative: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Swap the currently set translation (config.HTML_ATTRIBUTE_TRANSLATION 0) with the selected alternative.</p>
+</div>
       </div>
     </td>
     <td>
@@ -402,14 +415,16 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber9">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber14">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Initialize the notifier field and the control field for the state of the
+alter menu (i.e. open or closed).</p>
+</div>
 
   
 
@@ -448,7 +463,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber15">source</a></span></span>
     </span>
   </h3>
 
@@ -491,7 +506,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber11">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber16">source</a></span></span>
     </span>
   </h3>
 
@@ -537,14 +552,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber76">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber100">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p> Hide the alter menu. </p>
+</div>
 
   
 
@@ -576,18 +592,20 @@
     
     
     
-    <span data-ice="name">construct</span><span data-ice="signature">(zeeguuTag: <span>*</span>, transCount: <span>*</span>)</span>
+    <span data-ice="name">construct</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, transCount: <span>int</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber43">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Add buttons with click listeners that replace the translation and
+append these to the alter menu. </p>
+</div>
 
   
 
@@ -601,15 +619,17 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Tag from which the alternative transaltions are retrieved.</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">transCount</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span>int</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Number of present alternative translations.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -641,18 +661,19 @@
     
     
     
-    <span data-ice="name">constructAndOpen</span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+    <span data-ice="name">constructAndOpen</span><span data-ice="signature">(htmlTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Create and open the alternative translation menu. </p>
+</div>
 
   
 
@@ -665,10 +686,11 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="name" data-depth="0">htmlTag</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Document element for which to present the alter menu.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -700,18 +722,19 @@
     
     
     
-    <span data-ice="name">isOpen</span><span data-ice="signature">(): <span>*</span></span>
+    <span data-ice="name">isOpen</span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber83">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber111">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Check whether the alter menu is an open state.</p>
+</div>
 
   
 
@@ -723,8 +746,9 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type" data-ice="returnType"><span>*</span></td>
-          
+          <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>True only if the alter menu is open.</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -759,14 +783,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber70">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber92">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Update the position of the alter menu.</p>
+</div>
 
   
 
@@ -800,18 +825,19 @@
     
     
     
-    <span data-ice="name">_place</span><span data-ice="signature">(zeeguuTag: <span>*</span>)</span>
+    <span data-ice="name">_place</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber53">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber72">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Place the alter menu below the supplied zeeguuTag.</p>
+</div>
 
   
 
@@ -825,9 +851,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Reference tag for the placement of the alter menu.</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -859,18 +886,19 @@
     
     
     
-    <span data-ice="name">_swapPrimaryTranslation</span><span data-ice="signature">(selectedAlternative: <span>*</span>)</span>
+    <span data-ice="name">_swapPrimaryTranslation</span><span data-ice="signature">(selectedAlternative: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber43">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber59">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Swap the currently set translation (config.HTML_ATTRIBUTE_TRANSLATION 0) with the selected alternative.</p>
+</div>
 
   
 
@@ -884,9 +912,10 @@
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">selectedAlternative</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Attribute that determines the selected alternative.</p>
+</td>
     </tr>
 </tbody>
   </table>

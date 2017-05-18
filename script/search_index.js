@@ -12,6 +12,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "zeeguu-umr/app/cache.js~cache",
+    "class/app/Cache.js~Cache.html",
+    "<span>Cache</span> <span class=\"search-result-import-path\">zeeguu-umr/app/Cache.js</span>",
+    "class"
+  ],
+  [
     "zeeguu-umr/app/subscription/feedsubscriber.js~feedsubscriber",
     "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html",
     "<span>FeedSubscriber</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/FeedSubscriber.js</span>",
@@ -27,6 +33,12 @@ window.esdocSearchIndex = [
     "zeeguu-umr/app/translation/notifier.js~notifier",
     "class/app/translation/Notifier.js~Notifier.html",
     "<span>Notifier</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/Notifier.js</span>",
+    "class"
+  ],
+  [
+    "zeeguu-umr/app/speaker.js~speaker",
+    "class/app/Speaker.js~Speaker.html",
+    "<span>Speaker</span> <span class=\"search-result-import-path\">zeeguu-umr/app/Speaker.js</span>",
     "class"
   ],
   [
@@ -378,6 +390,54 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "app/cache.js",
+    "file/app/Cache.js.html",
+    "app/Cache.js",
+    "file"
+  ],
+  [
+    "app/cache.js~cache.has",
+    "class/app/Cache.js~Cache.html#static-method-has",
+    "app/Cache.js~Cache.has",
+    "method"
+  ],
+  [
+    "app/cache.js~cache.isavailable",
+    "class/app/Cache.js~Cache.html#static-method-isAvailable",
+    "app/Cache.js~Cache.isAvailable",
+    "method"
+  ],
+  [
+    "app/cache.js~cache.remove",
+    "class/app/Cache.js~Cache.html#static-method-remove",
+    "app/Cache.js~Cache.remove",
+    "method"
+  ],
+  [
+    "app/cache.js~cache.retrieve",
+    "class/app/Cache.js~Cache.html#static-method-retrieve",
+    "app/Cache.js~Cache.retrieve",
+    "method"
+  ],
+  [
+    "app/cache.js~cache.store",
+    "class/app/Cache.js~Cache.html#static-method-store",
+    "app/Cache.js~Cache.store",
+    "method"
+  ],
+  [
+    "app/speaker.js",
+    "file/app/Speaker.js.html",
+    "app/Speaker.js",
+    "file"
+  ],
+  [
+    "app/speaker.js~speaker#speak",
+    "class/app/Speaker.js~Speaker.html#instance-method-speak",
+    "app/Speaker.js~Speaker#speak",
+    "method"
+  ],
+  [
     "app/config.js",
     "file/app/config.js.html",
     "app/config.js",
@@ -393,6 +453,12 @@ window.esdocSearchIndex = [
     "app/subscription/articlelist.js~articlelist#_loadarticlelinks",
     "class/app/subscription/ArticleList.js~ArticleList.html#instance-method-_loadArticleLinks",
     "app/subscription/ArticleList.js~ArticleList#_loadArticleLinks",
+    "method"
+  ],
+  [
+    "app/subscription/articlelist.js~articlelist#_renderarticlelinks",
+    "class/app/subscription/ArticleList.js~ArticleList.html#instance-method-_renderArticleLinks",
+    "app/subscription/ArticleList.js~ArticleList#_renderArticleLinks",
     "method"
   ],
   [

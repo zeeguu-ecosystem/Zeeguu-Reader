@@ -15,7 +15,7 @@
 
 <header>
   <a href="./">Home</a>
-  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
@@ -32,7 +32,9 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
@@ -71,8 +73,8 @@
 
   
   
-  <div class="description" data-ice="description"><p>Allows for small pop-up messages.
-Does not repeat the same message if it is still displaying it.</p>
+  <div class="description" data-ice="description"><p>Presents small pop-up messages (notifications).
+Does not repeat the same message if it currently displays it.</p>
 </div>
   
 
@@ -110,7 +112,8 @@ Does not repeat the same message if it is still displaying it.</p>
       <div>
         
         
-        
+        <div data-ice="description"><p>Initializes the previously displayed message field.</p>
+</div>
       </div>
     </td>
     <td>
@@ -172,13 +175,14 @@ Does not repeat the same message if it is still displaying it.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-method-notify">notify</a></span></span><span data-ice="signature">(message: <span>*</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-method-notify">notify</a></span></span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Notify the user with the supplied message.</p>
+</div>
       </div>
     </td>
     <td>
@@ -208,14 +212,15 @@ Does not repeat the same message if it is still displaying it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber8">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber11">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Initializes the previously displayed message field. Empty at creation.</p>
+</div>
 
   
 
@@ -254,7 +259,7 @@ Does not repeat the same message if it is still displaying it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber9">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber12">source</a></span></span>
     </span>
   </h3>
 
@@ -296,18 +301,19 @@ Does not repeat the same message if it is still displaying it.</p>
     
     
     
-    <span data-ice="name">notify</span><span data-ice="signature">(message: <span>*</span>)</span>
+    <span data-ice="name">notify</span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Notify the user with the supplied message.</p>
+</div>
 
   
 
@@ -321,9 +327,10 @@ Does not repeat the same message if it is still displaying it.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">message</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Message to be displayed.</p>
+</td>
     </tr>
 </tbody>
   </table>
