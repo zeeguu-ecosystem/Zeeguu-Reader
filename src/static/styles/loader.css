@@ -88,6 +88,11 @@
   animation: wiggleLeftRight 0.3s 0s infinite linear reverse
 }
 
+.mdl-layout__drawer-button.wiggle
+{
+  animation: wiggleLeftRightAgressive 1s 0s infinite linear reverse
+}
+
 @keyframes wiggleLeftRight {
   0%
   {
@@ -104,5 +109,24 @@
   75%
   {
     transform: rotate(2deg);
+  }
+}
+
+@keyframes wiggleLeftRightAgressive {
+  0%
+  {
+    transform: rotate(0deg) scale(1, 1);
+  }
+  25%
+  {
+    transform: rotate(-6deg) scale(1.4, 1.4);
+  }
+  50%
+  {
+    transform: rotate(0deg) scale(1, 1);
+  }
+  75%
+  {
+    transform: rotate(6deg) scale(1.4, 1.4);
   }
 }

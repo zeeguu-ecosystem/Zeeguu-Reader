@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9947,7 +9947,9 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
-    HTML_CLASS_EMPTY_PAGE: '.emptyPage'
+    HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    HTML_CLASS_TOUR: '.tour',
+    HTML_CLASS_WIGGLE: 'wiggle'
 };
 
 /***/ }),
@@ -11355,7 +11357,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
 
-  if ("function" === 'function' && 'amd' in __webpack_require__(17)) {
+  if ("function" === 'function' && 'amd' in __webpack_require__(18)) {
     // AMD support
     !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
       return dialogPolyfill;
@@ -11801,6 +11803,10 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
+var _NoFeedTour = __webpack_require__(14);
+
+var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11811,13 +11817,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var SubscriptionList = function () {
     /**
-     * Bind with the {@link ArticleList} and initialise an empty list of feeds.
+     * Bind with the {@link ArticleList}, initialise an empty list of feeds and a {@link NoFeedTour} object.
      * @param {ArticleList} articleList - List of all articles available to the user.
      */
     function SubscriptionList(articleList) {
         _classCallCheck(this, SubscriptionList);
 
         this.articleList = articleList;
+        this.noFeedTour = new _NoFeedTour2.default();
         this.feedList = new Set();
     }
 
@@ -11887,7 +11894,7 @@ var SubscriptionList = function () {
                 this.feedList.add(Number(subscriptionData['subscriptionID']));
             }
 
-            if (this.feedList.size < 1) (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();else (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).hide();
+            if (this.feedList.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
         }
 
         /**
@@ -11939,7 +11946,7 @@ var SubscriptionList = function () {
             }
             (0, _jquery2.default)(feedNode).fadeOut();
 
-            if (this.feedList.size < 1) (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();
+            if (this.feedList.size < 1) this.noFeedTour.show();
         }
     }]);
 
@@ -12051,6 +12058,70 @@ exports.default = Cache;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Shows or hides style for when there is no feed.
+ */
+var NoFeedTour = function () {
+    function NoFeedTour() {
+        _classCallCheck(this, NoFeedTour);
+    }
+
+    _createClass(NoFeedTour, [{
+        key: 'show',
+
+
+        /**
+         * Show a tour styling, guiding the user to new feeds.
+         */
+        value: function show() {
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_TOUR).addClass(_config2.default.HTML_CLASS_WIGGLE);
+            (0, _jquery2.default)('.mdl-layout__drawer-button').addClass(_config2.default.HTML_CLASS_WIGGLE);
+        }
+
+        /**
+         * Hides the tour styling.
+         */
+
+    }, {
+        key: 'hide',
+        value: function hide() {
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).hide();
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_TOUR).removeClass(_config2.default.HTML_CLASS_WIGGLE);
+            (0, _jquery2.default)('.mdl-layout__drawer-button').removeClass(_config2.default.HTML_CLASS_WIGGLE);
+        }
+    }]);
+
+    return NoFeedTour;
+}();
+
+exports.default = NoFeedTour;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -12114,9 +12185,9 @@ function noAvatar(image) {
 }
 
 /***/ }),
-/* 15 */,
 /* 16 */,
-/* 17 */
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
