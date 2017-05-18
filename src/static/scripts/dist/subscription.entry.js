@@ -9947,7 +9947,9 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
-    HTML_CLASS_EMPTY_PAGE: '.emptyPage'
+    HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    CLASS_LOADING: 'loading',
+    CLASS_NOSELECT: 'noselect'
 };
 
 /***/ }),
