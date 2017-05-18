@@ -1,17 +1,35 @@
-zeeguu.loading
+zeeguu orig.loading
 {
 	animation: fadein 1s 0s infinite linear alternate;
 }
 
-
-zeeguu[transCount]
+zeeguu orig
 {
-	background-color:#eaf2ff;
+	background-color:#2F4987;
+  color: white;
+  text-shadow: 1px 1px #505050;
+  border-radius: 4px 0px 0px 4px;
+  background-clip: border-box;
+  display: inline-block;
+  padding: 3px;
+  border-top: 2px solid #FFFFFF;
 }
 
-zeeguu[translation0]:after 
+zeeguu tran[transCount]
 {
-	content: " (" attr(translation0) ") ";
+	background-color:#A2BBE0;
+  color: white;
+  text-shadow: 1px 1px #505050;
+  border-radius: 0px 4px 4px 0px;
+  background-clip: border-box;
+  display: inline-block;
+  padding: 3px;
+  border-top: 2px solid #FFFFFF;
+}
+
+zeeguu tran[translation0]:after 
+{
+	content: attr(translation0);
 }
 
 

@@ -1,5 +1,6 @@
 .loader 
 {
+  display:none;
   position: absolute;
   text-align:center;
   top: 50%;
@@ -52,5 +53,32 @@
   100% 
   {
      opacity: 1;
+  }
+}
+
+.emptyPage
+{
+  display:none;
+  position: absolute;
+  text-align:center;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  animation: upwards 1s 0s 1 linear, fadein 1s 0s 1 linear;
+}
+
+.sadEleph
+{
+  width:100%;
+}
+
+@keyframes upwards {
+  0%
+  {
+    transform: translate(-50%, -40%);
+  }
+  100%
+  {
+    transform: translate(-50%, -50%);
   }
 }

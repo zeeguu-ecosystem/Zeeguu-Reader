@@ -1,0 +1,15 @@
+
+/* Class that allows text to speech for supplied text and language. */
+export default class Speaker {
+    /**
+     * Performs the speech synthesis of the supplied parameters.
+     * @param {string} text - Text to be transformed to speech.
+     * @param {string} language - Language code to be used for synthesis. 
+     */
+    speak(text, language) {
+        let utterance = new SpeechSynthesisUtterance();
+        utterance.lang = language;
+        utterance.text = text;
+        speechSynthesis.speak(utterance);
+    }
+};

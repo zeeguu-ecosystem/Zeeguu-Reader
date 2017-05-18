@@ -1,1 +1,1 @@
-web: python src/zeeguu_umr.py
+web: cd src; gunicorn zeeguu_umr:app
