@@ -9924,16 +9924,21 @@ exports.default = {
     GET_FEED_ITEMS: '/get_feed_items_with_metrics',
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
+    ENTER_KEY: 13,
+    TEXT_SUGGESTION: 'Suggestion...',
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
+    HTML_ATTRIBUTE_CHOSEN: 'chosen',
+    HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
+    HTML_ID_USER_ALTERNATIVE: '#userAlternative',
     HTML_ID_ARTICLELINK_TEMPLATE: '#articleLink-template',
     HTML_ID_ARTICLELINK_LIST: '#articleLinkList',
     HTML_ID_SUBSCRIPTION_TEMPLATE: '#subscription-template',
@@ -10076,54 +10081,11 @@ module.exports = function (module) {
 
 /***/ }),
 /* 5 */,
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/* Class that allows text to speech for supplied text and language. */
-var Speaker = function () {
-    function Speaker() {
-        _classCallCheck(this, Speaker);
-    }
-
-    _createClass(Speaker, [{
-        key: "speak",
-
-        /**
-         * Performs the speech synthesis of the supplied parameters.
-         * @param {string} text - Text to be transformed to speech.
-         * @param {string} language - Language code to be used for synthesis. 
-         */
-        value: function speak(text, language) {
-            var utterance = new SpeechSynthesisUtterance();
-            utterance.lang = language;
-            utterance.text = text;
-            speechSynthesis.speak(utterance);
-        }
-    }]);
-
-    return Speaker;
-}();
-
-exports.default = Speaker;
-;
-
-/***/ }),
+/* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */,
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10208,6 +10170,25 @@ var AlterMenu = function () {
                 (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(button));
                 (0, _jquery2.default)(button).click({ zeeguuTag: zeeguuTag, alternative: i }, this._swapPrimaryTranslation);
             }
+            this._appendInputField(zeeguuTag);
+        }
+
+        /** 
+         * Appends the input field for user alternative, to the alter menu.
+         * @param {Element} zeeguuTag - Tag from which the suggested transaltion is retrieved.
+         */
+
+    }, {
+        key: '_appendInputField',
+        value: function _appendInputField(zeeguuTag) {
+            var input_field = document.createElement('input');
+            var suggestion = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION);
+            var value = suggestion === '' ? _config2.default.TEXT_SUGGESTION : suggestion;
+            (0, _jquery2.default)(input_field).addClass('mdl-textfield__input');
+            (0, _jquery2.default)(input_field).attr('type', 'text');
+            (0, _jquery2.default)(input_field).attr('id', _config2.default.HTML_ID_USER_ALTERNATIVE);
+            (0, _jquery2.default)(input_field).attr('value', value);
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(input_field));
         }
 
         /**
@@ -10220,10 +10201,8 @@ var AlterMenu = function () {
         value: function _swapPrimaryTranslation(selectedAlternative) {
             var zeeguuTag = selectedAlternative.data.zeeguuTag;
             var alternative = selectedAlternative.data.alternative;
-            var oldText = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + '0');
             var newText = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative);
-            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + '0', newText);
-            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
+            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, newText);
         }
 
         /**
@@ -10290,6 +10269,49 @@ var AlterMenu = function () {
 }();
 
 exports.default = AlterMenu;
+;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/* Class that allows text to speech for supplied text and language. */
+var Speaker = function () {
+    function Speaker() {
+        _classCallCheck(this, Speaker);
+    }
+
+    _createClass(Speaker, [{
+        key: "speak",
+
+        /**
+         * Performs the speech synthesis of the supplied parameters.
+         * @param {string} text - Text to be transformed to speech.
+         * @param {string} language - Language code to be used for synthesis. 
+         */
+        value: function speak(text, language) {
+            var utterance = new SpeechSynthesisUtterance();
+            utterance.lang = language;
+            utterance.text = text;
+            speechSynthesis.speak(utterance);
+        }
+    }]);
+
+    return Speaker;
+}();
+
+exports.default = Speaker;
 ;
 
 /***/ }),
@@ -10388,7 +10410,9 @@ var Translator = function () {
             htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
             for (var i = 0; i < transCount; i++) {
                 htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            }(0, _jquery2.default)(orig).removeClass('loading');
+            }htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
+            htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION, '');
+            (0, _jquery2.default)(orig).removeClass('loading');
         }
 
         /**
@@ -10519,11 +10543,11 @@ var _Translator = __webpack_require__(12);
 
 var _Translator2 = _interopRequireDefault(_Translator);
 
-var _AlterMenu = __webpack_require__(11);
+var _AlterMenu = __webpack_require__(10);
 
 var _AlterMenu2 = _interopRequireDefault(_AlterMenu);
 
-var _Speaker = __webpack_require__(6);
+var _Speaker = __webpack_require__(11);
 
 var _Speaker2 = _interopRequireDefault(_Speaker);
 
@@ -10544,10 +10568,7 @@ var speaker = new _Speaker2.default();
      * make sure that we disable or enable hyperlinks
      * and close all translation tools. */
     (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).change(function () {
-        if (this.checked) disableHREF();else {
-            alterMenu.close();
-            enableHREF();
-        }
+        if (this.checked) disableHREF();else enableHREF();
     });
 
     /* When a translatable word has been clicked,
@@ -10555,11 +10576,7 @@ var speaker = new _Speaker2.default();
      * translation window.  */
     (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
         if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).is(':checked')) return;
-
-        if (alterMenu.isOpen()) {
-            alterMenu.close();
-            return;
-        }
+        if (alterMenu.isOpen()) return;
 
         var target = (0, _jquery2.default)(event.target);
         if (target.is(_config2.default.HTML_ZEEGUUTAG)) {
@@ -10576,8 +10593,27 @@ var speaker = new _Speaker2.default();
 
 /* Clicking anywhere in the document when the 
  * alter menu is open, will close it.*/
-(0, _jquery2.default)(document).click(function () {
-    if (alterMenu.isOpen()) alterMenu.close();
+(0, _jquery2.default)(document).click(function (event) {
+    var target = (0, _jquery2.default)(event.target);
+    if (!target.is('input') && alterMenu.isOpen()) {
+        alterMenu.close();
+    } else if (target.is('input') && target.val() === _config2.default.TEXT_SUGGESTION) {
+        target.attr('value', '');
+    }
+});
+
+/* Listens on keypress 'enter' to set the user suggestion 
+ * as the chosen translation. */
+(0, _jquery2.default)(document).keypress(function (event) {
+    var target = (0, _jquery2.default)(event.target);
+    if (target.is('input') && event.which == _config2.default.ENTER_KEY) {
+        var trans = target.parent().parent();
+        if (target.val() !== '') {
+            trans.attr(_config2.default.HTML_ATTRIBUTE_CHOSEN, target.val());
+            trans.attr(_config2.default.HTML_ATTRIBUTE_SUGGESTION, target.val());
+        }
+        alterMenu.close();
+    }
 });
 
 /* Every time the screen changes, we need to
