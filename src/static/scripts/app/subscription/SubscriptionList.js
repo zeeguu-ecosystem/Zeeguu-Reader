@@ -2,6 +2,7 @@ import $ from 'jquery'
 import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
+import NoFeedTour from './NoFeedTour';
 
 /**
  * Shows a list of all subscribed feeds, allows the user to remove them.
@@ -9,11 +10,12 @@ import ZeeguuRequests from '../zeeguuRequests';
  */
 export default class SubscriptionList {
     /**
-     * Bind with the {@link ArticleList} and initialise an empty list of feeds.
+     * Bind with the {@link ArticleList}, initialise an empty list of feeds and a {@link NoFeedTour} object.
      * @param {ArticleList} articleList - List of all articles available to the user.
      */
     constructor(articleList) {
         this.articleList = articleList;
+        this.noFeedTour = new NoFeedTour();
         this.feedList = new Set();
     }
 
@@ -71,9 +73,9 @@ export default class SubscriptionList {
         }
 
         if (this.feedList.size < 1)
-            $(config.HTML_CLASS_EMPTY_PAGE).show();
+            this.noFeedTour.show();
         else
-            $(config.HTML_CLASS_EMPTY_PAGE).hide();
+            this.noFeedTour.hide();
     }
 
     /**
@@ -112,6 +114,6 @@ export default class SubscriptionList {
         $(feedNode).fadeOut();
 
         if (this.feedList.size < 1)
-            $(config.HTML_CLASS_EMPTY_PAGE).show();
+            this.noFeedTour.show();
     }
 };

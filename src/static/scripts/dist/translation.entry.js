@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9947,7 +9947,9 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
-    HTML_CLASS_EMPTY_PAGE: '.emptyPage'
+    HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    HTML_CLASS_TOUR: '.tour',
+    HTML_CLASS_WIGGLE: 'wiggle'
 };
 
 /***/ }),
@@ -10105,7 +10107,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Notifier = __webpack_require__(15);
+var _Notifier = __webpack_require__(16);
 
 var _Notifier2 = _interopRequireDefault(_Notifier);
 
@@ -10468,7 +10470,8 @@ exports.default = Translator;
 /***/ }),
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10525,7 +10528,7 @@ exports.default = Notifier;
 ;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
