@@ -50,18 +50,21 @@ export default class AlterMenu {
             $(config.HTML_ID_ALTERMENU).append($(button));
             $(button).click({zeeguuTag: zeeguuTag, alternative: i}, this._swapPrimaryTranslation);
         }
-        this._appendInputField();
+        this._appendInputField(zeeguuTag);
     }
 
     /** 
      * Appends the input field for user alternative, to the alter menu.
+     * @param {Element} zeeguuTag - Tag from which the suggested transaltion is retrieved.
      */
-    _appendInputField() {
+    _appendInputField(zeeguuTag) {
         var input_field = document.createElement('input');
+        var suggestion  = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_SUGGESTION);
+        var value = (suggestion === '' ? config.TEXT_SUGGESTION : suggestion);
         $(input_field).addClass('mdl-textfield__input');
         $(input_field).attr('type', 'text');
-        $(input_field).attr('id', 'usr_alt');
-        $(input_field).attr('value', 'Suggestion...');
+        $(input_field).attr('id', config.HTML_ID_USER_ALTERNATIVE);        
+        $(input_field).attr('value', value);
         $(config.HTML_ID_ALTERMENU).append($(input_field));
     }
 
@@ -72,10 +75,8 @@ export default class AlterMenu {
     _swapPrimaryTranslation(selectedAlternative) {
         var zeeguuTag = selectedAlternative.data.zeeguuTag;
         var alternative = selectedAlternative.data.alternative;
-        var oldText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + '0');
         var newText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative);
-        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + '0', newText);
-        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
+        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, newText);
     }
 
     /**

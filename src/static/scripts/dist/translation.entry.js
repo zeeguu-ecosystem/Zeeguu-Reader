@@ -9924,16 +9924,21 @@ exports.default = {
     GET_FEED_ITEMS: '/get_feed_items_with_metrics',
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
+    ENTER_KEY: 13,
+    TEXT_SUGGESTION: 'Suggestion...',
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
+    HTML_ATTRIBUTE_CHOSEN: 'chosen',
+    HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
+    HTML_ID_USER_ALTERNATIVE: '#userAlternative',
     HTML_ID_ARTICLELINK_TEMPLATE: '#articleLink-template',
     HTML_ID_ARTICLELINK_LIST: '#articleLinkList',
     HTML_ID_SUBSCRIPTION_TEMPLATE: '#subscription-template',
@@ -10165,21 +10170,24 @@ var AlterMenu = function () {
                 (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(button));
                 (0, _jquery2.default)(button).click({ zeeguuTag: zeeguuTag, alternative: i }, this._swapPrimaryTranslation);
             }
-            this._appendInputField();
+            this._appendInputField(zeeguuTag);
         }
 
         /** 
          * Appends the input field for user alternative, to the alter menu.
+         * @param {Element} zeeguuTag - Tag from which the suggested transaltion is retrieved.
          */
 
     }, {
         key: '_appendInputField',
-        value: function _appendInputField() {
+        value: function _appendInputField(zeeguuTag) {
             var input_field = document.createElement('input');
+            var suggestion = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION);
+            var value = suggestion === '' ? _config2.default.TEXT_SUGGESTION : suggestion;
             (0, _jquery2.default)(input_field).addClass('mdl-textfield__input');
             (0, _jquery2.default)(input_field).attr('type', 'text');
-            (0, _jquery2.default)(input_field).attr('id', 'usr_alt');
-            (0, _jquery2.default)(input_field).attr('value', 'Suggestion...');
+            (0, _jquery2.default)(input_field).attr('id', _config2.default.HTML_ID_USER_ALTERNATIVE);
+            (0, _jquery2.default)(input_field).attr('value', value);
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(input_field));
         }
 
@@ -10193,10 +10201,8 @@ var AlterMenu = function () {
         value: function _swapPrimaryTranslation(selectedAlternative) {
             var zeeguuTag = selectedAlternative.data.zeeguuTag;
             var alternative = selectedAlternative.data.alternative;
-            var oldText = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + '0');
             var newText = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative);
-            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + '0', newText);
-            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
+            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, newText);
         }
 
         /**
@@ -10404,7 +10410,9 @@ var Translator = function () {
             htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
             for (var i = 0; i < transCount; i++) {
                 htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            }(0, _jquery2.default)(orig).removeClass('loading');
+            }htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
+            htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION, '');
+            (0, _jquery2.default)(orig).removeClass('loading');
         }
 
         /**
@@ -10589,15 +10597,21 @@ var speaker = new _Speaker2.default();
     var target = (0, _jquery2.default)(event.target);
     if (!target.is('input') && alterMenu.isOpen()) {
         alterMenu.close();
-    } else if (target.is('input')) {
+    } else if (target.is('input') && target.val() === _config2.default.TEXT_SUGGESTION) {
         target.attr('value', '');
     }
 });
 
+/* Listens on keypress 'enter' to set the user suggestion 
+ * as the chosen translation. */
 (0, _jquery2.default)(document).keypress(function (event) {
     var target = (0, _jquery2.default)(event.target);
-    if (target.is('input') && event.which == 13) {
-        console.log(target.val());
+    if (target.is('input') && event.which == _config2.default.ENTER_KEY) {
+        var trans = target.parent().parent();
+        if (target.val() !== '') {
+            trans.attr(_config2.default.HTML_ATTRIBUTE_CHOSEN, target.val());
+            trans.attr(_config2.default.HTML_ATTRIBUTE_SUGGESTION, target.val());
+        }
         alterMenu.close();
     }
 });

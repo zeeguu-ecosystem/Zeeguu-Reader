@@ -27,9 +27,9 @@ zeeguu tran[transCount]
   border-bottom: 0.1em solid #FFFFFF;
 }
 
-zeeguu tran[translation0]:after 
+zeeguu tran[chosen]:after 
 {
-	content: attr(translation0);
+	content: attr(chosen);
 }
 
 

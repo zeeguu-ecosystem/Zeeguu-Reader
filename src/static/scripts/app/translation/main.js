@@ -20,10 +20,8 @@ $(document).ready(function() {
      * and close all translation tools. */
     $(config.HTML_ID_TOGGLETRANSLATE).change(function()
     {
-        if (this.checked)
-            disableHREF();
-        else
-            enableHREF();
+        if (this.checked) disableHREF();
+        else enableHREF();
     });
 
     /* When a translatable word has been clicked,
@@ -54,15 +52,21 @@ $(document).click(function(event) {
     var target = $(event.target);
     if (!target.is('input') && alterMenu.isOpen()) {
         alterMenu.close();
-    } else if (target.is('input')) {
+    } else if (target.is('input') && target.val() === config.TEXT_SUGGESTION) {
         target.attr('value', '');
     }
 });
 
+/* Listens on keypress 'enter' to set the user suggestion 
+ * as the chosen translation. */
 $(document).keypress(function(event) {
     var target = $(event.target);
-    if (target.is('input') && event.which == 13) {
-        console.log(target.val());
+    if (target.is('input') && event.which == config.ENTER_KEY) {
+        var trans = target.parent().parent();
+        if (target.val() !== '') {
+            trans.attr(config.HTML_ATTRIBUTE_CHOSEN, target.val());
+            trans.attr(config.HTML_ATTRIBUTE_SUGGESTION, target.val());
+        }
         alterMenu.close();
     }
 });
