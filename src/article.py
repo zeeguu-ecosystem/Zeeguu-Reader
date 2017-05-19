@@ -10,7 +10,7 @@ WORD_TAG = "zeeguu"
 endpoints_article = Blueprint('endpoints_article', __name__, template_folder='templates')
 
 
-@endpoints_article.route('/articles/article', methods=['GET'])
+@endpoints_article.route('/article', methods=['GET'])
 @with_session
 def get_article():
     """Retrieve the supplied article link of the supplied language,
@@ -30,12 +30,11 @@ def make_article(url, language):
     url      -- the url of the article
     language -- the language the article is written in
     """
-
     article = Article(url=url, language=language)
     article.download()
     article.parse()
 
-    title = wrap_zeeguu_words(article.title)
+    title   = wrap_zeeguu_words(article.title)
     content = article.text
     content = add_paragraphs(content)
     content = wrap_zeeguu_words(content)
@@ -51,7 +50,7 @@ def make_article(url, language):
 
 def add_paragraphs(text):
     text = "<p>" + text
-    text = text.replace('\n', '</p><p>')
+    text = text.replace('\n\n', '</p><p>')
     return text
 
 

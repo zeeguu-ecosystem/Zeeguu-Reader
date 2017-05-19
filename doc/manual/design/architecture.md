@@ -25,7 +25,7 @@ Using these tools, we will were able to define our system as follows:
 
 The Flask server defines two endpoints accessable if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. 
 
-The **/articles** endpoint simply delivers the article.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, but all functionality is implemented by the package which it invokes. The subscription package make use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
+The root endpoint simply delivers the articles.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, but all functionality is implemented by the package which it invokes. The subscription package make use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
 
 The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing but again all functionality (like tap-and-translate) is implemented by the package which it invokes. 
 

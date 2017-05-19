@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9924,16 +9924,22 @@ exports.default = {
     GET_FEED_ITEMS: '/get_feed_items_with_metrics',
     GET_AVAILABLE_LANGUAGES: '/available_languages',
     TO_LANGUAGE: 'en',
+    ENTER_KEY: 13,
+    TEXT_SUGGESTION: 'Suggestion...',
+    TEXT_NO_ALTERNATIVES: 'Sorry, no alternatives.',
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
+    HTML_ATTRIBUTE_CHOSEN: 'chosen',
+    HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
+    HTML_ID_USER_ALTERNATIVE: '#userAlternative',
     HTML_ID_ARTICLELINK_TEMPLATE: '#articleLink-template',
     HTML_ID_ARTICLELINK_LIST: '#articleLinkList',
     HTML_ID_SUBSCRIPTION_TEMPLATE: '#subscription-template',
@@ -9942,7 +9948,11 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
-    HTML_CLASS_EMPTY_PAGE: '.emptyPage'
+    HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    CLASS_LOADING: 'loading',
+    CLASS_NOSELECT: 'noselect',
+    HTML_CLASS_TOUR: '.tour',
+    HTML_CLASS_WIGGLE: 'wiggle'
 };
 
 /***/ }),
@@ -11350,7 +11360,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
 
-  if ("function" === 'function' && 'amd' in __webpack_require__(17)) {
+  if ("function" === 'function' && 'amd' in __webpack_require__(18)) {
     // AMD support
     !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
       return dialogPolyfill;
@@ -11367,8 +11377,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 6 */,
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11518,7 +11527,7 @@ exports.default = ArticleList;
 ;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11676,7 +11685,7 @@ exports.default = FeedSubscriber;
 ;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11769,7 +11778,7 @@ exports.default = LanguageMenu;
 ;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11797,6 +11806,10 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
+var _NoFeedTour = __webpack_require__(14);
+
+var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11807,13 +11820,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var SubscriptionList = function () {
     /**
-     * Bind with the {@link ArticleList} and initialise an empty list of feeds.
+     * Bind with the {@link ArticleList}, initialise an empty list of feeds and a {@link NoFeedTour} object.
      * @param {ArticleList} articleList - List of all articles available to the user.
      */
     function SubscriptionList(articleList) {
         _classCallCheck(this, SubscriptionList);
 
         this.articleList = articleList;
+        this.noFeedTour = new _NoFeedTour2.default();
         this.feedList = new Set();
     }
 
@@ -11883,7 +11897,7 @@ var SubscriptionList = function () {
                 this.feedList.add(Number(subscriptionData['subscriptionID']));
             }
 
-            if (this.feedList.size < 1) (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();else (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).hide();
+            if (this.feedList.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
         }
 
         /**
@@ -11935,7 +11949,7 @@ var SubscriptionList = function () {
             }
             (0, _jquery2.default)(feedNode).fadeOut();
 
-            if (this.feedList.size < 1) (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();
+            if (this.feedList.size < 1) this.noFeedTour.show();
         }
     }]);
 
@@ -11946,6 +11960,7 @@ exports.default = SubscriptionList;
 ;
 
 /***/ }),
+/* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */
@@ -12046,19 +12061,83 @@ exports.default = Cache;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ArticleList = __webpack_require__(7);
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Shows or hides style for when there is no feed.
+ */
+var NoFeedTour = function () {
+    function NoFeedTour() {
+        _classCallCheck(this, NoFeedTour);
+    }
+
+    _createClass(NoFeedTour, [{
+        key: 'show',
+
+
+        /**
+         * Show a tour styling, guiding the user to new feeds.
+         */
+        value: function show() {
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).show();
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_TOUR).addClass(_config2.default.HTML_CLASS_WIGGLE);
+            (0, _jquery2.default)('.mdl-layout__drawer-button').addClass(_config2.default.HTML_CLASS_WIGGLE);
+        }
+
+        /**
+         * Hides the tour styling.
+         */
+
+    }, {
+        key: 'hide',
+        value: function hide() {
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_EMPTY_PAGE).hide();
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_TOUR).removeClass(_config2.default.HTML_CLASS_WIGGLE);
+            (0, _jquery2.default)('.mdl-layout__drawer-button').removeClass(_config2.default.HTML_CLASS_WIGGLE);
+        }
+    }]);
+
+    return NoFeedTour;
+}();
+
+exports.default = NoFeedTour;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _ArticleList = __webpack_require__(6);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _SubscriptionList = __webpack_require__(10);
+var _SubscriptionList = __webpack_require__(9);
 
 var _SubscriptionList2 = _interopRequireDefault(_SubscriptionList);
 
-var _FeedSubscriber = __webpack_require__(8);
+var _FeedSubscriber = __webpack_require__(7);
 
 var _FeedSubscriber2 = _interopRequireDefault(_FeedSubscriber);
 
@@ -12066,7 +12145,7 @@ var _dialogPolyfill = __webpack_require__(5);
 
 var _dialogPolyfill2 = _interopRequireDefault(_dialogPolyfill);
 
-var _LanguageMenu = __webpack_require__(9);
+var _LanguageMenu = __webpack_require__(8);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
 
@@ -12109,9 +12188,9 @@ function noAvatar(image) {
 }
 
 /***/ }),
-/* 15 */,
 /* 16 */,
-/* 17 */
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = function() {

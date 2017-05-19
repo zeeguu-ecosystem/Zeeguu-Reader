@@ -3,7 +3,7 @@ import article
 
 def test_add_paragraphs():
     """Assert if newlines are replaced with paragraphs."""
-    text = "\n"
+    text = "\n\n"
     expected = "<p></p><p>"
     result = article.add_paragraphs(text)
     assert result == expected
