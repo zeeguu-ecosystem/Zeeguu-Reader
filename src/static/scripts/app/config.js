@@ -36,5 +36,7 @@ export default {
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
     CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect'
+    CLASS_NOSELECT: 'noselect',
+    HTML_CLASS_TOUR: '.tour',
+    HTML_CLASS_WIGGLE: 'wiggle'
 };

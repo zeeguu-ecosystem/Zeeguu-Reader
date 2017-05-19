@@ -10,7 +10,7 @@ WORD_TAG = "zeeguu"
 endpoints_article = Blueprint('endpoints_article', __name__, template_folder='templates')
 
 
-@endpoints_article.route('/articles/article', methods=['GET'])
+@endpoints_article.route('/article', methods=['GET'])
 @with_session
 def get_article():
     """Retrieve the supplied article link of the supplied language,
