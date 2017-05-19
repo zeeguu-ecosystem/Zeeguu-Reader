@@ -1,4 +1,4 @@
-import article
+from umr import article
 
 
 def test_add_paragraphs():
