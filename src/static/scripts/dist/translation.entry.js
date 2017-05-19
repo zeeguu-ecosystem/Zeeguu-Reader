@@ -9926,6 +9926,7 @@ exports.default = {
     TO_LANGUAGE: 'en',
     ENTER_KEY: 13,
     TEXT_SUGGESTION: 'Suggestion...',
+    TEXT_NO_ALTERNATIVES: 'Sorry, no alternatives.',
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
@@ -9948,6 +9949,8 @@ exports.default = {
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    CLASS_LOADING: 'loading',
+    CLASS_NOSELECT: 'noselect',
     HTML_CLASS_TOUR: '.tour',
     HTML_CLASS_WIGGLE: 'wiggle'
 };
@@ -10143,11 +10146,12 @@ var AlterMenu = function () {
             // Check how many alternatives there are, if less than 2: abort.
             var transCount = parseInt(htmlTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT));
             if (transCount < 2) {
-                this.notifier.notify("Sorry, no alternatives.");
+                this.notifier.notify(_config2.default.TEXT_NO_ALTERNATIVES);
                 return;
             }
             this.construct(htmlTag, transCount);
             this._place(htmlTag);
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).hide();
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideDown(function () {
                 this.menuOpen = true;
             }.bind(this));
@@ -10228,7 +10232,6 @@ var AlterMenu = function () {
                 left: position.left + (tagWidth - menuWidth) / 2 + "px",
                 top: position.top + tagHeight + topScroll + "px"
             });
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).hide();
         }
 
         /**
@@ -10239,7 +10242,6 @@ var AlterMenu = function () {
         key: 'reposition',
         value: function reposition() {
             this._place((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).parent());
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).show();
         }
     }, {
         key: 'close',
@@ -10376,7 +10378,7 @@ var Translator = function () {
             var orig = document.createElement(_config2.default.HTML_ORIGINAL);
             var tran = document.createElement(_config2.default.HTML_TRANSLATED);
             (0, _jquery2.default)(orig).text(text);
-            (0, _jquery2.default)(orig).addClass('loading');
+            (0, _jquery2.default)(orig).addClass(_config2.default.CLASS_LOADING);
             (0, _jquery2.default)(zeeguuTag).append(orig, tran);
 
             var callback = function callback(data) {
@@ -10414,7 +10416,7 @@ var Translator = function () {
                 htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
             }htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
             htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION, '');
-            (0, _jquery2.default)(orig).removeClass('loading');
+            (0, _jquery2.default)(orig).removeClass(_config2.default.CLASS_LOADING);
         }
 
         /**
@@ -10565,13 +10567,13 @@ var speaker = new _Speaker2.default();
 /* When the document has finished loading,
  * bind all necessary listeners. */
 (0, _jquery2.default)(document).ready(function () {
-    disableHREF();
+    disableSelection();
 
     /* When the translate toggle is changed, we
      * make sure that we disable or enable hyperlinks
      * and close all translation tools. */
     (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).change(function () {
-        if (this.checked) disableHREF();else enableHREF();
+        if (this.checked) disableSelection();else enableSelection();
     });
 
     /* When a translatable word has been clicked,
@@ -10619,28 +10621,23 @@ var speaker = new _Speaker2.default();
     }
 });
 
-/* Every time the screen changes, we need to
- * reposition the alter menu to be at the correct word
- * position. */
-(0, _jquery2.default)(window).on("resize", function () {
-    if (alterMenu.isOpen()) alterMenu.reposition();
+/* Every time the screen orientation changes, 
+ * the alter menu will be closed. */
+(0, _jquery2.default)(window).on("orientationchange", function () {
+    alterMenu.close();
 });
 
-/* Disable links.
- * Done in this peculiar way as default link disabling methods do not
- * pass a proper text selection. */
-function disableHREF() {
-    (0, _jquery2.default)('.translatable').find('a').each(function () {
-        this.setAttribute('href_disabled', this.getAttribute('href'));
-        this.removeAttribute('href');
+/* Disable selection. */
+function disableSelection() {
+    (0, _jquery2.default)("p").each(function () {
+        (0, _jquery2.default)(this).addClass(_config2.default.CLASS_NOSELECT);
     });
 }
 
-/* Enable links. */
-function enableHREF() {
-    (0, _jquery2.default)('.translatable').find('a').each(function () {
-        this.setAttribute('href', this.getAttribute('href_disabled'));
-        this.removeAttribute('href_disabled');
+/* Enable selection. */
+function enableSelection() {
+    (0, _jquery2.default)("p").each(function () {
+        (0, _jquery2.default)(this).removeClass(_config2.default.CLASS_NOSELECT);
     });
 }
 

@@ -9926,6 +9926,7 @@ exports.default = {
     TO_LANGUAGE: 'en',
     ENTER_KEY: 13,
     TEXT_SUGGESTION: 'Suggestion...',
+    TEXT_NO_ALTERNATIVES: 'Sorry, no alternatives.',
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
@@ -9948,6 +9949,8 @@ exports.default = {
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    CLASS_LOADING: 'loading',
+    CLASS_NOSELECT: 'noselect',
     HTML_CLASS_TOUR: '.tour',
     HTML_CLASS_WIGGLE: 'wiggle'
 };

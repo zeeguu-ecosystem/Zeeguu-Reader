@@ -13,15 +13,15 @@ var speaker = new Speaker();
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function() {
-    disableHREF();
+    disableSelection();
 
     /* When the translate toggle is changed, we
      * make sure that we disable or enable hyperlinks
      * and close all translation tools. */
     $(config.HTML_ID_TOGGLETRANSLATE).change(function()
     {
-        if (this.checked) disableHREF();
-        else enableHREF();
+        if (this.checked) disableSelection();
+        else enableSelection();
     });
 
     /* When a translatable word has been clicked,
@@ -71,32 +71,22 @@ $(document).keypress(function(event) {
     }
 });
 
-/* Every time the screen changes, we need to
- * reposition the alter menu to be at the correct word
- * position. */
-$(window).on("resize", function() {
-    if (alterMenu.isOpen())
-        alterMenu.reposition();
+/* Every time the screen orientation changes, 
+ * the alter menu will be closed. */
+$(window).on("orientationchange",function(){
+  alterMenu.close();
 });
 
-/* Disable links.
- * Done in this peculiar way as default link disabling methods do not
- * pass a proper text selection. */
-function disableHREF()
-{
-    $('.translatable').find('a').each(function()
-    {
-        this.setAttribute('href_disabled',this.getAttribute('href'));
-        this.removeAttribute('href');
+/* Disable selection. */
+function disableSelection() {
+    $("p").each (function () {
+        $(this).addClass(config.CLASS_NOSELECT);
     });
 }
 
-/* Enable links. */
-function enableHREF()
-{
-    $('.translatable').find('a').each(function()
-    {
-        this.setAttribute('href',this.getAttribute('href_disabled'));
-        this.removeAttribute('href_disabled');
+/* Enable selection. */
+function enableSelection() {
+    $("p").each (function () {
+        $(this).removeClass(config.CLASS_NOSELECT);
     });
 }

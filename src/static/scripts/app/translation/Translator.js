@@ -24,7 +24,7 @@ export default class Translator {
         var orig = document.createElement(config.HTML_ORIGINAL);
         var tran = document.createElement(config.HTML_TRANSLATED);
         $(orig).text(text);
-        $(orig).addClass('loading');
+        $(orig).addClass(config.CLASS_LOADING);
         $(zeeguuTag).append(orig, tran);
 
         var callback = (data) => this._setTranslations(orig, tran, data);
@@ -56,7 +56,7 @@ export default class Translator {
 
         htmlTag.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
         htmlTag.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');        
-        $(orig).removeClass('loading');
+        $(orig).removeClass(config.CLASS_LOADING);
     }
 
     /**
