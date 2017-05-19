@@ -3,15 +3,15 @@
 <HEAD>
 	<TITLE>Zeeguu UMR</TITLE>
 	<META name="viewport" content="width=device-width, initial-scale=1">
-	<LINK rel="stylesheet" href="{{ url_for('static',filename='styles/mdl/material.min.css') }}">
-	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/loader.css') }}" type= "text/css">
-	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/login.css') }}" type= "text/css">
+	<LINK rel="stylesheet" href="{{ url_for('umrblue.static',filename='styles/mdl/material.min.css') }}">
+	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/loader.css') }}" type= "text/css">
+	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/login.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/articles.css') }}" type= "text/css">
-	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/dialog-polyfill.css') }}" type= "text/css">
-	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
-	<SCRIPT> var noAvatarURL = "{{url_for('static',filename='images/noAvatar.png')}}";</SCRIPT>
-	<script src="{{url_for('static',filename='scripts/dist/subscription.entry.js')}}"></script>
+	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/articles.css') }}" type= "text/css">
+	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/dialog-polyfill.css') }}" type= "text/css">
+	<SCRIPT src="{{ url_for('umrblue.static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
+	<SCRIPT> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</SCRIPT>
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription.entry.js')}}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -37,10 +37,10 @@
     </div>
 		<BR />
 	    <div class="emptyPage">
-			 <img class="sadEleph" src="{{ url_for('static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
+			 <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
 		</div>
 		<div class="loader">
-			 <img class="eleph" src="{{ url_for('static',filename='images/elephlogo.png') }}" alt="Loading..."/>
+			 <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
 		</div>
   </main>
 </div>
@@ -62,7 +62,7 @@
 			<div class="articleLinkImage">
 				<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
 			</div>
-			<a class="articleLinkTitle" href="{{ url_for('endpoints_article.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
+			<a class="articleLinkTitle" href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
 				{% raw %}{{ articleLinkTitle }}{% endraw %}
 			</a>
 			<div class="articleLinkDifficulty">

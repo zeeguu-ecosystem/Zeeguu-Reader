@@ -1,13 +1,11 @@
 import os
 from flask import Flask, send_from_directory
-from login import endpoints_login
-from article import endpoints_article
-from articles import endpoints_articles
+from umr.login import endpoints_login
+from umr import umrblue
 
 app = Flask(__name__)
 app.register_blueprint(endpoints_login)
-app.register_blueprint(endpoints_article)
-app.register_blueprint(endpoints_articles)
+app.register_blueprint(umrblue)
 
 
 @app.route('/favicon.ico')

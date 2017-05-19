@@ -1,0 +1,2 @@
+include umr/templates/*
+recursive-include umr/static *

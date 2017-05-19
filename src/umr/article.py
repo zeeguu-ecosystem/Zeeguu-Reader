@@ -2,15 +2,14 @@ from flask import Blueprint, request, render_template
 from newspaper import Article
 
 from bs4 import BeautifulSoup as Soup
-from session import with_session
+from .session import with_session
 import re
+from .umr_blueprint import umrblue
 
 WORD_TAG = "zeeguu"
 
-endpoints_article = Blueprint('endpoints_article', __name__, template_folder='templates')
 
-
-@endpoints_article.route('/article', methods=['GET'])
+@umrblue.route('/article', methods=['GET'])
 @with_session
 def get_article():
     """Retrieve the supplied article link of the supplied language,

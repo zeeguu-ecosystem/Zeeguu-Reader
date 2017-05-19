@@ -1,6 +1,6 @@
 import requests
 from flask import Blueprint, request, render_template, redirect, url_for, make_response
-from articles import  get_articles_page
+from .articles import  get_articles_page
 
 ZEEGUU_SERVER = "https://zeeguu.unibe.ch/api"
 STATUS_ACCEPT = 200

@@ -1,10 +1,9 @@
-from flask import Blueprint, request, render_template
-from session import with_session
+from flask import render_template
+from . import umrblue
+from .session import with_session
 
-endpoints_articles = Blueprint('endpoints_articles', __name__, template_folder='templates')
 
-
-@endpoints_articles.route('/', methods=['GET'])
+@umrblue.route('/articles', methods=['GET'])
 @with_session
 def articles():
     """Return the main page where the articles and feeds are listed."""

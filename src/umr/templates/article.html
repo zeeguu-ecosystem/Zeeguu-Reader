@@ -2,14 +2,14 @@
 <HEAD>
 	<TITLE>Zeeguu UMR</TITLE>
 	<META name="viewport" content="width=device-width, initial-scale=1">
-	<LINK rel="stylesheet" href="{{ url_for('static',filename='styles/mdl/material.min.css') }}">
-	<LINK rel="stylesheet" href= "{{ url_for('static',filename='styles/article.css') }}" type= "text/css">
+	<LINK rel="stylesheet" href="{{ url_for('umrblue.static',filename='styles/mdl/material.min.css') }}">
+	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/article.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<SCRIPT src="{{ url_for('static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
+	<SCRIPT src="{{ url_for('umrblue.static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
 	<SCRIPT>
 		var FROM_LANGUAGE = '{{ fromLanguage }}';
 	</SCRIPT>
-	<script src="{{url_for('static',filename='scripts/dist/translation.entry.js')}}"></script>
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation.entry.js')}}"></script>
 </HEAD>
 <BODY>
 <!-- Top bar -->
