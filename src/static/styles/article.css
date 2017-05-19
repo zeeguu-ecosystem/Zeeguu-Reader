@@ -32,7 +32,6 @@ zeeguu tran[chosen]:after
 	content: attr(chosen);
 }
 
-
 #altermenu
 {
 	display: none;

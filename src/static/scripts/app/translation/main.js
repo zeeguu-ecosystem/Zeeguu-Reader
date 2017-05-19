@@ -71,12 +71,10 @@ $(document).keypress(function(event) {
     }
 });
 
-/* Every time the screen changes, we need to
- * reposition the alter menu to be at the correct word
- * position. */
-$(window).on("resize", function() {
-    if (alterMenu.isOpen())
-        alterMenu.reposition();
+/* Every time the screen orientation changes, 
+ * the alter menu will be closed. */
+$(window).on("orientationchange",function(){
+  alterMenu.close();
 });
 
 /* Disable selection. */

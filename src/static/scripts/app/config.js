@@ -12,6 +12,7 @@ export default {
     TO_LANGUAGE: 'en',
     ENTER_KEY: 13,
     TEXT_SUGGESTION: 'Suggestion...',
+    TEXT_NO_ALTERNATIVES: 'Sorry, no alternatives.',
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
