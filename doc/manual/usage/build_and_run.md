@@ -15,6 +15,3 @@ Local deployment of the Zeeguu UMR system consists of the deployment of a Flask 
 There are many methods and services that allow you to launch Zeeguu UMR on a non-local network, but we chose for the [Heroku Cloud Platform](https://www.heroku.com). It provides a basic free hosting plan that is good enough for development build publishing. In their implementation, you can simply push your code-base to your server-associated repository, and it will be build and executed there automatically. 
 
 If you intend to deploy on this platform as well, the repository has the required *Procfile* already included. In short: it simply launches `zeeguu_umr.py` with [gunicorn](http://gunicorn.org).
-
-### Apache
-If you intend to deploy on a WSGI compliant server, we have included a `.wsgi` file which will allow you to do that.
