@@ -14,6 +14,7 @@ var speaker = new Speaker();
  * bind all necessary listeners. */
 $(document).ready(function() {
     disableSelection();
+    attachZeeguuListeners();
 
     /* When the translate toggle is changed, we
      * make sure that we disable or enable hyperlinks
@@ -24,25 +25,11 @@ $(document).ready(function() {
         else enableSelection();
     });
 
-    /* When a translatable word has been clicked,
-     * either try to translate it, speak it, or open an alternative
-     * translation window.  */
-    $(config.HTML_ZEEGUUTAG).click(function(event) {
-        if (!$(config.HTML_ID_TOGGLETRANSLATE).is(':checked'))
-            return;
-        if(alterMenu.isOpen())
-            return;
-
-        var target = $(event.target);
-        if ( target.is(config.HTML_ZEEGUUTAG) ) {
-            if (!translator.isTranslated(this)) {
-                translator.translate(this);
-            }
-        } else if (target.is(config.HTML_ORIGINAL) ) {
-            speaker.speak($(this).find(config.HTML_ORIGINAL).text(), FROM_LANGUAGE);
-        } else if (target.is(config.HTML_TRANSLATED) ) {
-            alterMenu.constructAndOpen(this.children[1]);
-        }
+    $(config.HTML_ID_TOGGLEUNDO).click(function()
+    {
+        $(config.HTML_ZEEGUUTAG).off();
+        translator.undoTranslate();
+        attachZeeguuListeners();
     });
 });
 
@@ -88,5 +75,29 @@ function disableSelection() {
 function enableSelection() {
     $("p").each (function () {
         $(this).removeClass(config.CLASS_NOSELECT);
+    });
+}
+
+/* Attach Zeeguu tag click listener. */
+function attachZeeguuListeners () {
+    /* When a translatable word has been clicked,
+     * either try to translate it, speak it, or open an alternative
+     * translation window.  */
+    $(config.HTML_ZEEGUUTAG).click(function(event) {
+        if (!$(config.HTML_ID_TOGGLETRANSLATE).is(':checked'))
+            return;
+        if(alterMenu.isOpen())
+            return;
+
+        var target = $(event.target);
+        if ( target.is(config.HTML_ZEEGUUTAG) ) {
+            if (!translator.isTranslated(this)) {
+                translator.translate(this);
+            }
+        } else if (target.is(config.HTML_ORIGINAL) ) {
+            speaker.speak($(this).find(config.HTML_ORIGINAL).text(), FROM_LANGUAGE);
+        } else if (target.is(config.HTML_TRANSLATED) ) {
+            alterMenu.constructAndOpen(this.children[1]);
+        }
     });
 }

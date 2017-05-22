@@ -6,11 +6,11 @@ var inProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: {
-		subscription: './src/static/scripts/app/subscription/main.js',
-		translation:  './src/static/scripts/app/translation/main.js'
+		subscription: './src/umr/static/scripts/app/subscription/main.js',
+		translation:  './src/umr/static/scripts/app/translation/main.js'
     },
     output: {
-        path: path.join(__dirname, './src/static/scripts/dist'),
+        path: path.join(__dirname, './src/umr/static/scripts/dist'),
         filename: '[name].entry.js'
     },
 	module: {
