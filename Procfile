@@ -1,1 +1,1 @@
-web: cd src; gunicorn heroku:app
+web: python src/dev_launch.py
