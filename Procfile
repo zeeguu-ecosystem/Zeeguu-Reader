@@ -1,1 +1,1 @@
-web: cd src; gunicorn zeeguu_umr:app
+web: cd src; gunicorn dev_launch:app
