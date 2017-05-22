@@ -1,6 +1,6 @@
 {
   "title": "Zeeguu UMR Client",
-  "source": "./src/static/scripts/app",
+  "source": "./src/umr/static/scripts/app",
   "destination": "./doc/dist",
   "access": ["public", "private", "protected"],
   "manual": 
@@ -14,7 +14,8 @@
                  "./doc/manual/design/dependencies.md"],
     "installation": ["./doc/manual/usage/build_and_run.md"],
     "usage":    ["./doc/manual/usage/workflow.md",
-				 "./doc/manual/usage/tryit.md"]
+				 "./doc/manual/usage/tryit.md",
+				 "./doc/manual/usage/support_list.md"]
   },
   "experimentalProposal": 
   {
