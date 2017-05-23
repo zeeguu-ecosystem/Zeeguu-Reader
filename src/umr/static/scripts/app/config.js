@@ -23,6 +23,7 @@ export default {
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
+    HTML_ID_TOGGLEUNDO: '#toggle_undo',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
     HTML_ID_USER_ALTERNATIVE: '#userAlternative',
@@ -35,8 +36,9 @@ export default {
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
-    CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect',
+    HTML_CLASS_PAGECONTENT: '.page-content',
     HTML_CLASS_TOUR: '.tour',
-    HTML_CLASS_WIGGLE: 'wiggle'
+    HTML_CLASS_WIGGLE: 'wiggle',
+    CLASS_LOADING: 'loading',
+    CLASS_NOSELECT: 'noselect'
 };

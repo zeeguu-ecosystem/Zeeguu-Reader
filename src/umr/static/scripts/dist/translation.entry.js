@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9937,6 +9937,7 @@ exports.default = {
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
+    HTML_ID_TOGGLEUNDO: '#toggle_undo',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
     HTML_ID_USER_ALTERNATIVE: '#userAlternative',
@@ -9949,10 +9950,11 @@ exports.default = {
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
-    CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect',
+    HTML_CLASS_PAGECONTENT: '.page-content',
     HTML_CLASS_TOUR: '.tour',
-    HTML_CLASS_WIGGLE: 'wiggle'
+    HTML_CLASS_WIGGLE: 'wiggle',
+    CLASS_LOADING: 'loading',
+    CLASS_NOSELECT: 'noselect'
 };
 
 /***/ }),
@@ -10110,7 +10112,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Notifier = __webpack_require__(16);
+var _Notifier = __webpack_require__(17);
 
 var _Notifier2 = _interopRequireDefault(_Notifier);
 
@@ -10339,6 +10341,10 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
+var _UndoManager = __webpack_require__(14);
+
+var _UndoManager2 = _interopRequireDefault(_UndoManager);
+
 var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
@@ -10351,22 +10357,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *  Class that allows for translating zeeguu tags. 
  */
 var Translator = function () {
+
+    /**
+     * Initializes the undo manager.
+     */
     function Translator() {
         _classCallCheck(this, Translator);
+
+        this.undoManager = new _UndoManager2.default();
     }
+
+    /**
+     * Merge the surrounding translated zeeguuTags
+     * and insert translations for the tag's content by calling Zeeguu.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Element} zeeguuTag - Document element containing the content to be translated. 
+     */
+
 
     _createClass(Translator, [{
         key: 'translate',
-
-        /**
-         * Merge the surrounding translated zeeguuTags
-         * and insert translations for the tag's content by calling Zeeguu.
-         * Uses {@link ZeeguuRequests}.
-         * @param {Element} zeeguuTag - Document element containing the content to be translated. 
-         */
         value: function translate(zeeguuTag) {
             var _this = this;
 
+            this.undoManager.pushState();
             this._mergeZeeguu(zeeguuTag);
 
             var text = zeeguuTag.textContent.trim();
@@ -10389,6 +10403,16 @@ var Translator = function () {
         }
 
         /**
+         * Resets to previous state (i.e. removes translation from last translated word).
+         */
+
+    }, {
+        key: 'undoTranslate',
+        value: function undoTranslate() {
+            this.undoManager.undoState();
+        }
+
+        /**
          * Checks whether given zeeguuTag is already translated.
          * @param {Element} zeeguuTag - Document element that wraps translatable content. 
          * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
@@ -10402,6 +10426,7 @@ var Translator = function () {
 
         /**
          * Handle the Zeeguu request returned values. Append the returned translations.
+         * @param {Element} orig - Document element containing the original text.
          * @param {Element} htmlTag - Document element processed for translation.
          * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
          */
@@ -10471,9 +10496,79 @@ exports.default = Translator;
 
 /***/ }),
 /* 13 */,
-/* 14 */,
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Class that allows for saving the state of the page content after each
+ * translation and restore upon request.
+ */
+var UndoManager = function () {
+    /**
+     * Initialize the stack for saving the states.
+     */
+    function UndoManager() {
+        _classCallCheck(this, UndoManager);
+
+        this.stack = [];
+    }
+
+    /**
+     * Push state onto the stack.
+     */
+
+
+    _createClass(UndoManager, [{
+        key: 'pushState',
+        value: function pushState() {
+            var $saved = (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).clone();
+            this.stack.push($saved);
+        }
+
+        /** Revert to previous state stored on the stack. */
+
+    }, {
+        key: 'undoState',
+        value: function undoState() {
+            var $saved = this.stack.pop();
+            if ($saved) {
+                (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).remove();
+                (0, _jquery2.default)('.mdl-layout__content').prepend($saved);
+            }
+        }
+    }]);
+
+    return UndoManager;
+}();
+
+exports.default = UndoManager;
+;
+
+/***/ }),
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10530,7 +10625,7 @@ exports.default = Notifier;
 ;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10568,6 +10663,7 @@ var speaker = new _Speaker2.default();
  * bind all necessary listeners. */
 (0, _jquery2.default)(document).ready(function () {
     disableSelection();
+    attachZeeguuListeners();
 
     /* When the translate toggle is changed, we
      * make sure that we disable or enable hyperlinks
@@ -10576,23 +10672,10 @@ var speaker = new _Speaker2.default();
         if (this.checked) disableSelection();else enableSelection();
     });
 
-    /* When a translatable word has been clicked,
-     * either try to translate it, speak it, or open an alternative
-     * translation window.  */
-    (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
-        if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).is(':checked')) return;
-        if (alterMenu.isOpen()) return;
-
-        var target = (0, _jquery2.default)(event.target);
-        if (target.is(_config2.default.HTML_ZEEGUUTAG)) {
-            if (!translator.isTranslated(this)) {
-                translator.translate(this);
-            }
-        } else if (target.is(_config2.default.HTML_ORIGINAL)) {
-            speaker.speak((0, _jquery2.default)(this).find(_config2.default.HTML_ORIGINAL).text(), FROM_LANGUAGE);
-        } else if (target.is(_config2.default.HTML_TRANSLATED)) {
-            alterMenu.constructAndOpen(this.children[1]);
-        }
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLEUNDO).click(function () {
+        (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).off();
+        translator.undoTranslate();
+        attachZeeguuListeners();
     });
 });
 
@@ -10638,6 +10721,28 @@ function disableSelection() {
 function enableSelection() {
     (0, _jquery2.default)("p").each(function () {
         (0, _jquery2.default)(this).removeClass(_config2.default.CLASS_NOSELECT);
+    });
+}
+
+/* Attach Zeeguu tag click listener. */
+function attachZeeguuListeners() {
+    /* When a translatable word has been clicked,
+     * either try to translate it, speak it, or open an alternative
+     * translation window.  */
+    (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
+        if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).is(':checked')) return;
+        if (alterMenu.isOpen()) return;
+
+        var target = (0, _jquery2.default)(event.target);
+        if (target.is(_config2.default.HTML_ZEEGUUTAG)) {
+            if (!translator.isTranslated(this)) {
+                translator.translate(this);
+            }
+        } else if (target.is(_config2.default.HTML_ORIGINAL)) {
+            speaker.speak((0, _jquery2.default)(this).find(_config2.default.HTML_ORIGINAL).text(), FROM_LANGUAGE);
+        } else if (target.is(_config2.default.HTML_TRANSLATED)) {
+            alterMenu.constructAndOpen(this.children[1]);
+        }
     });
 }
 

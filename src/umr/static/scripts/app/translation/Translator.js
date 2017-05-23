@@ -1,11 +1,20 @@
 import $ from 'jquery';
 import ZeeguuRequests from '../zeeguuRequests'
+import UndoManager from '../UndoManager'
 import config from '../config'
 
 /**
  *  Class that allows for translating zeeguu tags. 
  */
 export default class Translator {
+
+    /**
+     * Initializes the undo manager.
+     */
+    constructor() {
+        this.undoManager = new UndoManager();
+    }
+
     /**
      * Merge the surrounding translated zeeguuTags
      * and insert translations for the tag's content by calling Zeeguu.
@@ -13,6 +22,7 @@ export default class Translator {
      * @param {Element} zeeguuTag - Document element containing the content to be translated. 
      */
     translate(zeeguuTag) {
+        this.undoManager.pushState();
         this._mergeZeeguu(zeeguuTag);
         
         var text = zeeguuTag.textContent.trim();
@@ -34,6 +44,13 @@ export default class Translator {
     }
 
     /**
+     * Resets to previous state (i.e. removes translation from last translated word).
+     */
+    undoTranslate() {
+        this.undoManager.undoState();
+    }
+
+    /**
      * Checks whether given zeeguuTag is already translated.
      * @param {Element} zeeguuTag - Document element that wraps translatable content. 
      * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
@@ -44,6 +61,7 @@ export default class Translator {
 
     /**
      * Handle the Zeeguu request returned values. Append the returned translations.
+     * @param {Element} orig - Document element containing the original text.
      * @param {Element} htmlTag - Document element processed for translation.
      * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
      */
