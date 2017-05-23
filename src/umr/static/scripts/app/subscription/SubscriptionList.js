@@ -53,23 +53,8 @@ export default class SubscriptionList {
     _loadSubscriptions(data) {
         var template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         for (var i = 0; i < data.length; i++) {
-            var subscriptionData = {
-                subscriptionTitle: data[i]['title'],
-                subscriptionID: data[i]['id'],
-                subscriptionLanguage: data[i]['language'],
-                subscriptionIcon: data[i]['image_url']
-            };
-            var subscription = $(Mustache.render(template, subscriptionData));
-            var removeButton = $(subscription.find(".removeButton"));
-            var _unfollow = this._unfollow.bind(this);
-            removeButton.click(function() {
-                _unfollow($(this).parent());
-            });
-            if (!this.feedList.has(Number(subscriptionData['subscriptionID']))) {                
-                $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-                this.articleList.load(subscriptionData);
-            }             
-            this.feedList.add(Number(subscriptionData['subscriptionID']));
+            this._addSubscription(data[i]);
+            this.articleList.load(data[i]);
         }
 
         if (this.feedList.size < 1)
@@ -78,16 +63,60 @@ export default class SubscriptionList {
             this.noFeedTour.hide();
     }
 
+    _addSubscription(feed) {
+        if (this.feedList.has(Number(feed.id)))
+            return;
+
+        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+        let subscription = $(Mustache.render(template, feed));
+        let removeButton = $(subscription.find(".removeButton"));
+        let _unfollow = this._unfollow.bind(this);
+        removeButton.click(function(feed) {
+            return function () {
+                _unfollow(feed);
+            };
+        }(feed));
+        $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+        this.feedList.add(Number(feed.id));
+
+        this.noFeedTour.hide();
+    }
+
+    /**
+     * Subscribe to a new feed, calls the zeeguu server.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Element} feed - Document element containing the id of the feed.
+     */
+    follow(feed) {
+        this._addSubscription(feed);
+        let callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
+        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
+    }
+
+    /**
+     * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
+     * mentioned feed from the addable feed list.
+     * Callback function for Zeeguu.
+     * @param {Element} feed - Document element containing the id of the feed.
+     * @param {string} data - Reply from the server.
+     */
+    _onFeedFollowed(feed, data) {
+        if (data == "OK") {
+            this.articleList.load(feed);
+        } else {
+            this._remove(feed);
+        }
+    }
+
     /**
      * Un-subscribe from a feed, call the zeeguu server.
      * Uses {@link ZeeguuRequests}.
      * @param {Element} feed - Feed element of the list to un-subscribe from.
      */
     _unfollow(feed) {
-        var removableID = $(feed).attr('removableID');
+        this._remove(feed);
         var callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
-        ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + removableID,
-                            {}, callback);
+        ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
     }
 
     /**
@@ -97,8 +126,8 @@ export default class SubscriptionList {
      * @param {string} data - Server reply.
      */
     _onFeedUnfollowed(feed, data) {
-        if (data == "OK") {
-            this._remove(feed);
+        if (data != "OK") {
+            this._onFeedFollowed(feed, "OK");
         }
     }
 
@@ -107,13 +136,14 @@ export default class SubscriptionList {
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
      * @param {Element} feedNode - The document element (feed) to remove.
      */
-    _remove(feedNode) {
-        var feedID = $(feedNode).attr('removableID');
-        this.articleList.remove(feedID);
-        if (!this.feedList.delete(Number(feedID)))  { console.log("Error"); }
-        $(feedNode).fadeOut();
+    _remove(feed) {
+        this.articleList.remove(feed.id);
+        if (!this.feedList.delete(Number(feed.id)))  { console.log("Error"); }
+        $('span[removableID="' + feed.id + '"]').fadeOut();
 
         if (this.feedList.size < 1)
             this.noFeedTour.show();
     }
+
+
 };

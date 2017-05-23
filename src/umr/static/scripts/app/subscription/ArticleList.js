@@ -17,13 +17,13 @@ export default class ArticleList {
      * @param {Object} subscription - The feed to retrieve articles from.
      */
     load(subscription) {
-        if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID]) {
-            let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID];
+        if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
+            let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
             this._renderArticleLinks(subscription, articleLinks);
         } else {
             $(config.HTML_CLASS_LOADER).show();
             let callback = (articleLinks) => this._loadArticleLinks(subscription, articleLinks);
-            ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
+            ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
         }
     };
 
@@ -60,7 +60,7 @@ export default class ArticleList {
         let feedMap = {};
         if (Cache.has(KEY_MAP_FEED_ARTICLE))
             feedMap = Cache.retrieve(KEY_MAP_FEED_ARTICLE);
-        feedMap[subscription.subscriptionID] = articleLinks;
+        feedMap[subscription.id] = articleLinks;
         Cache.store(KEY_MAP_FEED_ARTICLE, feedMap);
     }
 
@@ -76,12 +76,12 @@ export default class ArticleList {
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
                 articleLinkURL: articleLink.url,
-                articleLinkFeedID: subscription.subscriptionID,
-                articleLinkLanguage: subscription.subscriptionLanguage,
+                articleLinkFeedID: subscription.id,
+                articleLinkLanguage: subscription.language,
                 articleDifficultyDiscrete: articleLink.metrics.difficulty.discrete,
                 articleDifficulty: Math.round(parseFloat(articleLink.metrics.difficulty.normalized) * 100) / 10,
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
-                articleIcon: subscription.subscriptionIcon
+                articleIcon: subscription.image_url
             };
             $(config.HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, templateAttributes));
         }

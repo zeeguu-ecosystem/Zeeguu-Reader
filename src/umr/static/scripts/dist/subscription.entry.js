@@ -11438,15 +11438,15 @@ var ArticleList = function () {
         value: function load(subscription) {
             var _this = this;
 
-            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE) && _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID]) {
-                var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID];
+            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE) && _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
+                var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
                 this._renderArticleLinks(subscription, articleLinks);
             } else {
                 (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
                 var callback = function callback(articleLinks) {
                     return _this._loadArticleLinks(subscription, articleLinks);
                 };
-                _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
+                _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
             }
         }
     }, {
@@ -11491,7 +11491,7 @@ var ArticleList = function () {
             // Cache the article links.
             var feedMap = {};
             if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE)) feedMap = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE);
-            feedMap[subscription.subscriptionID] = articleLinks;
+            feedMap[subscription.id] = articleLinks;
             _Cache2.default.store(KEY_MAP_FEED_ARTICLE, feedMap);
         }
 
@@ -11510,12 +11510,12 @@ var ArticleList = function () {
                 var templateAttributes = {
                     articleLinkTitle: articleLink.title,
                     articleLinkURL: articleLink.url,
-                    articleLinkFeedID: subscription.subscriptionID,
-                    articleLinkLanguage: subscription.subscriptionLanguage,
+                    articleLinkFeedID: subscription.id,
+                    articleLinkLanguage: subscription.language,
                     articleDifficultyDiscrete: articleLink.metrics.difficulty.discrete,
                     articleDifficulty: Math.round(parseFloat(articleLink.metrics.difficulty.normalized) * 100) / 10,
                     articleSummary: (0, _jquery2.default)('<p>' + articleLink.summary + '</p>').text(),
-                    articleIcon: subscription.subscriptionIcon
+                    articleIcon: subscription.image_url
                 };
                 (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(_mustache2.default.render(template, templateAttributes));
             }
@@ -11625,57 +11625,21 @@ var FeedSubscriber = function () {
         value: function _loadFeedOptions(data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
-                var addableData = {
-                    addableTitle: data[i]['title'],
-                    addableID: data[i]['id'],
-                    addableImage: data[i]['image_url']
-                };
-                var feedOption = (0, _jquery2.default)(_mustache2.default.render(template, addableData));
+                var feedOption = (0, _jquery2.default)(_mustache2.default.render(template, data[i]));
                 var subscribeButton = (0, _jquery2.default)(feedOption.find(".subscribeButton"));
-                var _follow = this._follow.bind(this);
-                subscribeButton.click(function () {
-                    _follow((0, _jquery2.default)(this).parent());
-                });
+
+                subscribeButton.click(function (data, feedOption, subscriptionList) {
+                    return function () {
+                        subscriptionList.follow(data);
+                        (0, _jquery2.default)(feedOption).fadeOut();
+                    };
+                }(data[i], feedOption, this.subscriptionList));
+
                 var feedIcon = (0, _jquery2.default)(feedOption.find(".feedIcon"));
                 feedIcon.on("error", function () {
                     (0, _jquery2.default)(this).unbind("error").attr("src", "static/images/noAvatar.png");
                 });
                 (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
-            }
-        }
-
-        /**
-         * Subscribe to a new feed, calls the zeeguu server.
-         * Uses {@link ZeeguuRequests}.
-         * @param {Element} feed - Document element containing the id of the feed.
-         */
-
-    }, {
-        key: '_follow',
-        value: function _follow(feed) {
-            var _this = this;
-
-            var feedID = (0, _jquery2.default)(feed).attr('addableID');
-            var callback = function (data) {
-                return _this._onFeedFollowed(feed, data);
-            }.bind(this);
-            _zeeguuRequests2.default.post(_config2.default.FOLLOW_FEED_ENDPOINT, { feed_id: feedID }, callback);
-        }
-
-        /**
-         * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
-         * mentioned feed from the addable feed list.
-         * Callback function for Zeeguu.
-         * @param {Element} feed - Document element containing the id of the feed.
-         * @param {string} data - Reply from the server.
-         */
-
-    }, {
-        key: '_onFeedFollowed',
-        value: function _onFeedFollowed(feed, data) {
-            if (data == "OK") {
-                this.subscriptionList.load();
-                (0, _jquery2.default)(feed).fadeOut();
             }
         }
     }]);
@@ -11880,26 +11844,66 @@ var SubscriptionList = function () {
         value: function _loadSubscriptions(data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
-                var subscriptionData = {
-                    subscriptionTitle: data[i]['title'],
-                    subscriptionID: data[i]['id'],
-                    subscriptionLanguage: data[i]['language'],
-                    subscriptionIcon: data[i]['image_url']
-                };
-                var subscription = (0, _jquery2.default)(_mustache2.default.render(template, subscriptionData));
-                var removeButton = (0, _jquery2.default)(subscription.find(".removeButton"));
-                var _unfollow = this._unfollow.bind(this);
-                removeButton.click(function () {
-                    _unfollow((0, _jquery2.default)(this).parent());
-                });
-                if (!this.feedList.has(Number(subscriptionData['subscriptionID']))) {
-                    (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-                    this.articleList.load(subscriptionData);
-                }
-                this.feedList.add(Number(subscriptionData['subscriptionID']));
+                this._addSubscription(data[i]);
+                this.articleList.load(data[i]);
             }
 
             if (this.feedList.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
+        }
+    }, {
+        key: '_addSubscription',
+        value: function _addSubscription(feed) {
+            if (this.feedList.has(Number(feed.id))) return;
+
+            var template = (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+            var subscription = (0, _jquery2.default)(_mustache2.default.render(template, feed));
+            var removeButton = (0, _jquery2.default)(subscription.find(".removeButton"));
+            var _unfollow = this._unfollow.bind(this);
+            removeButton.click(function (feed) {
+                return function () {
+                    _unfollow(feed);
+                };
+            }(feed));
+            (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+            this.feedList.add(Number(feed.id));
+
+            this.noFeedTour.hide();
+        }
+
+        /**
+         * Subscribe to a new feed, calls the zeeguu server.
+         * Uses {@link ZeeguuRequests}.
+         * @param {Element} feed - Document element containing the id of the feed.
+         */
+
+    }, {
+        key: 'follow',
+        value: function follow(feed) {
+            var _this = this;
+
+            this._addSubscription(feed);
+            var callback = function (data) {
+                return _this._onFeedFollowed(feed, data);
+            }.bind(this);
+            _zeeguuRequests2.default.post(_config2.default.FOLLOW_FEED_ENDPOINT, { feed_id: feed.id }, callback);
+        }
+
+        /**
+         * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
+         * mentioned feed from the addable feed list.
+         * Callback function for Zeeguu.
+         * @param {Element} feed - Document element containing the id of the feed.
+         * @param {string} data - Reply from the server.
+         */
+
+    }, {
+        key: '_onFeedFollowed',
+        value: function _onFeedFollowed(feed, data) {
+            if (data == "OK") {
+                this.articleList.load(feed);
+            } else {
+                this._remove(feed);
+            }
         }
 
         /**
@@ -11911,13 +11915,13 @@ var SubscriptionList = function () {
     }, {
         key: '_unfollow',
         value: function _unfollow(feed) {
-            var _this = this;
+            var _this2 = this;
 
-            var removableID = (0, _jquery2.default)(feed).attr('removableID');
+            this._remove(feed);
             var callback = function (data) {
-                return _this._onFeedUnfollowed(feed, data);
+                return _this2._onFeedUnfollowed(feed, data);
             }.bind(this);
-            _zeeguuRequests2.default.get(_config2.default.UNFOLLOW_FEED_ENDPOINT + "/" + removableID, {}, callback);
+            _zeeguuRequests2.default.get(_config2.default.UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
         }
 
         /**
@@ -11930,8 +11934,8 @@ var SubscriptionList = function () {
     }, {
         key: '_onFeedUnfollowed',
         value: function _onFeedUnfollowed(feed, data) {
-            if (data == "OK") {
-                this._remove(feed);
+            if (data != "OK") {
+                this._onFeedFollowed(feed, "OK");
             }
         }
 
@@ -11943,13 +11947,12 @@ var SubscriptionList = function () {
 
     }, {
         key: '_remove',
-        value: function _remove(feedNode) {
-            var feedID = (0, _jquery2.default)(feedNode).attr('removableID');
-            this.articleList.remove(feedID);
-            if (!this.feedList.delete(Number(feedID))) {
+        value: function _remove(feed) {
+            this.articleList.remove(feed.id);
+            if (!this.feedList.delete(Number(feed.id))) {
                 console.log("Error");
             }
-            (0, _jquery2.default)(feedNode).fadeOut();
+            (0, _jquery2.default)('span[removableID="' + feed.id + '"]').fadeOut();
 
             if (this.feedList.size < 1) this.noFeedTour.show();
         }

@@ -59,8 +59,8 @@
 
 <!-- Template for subscribed feed items -->
 <script id="subscription-template" type="text/template">
-	<span removableID="{% raw %}{{subscriptionID}}{% endraw %}" class="mdl-chip mdl-chip--deletable">
-		<span class="mdl-chip__text">{% raw %}{{subscriptionTitle}}{% endraw %}</span>
+	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
 		</a>
