@@ -3,6 +3,7 @@ import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 import Cache from '../Cache';
+import NoFeedTour from './NoFeedTour';
 
 const KEY_MAP_FEED_ARTICLE = "feed_article_map";
 
@@ -11,12 +12,24 @@ const KEY_MAP_FEED_ARTICLE = "feed_article_map";
  */
 export default class ArticleList {
     /**
+     * Initialise a {@link NoFeedTour} object.
+     */
+    constructor() {
+        this.noFeedTour = new NoFeedTour();
+    }
+
+    /**
      * Call zeeguu and get the articles for the given feed 'subscription'.
      * If the articles are already in {@link Cache}, load them instead.
      * Uses {@link ZeeguuRequests}.
      * @param {Map} subscriptions - The feeds to retrieve articles from.
      */
     load(subscriptions) {
+        if (subscriptions.size < 1)
+            this.noFeedTour.show();
+        else
+            this.noFeedTour.hide();
+
         for (const subscription of subscriptions.values()) {
             if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
                 let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];

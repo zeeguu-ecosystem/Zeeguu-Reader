@@ -11469,6 +11469,10 @@ var _Cache = __webpack_require__(14);
 
 var _Cache2 = _interopRequireDefault(_Cache);
 
+var _NoFeedTour = __webpack_require__(16);
+
+var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11480,21 +11484,29 @@ var KEY_MAP_FEED_ARTICLE = "feed_article_map";
  */
 
 var ArticleList = function () {
+    /**
+     * Initialise a {@link NoFeedTour} object.
+     */
     function ArticleList() {
         _classCallCheck(this, ArticleList);
+
+        this.noFeedTour = new _NoFeedTour2.default();
     }
+
+    /**
+     * Call zeeguu and get the articles for the given feed 'subscription'.
+     * If the articles are already in {@link Cache}, load them instead.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Map} subscriptions - The feeds to retrieve articles from.
+     */
+
 
     _createClass(ArticleList, [{
         key: 'load',
-
-        /**
-         * Call zeeguu and get the articles for the given feed 'subscription'.
-         * If the articles are already in {@link Cache}, load them instead.
-         * Uses {@link ZeeguuRequests}.
-         * @param {Map} subscriptions - The feeds to retrieve articles from.
-         */
         value: function load(subscriptions) {
             var _this = this;
+
+            if (subscriptions.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
 
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
@@ -11854,10 +11866,6 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _NoFeedTour = __webpack_require__(16);
-
-var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
-
 var _Notifier = __webpack_require__(5);
 
 var _Notifier2 = _interopRequireDefault(_Notifier);
@@ -11872,13 +11880,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var SubscriptionList = function () {
     /**
-     * Initialise an empty list of feeds and a {@link NoFeedTour} object.
-     * Also initialise a {@link Notifier} to notify the user of failures.
+     * Initialise an empty {@link Map} of feeds and a {@link Notifier} to notify the user of failures.
      */
     function SubscriptionList() {
         _classCallCheck(this, SubscriptionList);
 
-        this.noFeedTour = new _NoFeedTour2.default();
         this.feedList = new Map();
         this.notifier = new _Notifier2.default();
     }
@@ -11933,8 +11939,6 @@ var SubscriptionList = function () {
             }
 
             this._changed();
-
-            if (this.feedList.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
         }
 
         /**
@@ -11958,8 +11962,6 @@ var SubscriptionList = function () {
             }(feed));
             (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
             this.feedList.set(feed.id, feed);
-
-            this.noFeedTour.hide();
         }
 
         /**
@@ -11994,7 +11996,7 @@ var SubscriptionList = function () {
             if (data === "OK") {
                 this._changed();
             } else {
-                this.notifier.notify("Could not follow " + feed.title + ".");
+                this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
                 console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
             }
         }
@@ -12031,11 +12033,9 @@ var SubscriptionList = function () {
             if (data === "OK") {
                 this._changed();
             } else {
-                this.notifier.notify("Could not unfollow " + feed.title + ".");
+                this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
                 console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
             }
-
-            if (this.feedList.size < 1) this.noFeedTour.show();
         }
 
         /**

@@ -2,7 +2,6 @@ import $ from 'jquery'
 import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
-import NoFeedTour from './NoFeedTour';
 import Notifier from '../Notifier';
 
 /**
@@ -11,11 +10,9 @@ import Notifier from '../Notifier';
  */
 export default class SubscriptionList {
     /**
-     * Initialise an empty list of feeds and a {@link NoFeedTour} object.
-     * Also initialise a {@link Notifier} to notify the user of failures.
+     * Initialise an empty {@link Map} of feeds and a {@link Notifier} to notify the user of failures.
      */
     constructor() {
-        this.noFeedTour = new NoFeedTour();
         this.feedList = new Map();
         this.notifier = new Notifier();
     }
@@ -57,11 +54,6 @@ export default class SubscriptionList {
         }
 
         this._changed();
-
-        if (this.feedList.size < 1)
-            this.noFeedTour.show();
-        else
-            this.noFeedTour.hide();
     }
 
     /**
@@ -83,8 +75,6 @@ export default class SubscriptionList {
         }(feed));
         $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
         this.feedList.set(feed.id, feed);
-
-        this.noFeedTour.hide();
     }
 
     /**
@@ -139,9 +129,6 @@ export default class SubscriptionList {
             this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
             console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
         }
-
-        if (this.feedList.size < 1)
-            this.noFeedTour.show();
     }
 
     /**
