@@ -37,6 +37,18 @@ zeeguu tran[chosen]:after
 	content: attr(chosen);
 }
 
+.mdl-button
+{
+  padding: 1em;
+}
+
+#toggle_back
+{
+  position: relative;
+  left: -2.6em !important;
+}
+
+
 #altermenu
 {
 	display: none;
@@ -66,7 +78,6 @@ zeeguu tran[chosen]:after
 {
   color: grey;
 	text-align: center;
-
 }
 
 .mdl-layout__header,
