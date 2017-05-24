@@ -37,17 +37,15 @@ zeeguu tran[chosen]:after
 	content: attr(chosen);
 }
 
-.mdl-button
-{
-  padding: 1em;
-}
-
 #toggle_back
 {
-  position: relative;
-  left: -2.6em !important;
+  left: -2.6em;
 }
 
+#toggle_translate
+{
+  right: -1em;
+}
 
 #altermenu
 {
