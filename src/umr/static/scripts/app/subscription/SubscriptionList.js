@@ -111,6 +111,7 @@ export default class SubscriptionList {
             this.articleList.load(feed);
         } else {
             this.notifier.notify("Could not follow " + feed.title + ".");
+            console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
         }
     }
 
@@ -135,6 +136,7 @@ export default class SubscriptionList {
     _onFeedUnfollowed(feed, data) {
         if (data !== "OK") {
             this.notifier.notify("Could not unfollow " + feed.title + ".");
+            console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
         }
     }
 
@@ -145,7 +147,7 @@ export default class SubscriptionList {
      */
     _remove(feed) {
         this.articleList.remove(feed.id);
-        if (!this.feedList.delete(Number(feed.id)))  { console.log("Error"); }
+        if (!this.feedList.delete(Number(feed.id)))  { console.log("Error: feed not in feed list."); }
         $('span[removableID="' + feed.id + '"]').fadeOut();
 
         if (this.feedList.size < 1)

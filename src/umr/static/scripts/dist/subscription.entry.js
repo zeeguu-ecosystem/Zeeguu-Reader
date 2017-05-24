@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10710,6 +10710,63 @@ module.exports = function (module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Presents small pop-up messages (notifications).
+ * Does not repeat the same message if it currently displays it.
+ */
+var Notifier = function () {
+    /**
+     * Initializes the previously displayed message field. Empty at creation.
+     */
+    function Notifier() {
+        _classCallCheck(this, Notifier);
+
+        this.lastMessage = "";
+    }
+
+    _createClass(Notifier, [{
+        key: 'notify',
+
+
+        /**
+         * Notify the user with the supplied message.
+         * @param {string} message - Message to be displayed. 
+         */
+        value: function notify(message) {
+            var snackbar = document.querySelector('.mdl-js-snackbar');
+            if (this.lastMessage === message && (0, _jquery2.default)(snackbar).hasClass('mdl-snackbar--active')) return;
+            snackbar.MaterialSnackbar.showSnackbar({ message: message });
+            this.lastMessage = message;
+        }
+    }]);
+
+    return Notifier;
+}();
+
+exports.default = Notifier;
+;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -11379,7 +11436,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11407,7 +11464,7 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _Cache = __webpack_require__(13);
+var _Cache = __webpack_require__(14);
 
 var _Cache2 = _interopRequireDefault(_Cache);
 
@@ -11422,19 +11479,25 @@ var KEY_MAP_FEED_ARTICLE = "feed_article_map";
  */
 
 var ArticleList = function () {
+    /**
+     * Initialise a set of all open requests.
+     */
     function ArticleList() {
         _classCallCheck(this, ArticleList);
+
+        this.openRequests = new Set();
     }
+
+    /**
+     * Call zeeguu and get the articles for the given feed 'subscription'.
+     * If the articles are already in {@link Cache}, load them instead.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Object} subscription - The feed to retrieve articles from.
+     */
+
 
     _createClass(ArticleList, [{
         key: 'load',
-
-        /**
-         * Call zeeguu and get the articles for the given feed 'subscription'.
-         * If the articles are already in {@link Cache}, load them instead.
-         * Uses {@link ZeeguuRequests}.
-         * @param {Object} subscription - The feed to retrieve articles from.
-         */
         value: function load(subscription) {
             var _this = this;
 
@@ -11442,6 +11505,7 @@ var ArticleList = function () {
                 var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
                 this._renderArticleLinks(subscription, articleLinks);
             } else {
+                this.openRequests.add(subscription.id);
                 (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
                 var callback = function callback(articleLinks) {
                     return _this._loadArticleLinks(subscription, articleLinks);
@@ -11469,6 +11533,8 @@ var ArticleList = function () {
          * @param {string} feedID - The identification code associated with the feed.
          */
         value: function remove(feedID) {
+            if (this.openRequests.delete(Number(feedID))) return;
+
             (0, _jquery2.default)('li[articleLinkFeedID="' + feedID + '"]').remove();
             if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE)) {
                 _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[feedID] = undefined;
@@ -11480,11 +11546,15 @@ var ArticleList = function () {
 
         /**
          * Store all the article links from a particular feed if possible, makes sure they are rendered.
+         * If the feed id is not in the open requests set,
+         * we simply return such that a poorly-timed removal of a feed does not have articles loaded.
          * Callback function for the zeeguu request.
          * @param {Object} subscription - The feed the articles are from.
          * @param {Object[]} articleLinks - List containing the articles for the feed.
          */
         value: function _loadArticleLinks(subscription, articleLinks) {
+            if (!this.openRequests.delete(Number(subscription.id))) return;
+
             this._renderArticleLinks(subscription, articleLinks);
             (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).fadeOut('slow');
 
@@ -11504,6 +11574,8 @@ var ArticleList = function () {
     }, {
         key: '_renderArticleLinks',
         value: function _renderArticleLinks(subscription, articleLinks) {
+            if (articleLinks.length < 1) console.log("No articles for " + subscription.title + ".");
+
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_TEMPLATE).html();
             for (var i = 0; i < articleLinks.length; i++) {
                 var articleLink = articleLinks[i];
@@ -11529,7 +11601,7 @@ exports.default = ArticleList;
 ;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11651,7 +11723,7 @@ exports.default = FeedSubscriber;
 ;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11744,7 +11816,7 @@ exports.default = LanguageMenu;
 ;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11772,9 +11844,13 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _NoFeedTour = __webpack_require__(15);
+var _NoFeedTour = __webpack_require__(16);
 
 var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
+
+var _Notifier = __webpack_require__(5);
+
+var _Notifier2 = _interopRequireDefault(_Notifier);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11795,6 +11871,7 @@ var SubscriptionList = function () {
         this.articleList = articleList;
         this.noFeedTour = new _NoFeedTour2.default();
         this.feedList = new Set();
+        this.notifier = new _Notifier2.default();
     }
 
     /**
@@ -11850,6 +11927,12 @@ var SubscriptionList = function () {
 
             if (this.feedList.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
         }
+
+        /**
+         * Add the feed to the list of subscribed feeds.
+         * @param {Object[]} feed - Data of the particular feed to add to the list.
+         */
+
     }, {
         key: '_addSubscription',
         value: function _addSubscription(feed) {
@@ -11873,7 +11956,7 @@ var SubscriptionList = function () {
         /**
          * Subscribe to a new feed, calls the zeeguu server.
          * Uses {@link ZeeguuRequests}.
-         * @param {Element} feed - Document element containing the id of the feed.
+         * @param {Object[]} feed - Data of the particular feed to subscribe to.
          */
 
     }, {
@@ -11889,27 +11972,28 @@ var SubscriptionList = function () {
         }
 
         /**
-         * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
-         * mentioned feed from the addable feed list.
+         * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
+         * If there was a failure to follow the feed, we notify the user.
          * Callback function for Zeeguu.
-         * @param {Element} feed - Document element containing the id of the feed.
+         * @param {Object[]} feed - Data of the particular feed that has been subscribed to.
          * @param {string} data - Reply from the server.
          */
 
     }, {
         key: '_onFeedFollowed',
         value: function _onFeedFollowed(feed, data) {
-            if (data == "OK") {
+            if (data === "OK") {
                 this.articleList.load(feed);
             } else {
-                this._remove(feed);
+                this.notifier.notify("Could not follow " + feed.title + ".");
+                console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
             }
         }
 
         /**
          * Un-subscribe from a feed, call the zeeguu server.
          * Uses {@link ZeeguuRequests}.
-         * @param {Element} feed - Feed element of the list to un-subscribe from.
+         * @param {Object[]} feed - Data of the particular feed to unfollow.
          */
 
     }, {
@@ -11926,23 +12010,25 @@ var SubscriptionList = function () {
 
         /**
          * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+         * On failure we notify the user.
          * Callback function for zeeguu.
-         * @param {Element} feed - Feed element of the list that is to be removed.
+         * @param {Object[]} feed - Data of the particular feed to that has been unfollowed.
          * @param {string} data - Server reply.
          */
 
     }, {
         key: '_onFeedUnfollowed',
         value: function _onFeedUnfollowed(feed, data) {
-            if (data != "OK") {
-                this._onFeedFollowed(feed, "OK");
+            if (data !== "OK") {
+                this.notifier.notify("Could not unfollow " + feed.title + ".");
+                console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
             }
         }
 
         /**
          * Remove a mentioned feed from the local list (not from the zeeguu list).
          * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-         * @param {Element} feedNode - The document element (feed) to remove.
+         * @param {Object[]} feed - Data of the particular feed to remove from the list.
          */
 
     }, {
@@ -11950,7 +12036,7 @@ var SubscriptionList = function () {
         value: function _remove(feed) {
             this.articleList.remove(feed.id);
             if (!this.feedList.delete(Number(feed.id))) {
-                console.log("Error");
+                console.log("Error: feed not in feed list.");
             }
             (0, _jquery2.default)('span[removableID="' + feed.id + '"]').fadeOut();
 
@@ -11965,10 +12051,10 @@ exports.default = SubscriptionList;
 ;
 
 /***/ }),
-/* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12060,8 +12146,8 @@ var Cache = function () {
 exports.default = Cache;
 
 /***/ }),
-/* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12125,7 +12211,7 @@ var NoFeedTour = function () {
 exports.default = NoFeedTour;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12135,23 +12221,23 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ArticleList = __webpack_require__(6);
+var _ArticleList = __webpack_require__(7);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _SubscriptionList = __webpack_require__(9);
+var _SubscriptionList = __webpack_require__(10);
 
 var _SubscriptionList2 = _interopRequireDefault(_SubscriptionList);
 
-var _FeedSubscriber = __webpack_require__(7);
+var _FeedSubscriber = __webpack_require__(8);
 
 var _FeedSubscriber2 = _interopRequireDefault(_FeedSubscriber);
 
-var _dialogPolyfill = __webpack_require__(5);
+var _dialogPolyfill = __webpack_require__(6);
 
 var _dialogPolyfill2 = _interopRequireDefault(_dialogPolyfill);
 
-var _LanguageMenu = __webpack_require__(8);
+var _LanguageMenu = __webpack_require__(9);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
 
@@ -12194,7 +12280,6 @@ function noAvatar(image) {
 }
 
 /***/ }),
-/* 17 */,
 /* 18 */,
 /* 19 */
 /***/ (function(module, exports) {

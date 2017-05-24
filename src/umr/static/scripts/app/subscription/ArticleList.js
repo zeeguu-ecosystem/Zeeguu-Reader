@@ -11,6 +11,13 @@ const KEY_MAP_FEED_ARTICLE = "feed_article_map";
  */
 export default class ArticleList {
     /**
+     * Initialise a set of all open requests.
+     */
+    constructor() {
+        this.openRequests = new Set();
+    }
+
+    /**
      * Call zeeguu and get the articles for the given feed 'subscription'.
      * If the articles are already in {@link Cache}, load them instead.
      * Uses {@link ZeeguuRequests}.
@@ -21,6 +28,7 @@ export default class ArticleList {
             let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
             this._renderArticleLinks(subscription, articleLinks);
         } else {
+            this.openRequests.add(subscription.id);
             $(config.HTML_CLASS_LOADER).show();
             let callback = (articleLinks) => this._loadArticleLinks(subscription, articleLinks);
             ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
@@ -40,6 +48,9 @@ export default class ArticleList {
      * @param {string} feedID - The identification code associated with the feed.
      */
     remove(feedID) {
+        if (this.openRequests.delete(Number(feedID)))
+            return;
+
         $('li[articleLinkFeedID="' + feedID + '"]').remove();
         if (Cache.has(KEY_MAP_FEED_ARTICLE)) {
             Cache.retrieve(KEY_MAP_FEED_ARTICLE)[feedID] = undefined;
@@ -48,11 +59,16 @@ export default class ArticleList {
 
     /**
      * Store all the article links from a particular feed if possible, makes sure they are rendered.
+     * If the feed id is not in the open requests set,
+     * we simply return such that a poorly-timed removal of a feed does not have articles loaded.
      * Callback function for the zeeguu request.
      * @param {Object} subscription - The feed the articles are from.
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
     _loadArticleLinks(subscription, articleLinks) {
+        if (!this.openRequests.delete(Number(subscription.id)))
+            return;
+
         this._renderArticleLinks(subscription, articleLinks);
         $(config.HTML_CLASS_LOADER).fadeOut('slow');
 
@@ -70,6 +86,9 @@ export default class ArticleList {
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
     _renderArticleLinks(subscription, articleLinks) {
+        if (articleLinks.length < 1)
+            console.log("No articles for " + subscription.title + ".");
+
         let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
