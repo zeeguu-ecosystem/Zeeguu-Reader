@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import config from '../config'
-import Notifier from './Notifier'
+import Notifier from '../Notifier'
 
 /**
  * Class that allows for choosing alternative zeeguu translations from

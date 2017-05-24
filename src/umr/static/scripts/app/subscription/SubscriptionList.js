@@ -3,6 +3,7 @@ import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 import NoFeedTour from './NoFeedTour';
+import Notifier from '../Notifier';
 
 /**
  * Shows a list of all subscribed feeds, allows the user to remove them.
@@ -17,6 +18,7 @@ export default class SubscriptionList {
         this.articleList = articleList;
         this.noFeedTour = new NoFeedTour();
         this.feedList = new Set();
+        this.notifier = new Notifier();
     }
 
     /**
@@ -51,8 +53,8 @@ export default class SubscriptionList {
      * @param {Object[]} data - List containing the feeds the user is subscribed to.
      */
     _loadSubscriptions(data) {
-        var template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
-        for (var i = 0; i < data.length; i++) {
+        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+        for (let i = 0; i < data.length; i++) {
             this._addSubscription(data[i]);
             this.articleList.load(data[i]);
         }
@@ -99,7 +101,7 @@ export default class SubscriptionList {
 
     /**
      * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
-     * If there was a failure to follow the feed, we remove this feed from our list.
+     * If there was a failure to follow the feed, we notify the user.
      * Callback function for Zeeguu.
      * @param {Object[]} feed - Data of the particular feed that has been subscribed to.
      * @param {string} data - Reply from the server.
@@ -108,7 +110,7 @@ export default class SubscriptionList {
         if (data === "OK") {
             this.articleList.load(feed);
         } else {
-            this._remove(feed);
+            this.notifier.notify("Could not follow " + feed.title + ".");
         }
     }
 
@@ -119,19 +121,20 @@ export default class SubscriptionList {
      */
     _unfollow(feed) {
         this._remove(feed);
-        var callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
+        let callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
         ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
     }
 
     /**
      * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+     * On failure we notify the user.
      * Callback function for zeeguu.
      * @param {Object[]} feed - Data of the particular feed to that has been unfollowed.
      * @param {string} data - Server reply.
      */
     _onFeedUnfollowed(feed, data) {
         if (data !== "OK") {
-            this._onFeedFollowed(feed, "OK");
+            this.notifier.notify("Could not unfollow " + feed.title + ".");
         }
     }
 

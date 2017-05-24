@@ -51,10 +51,10 @@ export default class FeedSubscriber {
      * @param {Object[]} data - A list of feeds the user can subscribe to.
      */
     _loadFeedOptions(data) {
-        var template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
-        for (var i = 0; i < data.length; i++) {
-            var feedOption = $(Mustache.render(template, data[i]));
-            var subscribeButton = $(feedOption.find(".subscribeButton"));
+        let template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
+        for (let i = 0; i < data.length; i++) {
+            let feedOption = $(Mustache.render(template, data[i]));
+            let subscribeButton = $(feedOption.find(".subscribeButton"));
 
             subscribeButton.click(
                 function (data, feedOption, subscriptionList) {
@@ -64,7 +64,7 @@ export default class FeedSubscriber {
                     };
             }(data[i], feedOption, this.subscriptionList));
 
-            var feedIcon = $(feedOption.find(".feedIcon"));
+            let feedIcon = $(feedOption.find(".feedIcon"));
             feedIcon.on( "error", function () {
                 $(this).unbind("error").attr("src", "static/images/noAvatar.png");
             });

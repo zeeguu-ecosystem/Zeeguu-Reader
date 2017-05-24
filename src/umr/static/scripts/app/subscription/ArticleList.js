@@ -71,7 +71,7 @@ export default class ArticleList {
      */
     _renderArticleLinks(subscription, articleLinks) {
         let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
-        for (var i = 0; i < articleLinks.length; i++) {
+        for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
