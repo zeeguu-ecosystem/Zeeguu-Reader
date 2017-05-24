@@ -109,7 +109,7 @@ export default class SubscriptionList {
         if (data === "OK") {
             this._changed();
         } else {
-            this.notifier.notify("Could not follow " + feed.title + ".");
+            this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
             console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
         }
     }
@@ -136,7 +136,7 @@ export default class SubscriptionList {
         if (data === "OK") {
             this._changed();
         } else {
-            this.notifier.notify("Could not unfollow " + feed.title + ".");
+            this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
             console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
         }
 
