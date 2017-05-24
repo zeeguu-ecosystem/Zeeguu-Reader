@@ -11,13 +11,12 @@ import Notifier from '../Notifier';
  */
 export default class SubscriptionList {
     /**
-     * Bind with the {@link ArticleList}, initialise an empty list of feeds and a {@link NoFeedTour} object.
-     * @param {ArticleList} articleList - List of all articles available to the user.
+     * Initialise an empty list of feeds and a {@link NoFeedTour} object.
+     * Also initialise a {@link Notifier} to notify the user of failures.
      */
-    constructor(articleList) {
-        this.articleList = articleList;
+    constructor() {
         this.noFeedTour = new NoFeedTour();
-        this.feedList = new Set();
+        this.feedList = new Map();
         this.notifier = new Notifier();
     }
 
@@ -34,7 +33,6 @@ export default class SubscriptionList {
      */
     clear() {
         $(config.HTML_ID_SUBSCRIPTION_LIST).empty();
-        this.articleList.clear();
     };
 
     /**
@@ -56,8 +54,9 @@ export default class SubscriptionList {
         let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         for (let i = 0; i < data.length; i++) {
             this._addSubscription(data[i]);
-            this.articleList.load(data[i]);
         }
+
+        this._changed();
 
         if (this.feedList.size < 1)
             this.noFeedTour.show();
@@ -70,7 +69,7 @@ export default class SubscriptionList {
      * @param {Object[]} feed - Data of the particular feed to add to the list.
      */
     _addSubscription(feed) {
-        if (this.feedList.has(Number(feed.id)))
+        if (this.feedList.has(feed.id))
             return;
 
         let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
@@ -83,7 +82,7 @@ export default class SubscriptionList {
             };
         }(feed));
         $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-        this.feedList.add(Number(feed.id));
+        this.feedList.set(feed.id, feed);
 
         this.noFeedTour.hide();
     }
@@ -108,7 +107,7 @@ export default class SubscriptionList {
      */
     _onFeedFollowed(feed, data) {
         if (data === "OK") {
-            this.articleList.load(feed);
+            this._changed();
         } else {
             this.notifier.notify("Could not follow " + feed.title + ".");
             console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
@@ -134,10 +133,15 @@ export default class SubscriptionList {
      * @param {string} data - Server reply.
      */
     _onFeedUnfollowed(feed, data) {
-        if (data !== "OK") {
+        if (data === "OK") {
+            this._changed();
+        } else {
             this.notifier.notify("Could not unfollow " + feed.title + ".");
             console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
         }
+
+        if (this.feedList.size < 1)
+            this.noFeedTour.show();
     }
 
     /**
@@ -146,11 +150,14 @@ export default class SubscriptionList {
      * @param {Object[]} feed - Data of the particular feed to remove from the list.
      */
     _remove(feed) {
-        this.articleList.remove(feed.id);
-        if (!this.feedList.delete(Number(feed.id)))  { console.log("Error: feed not in feed list."); }
+        if (!this.feedList.delete(feed.id))  { console.log("Error: feed not in feed list."); }
         $('span[removableID="' + feed.id + '"]').fadeOut();
+    }
 
-        if (this.feedList.size < 1)
-            this.noFeedTour.show();
+    /**
+     * Fire an event to notify change in this class.
+     */
+    _changed() {
+        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION, { "detail": this.feedList }));
     }
 };

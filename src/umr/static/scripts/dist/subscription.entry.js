@@ -9954,7 +9954,8 @@ exports.default = {
     HTML_CLASS_TOUR: '.tour',
     HTML_CLASS_WIGGLE: 'wiggle',
     CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect'
+    CLASS_NOSELECT: 'noselect',
+    EVENT_SUBSCRIPTION: 'subscription-list-loaded'
 };
 
 /***/ }),
@@ -11479,82 +11480,92 @@ var KEY_MAP_FEED_ARTICLE = "feed_article_map";
  */
 
 var ArticleList = function () {
-    /**
-     * Initialise a set of all open requests.
-     */
     function ArticleList() {
         _classCallCheck(this, ArticleList);
-
-        this.openRequests = new Set();
     }
-
-    /**
-     * Call zeeguu and get the articles for the given feed 'subscription'.
-     * If the articles are already in {@link Cache}, load them instead.
-     * Uses {@link ZeeguuRequests}.
-     * @param {Object} subscription - The feed to retrieve articles from.
-     */
-
 
     _createClass(ArticleList, [{
         key: 'load',
-        value: function load(subscription) {
-            var _this = this;
-
-            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE) && _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
-                var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
-                this._renderArticleLinks(subscription, articleLinks);
-            } else {
-                this.openRequests.add(subscription.id);
-                (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
-                var callback = function callback(articleLinks) {
-                    return _this._loadArticleLinks(subscription, articleLinks);
-                };
-                _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
-            }
-        }
-    }, {
-        key: 'clear',
-
 
         /**
-         * Remove all articles from the list, clears the cached articles.
+         * Call zeeguu and get the articles for the given feed 'subscription'.
+         * If the articles are already in {@link Cache}, load them instead.
+         * Uses {@link ZeeguuRequests}.
+         * @param {Map} subscriptions - The feeds to retrieve articles from.
          */
+        value: function load(subscriptions) {
+            var _this = this;
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                var _loop = function _loop() {
+                    var subscription = _step.value;
+
+                    if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE) && _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
+                        var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
+                        _this._renderArticleLinks(subscription, articleLinks);
+                    } else {
+                        (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
+                        var callback = function callback(articleLinks) {
+                            return _this._loadArticleLinks(subscription, articleLinks);
+                        };
+                        _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
+                    }
+                };
+
+                for (var _iterator = subscriptions.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    _loop();
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Remove all articles from the list.
+         */
+
+    }, {
+        key: 'clear',
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).empty();
-            _Cache2.default.remove(KEY_MAP_FEED_ARTICLE);
         }
-    }, {
-        key: 'remove',
-
 
         /**
          * Remove all articles from the list associated with the given feed.
          * @param {string} feedID - The identification code associated with the feed.
          */
-        value: function remove(feedID) {
-            if (this.openRequests.delete(Number(feedID))) return;
 
-            (0, _jquery2.default)('li[articleLinkFeedID="' + feedID + '"]').remove();
-            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE)) {
-                _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[feedID] = undefined;
-            }
-        }
     }, {
-        key: '_loadArticleLinks',
-
+        key: 'remove',
+        value: function remove(feedID) {
+            (0, _jquery2.default)('li[articleLinkFeedID="' + feedID + '"]').remove();
+        }
 
         /**
          * Store all the article links from a particular feed if possible, makes sure they are rendered.
-         * If the feed id is not in the open requests set,
-         * we simply return such that a poorly-timed removal of a feed does not have articles loaded.
          * Callback function for the zeeguu request.
          * @param {Object} subscription - The feed the articles are from.
          * @param {Object[]} articleLinks - List containing the articles for the feed.
          */
-        value: function _loadArticleLinks(subscription, articleLinks) {
-            if (!this.openRequests.delete(Number(subscription.id))) return;
 
+    }, {
+        key: '_loadArticleLinks',
+        value: function _loadArticleLinks(subscription, articleLinks) {
             this._renderArticleLinks(subscription, articleLinks);
             (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).fadeOut('slow');
 
@@ -11598,7 +11609,6 @@ var ArticleList = function () {
 }();
 
 exports.default = ArticleList;
-;
 
 /***/ }),
 /* 8 */
@@ -11862,15 +11872,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var SubscriptionList = function () {
     /**
-     * Bind with the {@link ArticleList}, initialise an empty list of feeds and a {@link NoFeedTour} object.
-     * @param {ArticleList} articleList - List of all articles available to the user.
+     * Initialise an empty list of feeds and a {@link NoFeedTour} object.
+     * Also initialise a {@link Notifier} to notify the user of failures.
      */
-    function SubscriptionList(articleList) {
+    function SubscriptionList() {
         _classCallCheck(this, SubscriptionList);
 
-        this.articleList = articleList;
         this.noFeedTour = new _NoFeedTour2.default();
-        this.feedList = new Set();
+        this.feedList = new Map();
         this.notifier = new _Notifier2.default();
     }
 
@@ -11894,7 +11903,6 @@ var SubscriptionList = function () {
          */
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).empty();
-            this.articleList.clear();
         }
     }, {
         key: 'refresh',
@@ -11922,8 +11930,9 @@ var SubscriptionList = function () {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
                 this._addSubscription(data[i]);
-                this.articleList.load(data[i]);
             }
+
+            this._changed();
 
             if (this.feedList.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
         }
@@ -11936,7 +11945,7 @@ var SubscriptionList = function () {
     }, {
         key: '_addSubscription',
         value: function _addSubscription(feed) {
-            if (this.feedList.has(Number(feed.id))) return;
+            if (this.feedList.has(feed.id)) return;
 
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
             var subscription = (0, _jquery2.default)(_mustache2.default.render(template, feed));
@@ -11948,7 +11957,7 @@ var SubscriptionList = function () {
                 };
             }(feed));
             (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-            this.feedList.add(Number(feed.id));
+            this.feedList.set(feed.id, feed);
 
             this.noFeedTour.hide();
         }
@@ -11983,7 +11992,7 @@ var SubscriptionList = function () {
         key: '_onFeedFollowed',
         value: function _onFeedFollowed(feed, data) {
             if (data === "OK") {
-                this.articleList.load(feed);
+                this._changed();
             } else {
                 this.notifier.notify("Could not follow " + feed.title + ".");
                 console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
@@ -12019,10 +12028,14 @@ var SubscriptionList = function () {
     }, {
         key: '_onFeedUnfollowed',
         value: function _onFeedUnfollowed(feed, data) {
-            if (data !== "OK") {
+            if (data === "OK") {
+                this._changed();
+            } else {
                 this.notifier.notify("Could not unfollow " + feed.title + ".");
                 console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
             }
+
+            if (this.feedList.size < 1) this.noFeedTour.show();
         }
 
         /**
@@ -12034,13 +12047,20 @@ var SubscriptionList = function () {
     }, {
         key: '_remove',
         value: function _remove(feed) {
-            this.articleList.remove(feed.id);
-            if (!this.feedList.delete(Number(feed.id))) {
+            if (!this.feedList.delete(feed.id)) {
                 console.log("Error: feed not in feed list.");
             }
             (0, _jquery2.default)('span[removableID="' + feed.id + '"]').fadeOut();
+        }
 
-            if (this.feedList.size < 1) this.noFeedTour.show();
+        /**
+         * Fire an event to notify change in this class.
+         */
+
+    }, {
+        key: '_changed',
+        value: function _changed() {
+            document.dispatchEvent(new CustomEvent(_config2.default.EVENT_SUBSCRIPTION, { "detail": this.feedList }));
         }
     }]);
 
@@ -12241,14 +12261,23 @@ var _LanguageMenu = __webpack_require__(9);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
 
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
-var articleList = new _ArticleList2.default();
-var subscriptionList = new _SubscriptionList2.default(articleList);
+var subscriptionList = new _SubscriptionList2.default();
+var articleList = new _ArticleList2.default(subscriptionList);
 var feedSubscriber = new _FeedSubscriber2.default(subscriptionList);
 var languageMenu = new _LanguageMenu2.default(feedSubscriber);
+
+document.addEventListener(_config2.default.EVENT_SUBSCRIPTION, function (e) {
+    articleList.clear();
+    articleList.load(e.detail);
+});
 
 /* When the document has finished loading,
  * bind all necessary listeners. */

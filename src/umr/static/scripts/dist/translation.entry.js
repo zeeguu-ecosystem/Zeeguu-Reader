@@ -9954,7 +9954,8 @@ exports.default = {
     HTML_CLASS_TOUR: '.tour',
     HTML_CLASS_WIGGLE: 'wiggle',
     CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect'
+    CLASS_NOSELECT: 'noselect',
+    EVENT_SUBSCRIPTION: 'subscription-list-loaded'
 };
 
 /***/ }),
