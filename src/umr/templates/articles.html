@@ -54,13 +54,17 @@
 		<div class="loader">
 			 <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
 		</div>
+		<div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
+		  <div class="mdl-snackbar__text"></div>
+		  <button class="mdl-snackbar__action" type="button"></button>
+		</div>
   </main>
 </div>
 
 <!-- Template for subscribed feed items -->
 <script id="subscription-template" type="text/template">
-	<span removableID="{% raw %}{{subscriptionID}}{% endraw %}" class="mdl-chip mdl-chip--deletable">
-		<span class="mdl-chip__text">{% raw %}{{subscriptionTitle}}{% endraw %}</span>
+	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
 		</a>

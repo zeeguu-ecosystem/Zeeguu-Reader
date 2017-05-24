@@ -9954,7 +9954,8 @@ exports.default = {
     HTML_CLASS_TOUR: '.tour',
     HTML_CLASS_WIGGLE: 'wiggle',
     CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect'
+    CLASS_NOSELECT: 'noselect',
+    EVENT_SUBSCRIPTION: 'subscription-list-loaded'
 };
 
 /***/ }),
@@ -10087,12 +10088,69 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 5 */,
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Presents small pop-up messages (notifications).
+ * Does not repeat the same message if it currently displays it.
+ */
+var Notifier = function () {
+    /**
+     * Initializes the previously displayed message field. Empty at creation.
+     */
+    function Notifier() {
+        _classCallCheck(this, Notifier);
+
+        this.lastMessage = "";
+    }
+
+    _createClass(Notifier, [{
+        key: 'notify',
+
+
+        /**
+         * Notify the user with the supplied message.
+         * @param {string} message - Message to be displayed. 
+         */
+        value: function notify(message) {
+            var snackbar = document.querySelector('.mdl-js-snackbar');
+            if (this.lastMessage === message && (0, _jquery2.default)(snackbar).hasClass('mdl-snackbar--active')) return;
+            snackbar.MaterialSnackbar.showSnackbar({ message: message });
+            this.lastMessage = message;
+        }
+    }]);
+
+    return Notifier;
+}();
+
+exports.default = Notifier;
+;
+
+/***/ }),
 /* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10112,7 +10170,7 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Notifier = __webpack_require__(17);
+var _Notifier = __webpack_require__(5);
 
 var _Notifier2 = _interopRequireDefault(_Notifier);
 
@@ -10278,7 +10336,7 @@ exports.default = AlterMenu;
 ;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10321,7 +10379,7 @@ exports.default = Speaker;
 ;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10341,7 +10399,7 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _UndoManager = __webpack_require__(14);
+var _UndoManager = __webpack_require__(15);
 
 var _UndoManager2 = _interopRequireDefault(_UndoManager);
 
@@ -10495,8 +10553,8 @@ exports.default = Translator;
 ;
 
 /***/ }),
-/* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10566,65 +10624,8 @@ exports.default = UndoManager;
 ;
 
 /***/ }),
-/* 15 */,
 /* 16 */,
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Presents small pop-up messages (notifications).
- * Does not repeat the same message if it currently displays it.
- */
-var Notifier = function () {
-    /**
-     * Initializes the previously displayed message field. Empty at creation.
-     */
-    function Notifier() {
-        _classCallCheck(this, Notifier);
-
-        this.lastMessage = "";
-    }
-
-    _createClass(Notifier, [{
-        key: 'notify',
-
-
-        /**
-         * Notify the user with the supplied message.
-         * @param {string} message - Message to be displayed. 
-         */
-        value: function notify(message) {
-            var snackbar = document.querySelector('.mdl-js-snackbar');
-            if (this.lastMessage == message && (0, _jquery2.default)(snackbar).hasClass('mdl-snackbar--active')) return;
-            snackbar.MaterialSnackbar.showSnackbar({ message: message });
-            this.lastMessage = message;
-        }
-    }]);
-
-    return Notifier;
-}();
-
-exports.default = Notifier;
-;
-
-/***/ }),
+/* 17 */,
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10639,15 +10640,15 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Translator = __webpack_require__(12);
+var _Translator = __webpack_require__(13);
 
 var _Translator2 = _interopRequireDefault(_Translator);
 
-var _AlterMenu = __webpack_require__(10);
+var _AlterMenu = __webpack_require__(11);
 
 var _AlterMenu2 = _interopRequireDefault(_AlterMenu);
 
-var _Speaker = __webpack_require__(11);
+var _Speaker = __webpack_require__(12);
 
 var _Speaker2 = _interopRequireDefault(_Speaker);
 

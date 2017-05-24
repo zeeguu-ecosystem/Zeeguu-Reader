@@ -2,7 +2,7 @@ import $ from 'jquery'
 import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
-import NoFeedTour from './NoFeedTour';
+import Notifier from '../Notifier';
 
 /**
  * Shows a list of all subscribed feeds, allows the user to remove them.
@@ -10,13 +10,11 @@ import NoFeedTour from './NoFeedTour';
  */
 export default class SubscriptionList {
     /**
-     * Bind with the {@link ArticleList}, initialise an empty list of feeds and a {@link NoFeedTour} object.
-     * @param {ArticleList} articleList - List of all articles available to the user.
+     * Initialise an empty {@link Map} of feeds and a {@link Notifier} to notify the user of failures.
      */
-    constructor(articleList) {
-        this.articleList = articleList;
-        this.noFeedTour = new NoFeedTour();
-        this.feedList = new Set();
+    constructor() {
+        this.feedList = new Map();
+        this.notifier = new Notifier();
     }
 
     /**
@@ -32,7 +30,6 @@ export default class SubscriptionList {
      */
     clear() {
         $(config.HTML_ID_SUBSCRIPTION_LIST).empty();
-        this.articleList.clear();
     };
 
     /**
@@ -51,69 +48,103 @@ export default class SubscriptionList {
      * @param {Object[]} data - List containing the feeds the user is subscribed to.
      */
     _loadSubscriptions(data) {
-        var template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
-        for (var i = 0; i < data.length; i++) {
-            var subscriptionData = {
-                subscriptionTitle: data[i]['title'],
-                subscriptionID: data[i]['id'],
-                subscriptionLanguage: data[i]['language'],
-                subscriptionIcon: data[i]['image_url']
-            };
-            var subscription = $(Mustache.render(template, subscriptionData));
-            var removeButton = $(subscription.find(".removeButton"));
-            var _unfollow = this._unfollow.bind(this);
-            removeButton.click(function() {
-                _unfollow($(this).parent());
-            });
-            if (!this.feedList.has(Number(subscriptionData['subscriptionID']))) {                
-                $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-                this.articleList.load(subscriptionData);
-            }             
-            this.feedList.add(Number(subscriptionData['subscriptionID']));
+        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+        for (let i = 0; i < data.length; i++) {
+            this._addSubscription(data[i]);
         }
 
-        if (this.feedList.size < 1)
-            this.noFeedTour.show();
-        else
-            this.noFeedTour.hide();
+        this._changed();
+    }
+
+    /**
+     * Add the feed to the list of subscribed feeds.
+     * @param {Object[]} feed - Data of the particular feed to add to the list.
+     */
+    _addSubscription(feed) {
+        if (this.feedList.has(feed.id))
+            return;
+
+        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+        let subscription = $(Mustache.render(template, feed));
+        let removeButton = $(subscription.find(".removeButton"));
+        let _unfollow = this._unfollow.bind(this);
+        removeButton.click(function(feed) {
+            return function () {
+                _unfollow(feed);
+            };
+        }(feed));
+        $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+        this.feedList.set(feed.id, feed);
+    }
+
+    /**
+     * Subscribe to a new feed, calls the zeeguu server.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Object[]} feed - Data of the particular feed to subscribe to.
+     */
+    follow(feed) {
+        this._addSubscription(feed);
+        let callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
+        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
+    }
+
+    /**
+     * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
+     * If there was a failure to follow the feed, we notify the user.
+     * Callback function for Zeeguu.
+     * @param {Object[]} feed - Data of the particular feed that has been subscribed to.
+     * @param {string} data - Reply from the server.
+     */
+    _onFeedFollowed(feed, data) {
+        if (data === "OK") {
+            this._changed();
+        } else {
+            this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
+            console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
+        }
     }
 
     /**
      * Un-subscribe from a feed, call the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Element} feed - Feed element of the list to un-subscribe from.
+     * @param {Object[]} feed - Data of the particular feed to unfollow.
      */
     _unfollow(feed) {
-        var removableID = $(feed).attr('removableID');
-        var callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
-        ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + removableID,
-                            {}, callback);
+        this._remove(feed);
+        let callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
+        ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
     }
 
     /**
      * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+     * On failure we notify the user.
      * Callback function for zeeguu.
-     * @param {Element} feed - Feed element of the list that is to be removed.
+     * @param {Object[]} feed - Data of the particular feed to that has been unfollowed.
      * @param {string} data - Server reply.
      */
     _onFeedUnfollowed(feed, data) {
-        if (data == "OK") {
-            this._remove(feed);
+        if (data === "OK") {
+            this._changed();
+        } else {
+            this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
+            console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
         }
     }
 
     /**
      * Remove a mentioned feed from the local list (not from the zeeguu list).
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-     * @param {Element} feedNode - The document element (feed) to remove.
+     * @param {Object[]} feed - Data of the particular feed to remove from the list.
      */
-    _remove(feedNode) {
-        var feedID = $(feedNode).attr('removableID');
-        this.articleList.remove(feedID);
-        if (!this.feedList.delete(Number(feedID)))  { console.log("Error"); }
-        $(feedNode).fadeOut();
+    _remove(feed) {
+        if (!this.feedList.delete(feed.id))  { console.log("Error: feed not in feed list."); }
+        $('span[removableID="' + feed.id + '"]').fadeOut();
+    }
 
-        if (this.feedList.size < 1)
-            this.noFeedTour.show();
+    /**
+     * Fire an event to notify change in this class.
+     */
+    _changed() {
+        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION, { "detail": this.feedList }));
     }
 };

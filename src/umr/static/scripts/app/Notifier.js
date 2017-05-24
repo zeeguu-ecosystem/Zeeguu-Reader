@@ -17,8 +17,8 @@ export default class Notifier {
      * @param {string} message - Message to be displayed. 
      */
     notify (message) {
-        var snackbar = document.querySelector('.mdl-js-snackbar');
-        if (this.lastMessage == message && $(snackbar).hasClass('mdl-snackbar--active'))
+        let snackbar = document.querySelector('.mdl-js-snackbar');
+        if (this.lastMessage === message && $(snackbar).hasClass('mdl-snackbar--active'))
             return;
         snackbar.MaterialSnackbar.showSnackbar({message: message});
         this.lastMessage = message;

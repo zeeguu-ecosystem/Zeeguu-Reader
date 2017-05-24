@@ -23,10 +23,10 @@
 
 <!-- Template for feed items -->
 <script id="feedAddable-template" type="text/template">
-  <div addableID="{% raw %}{{addableID}}{% endraw %}" class="mdl-list__item">
+  <div addableID="{% raw %}{{ id }}{% endraw %}" class="mdl-list__item">
     <span class="mdl-list__item-primary-content">
-      <img src="{% raw %}{{addableImage}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
-      <span class="addableTitle">{% raw %}{{addableTitle}}{% endraw %}</span>
+      <img src="{% raw %}{{ image_url }}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+      <span class="addableTitle">{% raw %}{{ title }}{% endraw %}</span>
     </span>
     <a class="mdl-list__item-secondary-action subscribeButton">
       <i class="material-icons ">add_circle</i>
