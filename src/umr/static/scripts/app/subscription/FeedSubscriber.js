@@ -56,11 +56,12 @@ export default class FeedSubscriber {
             var feedOption = $(Mustache.render(template, data[i]));
             var subscribeButton = $(feedOption.find(".subscribeButton"));
 
-            subscribeButton.click(function (data, feedOption, subscriptionList) {
-                return function() {
-                    subscriptionList.follow(data);
-                    $(feedOption).fadeOut();
-                };
+            subscribeButton.click(
+                function (data, feedOption, subscriptionList) {
+                    return function() {
+                        subscriptionList.follow(data);
+                        $(feedOption).fadeOut();
+                    };
             }(data[i], feedOption, this.subscriptionList));
 
             var feedIcon = $(feedOption.find(".feedIcon"));

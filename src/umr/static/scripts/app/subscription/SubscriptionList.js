@@ -63,6 +63,10 @@ export default class SubscriptionList {
             this.noFeedTour.hide();
     }
 
+    /**
+     * Add the feed to the list of subscribed feeds.
+     * @param {Object[]} feed - Data of the particular feed to add to the list.
+     */
     _addSubscription(feed) {
         if (this.feedList.has(Number(feed.id)))
             return;
@@ -85,7 +89,7 @@ export default class SubscriptionList {
     /**
      * Subscribe to a new feed, calls the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Element} feed - Document element containing the id of the feed.
+     * @param {Object[]} feed - Data of the particular feed to subscribe to.
      */
     follow(feed) {
         this._addSubscription(feed);
@@ -94,14 +98,14 @@ export default class SubscriptionList {
     }
 
     /**
-     * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
-     * mentioned feed from the addable feed list.
+     * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
+     * If there was a failure to follow the feed, we remove this feed from our list.
      * Callback function for Zeeguu.
-     * @param {Element} feed - Document element containing the id of the feed.
+     * @param {Object[]} feed - Data of the particular feed that has been subscribed to.
      * @param {string} data - Reply from the server.
      */
     _onFeedFollowed(feed, data) {
-        if (data == "OK") {
+        if (data === "OK") {
             this.articleList.load(feed);
         } else {
             this._remove(feed);
@@ -111,7 +115,7 @@ export default class SubscriptionList {
     /**
      * Un-subscribe from a feed, call the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Element} feed - Feed element of the list to un-subscribe from.
+     * @param {Object[]} feed - Data of the particular feed to unfollow.
      */
     _unfollow(feed) {
         this._remove(feed);
@@ -122,11 +126,11 @@ export default class SubscriptionList {
     /**
      * A feed has just been removed, so we remove the mentioned feed from the subscription list.
      * Callback function for zeeguu.
-     * @param {Element} feed - Feed element of the list that is to be removed.
+     * @param {Object[]} feed - Data of the particular feed to that has been unfollowed.
      * @param {string} data - Server reply.
      */
     _onFeedUnfollowed(feed, data) {
-        if (data != "OK") {
+        if (data !== "OK") {
             this._onFeedFollowed(feed, "OK");
         }
     }
@@ -134,7 +138,7 @@ export default class SubscriptionList {
     /**
      * Remove a mentioned feed from the local list (not from the zeeguu list).
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-     * @param {Element} feedNode - The document element (feed) to remove.
+     * @param {Object[]} feed - Data of the particular feed to remove from the list.
      */
     _remove(feed) {
         this.articleList.remove(feed.id);
@@ -144,6 +148,4 @@ export default class SubscriptionList {
         if (this.feedList.size < 1)
             this.noFeedTour.show();
     }
-
-
 };
