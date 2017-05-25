@@ -34,6 +34,7 @@ export default {
     HTML_ID_ADDSUBSCRIPTION_TEMPLATE: '#feedAddable-template',
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
+    HTML_CLASS_ARTICLELINK: '.articleLinkEntry',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
     HTML_CLASS_PAGECONTENT: '.page-content',

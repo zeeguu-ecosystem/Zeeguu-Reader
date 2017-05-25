@@ -97,7 +97,26 @@ export default class ArticleList {
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: subscription.image_url
             };
-            $(config.HTML_ID_ARTICLELINK_LIST).append(Mustache.render(template, templateAttributes));
+            let element = Mustache.render(template, templateAttributes);
+            $(config.HTML_ID_ARTICLELINK_LIST).append(element);
         }
+
+        // Make the link expand on click, then redirect to the article.
+        $(config.HTML_CLASS_ARTICLELINK).one('click', function (event) {
+            if (!event.isPropagationStopped()) {
+                event.stopPropagation();
+                $(this).find('.articleLinkSummary').animate({
+                    height: '+=30em'
+                }, 200);
+                $(this).animate({
+                    scrollTop: $(this).offset().top,
+                    height: '+=30em'
+                }, 200, function () {
+                    // Animation complete.
+                    location.href = $(this).attr('href');
+                });
+                $(config.HTML_CLASS_PAGECONTENT).fadeOut();
+            }
+        });
     }
 }

@@ -74,12 +74,13 @@
 
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
-	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}"
+		href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
 		<div class ="articleLinkHeader">
 			<div class="articleLinkImage">
 				<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
 			</div>
-			<a class="articleLinkTitle" href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
+			<a class="articleLinkTitle" >
 				{% raw %}{{ articleLinkTitle }}{% endraw %}
 			</a>
 			<div class="articleLinkDifficulty">

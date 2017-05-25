@@ -9948,6 +9948,7 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_TEMPLATE: '#feedAddable-template',
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
+    HTML_CLASS_ARTICLELINK: '.articleLinkEntry',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
     HTML_CLASS_PAGECONTENT: '.page-content',
@@ -11612,8 +11613,27 @@ var ArticleList = function () {
                     articleSummary: (0, _jquery2.default)('<p>' + articleLink.summary + '</p>').text(),
                     articleIcon: subscription.image_url
                 };
-                (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(_mustache2.default.render(template, templateAttributes));
+                var element = _mustache2.default.render(template, templateAttributes);
+                (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(element);
             }
+
+            // Make the link expand on click, then redirect to the article.
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_ARTICLELINK).one('click', function (event) {
+                if (!event.isPropagationStopped()) {
+                    event.stopPropagation();
+                    (0, _jquery2.default)(this).find('.articleLinkSummary').animate({
+                        height: '+=30em'
+                    }, 200);
+                    (0, _jquery2.default)(this).animate({
+                        scrollTop: (0, _jquery2.default)(this).offset().top,
+                        height: '+=30em'
+                    }, 200, function () {
+                        // Animation complete.
+                        location.href = (0, _jquery2.default)(this).attr('href');
+                    });
+                    (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).fadeOut();
+                }
+            });
         }
     }]);
 
