@@ -58,7 +58,7 @@ export default class SubscriptionList {
 
     /**
      * Add the feed to the list of subscribed feeds.
-     * @param {Object[]} feed - Data of the particular feed to add to the list.
+     * @param {Object} feed - Data of the particular feed to add to the list.
      */
     _addSubscription(feed) {
         if (this.feedList.has(feed.id))
@@ -80,7 +80,7 @@ export default class SubscriptionList {
     /**
      * Subscribe to a new feed, calls the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object[]} feed - Data of the particular feed to subscribe to.
+     * @param {Object} feed - Data of the particular feed to subscribe to.
      */
     follow(feed) {
         this._addSubscription(feed);
@@ -92,10 +92,10 @@ export default class SubscriptionList {
      * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
      * If there was a failure to follow the feed, we notify the user.
      * Callback function for Zeeguu.
-     * @param {Object[]} feed - Data of the particular feed that has been subscribed to.
-     * @param {string} data - Reply from the server.
+     * @param {Object} feed - Data of the particular feed that has been subscribed to.
+     * @param {string} reply - Reply from the server.
      */
-    _onFeedFollowed(feed, data) {
+    _onFeedFollowed(feed, reply) {
         if (data === "OK") {
             this._changed();
         } else {
@@ -107,7 +107,7 @@ export default class SubscriptionList {
     /**
      * Un-subscribe from a feed, call the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object[]} feed - Data of the particular feed to unfollow.
+     * @param {Object} feed - Data of the particular feed to unfollow.
      */
     _unfollow(feed) {
         this._remove(feed);
@@ -119,10 +119,10 @@ export default class SubscriptionList {
      * A feed has just been removed, so we remove the mentioned feed from the subscription list.
      * On failure we notify the user.
      * Callback function for zeeguu.
-     * @param {Object[]} feed - Data of the particular feed to that has been unfollowed.
-     * @param {string} data - Server reply.
+     * @param {Object} feed - Data of the particular feed to that has been unfollowed.
+     * @param {string} reply - Server reply.
      */
-    _onFeedUnfollowed(feed, data) {
+    _onFeedUnfollowed(feed, reply) {
         if (data === "OK") {
             this._changed();
         } else {
@@ -134,7 +134,7 @@ export default class SubscriptionList {
     /**
      * Remove a mentioned feed from the local list (not from the zeeguu list).
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-     * @param {Object[]} feed - Data of the particular feed to remove from the list.
+     * @param {Object} feed - Data of the particular feed to remove from the list.
      */
     _remove(feed) {
         if (!this.feedList.delete(feed.id))  { console.log("Error: feed not in feed list."); }
