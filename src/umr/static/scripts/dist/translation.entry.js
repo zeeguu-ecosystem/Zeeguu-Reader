@@ -10446,12 +10446,12 @@ var Translator = function () {
             var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
             var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
 
-            (0, _jquery2.default)(zeeguuTag).empty(); // clear tag up for insertion
             var orig = document.createElement(_config2.default.HTML_ORIGINAL);
             var tran = document.createElement(_config2.default.HTML_TRANSLATED);
+
             (0, _jquery2.default)(orig).text(text);
             (0, _jquery2.default)(orig).addClass(_config2.default.CLASS_LOADING);
-            (0, _jquery2.default)(zeeguuTag).append(orig, tran);
+            (0, _jquery2.default)(zeeguuTag).empty().append(orig, tran);
 
             var callback = function callback(data) {
                 return _this._setTranslations(orig, tran, data);
@@ -10666,13 +10666,14 @@ var speaker = new _Speaker2.default();
     disableSelection();
     attachZeeguuListeners();
 
-    /* When the translate toggle is changed, we
-     * make sure that we disable or enable hyperlinks
-     * and close all translation tools. */
-    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).change(function () {
-        if (this.checked) disableSelection();else enableSelection();
+    /* When the copy toggle is switched on, 
+     * copying is enabled and translation gets disabled and vice-versa. */
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).click(function () {
+        if ((0, _jquery2.default)(this).hasClass('mdl-button--disabled')) enableSelection();else disableSelection();
     });
 
+    /* When the undo is clicked, content page is replaced
+     * with previous one in the stack and listeners are re-attached. */
     (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLEUNDO).click(function () {
         (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).off();
         translator.undoTranslate();
@@ -10716,6 +10717,7 @@ function disableSelection() {
     (0, _jquery2.default)("p").each(function () {
         (0, _jquery2.default)(this).addClass(_config2.default.CLASS_NOSELECT);
     });
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).addClass('mdl-button--disabled');
 }
 
 /* Enable selection. */
@@ -10723,6 +10725,7 @@ function enableSelection() {
     (0, _jquery2.default)("p").each(function () {
         (0, _jquery2.default)(this).removeClass(_config2.default.CLASS_NOSELECT);
     });
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).removeClass('mdl-button--disabled');
 }
 
 /* Attach Zeeguu tag click listener. */
@@ -10731,9 +10734,8 @@ function attachZeeguuListeners() {
      * either try to translate it, speak it, or open an alternative
      * translation window.  */
     (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
-        if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).is(':checked')) return;
+        if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).hasClass('mdl-button--disabled')) return;
         if (alterMenu.isOpen()) return;
-
         var target = (0, _jquery2.default)(event.target);
         if (target.is(_config2.default.HTML_ZEEGUUTAG)) {
             if (!translator.isTranslated(this)) {

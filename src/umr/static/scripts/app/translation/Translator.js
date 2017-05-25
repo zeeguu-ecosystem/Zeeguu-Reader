@@ -24,18 +24,18 @@ export default class Translator {
     translate(zeeguuTag) {
         this.undoManager.pushState();
         this._mergeZeeguu(zeeguuTag);
-        
+
         var text = zeeguuTag.textContent.trim();
         var context = this._getContext(zeeguuTag);
         var url = $(config.HTML_ID_ARTICLE_URL).text();
         var title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
-        $(zeeguuTag).empty(); // clear tag up for insertion
         var orig = document.createElement(config.HTML_ORIGINAL);
         var tran = document.createElement(config.HTML_TRANSLATED);
+
         $(orig).text(text);
         $(orig).addClass(config.CLASS_LOADING);
-        $(zeeguuTag).append(orig, tran);
+        $(zeeguuTag).empty().append(orig, tran);
 
         var callback = (data) => this._setTranslations(orig, tran, data);
         // Launch Zeeguu request to fill translation options.

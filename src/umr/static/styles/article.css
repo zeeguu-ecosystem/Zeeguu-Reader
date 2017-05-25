@@ -1,3 +1,8 @@
+.is-casting-shadow
+{
+  box-shadow: 0px 1em 2em #FFFFFF !important;
+}
+
 zeeguu orig.loading
 {
 	animation: fadein 1s 0s infinite linear alternate;
@@ -32,6 +37,16 @@ zeeguu tran[chosen]:after
 	content: attr(chosen);
 }
 
+#toggle_back
+{
+  left: -2.6em;
+}
+
+#toggle_translate
+{
+  right: -1em;
+}
+
 #altermenu
 {
 	display: none;
@@ -61,7 +76,6 @@ zeeguu tran[chosen]:after
 {
   color: grey;
 	text-align: center;
-
 }
 
 .mdl-layout__header,
@@ -109,7 +123,8 @@ a[href_disabled]
   text-align:justify;
 }
 
-.noselect {
+.noselect 
+{
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
