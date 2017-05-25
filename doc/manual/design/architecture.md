@@ -35,7 +35,7 @@ Both packages share a need to contact the Zeeguu API once in a while, and thus t
 ### Subscription
 ![Subscription UML](asset/subscription.png)
 
-The subscription package allows for modifying the users feeds and listing the available articles for the feeds the user is currently subscribed to. The **LanguageMenu** class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. **FeedSubscriber** thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. **SubscriptionList** manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. A change to this class calls for a change to the ArticleList. **ArticleList** manages a list of all possible articles to read, and uses the **Cache** class to do this efficiently.
+The subscription package allows for modifying the users feeds and listing the available articles for the feeds the user is currently subscribed to. The **LanguageMenu** class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. **FeedSubscriber** thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. **SubscriptionList** manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. It uses the **Notifier** in order to inform the user of subscription problems (such as a failure to subscribe). A change to this class calls for a change to the ArticleList. This happens by firing an Event that ArticleList listenes to, with the changed data appended to the detail attribute of the Event. **ArticleList** manages a list of all possible articles to read, and uses the **Cache** class to do this efficiently. When there are no feeds to render article links for, is calls for the NoFeedTour object to show. The **NoFeedTour** class allows for showing a webpage styling that motivates the user to subscribe to more feeds.
 
 ### Translation
 ![Translation UML](asset/translation.png)
@@ -51,3 +51,7 @@ The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST
 ![Subscription UML](asset/Cache.png)
 
 The Cache class abstracts the implementation of storing user data locally. It allows us, if supported by the browser, to not be forced in querying zeeguu about identical data we requested shortly before. This increases responsiveness of the application whilst decreasing server workload.
+
+### Notifier
+![Notifier UML](asset/Notifier.png)
+The Notifier class binds itself to a document element that is capable of showing small pop-up messages at the bottom of the screen. It will ignore notification requests when they are identical to the currently displayed message, in order to reduce spamming the user with redundant information.
