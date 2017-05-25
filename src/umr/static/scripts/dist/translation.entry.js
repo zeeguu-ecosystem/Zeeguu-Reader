@@ -10444,7 +10444,7 @@ var Translator = function () {
 
             var text = zeeguuTag.textContent.trim();
             var context = this._getContext(zeeguuTag);
-            var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
+            var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).find('a').attr('href');
             var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
 
             var orig = document.createElement(_config2.default.HTML_ORIGINAL);
