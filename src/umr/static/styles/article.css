@@ -108,11 +108,21 @@ h5,h6
   font-size: 0.7em;
 }
 
-a[href_disabled]
+
+#articleURL
+{
+  text-align: center;
+}
+
+a
 {
   color: grey;
-  text-decoration: underline;
-  cursor: default;
+  text-decoration: none;
+}
+
+a:hover
+{
+  color: #505050;
 }
 
 .page-content

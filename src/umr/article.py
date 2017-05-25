@@ -40,9 +40,9 @@ def make_article(url, language):
 
     # Create our article using Soup.
     soup = Soup(render_template('article.html', fromLanguage=language), 'html.parser')
+    soup.find('div', {'id': 'articleURL'}).find('a')['href'] = url
     soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'))
     soup.find('p',   {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
-    soup.find('p',   {'id': 'articleURL'}).append(Soup(url, 'html.parser'))
 
     return str(soup)
 
