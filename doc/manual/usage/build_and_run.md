@@ -8,6 +8,8 @@ The sources include a small script called `dev_setup.sh`, which you should be ab
 In the case your system does not allow for this shell script to do all the work for you, or you desire a more custom configuration, you should be able to look at the script and perform the listed tasks manually.
 
 ## Local deployment
+Before deployment, it is important to transpile and bundle our Ecmascript into the necessary entry-point files for Zeeguu UMR to run (refer to the Design documentation for information as to *why* this is done). If you managed to successfully setup your development environment, this should be as simple as running the command `webpack` in the root directory of this repository. The included configuration should take care of the rest.
+
 Local deployment of the Zeeguu UMR system consists of the deployment of a Flask app, which is a relatively straightforward procedure automated in the `dev_launch.sh` script. Executing this script will launch your Flask server on `yourIP:5000`, but this can be easily changed to any IP-address or port you desire.
 
 ## Remote deployment
