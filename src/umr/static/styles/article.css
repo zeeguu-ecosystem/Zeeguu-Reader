@@ -3,7 +3,7 @@
   box-shadow: 0px 1em 2em #FFFFFF !important;
 }
 
-zeeguu orig.loading
+zeeguu.loading
 {
 	animation: fadein 1s 0s infinite linear alternate;
 }
@@ -20,7 +20,7 @@ zeeguu orig
   border-bottom: 0.1em solid #FFFFFF;
 }
 
-zeeguu tran[transCount]
+zeeguu tran
 {
 	background-color:#CEEBFB;
   color: #505050;

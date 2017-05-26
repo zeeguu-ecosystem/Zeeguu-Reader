@@ -10400,9 +10400,9 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _UndoManager = __webpack_require__(15);
+var _UndoStack = __webpack_require__(17);
 
-var _UndoManager2 = _interopRequireDefault(_UndoManager);
+var _UndoStack2 = _interopRequireDefault(_UndoStack);
 
 var _config = __webpack_require__(1);
 
@@ -10423,7 +10423,7 @@ var Translator = function () {
     function Translator() {
         _classCallCheck(this, Translator);
 
-        this.undoManager = new _UndoManager2.default();
+        this.undoStack = new _UndoStack2.default();
     }
 
     /**
@@ -10439,8 +10439,8 @@ var Translator = function () {
         value: function translate(zeeguuTag) {
             var _this = this;
 
-            this.undoManager.pushState();
-            this._mergeZeeguu(zeeguuTag);
+            this.undoStack.pushState();
+            var temp_translation = this._mergeZeeguu(zeeguuTag);
 
             var text = zeeguuTag.textContent.trim();
             var context = this._getContext(zeeguuTag);
@@ -10451,11 +10451,12 @@ var Translator = function () {
             var tran = document.createElement(_config2.default.HTML_TRANSLATED);
 
             (0, _jquery2.default)(orig).text(text);
-            (0, _jquery2.default)(orig).addClass(_config2.default.CLASS_LOADING);
+            (0, _jquery2.default)(zeeguuTag).addClass(_config2.default.CLASS_LOADING);
+            (0, _jquery2.default)(tran).attr('chosen', temp_translation);
             (0, _jquery2.default)(zeeguuTag).empty().append(orig, tran);
 
             var callback = function callback(data) {
-                return _this._setTranslations(orig, tran, data);
+                return _this._setTranslations(zeeguuTag, data);
             };
             // Launch Zeeguu request to fill translation options.
             _zeeguuRequests2.default.post(_config2.default.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + _config2.default.TO_LANGUAGE, { word: text, context: context, url: url, title: title }, callback);
@@ -10468,7 +10469,7 @@ var Translator = function () {
     }, {
         key: 'undoTranslate',
         value: function undoTranslate() {
-            this.undoManager.undoState();
+            this.undoStack.undoState();
         }
 
         /**
@@ -10485,22 +10486,22 @@ var Translator = function () {
 
         /**
          * Handle the Zeeguu request returned values. Append the returned translations.
-         * @param {Element} orig - Document element containing the original text.
-         * @param {Element} htmlTag - Document element processed for translation.
+         * @param {Element} zeeguuTag - Document element containing the original text and the translations.
          * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
          */
 
     }, {
         key: '_setTranslations',
-        value: function _setTranslations(orig, htmlTag, translations) {
+        value: function _setTranslations(zeeguuTag, translations) {
+            var tran = zeeguuTag.children[1];
             translations = translations.translations;
             var transCount = Math.min(translations.length, 3);
-            htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
+            tran.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
             for (var i = 0; i < transCount; i++) {
-                htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            }htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
-            htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION, '');
-            (0, _jquery2.default)(orig).removeClass(_config2.default.CLASS_LOADING);
+                tran.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+            }tran.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
+            tran.setAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION, '');
+            (0, _jquery2.default)(zeeguuTag).removeClass(_config2.default.CLASS_LOADING);
         }
 
         /**
@@ -10524,17 +10525,22 @@ var Translator = function () {
     }, {
         key: '_mergeZeeguu',
         value: function _mergeZeeguu(zeeguuTag) {
+            var temp_translation = '';
             var spaces = '';
             var node = zeeguuTag.previousSibling;
             while (node && node.textContent == ' ') {
                 node = node.previousSibling;
                 spaces += ' ';
             }
+            var paddingLength = zeeguuTag.textContent.length; // used to approximate the size of the to be translated word
+
             if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
                 zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
+                temp_translation = temp_translation.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
                 node.parentNode.removeChild(node);
             }
             spaces = '';
+            temp_translation = temp_translation.concat(' ', '..'.repeat(paddingLength), ' ');
             node = zeeguuTag.nextSibling;
             while (node && node.textContent == ' ') {
                 node = node.nextSibling;
@@ -10542,8 +10548,10 @@ var Translator = function () {
             }
             if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
                 zeeguuTag.textContent += spaces + node.textContent;
+                temp_translation = temp_translation.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
                 node.parentNode.removeChild(node);
             }
+            return temp_translation;
         }
     }]);
 
@@ -10555,7 +10563,9 @@ exports.default = Translator;
 
 /***/ }),
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10583,12 +10593,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Class that allows for saving the state of the page content after each
  * translation and restore upon request.
  */
-var UndoManager = function () {
+var UndoStack = function () {
     /**
      * Initialize the stack for saving the states.
      */
-    function UndoManager() {
-        _classCallCheck(this, UndoManager);
+    function UndoStack() {
+        _classCallCheck(this, UndoStack);
 
         this.stack = [];
     }
@@ -10598,7 +10608,7 @@ var UndoManager = function () {
      */
 
 
-    _createClass(UndoManager, [{
+    _createClass(UndoStack, [{
         key: 'pushState',
         value: function pushState() {
             var $saved = (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).clone();
@@ -10618,15 +10628,13 @@ var UndoManager = function () {
         }
     }]);
 
-    return UndoManager;
+    return UndoStack;
 }();
 
-exports.default = UndoManager;
+exports.default = UndoStack;
 ;
 
 /***/ }),
-/* 16 */,
-/* 17 */,
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 

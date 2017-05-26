@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -11470,7 +11470,7 @@ var _Cache = __webpack_require__(14);
 
 var _Cache2 = _interopRequireDefault(_Cache);
 
-var _NoFeedTour = __webpack_require__(16);
+var _NoFeedTour = __webpack_require__(15);
 
 var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
 
@@ -12186,8 +12186,7 @@ var Cache = function () {
 exports.default = Cache;
 
 /***/ }),
-/* 15 */,
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12250,7 +12249,7 @@ var NoFeedTour = function () {
 exports.default = NoFeedTour;
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12328,6 +12327,7 @@ function noAvatar(image) {
 }
 
 /***/ }),
+/* 17 */,
 /* 18 */,
 /* 19 */
 /***/ (function(module, exports) {

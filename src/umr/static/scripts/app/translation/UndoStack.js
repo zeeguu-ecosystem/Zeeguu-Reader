@@ -1,11 +1,11 @@
 import $ from 'jquery';
-import config from './config'
+import config from '../config'
 
 /**
  * Class that allows for saving the state of the page content after each
  * translation and restore upon request.
  */
-export default class UndoManager {
+export default class UndoStack {
     /**
      * Initialize the stack for saving the states.
      */
