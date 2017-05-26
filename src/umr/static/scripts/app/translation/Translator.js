@@ -27,7 +27,7 @@ export default class Translator {
 
         var text = zeeguuTag.textContent.trim();
         var context = this._getContext(zeeguuTag);
-        var url = $(config.HTML_ID_ARTICLE_URL).text();
+        var url = $(config.HTML_ID_ARTICLE_URL).find('a').attr('href');
         var title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
         var orig = document.createElement(config.HTML_ORIGINAL);

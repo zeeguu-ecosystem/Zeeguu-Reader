@@ -44,7 +44,7 @@ zeeguu tran[chosen]:after
 
 #toggle_translate
 {
-  right: -1em;
+  right: -0.5em;
 }
 
 #altermenu
@@ -62,9 +62,11 @@ zeeguu tran[chosen]:after
 #altermenu .mdl-button
 {
 	width:100%;
+  height: 100%;
 	display: block;
 	text-transform: none;
-	word-wrap: break-word !important;
+  white-space: normal;
+  border-bottom: 1px solid lightgray;
 }
 
 #altermenu *
@@ -108,11 +110,28 @@ h5,h6
   font-size: 0.7em;
 }
 
-a[href_disabled]
+#articleAuthor
+{
+  font-size: 1em;
+  text-align: right;
+  color: grey;
+}
+
+#articleURL
+{
+  text-align: center;
+  font-size: 1em;
+}
+
+a
 {
   color: grey;
-  text-decoration: underline;
-  cursor: default;
+  text-decoration: none;
+}
+
+a:hover
+{
+  color: #505050;
 }
 
 .page-content

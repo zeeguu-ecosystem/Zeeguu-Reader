@@ -10288,7 +10288,7 @@ var AlterMenu = function () {
             (0, _jquery2.default)(zeeguuTag).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).css({
                 position: "absolute",
-                maxWidth: "80%",
+                maxWidth: "35%",
                 display: "inline-block",
                 left: position.left + (tagWidth - menuWidth) / 2 + "px",
                 top: position.top + tagHeight + topScroll + "px"
@@ -10444,7 +10444,7 @@ var Translator = function () {
 
             var text = zeeguuTag.textContent.trim();
             var context = this._getContext(zeeguuTag);
-            var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
+            var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).find('a').attr('href');
             var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
 
             var orig = document.createElement(_config2.default.HTML_ORIGINAL);
