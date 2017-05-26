@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import ZeeguuRequests from '../zeeguuRequests'
-import UndoManager from '../UndoManager'
+import UndoStack from './UndoStack'
 import config from '../config'
 
 /**
@@ -12,7 +12,7 @@ export default class Translator {
      * Initializes the undo manager.
      */
     constructor() {
-        this.undoManager = new UndoManager();
+        this.undoStack = new UndoStack();
     }
 
     /**
@@ -22,7 +22,7 @@ export default class Translator {
      * @param {Element} zeeguuTag - Document element containing the content to be translated. 
      */
     translate(zeeguuTag) {
-        this.undoManager.pushState();
+        this.undoStack.pushState();
         var temp_translation = this._mergeZeeguu(zeeguuTag);
 
         var text = zeeguuTag.textContent.trim();
@@ -48,7 +48,7 @@ export default class Translator {
      * Resets to previous state (i.e. removes translation from last translated word).
      */
     undoTranslate() {
-        this.undoManager.undoState();
+        this.undoStack.undoState();
     }
 
     /**
@@ -62,11 +62,10 @@ export default class Translator {
 
     /**
      * Handle the Zeeguu request returned values. Append the returned translations.
-     * @param {Element} zeeguuTag - Document element containing the original text.
+     * @param {Element} zeeguuTag - Document element containing the original text and the translations.
      * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
      */
     _setTranslations(zeeguuTag, translations) {
-        var orig = zeeguuTag.children[0];
         var tran = zeeguuTag.children[1];
         translations = translations.translations;
         var transCount = Math.min(translations.length, 3);
@@ -101,13 +100,15 @@ export default class Translator {
             node = node.previousSibling;
             spaces += ' ';
         }
+        var paddingLength = zeeguuTag.textContent.length; // used to approximate the size of the to be translated word
+
         if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {
             zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
             temp_translation = temp_translation.concat($(node).find('tran').attr('chosen'));
             node.parentNode.removeChild(node);
         }
         spaces = '';
-        temp_translation = temp_translation.concat(' ... ');
+        temp_translation = temp_translation.concat(' ', '..'.repeat(paddingLength), ' ');
         node = zeeguuTag.nextSibling;
         while (node && node.textContent == ' ') {
             node = node.nextSibling;
