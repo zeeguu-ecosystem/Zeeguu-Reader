@@ -23,7 +23,7 @@ export default class Translator {
      */
     translate(zeeguuTag) {
         this.undoManager.pushState();
-        this._mergeZeeguu(zeeguuTag);
+        var temp_translation = this._mergeZeeguu(zeeguuTag);
 
         var text = zeeguuTag.textContent.trim();
         var context = this._getContext(zeeguuTag);
@@ -34,10 +34,11 @@ export default class Translator {
         var tran = document.createElement(config.HTML_TRANSLATED);
 
         $(orig).text(text);
-        $(orig).addClass(config.CLASS_LOADING);
+        $(zeeguuTag).addClass(config.CLASS_LOADING);
+        $(tran).attr('chosen', temp_translation);
         $(zeeguuTag).empty().append(orig, tran);
 
-        var callback = (data) => this._setTranslations(orig, tran, data);
+        var callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
         ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
@@ -61,20 +62,21 @@ export default class Translator {
 
     /**
      * Handle the Zeeguu request returned values. Append the returned translations.
-     * @param {Element} orig - Document element containing the original text.
-     * @param {Element} htmlTag - Document element processed for translation.
+     * @param {Element} zeeguuTag - Document element containing the original text.
      * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
      */
-    _setTranslations(orig, htmlTag, translations) {
+    _setTranslations(zeeguuTag, translations) {
+        var orig = zeeguuTag.children[0];
+        var tran = zeeguuTag.children[1];
         translations = translations.translations;
         var transCount = Math.min(translations.length, 3);
-        htmlTag.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
+        tran.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
         for (var i = 0; i < transCount; i++)
-            htmlTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+            tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
 
-        htmlTag.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
-        htmlTag.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');        
-        $(orig).removeClass(config.CLASS_LOADING);
+        tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
+        tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');        
+        $(zeeguuTag).removeClass(config.CLASS_LOADING);
     }
 
     /**
@@ -92,6 +94,7 @@ export default class Translator {
      * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
      */
     _mergeZeeguu(zeeguuTag) {
+        var temp_translation = '';
         var spaces = '';
         var node = zeeguuTag.previousSibling;
         while (node && node.textContent == ' ') {
@@ -100,9 +103,11 @@ export default class Translator {
         }
         if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {
             zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
+            temp_translation = temp_translation.concat($(node).find('tran').attr('chosen'));
             node.parentNode.removeChild(node);
         }
         spaces = '';
+        temp_translation = temp_translation.concat(' ... ');
         node = zeeguuTag.nextSibling;
         while (node && node.textContent == ' ') {
             node = node.nextSibling;
@@ -111,8 +116,10 @@ export default class Translator {
         }
         if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {
             zeeguuTag.textContent += spaces + node.textContent;
+            temp_translation = temp_translation.concat($(node).find('tran').attr('chosen'));
             node.parentNode.removeChild(node);
         }
+        return temp_translation;
     }
 
 };
