@@ -12013,11 +12013,11 @@ var SubscriptionList = function () {
     }, {
         key: '_onFeedFollowed',
         value: function _onFeedFollowed(feed, reply) {
-            if (data === "OK") {
+            if (reply === "OK") {
                 this._changed();
             } else {
                 this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
-                console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
+                console.log("Could not follow '" + feed.title + "'. Server reply: \n" + reply);
             }
         }
 
@@ -12050,11 +12050,11 @@ var SubscriptionList = function () {
     }, {
         key: '_onFeedUnfollowed',
         value: function _onFeedUnfollowed(feed, reply) {
-            if (data === "OK") {
+            if (reply === "OK") {
                 this._changed();
             } else {
                 this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
-                console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
+                console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + reply);
             }
         }
 
