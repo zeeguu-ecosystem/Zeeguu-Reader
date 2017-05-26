@@ -34,7 +34,6 @@ def make_article(url, language):
     article.parse()
 
     title   = wrap_zeeguu_words(article.title)
-    print(article.authors)
     authors = ', '.join(article.authors)
     content = article.text
     content = add_paragraphs(content)
@@ -45,7 +44,7 @@ def make_article(url, language):
     soup.find('div', {'id': 'articleURL'}).find('a')['href'] = url
     soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'))
     if authors:
-        soup.find('p',   {'id': 'articleAuthor'}).append(Soup(authors, 'html.parser'))
+        soup.find('p',   {'id': 'articleAuthor'}).append(Soup('By: ' + authors, 'html.parser'))
     soup.find('p',   {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
 
     return str(soup)
