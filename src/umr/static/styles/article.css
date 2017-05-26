@@ -72,11 +72,6 @@ zeeguu tran[chosen]:after
   font-size: 14px;
 }
 
-#articleURL
-{
-  text-align: center;
-}
-
 .mdl-textfield__input
 {
   color: grey;
@@ -111,6 +106,19 @@ h1, h2, h3, h4
 h5,h6
 {
   font-size: 0.7em;
+}
+
+#articleAuthor
+{
+  font-size: 1em;
+  text-align: right;
+  color: grey;
+}
+
+#articleURL
+{
+  text-align: center;
+  font-size: 1em;
 }
 
 a
