@@ -96,11 +96,11 @@ export default class SubscriptionList {
      * @param {string} reply - Reply from the server.
      */
     _onFeedFollowed(feed, reply) {
-        if (data === "OK") {
+        if (reply === "OK") {
             this._changed();
         } else {
             this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
-            console.log("Could not follow '" + feed.title + "'. Server reply: \n" + data);
+            console.log("Could not follow '" + feed.title + "'. Server reply: \n" + reply);
         }
     }
 
@@ -123,11 +123,11 @@ export default class SubscriptionList {
      * @param {string} reply - Server reply.
      */
     _onFeedUnfollowed(feed, reply) {
-        if (data === "OK") {
+        if (reply === "OK") {
             this._changed();
         } else {
             this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
-            console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + data);
+            console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + reply);
         }
     }
 
