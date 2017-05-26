@@ -44,7 +44,7 @@ zeeguu tran[chosen]:after
 
 #toggle_translate
 {
-  right: -1em;
+  right: -0.5em;
 }
 
 #altermenu
@@ -57,7 +57,6 @@ zeeguu tran[chosen]:after
 	background: #eaf2ff;
 	border-radius: 2px;
 	box-shadow: 0px -14px 39px 0px rgba(0, 0, 0, 0.2);
-  width: 25%;
 }
 
 #altermenu .mdl-button

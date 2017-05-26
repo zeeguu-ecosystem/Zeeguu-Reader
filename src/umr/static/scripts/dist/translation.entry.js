@@ -10288,7 +10288,7 @@ var AlterMenu = function () {
             (0, _jquery2.default)(zeeguuTag).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).css({
                 position: "absolute",
-                maxWidth: "80%",
+                maxWidth: "35%",
                 display: "inline-block",
                 left: position.left + (tagWidth - menuWidth) / 2 + "px",
                 top: position.top + tagHeight + topScroll + "px"

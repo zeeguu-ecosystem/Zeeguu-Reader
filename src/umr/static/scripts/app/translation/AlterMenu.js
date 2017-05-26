@@ -93,7 +93,7 @@ export default class AlterMenu {
         $(zeeguuTag).append($(config.HTML_ID_ALTERMENU));
         $(config.HTML_ID_ALTERMENU).css({
             position: "absolute",
-            maxWidth: "80%",
+            maxWidth: "35%",
             display: "inline-block",
             left: position.left + (tagWidth - menuWidth) / 2 + "px",
             top: position.top + tagHeight + topScroll + "px"
