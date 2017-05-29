@@ -10705,7 +10705,7 @@ var speaker = new _Speaker2.default();
  * as the chosen translation. */
 (0, _jquery2.default)(document).keypress(function (event) {
     var target = (0, _jquery2.default)(event.target);
-    if (target.is('input') && event.which == _config2.default.ENTER_KEY) {
+    if (target.is('input') && event.which === _config2.default.ENTER_KEY) {
         var trans = target.parent().parent();
         if (target.val() !== '') {
             trans.attr(_config2.default.HTML_ATTRIBUTE_CHOSEN, target.val());
@@ -10745,15 +10745,17 @@ function attachZeeguuListeners() {
     (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
         if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).hasClass('mdl-button--disabled')) return;
         if (alterMenu.isOpen()) return;
+
         var target = (0, _jquery2.default)(event.target);
-        if (target.is(_config2.default.HTML_ZEEGUUTAG)) {
-            if (!translator.isTranslated(this)) {
-                translator.translate(this);
-            }
+        if (target.is(_config2.default.HTML_ZEEGUUTAG) && !translator.isTranslated(this)) {
+            // A non-translated word is clicked, so we translate it.
+            translator.translate(this);
         } else if (target.is(_config2.default.HTML_ORIGINAL)) {
-            speaker.speak((0, _jquery2.default)(this).find(_config2.default.HTML_ORIGINAL).text(), FROM_LANGUAGE);
+            // Original text is clicked, so we pronounce it using the speaker.
+            speaker.speak((0, _jquery2.default)(target).text(), FROM_LANGUAGE);
         } else if (target.is(_config2.default.HTML_TRANSLATED)) {
-            alterMenu.constructAndOpen(this.children[1]);
+            // Translated text is clicked, so we open the alterMenu to allow for suggestions.
+            alterMenu.constructAndOpen(target);
         }
     });
 }
