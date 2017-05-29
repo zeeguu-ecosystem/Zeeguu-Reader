@@ -9936,7 +9936,7 @@ exports.default = {
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
-    HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
+    HTML_ID_TOGGLECOPY: '#toggle_copy',
     HTML_ID_TOGGLEUNDO: '#toggle_undo',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
@@ -10197,25 +10197,25 @@ var AlterMenu = function () {
 
     /**
      * Create and open the alternative translation menu. 
-     * @param {Element} htmlTag - Document element for which to present the alter menu.
+     * @param {jQuery} $tran - jQuery element encompasing the <tran> tag, 
+     * for which to present the alter menu.
      */
 
 
     _createClass(AlterMenu, [{
-        key: 'constructAndOpen',
-        value: function constructAndOpen(htmlTag) {
+        key: 'build',
+        value: function build($tran) {
             // Check how many alternatives there are, if less than 2: abort.
-            var transCount = parseInt(htmlTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT));
+            var transCount = parseInt($tran.attr(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT));
             if (transCount < 2) {
                 this.notifier.notify(_config2.default.TEXT_NO_ALTERNATIVES);
                 return;
             }
-            this.construct(htmlTag, transCount);
-            this._place(htmlTag);
+            this.construct($tran, transCount);
+            this._place($tran);
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).hide();
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideDown(function () {
-                this.menuOpen = true;
-            }.bind(this));
+
+            this.open();
         }
     }, {
         key: 'construct',
@@ -10224,32 +10224,33 @@ var AlterMenu = function () {
         /**
          * Add buttons with click listeners that replace the translation and
          * append these to the alter menu. 
-         * @param {Element} zeeguuTag - Tag from which the alternative transaltions are retrieved.
+         * @param {jQuery} $tran - Reference tag from which the alternative translations are retrieved.
          * @param {int} transCount - Number of present alternative translations. 
          */
-        value: function construct(zeeguuTag, transCount) {
+        value: function construct($tran, transCount) {
+
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).empty();
             for (var i = 0; i < transCount; i++) {
                 var button = document.createElement('button');
-                var alternative = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i);
+                var alternative = $tran.attr(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i);
                 button.textContent = alternative;
                 (0, _jquery2.default)(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
                 (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(button));
-                (0, _jquery2.default)(button).click({ zeeguuTag: zeeguuTag, alternative: i }, this._swapPrimaryTranslation);
+                (0, _jquery2.default)(button).click({ $tran: $tran, alternative: i }, this._swapPrimaryTranslation);
             }
-            this._appendInputField(zeeguuTag);
+            this._appendInputField($tran);
         }
 
         /** 
          * Appends the input field for user alternative, to the alter menu.
-         * @param {Element} zeeguuTag - Tag from which the suggested transaltion is retrieved.
+         * @param {jQuery} $tran - Reference tag from which the suggested translation is retrieved.
          */
 
     }, {
         key: '_appendInputField',
-        value: function _appendInputField(zeeguuTag) {
+        value: function _appendInputField($tran) {
             var input_field = document.createElement('input');
-            var suggestion = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION);
+            var suggestion = $tran.attr(_config2.default.HTML_ATTRIBUTE_SUGGESTION);
             var value = suggestion === '' ? _config2.default.TEXT_SUGGESTION : suggestion;
             (0, _jquery2.default)(input_field).addClass('mdl-textfield__input');
             (0, _jquery2.default)(input_field).attr('type', 'text');
@@ -10266,26 +10267,26 @@ var AlterMenu = function () {
     }, {
         key: '_swapPrimaryTranslation',
         value: function _swapPrimaryTranslation(selectedAlternative) {
-            var zeeguuTag = selectedAlternative.data.zeeguuTag;
+            var $tran = selectedAlternative.data.$tran;
             var alternative = selectedAlternative.data.alternative;
-            var newText = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative);
-            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, newText);
+            var newText = $tran.attr(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative);
+            $tran.attr(_config2.default.HTML_ATTRIBUTE_CHOSEN, newText);
         }
 
         /**
          * Place the alter menu below the supplied zeeguuTag.
-         * @param {Element} zeeguuTag - Reference tag for the placement of the alter menu.
+         * @param {jQuery} $tran - Reference tag for the placement of the alter menu.
          */
 
     }, {
         key: '_place',
-        value: function _place(zeeguuTag) {
-            var position = (0, _jquery2.default)(zeeguuTag).position();
-            var tagHeight = (0, _jquery2.default)(zeeguuTag).outerHeight();
-            var tagWidth = (0, _jquery2.default)(zeeguuTag).outerWidth();
+        value: function _place($tran) {
+            var position = $tran.position();
+            var tagHeight = $tran.outerHeight();
+            var tagWidth = $tran.outerWidth();
             var menuWidth = (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).outerWidth();
             var topScroll = (0, _jquery2.default)(".mdl-layout__content").scrollTop();
-            (0, _jquery2.default)(zeeguuTag).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
+            $tran.append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).css({
                 position: "absolute",
                 maxWidth: "35%",
@@ -10309,12 +10310,24 @@ var AlterMenu = function () {
 
 
         /**
-         *  Hide the alter menu. 
+         *  Hide (close) the alter menu. 
          */
         value: function close() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideUp(function () {
                 (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENUCONTAINER).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
                 this.menuOpen = false;
+            }.bind(this));
+        }
+    }, {
+        key: 'open',
+
+
+        /**
+         *  Open the alter menu. 
+         */
+        value: function open() {
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideDown(function () {
+                this.menuOpen = true;
             }.bind(this));
         }
     }, {
@@ -10672,18 +10685,21 @@ var speaker = new _Speaker2.default();
 /* When the document has finished loading,
  * bind all necessary listeners. */
 (0, _jquery2.default)(document).ready(function () {
-    disableSelection();
+    // Disable selection by default.
+    disableToggleCopy();
     attachZeeguuListeners();
 
     /* When the copy toggle is switched on, 
      * copying is enabled and translation gets disabled and vice-versa. */
-    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).click(function () {
-        if ((0, _jquery2.default)(this).hasClass('mdl-button--disabled')) enableSelection();else disableSelection();
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).click(function () {
+        // Selection is disabled -> enable it.
+        if ((0, _jquery2.default)(this).hasClass('mdl-button--disabled')) enableToggleCopy();else disableToggleCopy();
     });
 
     /* When the undo is clicked, content page is replaced
      * with previous one in the stack and listeners are re-attached. */
     (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLEUNDO).click(function () {
+        if (alterMenu.isOpen()) alterMenu.close();
         (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).off();
         translator.undoTranslate();
         attachZeeguuListeners();
@@ -10691,7 +10707,8 @@ var speaker = new _Speaker2.default();
 });
 
 /* Clicking anywhere in the document when the 
- * alter menu is open, will close it.*/
+ * alter menu is open, except for the input field,
+ * will close the alter menu.*/
 (0, _jquery2.default)(document).click(function (event) {
     var target = (0, _jquery2.default)(event.target);
     if (!target.is('input') && alterMenu.isOpen()) {
@@ -10722,19 +10739,23 @@ var speaker = new _Speaker2.default();
 });
 
 /* Disable selection. */
-function disableSelection() {
+function disableToggleCopy() {
     (0, _jquery2.default)("p").each(function () {
         (0, _jquery2.default)(this).addClass(_config2.default.CLASS_NOSELECT);
     });
-    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).addClass('mdl-button--disabled');
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
 }
 
 /* Enable selection. */
-function enableSelection() {
+function enableToggleCopy() {
     (0, _jquery2.default)("p").each(function () {
         (0, _jquery2.default)(this).removeClass(_config2.default.CLASS_NOSELECT);
     });
-    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).removeClass('mdl-button--disabled');
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
+}
+
+function isToggledCopy() {
+    return !(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).hasClass('mdl-button--disabled');
 }
 
 /* Attach Zeeguu tag click listener. */
@@ -10743,23 +10764,23 @@ function attachZeeguuListeners() {
      * either try to translate it, speak it, or open an alternative
      * translation window.  */
     (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
-        if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).hasClass('mdl-button--disabled')) return;
+        if (isToggledCopy()) return;
         if (alterMenu.isOpen()) return;
 
-        var target = (0, _jquery2.default)(event.target);
-        if (target.is(_config2.default.HTML_ZEEGUUTAG) && !translator.isTranslated(this)) {
+        var $target = (0, _jquery2.default)(event.target);
+        if ($target.is(_config2.default.HTML_ZEEGUUTAG) && !translator.isTranslated(this)) {
             // A non-translated word is clicked, so we translate it.
             translator.translate(this);
-        } else if (target.is(_config2.default.HTML_ORIGINAL)) {
+        } else if ($target.is(_config2.default.HTML_ORIGINAL)) {
             // Original text is clicked, so we pronounce it using the speaker.
-            speaker.speak((0, _jquery2.default)(target).text(), FROM_LANGUAGE);
-        } else if (target.is(_config2.default.HTML_TRANSLATED)) {
+            speaker.speak($target.text(), FROM_LANGUAGE);
+        } else if ($target.is(_config2.default.HTML_TRANSLATED)) {
             // Translated text is clicked, so we open the alterMenu to allow for suggestions.
-            alterMenu.constructAndOpen(target);
+            alterMenu.build($target);
         }
     });
 }
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=translation.entry.js.map
+//# sourceMappingURL=translation.js.map

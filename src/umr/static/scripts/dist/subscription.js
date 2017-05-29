@@ -9936,7 +9936,7 @@ exports.default = {
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
-    HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
+    HTML_ID_TOGGLECOPY: '#toggle_copy',
     HTML_ID_TOGGLEUNDO: '#toggle_undo',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
@@ -12339,4 +12339,4 @@ module.exports = function() {
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=subscription.entry.js.map
+//# sourceMappingURL=subscription.js.map
