@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9936,7 +9936,8 @@ exports.default = {
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
-    HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
+    HTML_ID_TOGGLECOPY: '#toggle_copy',
+    HTML_ID_TOGGLEUNDO: '#toggle_undo',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
     HTML_ID_USER_ALTERNATIVE: '#userAlternative',
@@ -9947,12 +9948,15 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_TEMPLATE: '#feedAddable-template',
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
+    HTML_CLASS_ARTICLELINK: '.articleLinkEntry',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    HTML_CLASS_PAGECONTENT: '.page-content',
+    HTML_CLASS_TOUR: '.tour',
+    HTML_CLASS_WIGGLE: 'wiggle',
     CLASS_LOADING: 'loading',
     CLASS_NOSELECT: 'noselect',
-    HTML_CLASS_TOUR: '.tour',
-    HTML_CLASS_WIGGLE: 'wiggle'
+    EVENT_SUBSCRIPTION: 'subscription-list-loaded'
 };
 
 /***/ }),
@@ -10085,395 +10089,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _config = __webpack_require__(1);
-
-var _config2 = _interopRequireDefault(_config);
-
-var _Notifier = __webpack_require__(16);
-
-var _Notifier2 = _interopRequireDefault(_Notifier);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Class that allows for choosing alternative zeeguu translations from
- * a drop-down alter menu.
- */
-var AlterMenu = function () {
-    /**
-     * Initialize the notifier field and the control field for the state of the
-     * alter menu (i.e. open or closed).
-     */
-    function AlterMenu() {
-        _classCallCheck(this, AlterMenu);
-
-        this.menuOpen = false;
-        this.notifier = new _Notifier2.default();
-    }
-
-    /**
-     * Create and open the alternative translation menu. 
-     * @param {Element} htmlTag - Document element for which to present the alter menu.
-     */
-
-
-    _createClass(AlterMenu, [{
-        key: 'constructAndOpen',
-        value: function constructAndOpen(htmlTag) {
-            // Check how many alternatives there are, if less than 2: abort.
-            var transCount = parseInt(htmlTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT));
-            if (transCount < 2) {
-                this.notifier.notify(_config2.default.TEXT_NO_ALTERNATIVES);
-                return;
-            }
-            this.construct(htmlTag, transCount);
-            this._place(htmlTag);
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).hide();
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideDown(function () {
-                this.menuOpen = true;
-            }.bind(this));
-        }
-    }, {
-        key: 'construct',
-
-
-        /**
-         * Add buttons with click listeners that replace the translation and
-         * append these to the alter menu. 
-         * @param {Element} zeeguuTag - Tag from which the alternative transaltions are retrieved.
-         * @param {int} transCount - Number of present alternative translations. 
-         */
-        value: function construct(zeeguuTag, transCount) {
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).empty();
-            for (var i = 0; i < transCount; i++) {
-                var button = document.createElement('button');
-                var alternative = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i);
-                button.textContent = alternative;
-                (0, _jquery2.default)(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
-                (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(button));
-                (0, _jquery2.default)(button).click({ zeeguuTag: zeeguuTag, alternative: i }, this._swapPrimaryTranslation);
-            }
-            this._appendInputField(zeeguuTag);
-        }
-
-        /** 
-         * Appends the input field for user alternative, to the alter menu.
-         * @param {Element} zeeguuTag - Tag from which the suggested transaltion is retrieved.
-         */
-
-    }, {
-        key: '_appendInputField',
-        value: function _appendInputField(zeeguuTag) {
-            var input_field = document.createElement('input');
-            var suggestion = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION);
-            var value = suggestion === '' ? _config2.default.TEXT_SUGGESTION : suggestion;
-            (0, _jquery2.default)(input_field).addClass('mdl-textfield__input');
-            (0, _jquery2.default)(input_field).attr('type', 'text');
-            (0, _jquery2.default)(input_field).attr('id', _config2.default.HTML_ID_USER_ALTERNATIVE);
-            (0, _jquery2.default)(input_field).attr('value', value);
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(input_field));
-        }
-
-        /**
-         * Swap the currently set translation (config.HTML_ATTRIBUTE_TRANSLATION 0) with the selected alternative.
-         * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
-         */
-
-    }, {
-        key: '_swapPrimaryTranslation',
-        value: function _swapPrimaryTranslation(selectedAlternative) {
-            var zeeguuTag = selectedAlternative.data.zeeguuTag;
-            var alternative = selectedAlternative.data.alternative;
-            var newText = zeeguuTag.getAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative);
-            zeeguuTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, newText);
-        }
-
-        /**
-         * Place the alter menu below the supplied zeeguuTag.
-         * @param {Element} zeeguuTag - Reference tag for the placement of the alter menu.
-         */
-
-    }, {
-        key: '_place',
-        value: function _place(zeeguuTag) {
-            var position = (0, _jquery2.default)(zeeguuTag).position();
-            var tagHeight = (0, _jquery2.default)(zeeguuTag).outerHeight();
-            var tagWidth = (0, _jquery2.default)(zeeguuTag).outerWidth();
-            var menuWidth = (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).outerWidth();
-            var topScroll = (0, _jquery2.default)(".mdl-layout__content").scrollTop();
-            (0, _jquery2.default)(zeeguuTag).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).css({
-                position: "absolute",
-                maxWidth: "80%",
-                display: "inline-block",
-                left: position.left + (tagWidth - menuWidth) / 2 + "px",
-                top: position.top + tagHeight + topScroll + "px"
-            });
-        }
-
-        /**
-         * Update the position of the alter menu.
-         */
-
-    }, {
-        key: 'reposition',
-        value: function reposition() {
-            this._place((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).parent());
-        }
-    }, {
-        key: 'close',
-
-
-        /**
-         *  Hide the alter menu. 
-         */
-        value: function close() {
-            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideUp(function () {
-                (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENUCONTAINER).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
-                this.menuOpen = false;
-            }.bind(this));
-        }
-    }, {
-        key: 'isOpen',
-
-
-        /**
-         * Check whether the alter menu is an open state.
-         * @return {boolean} - True only if the alter menu is open.
-         */
-        value: function isOpen() {
-            return this.menuOpen;
-        }
-    }]);
-
-    return AlterMenu;
-}();
-
-exports.default = AlterMenu;
-;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/* Class that allows text to speech for supplied text and language. */
-var Speaker = function () {
-    function Speaker() {
-        _classCallCheck(this, Speaker);
-    }
-
-    _createClass(Speaker, [{
-        key: "speak",
-
-        /**
-         * Performs the speech synthesis of the supplied parameters.
-         * @param {string} text - Text to be transformed to speech.
-         * @param {string} language - Language code to be used for synthesis. 
-         */
-        value: function speak(text, language) {
-            var utterance = new SpeechSynthesisUtterance();
-            utterance.lang = language;
-            utterance.text = text;
-            speechSynthesis.speak(utterance);
-        }
-    }]);
-
-    return Speaker;
-}();
-
-exports.default = Speaker;
-;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(0);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _zeeguuRequests = __webpack_require__(2);
-
-var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
-
-var _config = __webpack_require__(1);
-
-var _config2 = _interopRequireDefault(_config);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- *  Class that allows for translating zeeguu tags. 
- */
-var Translator = function () {
-    function Translator() {
-        _classCallCheck(this, Translator);
-    }
-
-    _createClass(Translator, [{
-        key: 'translate',
-
-        /**
-         * Merge the surrounding translated zeeguuTags
-         * and insert translations for the tag's content by calling Zeeguu.
-         * Uses {@link ZeeguuRequests}.
-         * @param {Element} zeeguuTag - Document element containing the content to be translated. 
-         */
-        value: function translate(zeeguuTag) {
-            var _this = this;
-
-            this._mergeZeeguu(zeeguuTag);
-
-            var text = zeeguuTag.textContent.trim();
-            var context = this._getContext(zeeguuTag);
-            var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).text();
-            var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
-
-            (0, _jquery2.default)(zeeguuTag).empty(); // clear tag up for insertion
-            var orig = document.createElement(_config2.default.HTML_ORIGINAL);
-            var tran = document.createElement(_config2.default.HTML_TRANSLATED);
-            (0, _jquery2.default)(orig).text(text);
-            (0, _jquery2.default)(orig).addClass(_config2.default.CLASS_LOADING);
-            (0, _jquery2.default)(zeeguuTag).append(orig, tran);
-
-            var callback = function callback(data) {
-                return _this._setTranslations(orig, tran, data);
-            };
-            // Launch Zeeguu request to fill translation options.
-            _zeeguuRequests2.default.post(_config2.default.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + _config2.default.TO_LANGUAGE, { word: text, context: context, url: url, title: title }, callback);
-        }
-
-        /**
-         * Checks whether given zeeguuTag is already translated.
-         * @param {Element} zeeguuTag - Document element that wraps translatable content. 
-         * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
-         */
-
-    }, {
-        key: 'isTranslated',
-        value: function isTranslated(zeeguuTag) {
-            return (0, _jquery2.default)(zeeguuTag).has(_config2.default.HTML_TRANSLATED).length;
-        }
-
-        /**
-         * Handle the Zeeguu request returned values. Append the returned translations.
-         * @param {Element} htmlTag - Document element processed for translation.
-         * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
-         */
-
-    }, {
-        key: '_setTranslations',
-        value: function _setTranslations(orig, htmlTag, translations) {
-            translations = translations.translations;
-            var transCount = Math.min(translations.length, 3);
-            htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
-            for (var i = 0; i < transCount; i++) {
-                htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            }htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
-            htmlTag.setAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION, '');
-            (0, _jquery2.default)(orig).removeClass(_config2.default.CLASS_LOADING);
-        }
-
-        /**
-         * Returns surrounding textual context for a given zeeguuTag by extracting the text from 
-         * its wrapping parent element.
-         * @param {Element} zeeguuTag - Document element for which to extract textual context
-         * @return {string} - Textual context.
-         */
-
-    }, {
-        key: '_getContext',
-        value: function _getContext(zeeguuTag) {
-            return zeeguuTag.parentElement.textContent;
-        }
-
-        /**
-         * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-         * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
-         */
-
-    }, {
-        key: '_mergeZeeguu',
-        value: function _mergeZeeguu(zeeguuTag) {
-            var spaces = '';
-            var node = zeeguuTag.previousSibling;
-            while (node && node.textContent == ' ') {
-                node = node.previousSibling;
-                spaces += ' ';
-            }
-            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
-                zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
-                node.parentNode.removeChild(node);
-            }
-            spaces = '';
-            node = zeeguuTag.nextSibling;
-            while (node && node.textContent == ' ') {
-                node = node.nextSibling;
-                spaces += ' ';
-            }
-            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
-                zeeguuTag.textContent += spaces + node.textContent;
-                node.parentNode.removeChild(node);
-            }
-        }
-    }]);
-
-    return Translator;
-}();
-
-exports.default = Translator;
-;
-
-/***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10517,7 +10133,7 @@ var Notifier = function () {
          */
         value: function notify(message) {
             var snackbar = document.querySelector('.mdl-js-snackbar');
-            if (this.lastMessage == message && (0, _jquery2.default)(snackbar).hasClass('mdl-snackbar--active')) return;
+            if (this.lastMessage === message && (0, _jquery2.default)(snackbar).hasClass('mdl-snackbar--active')) return;
             snackbar.MaterialSnackbar.showSnackbar({ message: message });
             this.lastMessage = message;
         }
@@ -10530,7 +10146,509 @@ exports.default = Notifier;
 ;
 
 /***/ }),
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _Notifier = __webpack_require__(5);
+
+var _Notifier2 = _interopRequireDefault(_Notifier);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Class that allows for choosing alternative zeeguu translations from
+ * a drop-down alter menu.
+ */
+var AlterMenu = function () {
+    /**
+     * Initialize the notifier field and the control field for the state of the
+     * alter menu (i.e. open or closed).
+     */
+    function AlterMenu() {
+        _classCallCheck(this, AlterMenu);
+
+        this.menuOpen = false;
+        this.notifier = new _Notifier2.default();
+    }
+
+    /**
+     * Create and open the alternative translation menu. 
+     * @param {jQuery} $tran - jQuery element encompasing the <tran> tag, 
+     * for which to present the alter menu.
+     */
+
+
+    _createClass(AlterMenu, [{
+        key: 'build',
+        value: function build($tran) {
+            // Check how many alternatives there are, if less than 2: abort.
+            var transCount = parseInt($tran.attr(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT));
+            if (transCount < 2) {
+                this.notifier.notify(_config2.default.TEXT_NO_ALTERNATIVES);
+                return;
+            }
+            this.construct($tran, transCount);
+            this._place($tran);
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).hide();
+
+            this.open();
+        }
+    }, {
+        key: 'construct',
+
+
+        /**
+         * Add buttons with click listeners that replace the translation and
+         * append these to the alter menu. 
+         * @param {jQuery} $tran - Reference tag from which the alternative translations are retrieved.
+         * @param {int} transCount - Number of present alternative translations. 
+         */
+        value: function construct($tran, transCount) {
+
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).empty();
+            for (var i = 0; i < transCount; i++) {
+                var button = document.createElement('button');
+                var alternative = $tran.attr(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i);
+                button.textContent = alternative;
+                (0, _jquery2.default)(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
+                (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(button));
+                (0, _jquery2.default)(button).click({ $tran: $tran, alternative: i }, this._swapPrimaryTranslation);
+            }
+            this._appendInputField($tran);
+        }
+
+        /** 
+         * Appends the input field for user alternative, to the alter menu.
+         * @param {jQuery} $tran - Reference tag from which the suggested translation is retrieved.
+         */
+
+    }, {
+        key: '_appendInputField',
+        value: function _appendInputField($tran) {
+            var input_field = document.createElement('input');
+            var suggestion = $tran.attr(_config2.default.HTML_ATTRIBUTE_SUGGESTION);
+            var value = suggestion === '' ? _config2.default.TEXT_SUGGESTION : suggestion;
+            (0, _jquery2.default)(input_field).addClass('mdl-textfield__input');
+            (0, _jquery2.default)(input_field).attr('type', 'text');
+            (0, _jquery2.default)(input_field).attr('id', _config2.default.HTML_ID_USER_ALTERNATIVE);
+            (0, _jquery2.default)(input_field).attr('value', value);
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).append((0, _jquery2.default)(input_field));
+        }
+
+        /**
+         * Swap the currently set translation (config.HTML_ATTRIBUTE_TRANSLATION 0) with the selected alternative.
+         * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
+         */
+
+    }, {
+        key: '_swapPrimaryTranslation',
+        value: function _swapPrimaryTranslation(selectedAlternative) {
+            var $tran = selectedAlternative.data.$tran;
+            var alternative = selectedAlternative.data.alternative;
+            var newText = $tran.attr(_config2.default.HTML_ATTRIBUTE_TRANSLATION + alternative);
+            $tran.attr(_config2.default.HTML_ATTRIBUTE_CHOSEN, newText);
+        }
+
+        /**
+         * Place the alter menu below the supplied zeeguuTag.
+         * @param {jQuery} $tran - Reference tag for the placement of the alter menu.
+         */
+
+    }, {
+        key: '_place',
+        value: function _place($tran) {
+            var position = $tran.position();
+            var tagHeight = $tran.outerHeight();
+            var tagWidth = $tran.outerWidth();
+            var menuWidth = (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).outerWidth();
+            var topScroll = (0, _jquery2.default)(".mdl-layout__content").scrollTop();
+            $tran.append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).css({
+                position: "absolute",
+                maxWidth: "35%",
+                display: "inline-block",
+                left: position.left + (tagWidth - menuWidth) / 2 + "px",
+                top: position.top + tagHeight + topScroll + "px"
+            });
+        }
+
+        /**
+         * Update the position of the alter menu.
+         */
+
+    }, {
+        key: 'reposition',
+        value: function reposition() {
+            this._place((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).parent());
+        }
+    }, {
+        key: 'close',
+
+
+        /**
+         *  Hide (close) the alter menu. 
+         */
+        value: function close() {
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideUp(function () {
+                (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENUCONTAINER).append((0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU));
+                this.menuOpen = false;
+            }.bind(this));
+        }
+    }, {
+        key: 'open',
+
+
+        /**
+         *  Open the alter menu. 
+         */
+        value: function open() {
+            (0, _jquery2.default)(_config2.default.HTML_ID_ALTERMENU).slideDown(function () {
+                this.menuOpen = true;
+            }.bind(this));
+        }
+    }, {
+        key: 'isOpen',
+
+
+        /**
+         * Check whether the alter menu is an open state.
+         * @return {boolean} - True only if the alter menu is open.
+         */
+        value: function isOpen() {
+            return this.menuOpen;
+        }
+    }]);
+
+    return AlterMenu;
+}();
+
+exports.default = AlterMenu;
+;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/* Class that allows text to speech for supplied text and language. */
+var Speaker = function () {
+    function Speaker() {
+        _classCallCheck(this, Speaker);
+    }
+
+    _createClass(Speaker, [{
+        key: "speak",
+
+        /**
+         * Performs the speech synthesis of the supplied parameters.
+         * @param {string} text - Text to be transformed to speech.
+         * @param {string} language - Language code to be used for synthesis. 
+         */
+        value: function speak(text, language) {
+            var utterance = new SpeechSynthesisUtterance();
+            utterance.lang = language;
+            utterance.text = text;
+            speechSynthesis.speak(utterance);
+        }
+    }]);
+
+    return Speaker;
+}();
+
+exports.default = Speaker;
+;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _zeeguuRequests = __webpack_require__(2);
+
+var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
+
+var _UndoStack = __webpack_require__(17);
+
+var _UndoStack2 = _interopRequireDefault(_UndoStack);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ *  Class that allows for translating zeeguu tags. 
+ */
+var Translator = function () {
+
+    /**
+     * Initializes the undo manager.
+     */
+    function Translator() {
+        _classCallCheck(this, Translator);
+
+        this.undoStack = new _UndoStack2.default();
+    }
+
+    /**
+     * Merge the surrounding translated zeeguuTags
+     * and insert translations for the tag's content by calling Zeeguu.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Element} zeeguuTag - Document element containing the content to be translated. 
+     */
+
+
+    _createClass(Translator, [{
+        key: 'translate',
+        value: function translate(zeeguuTag) {
+            var _this = this;
+
+            this.undoStack.pushState();
+            var temp_translation = this._mergeZeeguu(zeeguuTag);
+
+            var text = zeeguuTag.textContent.trim();
+            var context = this._getContext(zeeguuTag);
+            var url = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_URL).find('a').attr('href');
+            var title = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLE_TITLE).text();
+
+            var orig = document.createElement(_config2.default.HTML_ORIGINAL);
+            var tran = document.createElement(_config2.default.HTML_TRANSLATED);
+
+            (0, _jquery2.default)(orig).text(text);
+            (0, _jquery2.default)(zeeguuTag).addClass(_config2.default.CLASS_LOADING);
+            (0, _jquery2.default)(tran).attr('chosen', temp_translation);
+            (0, _jquery2.default)(zeeguuTag).empty().append(orig, tran);
+
+            var callback = function callback(data) {
+                return _this._setTranslations(zeeguuTag, data);
+            };
+            // Launch Zeeguu request to fill translation options.
+            _zeeguuRequests2.default.post(_config2.default.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + _config2.default.TO_LANGUAGE, { word: text, context: context, url: url, title: title }, callback);
+        }
+
+        /**
+         * Resets to previous state (i.e. removes translation from last translated word).
+         */
+
+    }, {
+        key: 'undoTranslate',
+        value: function undoTranslate() {
+            this.undoStack.undoState();
+        }
+
+        /**
+         * Checks whether given zeeguuTag is already translated.
+         * @param {Element} zeeguuTag - Document element that wraps translatable content. 
+         * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
+         */
+
+    }, {
+        key: 'isTranslated',
+        value: function isTranslated(zeeguuTag) {
+            return (0, _jquery2.default)(zeeguuTag).has(_config2.default.HTML_TRANSLATED).length;
+        }
+
+        /**
+         * Handle the Zeeguu request returned values. Append the returned translations.
+         * @param {Element} zeeguuTag - Document element containing the original text and the translations.
+         * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
+         */
+
+    }, {
+        key: '_setTranslations',
+        value: function _setTranslations(zeeguuTag, translations) {
+            var tran = zeeguuTag.children[1];
+            translations = translations.translations;
+            var transCount = Math.min(translations.length, 3);
+            tran.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
+            for (var i = 0; i < transCount; i++) {
+                tran.setAttribute(_config2.default.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+            }tran.setAttribute(_config2.default.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
+            tran.setAttribute(_config2.default.HTML_ATTRIBUTE_SUGGESTION, '');
+            (0, _jquery2.default)(zeeguuTag).removeClass(_config2.default.CLASS_LOADING);
+        }
+
+        /**
+         * Returns surrounding textual context for a given zeeguuTag by extracting the text from 
+         * its wrapping parent element.
+         * @param {Element} zeeguuTag - Document element for which to extract textual context
+         * @return {string} - Textual context.
+         */
+
+    }, {
+        key: '_getContext',
+        value: function _getContext(zeeguuTag) {
+            return zeeguuTag.parentElement.textContent;
+        }
+
+        /**
+         * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
+         * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+         */
+
+    }, {
+        key: '_mergeZeeguu',
+        value: function _mergeZeeguu(zeeguuTag) {
+            var temp_translation = '';
+            var spaces = '';
+            var node = zeeguuTag.previousSibling;
+            while (node && node.textContent == ' ') {
+                node = node.previousSibling;
+                spaces += ' ';
+            }
+            var paddingLength = zeeguuTag.textContent.length; // used to approximate the size of the to be translated word
+
+            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
+                zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
+                temp_translation = temp_translation.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
+                node.parentNode.removeChild(node);
+            }
+            spaces = '';
+            temp_translation = temp_translation.concat(' ', '..'.repeat(paddingLength), ' ');
+            node = zeeguuTag.nextSibling;
+            while (node && node.textContent == ' ') {
+                node = node.nextSibling;
+                spaces += ' ';
+            }
+            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
+                zeeguuTag.textContent += spaces + node.textContent;
+                temp_translation = temp_translation.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
+                node.parentNode.removeChild(node);
+            }
+            return temp_translation;
+        }
+    }]);
+
+    return Translator;
+}();
+
+exports.default = Translator;
+;
+
+/***/ }),
+/* 14 */,
+/* 15 */,
+/* 16 */,
 /* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Class that allows for saving the state of the page content after each
+ * translation and restore upon request.
+ */
+var UndoStack = function () {
+    /**
+     * Initialize the stack for saving the states.
+     */
+    function UndoStack() {
+        _classCallCheck(this, UndoStack);
+
+        this.stack = [];
+    }
+
+    /**
+     * Push state onto the stack.
+     */
+
+
+    _createClass(UndoStack, [{
+        key: 'pushState',
+        value: function pushState() {
+            var $saved = (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).clone();
+            this.stack.push($saved);
+        }
+
+        /** Revert to previous state stored on the stack. */
+
+    }, {
+        key: 'undoState',
+        value: function undoState() {
+            var $saved = this.stack.pop();
+            if ($saved) {
+                (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).remove();
+                (0, _jquery2.default)('.mdl-layout__content').prepend($saved);
+            }
+        }
+    }]);
+
+    return UndoStack;
+}();
+
+exports.default = UndoStack;
+;
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10544,15 +10662,15 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Translator = __webpack_require__(12);
+var _Translator = __webpack_require__(13);
 
 var _Translator2 = _interopRequireDefault(_Translator);
 
-var _AlterMenu = __webpack_require__(10);
+var _AlterMenu = __webpack_require__(11);
 
 var _AlterMenu2 = _interopRequireDefault(_AlterMenu);
 
-var _Speaker = __webpack_require__(11);
+var _Speaker = __webpack_require__(12);
 
 var _Speaker2 = _interopRequireDefault(_Speaker);
 
@@ -10567,37 +10685,33 @@ var speaker = new _Speaker2.default();
 /* When the document has finished loading,
  * bind all necessary listeners. */
 (0, _jquery2.default)(document).ready(function () {
-    disableSelection();
+    // Disable selection by default.
+    disableToggleCopy();
+    attachZeeguuListeners();
 
-    /* When the translate toggle is changed, we
-     * make sure that we disable or enable hyperlinks
-     * and close all translation tools. */
-    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).change(function () {
-        if (this.checked) disableSelection();else enableSelection();
+    /* When the copy toggle is switched on, 
+     * copying is enabled and translation gets disabled and vice-versa. */
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).click(function () {
+        // Selection is disabled -> enable it.
+        if ((0, _jquery2.default)(this).hasClass('mdl-button--disabled')) enableToggleCopy();else disableToggleCopy();
     });
 
-    /* When a translatable word has been clicked,
-     * either try to translate it, speak it, or open an alternative
-     * translation window.  */
-    (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
-        if (!(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLETRANSLATE).is(':checked')) return;
-        if (alterMenu.isOpen()) return;
-
-        var target = (0, _jquery2.default)(event.target);
-        if (target.is(_config2.default.HTML_ZEEGUUTAG)) {
-            if (!translator.isTranslated(this)) {
-                translator.translate(this);
-            }
-        } else if (target.is(_config2.default.HTML_ORIGINAL)) {
-            speaker.speak((0, _jquery2.default)(this).find(_config2.default.HTML_ORIGINAL).text(), FROM_LANGUAGE);
-        } else if (target.is(_config2.default.HTML_TRANSLATED)) {
-            alterMenu.constructAndOpen(this.children[1]);
+    /* When the undo is clicked, content page is replaced
+     * with previous one in the stack and listeners are re-attached. */
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLEUNDO).click(function () {
+        if (alterMenu.isOpen()) {
+            alterMenu.close();
+            return;
         }
+        (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).off();
+        translator.undoTranslate();
+        attachZeeguuListeners();
     });
 });
 
 /* Clicking anywhere in the document when the 
- * alter menu is open, will close it.*/
+ * alter menu is open, except for the input field,
+ * will close the alter menu.*/
 (0, _jquery2.default)(document).click(function (event) {
     var target = (0, _jquery2.default)(event.target);
     if (!target.is('input') && alterMenu.isOpen()) {
@@ -10611,7 +10725,7 @@ var speaker = new _Speaker2.default();
  * as the chosen translation. */
 (0, _jquery2.default)(document).keypress(function (event) {
     var target = (0, _jquery2.default)(event.target);
-    if (target.is('input') && event.which == _config2.default.ENTER_KEY) {
+    if (target.is('input') && event.which === _config2.default.ENTER_KEY) {
         var trans = target.parent().parent();
         if (target.val() !== '') {
             trans.attr(_config2.default.HTML_ATTRIBUTE_CHOSEN, target.val());
@@ -10628,19 +10742,48 @@ var speaker = new _Speaker2.default();
 });
 
 /* Disable selection. */
-function disableSelection() {
+function disableToggleCopy() {
     (0, _jquery2.default)("p").each(function () {
         (0, _jquery2.default)(this).addClass(_config2.default.CLASS_NOSELECT);
     });
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
 }
 
 /* Enable selection. */
-function enableSelection() {
+function enableToggleCopy() {
     (0, _jquery2.default)("p").each(function () {
         (0, _jquery2.default)(this).removeClass(_config2.default.CLASS_NOSELECT);
+    });
+    (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
+}
+
+function isToggledCopy() {
+    return !(0, _jquery2.default)(_config2.default.HTML_ID_TOGGLECOPY).hasClass('mdl-button--disabled');
+}
+
+/* Attach Zeeguu tag click listener. */
+function attachZeeguuListeners() {
+    /* When a translatable word has been clicked,
+     * either try to translate it, speak it, or open an alternative
+     * translation window.  */
+    (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).click(function (event) {
+        if (isToggledCopy()) return;
+        if (alterMenu.isOpen()) return;
+
+        var $target = (0, _jquery2.default)(event.target);
+        if ($target.is(_config2.default.HTML_ZEEGUUTAG) && !translator.isTranslated(this)) {
+            // A non-translated word is clicked, so we translate it.
+            translator.translate(this);
+        } else if ($target.is(_config2.default.HTML_ORIGINAL)) {
+            // Original text is clicked, so we pronounce it using the speaker.
+            speaker.speak($target.text(), FROM_LANGUAGE);
+        } else if ($target.is(_config2.default.HTML_TRANSLATED)) {
+            // Translated text is clicked, so we open the alterMenu to allow for suggestions.
+            alterMenu.build($target);
+        }
     });
 }
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=translation.entry.js.map
+//# sourceMappingURL=translation.js.map

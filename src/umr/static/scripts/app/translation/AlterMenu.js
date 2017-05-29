@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import config from '../config'
-import Notifier from './Notifier'
+import Notifier from '../Notifier'
 
 /**
  * Class that allows for choosing alternative zeeguu translations from
@@ -18,49 +18,50 @@ export default class AlterMenu {
 
     /**
      * Create and open the alternative translation menu. 
-     * @param {Element} htmlTag - Document element for which to present the alter menu.
+     * @param {jQuery} $tran - jQuery element encompasing the <tran> tag, 
+     * for which to present the alter menu.
      */
-    constructAndOpen(htmlTag) {
+    build($tran) {
         // Check how many alternatives there are, if less than 2: abort.
-        var transCount = parseInt(htmlTag.getAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT));
+        var transCount = parseInt($tran.attr(config.HTML_ATTRIBUTE_TRANSCOUNT));
         if (transCount < 2) {
             this.notifier.notify(config.TEXT_NO_ALTERNATIVES);
             return;
         }
-        this.construct(htmlTag, transCount);
-        this._place(htmlTag);
+        this.construct($tran, transCount);
+        this._place($tran);
         $(config.HTML_ID_ALTERMENU).hide();
-        $(config.HTML_ID_ALTERMENU).slideDown(function () {
-            this.menuOpen = true
-        }.bind(this));
+
+        this.open();
     };
 
     /**
      * Add buttons with click listeners that replace the translation and
      * append these to the alter menu. 
-     * @param {Element} zeeguuTag - Tag from which the alternative transaltions are retrieved.
+     * @param {jQuery} $tran - Reference tag from which the alternative translations are retrieved.
      * @param {int} transCount - Number of present alternative translations. 
      */
-    construct(zeeguuTag, transCount) {
+    construct($tran, transCount) {
+
         $(config.HTML_ID_ALTERMENU).empty();
         for (var i = 0; i < transCount; i++) {
             var button = document.createElement('button');
-            var alternative = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i);
+            var alternative = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + i);
             button.textContent = alternative;
             $(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
             $(config.HTML_ID_ALTERMENU).append($(button));
-            $(button).click({zeeguuTag: zeeguuTag, alternative: i}, this._swapPrimaryTranslation);
+            $(button).click({$tran: $tran, alternative: i}, this._swapPrimaryTranslation);
         }
-        this._appendInputField(zeeguuTag);
+        this._appendInputField($tran);
     }
 
     /** 
      * Appends the input field for user alternative, to the alter menu.
-     * @param {Element} zeeguuTag - Tag from which the suggested transaltion is retrieved.
+     * @param {jQuery} $tran - Reference tag from which the suggested translation is retrieved.
      */
-    _appendInputField(zeeguuTag) {
+    _appendInputField($tran) {
         var input_field = document.createElement('input');
-        var suggestion  = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_SUGGESTION);
+        var suggestion  = $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION);
         var value = (suggestion === '' ? config.TEXT_SUGGESTION : suggestion);
         $(input_field).addClass('mdl-textfield__input');
         $(input_field).attr('type', 'text');
@@ -74,26 +75,26 @@ export default class AlterMenu {
      * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
      */
     _swapPrimaryTranslation(selectedAlternative) {
-        var zeeguuTag = selectedAlternative.data.zeeguuTag;
+        var $tran = selectedAlternative.data.$tran;
         var alternative = selectedAlternative.data.alternative;
-        var newText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative);
-        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, newText);
+        var newText = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + alternative);
+        $tran.attr(config.HTML_ATTRIBUTE_CHOSEN, newText);
     }
 
     /**
      * Place the alter menu below the supplied zeeguuTag.
-     * @param {Element} zeeguuTag - Reference tag for the placement of the alter menu.
+     * @param {jQuery} $tran - Reference tag for the placement of the alter menu.
      */
-    _place(zeeguuTag) {
-        var position = $(zeeguuTag).position();
-        var tagHeight = $(zeeguuTag).outerHeight();
-        var tagWidth = $(zeeguuTag).outerWidth();
+    _place($tran) {
+        var position = $tran.position();
+        var tagHeight = $tran.outerHeight();
+        var tagWidth = $tran.outerWidth();
         var menuWidth = $(config.HTML_ID_ALTERMENU).outerWidth();
         var topScroll = $(".mdl-layout__content").scrollTop();
-        $(zeeguuTag).append($(config.HTML_ID_ALTERMENU));
+        $tran.append($(config.HTML_ID_ALTERMENU));
         $(config.HTML_ID_ALTERMENU).css({
             position: "absolute",
-            maxWidth: "80%",
+            maxWidth: "35%",
             display: "inline-block",
             left: position.left + (tagWidth - menuWidth) / 2 + "px",
             top: position.top + tagHeight + topScroll + "px"
@@ -108,12 +109,21 @@ export default class AlterMenu {
     };
 
     /**
-     *  Hide the alter menu. 
+     *  Hide (close) the alter menu. 
      */
     close() {
         $(config.HTML_ID_ALTERMENU).slideUp(function () {
             $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
             this.menuOpen = false;
+        }.bind(this));
+    };
+
+    /**
+     *  Open the alter menu. 
+     */
+    open() {
+        $(config.HTML_ID_ALTERMENU).slideDown(function () {
+            this.menuOpen = true
         }.bind(this));
     };
 

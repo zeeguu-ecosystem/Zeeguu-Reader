@@ -18,9 +18,6 @@ We use the [Newspaper](https://newspaper.readthedocs.io/en/latest/) library in o
 ### Pytest
 [Pytest](https://docs.pytest.org/en/latest/) is a widely adopted testing framework for python. It's more simple and elegant than the build-in testing tools Python provides (decreasing the chance of bugs in our bug-testing tools).
 
-### Gunicorn
-[Gunicorn](http://gunicorn.org/) is only used on the Heroku server. It allows it to handle multiple users concurrently.
-
 ## Javascript
 You can find a listing of **all** dependencies in our `package.json` file.
 ### MDL

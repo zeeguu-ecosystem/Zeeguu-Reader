@@ -28,4 +28,4 @@ Zeeguu UMR is at its core a University project ([Rijksuniversiteit Groningen](ht
 [![ Dan Chirtoaca](https://avatars1.githubusercontent.com/DanChirtoaca?s=32)](https://github.com/DanChirtoaca) Dan Chirtoaca,
 [![Luc van den Brand](https://avatars1.githubusercontent.com/Lukeslux?s=32)](https://github.com/Lukeslux) Luc van den Brand.
 
-Under the supervision of : [![Mircea Lungu](https://avatars1.githubusercontent.com/mircealungu?s=32)](https://github.com/Lukeslux) Dr. Mircea Lungu.
+Under the supervision of : [![Mircea Lungu](https://avatars1.githubusercontent.com/mircealungu?s=32)](https://github.com/MirceaLungu) Dr. Mircea Lungu.

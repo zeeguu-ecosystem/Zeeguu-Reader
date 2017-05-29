@@ -51,50 +51,24 @@ export default class FeedSubscriber {
      * @param {Object[]} data - A list of feeds the user can subscribe to.
      */
     _loadFeedOptions(data) {
-        var template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
-        for (var i = 0; i < data.length; i++) {
-            var addableData = {
-                addableTitle: data[i]['title'],
-                addableID: data[i]['id'],
-                addableImage: data[i]['image_url']
-            };
-            var feedOption = $(Mustache.render(template, addableData));
-            var subscribeButton = $(feedOption.find(".subscribeButton"));
-            var _follow = this._follow.bind(this);
-            subscribeButton.click(function () {
-                _follow($(this).parent());
-            });
-            var feedIcon = $(feedOption.find(".feedIcon"));
+        let template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
+        for (let i = 0; i < data.length; i++) {
+            let feedOption = $(Mustache.render(template, data[i]));
+            let subscribeButton = $(feedOption.find(".subscribeButton"));
+
+            subscribeButton.click(
+                function (data, feedOption, subscriptionList) {
+                    return function() {
+                        subscriptionList.follow(data);
+                        $(feedOption).fadeOut();
+                    };
+            }(data[i], feedOption, this.subscriptionList));
+
+            let feedIcon = $(feedOption.find(".feedIcon"));
             feedIcon.on( "error", function () {
                 $(this).unbind("error").attr("src", "static/images/noAvatar.png");
             });
             $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
         }
     }
-
-    /**
-     * Subscribe to a new feed, calls the zeeguu server.
-     * Uses {@link ZeeguuRequests}.
-     * @param {Element} feed - Document element containing the id of the feed.
-     */
-    _follow(feed) {
-        var feedID = $(feed).attr('addableID');
-        var callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
-        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, callback);
-    }
-
-    /**
-     * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
-     * mentioned feed from the addable feed list.
-     * Callback function for Zeeguu.
-     * @param {Element} feed - Document element containing the id of the feed.
-     * @param {string} data - Reply from the server.
-     */
-    _onFeedFollowed(feed, data) {
-        if (data == "OK") {
-            this.subscriptionList.load();
-            $(feed).fadeOut();
-        }
-    }
-
 };

@@ -5,7 +5,6 @@ import config from '../config';
  * Shows or hides style for when there is no feed.
  */
 export default class NoFeedTour {
-
     /**
      * Show a tour styling, guiding the user to new feeds.
      */

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9936,7 +9936,8 @@ exports.default = {
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
-    HTML_ID_TOGGLETRANSLATE: '#toggle_translate',
+    HTML_ID_TOGGLECOPY: '#toggle_copy',
+    HTML_ID_TOGGLEUNDO: '#toggle_undo',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
     HTML_ID_USER_ALTERNATIVE: '#userAlternative',
@@ -9947,12 +9948,15 @@ exports.default = {
     HTML_ID_ADDSUBSCRIPTION_TEMPLATE: '#feedAddable-template',
     HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
+    HTML_CLASS_ARTICLELINK: '.articleLinkEntry',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
+    HTML_CLASS_PAGECONTENT: '.page-content',
+    HTML_CLASS_TOUR: '.tour',
+    HTML_CLASS_WIGGLE: 'wiggle',
     CLASS_LOADING: 'loading',
     CLASS_NOSELECT: 'noselect',
-    HTML_CLASS_TOUR: '.tour',
-    HTML_CLASS_WIGGLE: 'wiggle'
+    EVENT_SUBSCRIPTION: 'subscription-list-loaded'
 };
 
 /***/ }),
@@ -10708,6 +10712,63 @@ module.exports = function (module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Presents small pop-up messages (notifications).
+ * Does not repeat the same message if it currently displays it.
+ */
+var Notifier = function () {
+    /**
+     * Initializes the previously displayed message field. Empty at creation.
+     */
+    function Notifier() {
+        _classCallCheck(this, Notifier);
+
+        this.lastMessage = "";
+    }
+
+    _createClass(Notifier, [{
+        key: 'notify',
+
+
+        /**
+         * Notify the user with the supplied message.
+         * @param {string} message - Message to be displayed. 
+         */
+        value: function notify(message) {
+            var snackbar = document.querySelector('.mdl-js-snackbar');
+            if (this.lastMessage === message && (0, _jquery2.default)(snackbar).hasClass('mdl-snackbar--active')) return;
+            snackbar.MaterialSnackbar.showSnackbar({ message: message });
+            this.lastMessage = message;
+        }
+    }]);
+
+    return Notifier;
+}();
+
+exports.default = Notifier;
+;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -11360,7 +11421,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
 
-  if ("function" === 'function' && 'amd' in __webpack_require__(18)) {
+  if ("function" === 'function' && 'amd' in __webpack_require__(19)) {
     // AMD support
     !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
       return dialogPolyfill;
@@ -11377,7 +11438,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11405,9 +11466,13 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _Cache = __webpack_require__(13);
+var _Cache = __webpack_require__(14);
 
 var _Cache2 = _interopRequireDefault(_Cache);
+
+var _NoFeedTour = __webpack_require__(15);
+
+var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11420,61 +11485,89 @@ var KEY_MAP_FEED_ARTICLE = "feed_article_map";
  */
 
 var ArticleList = function () {
+    /**
+     * Initialise a {@link NoFeedTour} object.
+     */
     function ArticleList() {
         _classCallCheck(this, ArticleList);
+
+        this.noFeedTour = new _NoFeedTour2.default();
     }
+
+    /**
+     * Call zeeguu and get the articles for the given feed 'subscription'.
+     * If the articles are already in {@link Cache}, load them instead.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Map} subscriptions - The feeds to retrieve articles from.
+     */
+
 
     _createClass(ArticleList, [{
         key: 'load',
-
-        /**
-         * Call zeeguu and get the articles for the given feed 'subscription'.
-         * If the articles are already in {@link Cache}, load them instead.
-         * Uses {@link ZeeguuRequests}.
-         * @param {Object} subscription - The feed to retrieve articles from.
-         */
-        value: function load(subscription) {
+        value: function load(subscriptions) {
             var _this = this;
 
-            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE) && _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID]) {
-                var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.subscriptionID];
-                this._renderArticleLinks(subscription, articleLinks);
-            } else {
-                (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
-                var callback = function callback(articleLinks) {
-                    return _this._loadArticleLinks(subscription, articleLinks);
+            if (subscriptions.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                var _loop = function _loop() {
+                    var subscription = _step.value;
+
+                    if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE) && _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
+                        var articleLinks = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
+                        _this._renderArticleLinks(subscription, articleLinks);
+                    } else {
+                        (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).show();
+                        var callback = function callback(articleLinks) {
+                            return _this._loadArticleLinks(subscription, articleLinks);
+                        };
+                        _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
+                    }
                 };
-                _zeeguuRequests2.default.get(_config2.default.GET_FEED_ITEMS + '/' + subscription.subscriptionID, {}, callback);
+
+                for (var _iterator = subscriptions.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    _loop();
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
             }
         }
-    }, {
-        key: 'clear',
-
 
         /**
-         * Remove all articles from the list, clears the cached articles.
+         * Remove all articles from the list.
          */
+
+    }, {
+        key: 'clear',
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).empty();
-            _Cache2.default.remove(KEY_MAP_FEED_ARTICLE);
         }
-    }, {
-        key: 'remove',
-
 
         /**
          * Remove all articles from the list associated with the given feed.
          * @param {string} feedID - The identification code associated with the feed.
          */
+
+    }, {
+        key: 'remove',
         value: function remove(feedID) {
             (0, _jquery2.default)('li[articleLinkFeedID="' + feedID + '"]').remove();
-            if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE)) {
-                _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE)[feedID] = undefined;
-            }
         }
-    }, {
-        key: '_loadArticleLinks',
-
 
         /**
          * Store all the article links from a particular feed if possible, makes sure they are rendered.
@@ -11482,6 +11575,9 @@ var ArticleList = function () {
          * @param {Object} subscription - The feed the articles are from.
          * @param {Object[]} articleLinks - List containing the articles for the feed.
          */
+
+    }, {
+        key: '_loadArticleLinks',
         value: function _loadArticleLinks(subscription, articleLinks) {
             this._renderArticleLinks(subscription, articleLinks);
             (0, _jquery2.default)(_config2.default.HTML_CLASS_LOADER).fadeOut('slow');
@@ -11489,7 +11585,7 @@ var ArticleList = function () {
             // Cache the article links.
             var feedMap = {};
             if (_Cache2.default.has(KEY_MAP_FEED_ARTICLE)) feedMap = _Cache2.default.retrieve(KEY_MAP_FEED_ARTICLE);
-            feedMap[subscription.subscriptionID] = articleLinks;
+            feedMap[subscription.id] = articleLinks;
             _Cache2.default.store(KEY_MAP_FEED_ARTICLE, feedMap);
         }
 
@@ -11502,21 +11598,42 @@ var ArticleList = function () {
     }, {
         key: '_renderArticleLinks',
         value: function _renderArticleLinks(subscription, articleLinks) {
+            if (articleLinks.length < 1) console.log("No articles for " + subscription.title + ".");
+
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_TEMPLATE).html();
             for (var i = 0; i < articleLinks.length; i++) {
                 var articleLink = articleLinks[i];
                 var templateAttributes = {
                     articleLinkTitle: articleLink.title,
                     articleLinkURL: articleLink.url,
-                    articleLinkFeedID: subscription.subscriptionID,
-                    articleLinkLanguage: subscription.subscriptionLanguage,
+                    articleLinkFeedID: subscription.id,
+                    articleLinkLanguage: subscription.language,
                     articleDifficultyDiscrete: articleLink.metrics.difficulty.discrete,
                     articleDifficulty: Math.round(parseFloat(articleLink.metrics.difficulty.normalized) * 100) / 10,
                     articleSummary: (0, _jquery2.default)('<p>' + articleLink.summary + '</p>').text(),
-                    articleIcon: subscription.subscriptionIcon
+                    articleIcon: subscription.image_url
                 };
-                (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(_mustache2.default.render(template, templateAttributes));
+                var element = _mustache2.default.render(template, templateAttributes);
+                (0, _jquery2.default)(_config2.default.HTML_ID_ARTICLELINK_LIST).append(element);
             }
+
+            // Make the link expand on click, then redirect to the article.
+            (0, _jquery2.default)(_config2.default.HTML_CLASS_ARTICLELINK).one('click', function (event) {
+                if (!event.isPropagationStopped()) {
+                    event.stopPropagation();
+                    (0, _jquery2.default)(this).find('.articleLinkSummary').animate({
+                        height: '+=30em'
+                    }, 200);
+                    (0, _jquery2.default)(this).animate({
+                        scrollTop: (0, _jquery2.default)(this).offset().top,
+                        height: '+=30em'
+                    }, 200, function () {
+                        // Animation complete.
+                        location.href = (0, _jquery2.default)(this).attr('href');
+                    });
+                    (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).fadeOut();
+                }
+            });
         }
     }]);
 
@@ -11524,10 +11641,9 @@ var ArticleList = function () {
 }();
 
 exports.default = ArticleList;
-;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11623,57 +11739,21 @@ var FeedSubscriber = function () {
         value: function _loadFeedOptions(data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
-                var addableData = {
-                    addableTitle: data[i]['title'],
-                    addableID: data[i]['id'],
-                    addableImage: data[i]['image_url']
-                };
-                var feedOption = (0, _jquery2.default)(_mustache2.default.render(template, addableData));
+                var feedOption = (0, _jquery2.default)(_mustache2.default.render(template, data[i]));
                 var subscribeButton = (0, _jquery2.default)(feedOption.find(".subscribeButton"));
-                var _follow = this._follow.bind(this);
-                subscribeButton.click(function () {
-                    _follow((0, _jquery2.default)(this).parent());
-                });
+
+                subscribeButton.click(function (data, feedOption, subscriptionList) {
+                    return function () {
+                        subscriptionList.follow(data);
+                        (0, _jquery2.default)(feedOption).fadeOut();
+                    };
+                }(data[i], feedOption, this.subscriptionList));
+
                 var feedIcon = (0, _jquery2.default)(feedOption.find(".feedIcon"));
                 feedIcon.on("error", function () {
                     (0, _jquery2.default)(this).unbind("error").attr("src", "static/images/noAvatar.png");
                 });
                 (0, _jquery2.default)(_config2.default.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
-            }
-        }
-
-        /**
-         * Subscribe to a new feed, calls the zeeguu server.
-         * Uses {@link ZeeguuRequests}.
-         * @param {Element} feed - Document element containing the id of the feed.
-         */
-
-    }, {
-        key: '_follow',
-        value: function _follow(feed) {
-            var _this = this;
-
-            var feedID = (0, _jquery2.default)(feed).attr('addableID');
-            var callback = function (data) {
-                return _this._onFeedFollowed(feed, data);
-            }.bind(this);
-            _zeeguuRequests2.default.post(_config2.default.FOLLOW_FEED_ENDPOINT, { feed_id: feedID }, callback);
-        }
-
-        /**
-         * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
-         * mentioned feed from the addable feed list.
-         * Callback function for Zeeguu.
-         * @param {Element} feed - Document element containing the id of the feed.
-         * @param {string} data - Reply from the server.
-         */
-
-    }, {
-        key: '_onFeedFollowed',
-        value: function _onFeedFollowed(feed, data) {
-            if (data == "OK") {
-                this.subscriptionList.load();
-                (0, _jquery2.default)(feed).fadeOut();
             }
         }
     }]);
@@ -11685,7 +11765,7 @@ exports.default = FeedSubscriber;
 ;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11778,7 +11858,7 @@ exports.default = LanguageMenu;
 ;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11806,9 +11886,9 @@ var _zeeguuRequests = __webpack_require__(2);
 
 var _zeeguuRequests2 = _interopRequireDefault(_zeeguuRequests);
 
-var _NoFeedTour = __webpack_require__(14);
+var _Notifier = __webpack_require__(5);
 
-var _NoFeedTour2 = _interopRequireDefault(_NoFeedTour);
+var _Notifier2 = _interopRequireDefault(_Notifier);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11820,15 +11900,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var SubscriptionList = function () {
     /**
-     * Bind with the {@link ArticleList}, initialise an empty list of feeds and a {@link NoFeedTour} object.
-     * @param {ArticleList} articleList - List of all articles available to the user.
+     * Initialise an empty {@link Map} of feeds and a {@link Notifier} to notify the user of failures.
      */
-    function SubscriptionList(articleList) {
+    function SubscriptionList() {
         _classCallCheck(this, SubscriptionList);
 
-        this.articleList = articleList;
-        this.noFeedTour = new _NoFeedTour2.default();
-        this.feedList = new Set();
+        this.feedList = new Map();
+        this.notifier = new _Notifier2.default();
     }
 
     /**
@@ -11851,7 +11929,6 @@ var SubscriptionList = function () {
          */
         value: function clear() {
             (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).empty();
-            this.articleList.clear();
         }
     }, {
         key: 'refresh',
@@ -11878,78 +11955,132 @@ var SubscriptionList = function () {
         value: function _loadSubscriptions(data) {
             var template = (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
             for (var i = 0; i < data.length; i++) {
-                var subscriptionData = {
-                    subscriptionTitle: data[i]['title'],
-                    subscriptionID: data[i]['id'],
-                    subscriptionLanguage: data[i]['language'],
-                    subscriptionIcon: data[i]['image_url']
-                };
-                var subscription = (0, _jquery2.default)(_mustache2.default.render(template, subscriptionData));
-                var removeButton = (0, _jquery2.default)(subscription.find(".removeButton"));
-                var _unfollow = this._unfollow.bind(this);
-                removeButton.click(function () {
-                    _unfollow((0, _jquery2.default)(this).parent());
-                });
-                if (!this.feedList.has(Number(subscriptionData['subscriptionID']))) {
-                    (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-                    this.articleList.load(subscriptionData);
-                }
-                this.feedList.add(Number(subscriptionData['subscriptionID']));
+                this._addSubscription(data[i]);
             }
 
-            if (this.feedList.size < 1) this.noFeedTour.show();else this.noFeedTour.hide();
+            this._changed();
+        }
+
+        /**
+         * Add the feed to the list of subscribed feeds.
+         * @param {Object} feed - Data of the particular feed to add to the list.
+         */
+
+    }, {
+        key: '_addSubscription',
+        value: function _addSubscription(feed) {
+            if (this.feedList.has(feed.id)) return;
+
+            var template = (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+            var subscription = (0, _jquery2.default)(_mustache2.default.render(template, feed));
+            var removeButton = (0, _jquery2.default)(subscription.find(".removeButton"));
+            var _unfollow = this._unfollow.bind(this);
+            removeButton.click(function (feed) {
+                return function () {
+                    _unfollow(feed);
+                };
+            }(feed));
+            (0, _jquery2.default)(_config2.default.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+            this.feedList.set(feed.id, feed);
+        }
+
+        /**
+         * Subscribe to a new feed, calls the zeeguu server.
+         * Uses {@link ZeeguuRequests}.
+         * @param {Object} feed - Data of the particular feed to subscribe to.
+         */
+
+    }, {
+        key: 'follow',
+        value: function follow(feed) {
+            var _this = this;
+
+            this._addSubscription(feed);
+            var callback = function (data) {
+                return _this._onFeedFollowed(feed, data);
+            }.bind(this);
+            _zeeguuRequests2.default.post(_config2.default.FOLLOW_FEED_ENDPOINT, { feed_id: feed.id }, callback);
+        }
+
+        /**
+         * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
+         * If there was a failure to follow the feed, we notify the user.
+         * Callback function for Zeeguu.
+         * @param {Object} feed - Data of the particular feed that has been subscribed to.
+         * @param {string} reply - Reply from the server.
+         */
+
+    }, {
+        key: '_onFeedFollowed',
+        value: function _onFeedFollowed(feed, reply) {
+            if (reply === "OK") {
+                this._changed();
+            } else {
+                this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
+                console.log("Could not follow '" + feed.title + "'. Server reply: \n" + reply);
+            }
         }
 
         /**
          * Un-subscribe from a feed, call the zeeguu server.
          * Uses {@link ZeeguuRequests}.
-         * @param {Element} feed - Feed element of the list to un-subscribe from.
+         * @param {Object} feed - Data of the particular feed to unfollow.
          */
 
     }, {
         key: '_unfollow',
         value: function _unfollow(feed) {
-            var _this = this;
+            var _this2 = this;
 
-            var removableID = (0, _jquery2.default)(feed).attr('removableID');
+            this._remove(feed);
             var callback = function (data) {
-                return _this._onFeedUnfollowed(feed, data);
+                return _this2._onFeedUnfollowed(feed, data);
             }.bind(this);
-            _zeeguuRequests2.default.get(_config2.default.UNFOLLOW_FEED_ENDPOINT + "/" + removableID, {}, callback);
+            _zeeguuRequests2.default.get(_config2.default.UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
         }
 
         /**
          * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+         * On failure we notify the user.
          * Callback function for zeeguu.
-         * @param {Element} feed - Feed element of the list that is to be removed.
-         * @param {string} data - Server reply.
+         * @param {Object} feed - Data of the particular feed to that has been unfollowed.
+         * @param {string} reply - Server reply.
          */
 
     }, {
         key: '_onFeedUnfollowed',
-        value: function _onFeedUnfollowed(feed, data) {
-            if (data == "OK") {
-                this._remove(feed);
+        value: function _onFeedUnfollowed(feed, reply) {
+            if (reply === "OK") {
+                this._changed();
+            } else {
+                this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
+                console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + reply);
             }
         }
 
         /**
          * Remove a mentioned feed from the local list (not from the zeeguu list).
          * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-         * @param {Element} feedNode - The document element (feed) to remove.
+         * @param {Object} feed - Data of the particular feed to remove from the list.
          */
 
     }, {
         key: '_remove',
-        value: function _remove(feedNode) {
-            var feedID = (0, _jquery2.default)(feedNode).attr('removableID');
-            this.articleList.remove(feedID);
-            if (!this.feedList.delete(Number(feedID))) {
-                console.log("Error");
+        value: function _remove(feed) {
+            if (!this.feedList.delete(feed.id)) {
+                console.log("Error: feed not in feed list.");
             }
-            (0, _jquery2.default)(feedNode).fadeOut();
+            (0, _jquery2.default)('span[removableID="' + feed.id + '"]').fadeOut();
+        }
 
-            if (this.feedList.size < 1) this.noFeedTour.show();
+        /**
+         * Fire an event to notify change in this class.
+         */
+
+    }, {
+        key: '_changed',
+        value: function _changed() {
+            document.dispatchEvent(new CustomEvent(_config2.default.EVENT_SUBSCRIPTION, { "detail": this.feedList }));
         }
     }]);
 
@@ -11960,10 +12091,10 @@ exports.default = SubscriptionList;
 ;
 
 /***/ }),
-/* 10 */,
 /* 11 */,
 /* 12 */,
-/* 13 */
+/* 13 */,
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12055,7 +12186,7 @@ var Cache = function () {
 exports.default = Cache;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12090,7 +12221,6 @@ var NoFeedTour = function () {
     _createClass(NoFeedTour, [{
         key: 'show',
 
-
         /**
          * Show a tour styling, guiding the user to new feeds.
          */
@@ -12119,7 +12249,7 @@ var NoFeedTour = function () {
 exports.default = NoFeedTour;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12129,34 +12259,43 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _ArticleList = __webpack_require__(6);
+var _ArticleList = __webpack_require__(7);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _SubscriptionList = __webpack_require__(9);
+var _SubscriptionList = __webpack_require__(10);
 
 var _SubscriptionList2 = _interopRequireDefault(_SubscriptionList);
 
-var _FeedSubscriber = __webpack_require__(7);
+var _FeedSubscriber = __webpack_require__(8);
 
 var _FeedSubscriber2 = _interopRequireDefault(_FeedSubscriber);
 
-var _dialogPolyfill = __webpack_require__(5);
+var _dialogPolyfill = __webpack_require__(6);
 
 var _dialogPolyfill2 = _interopRequireDefault(_dialogPolyfill);
 
-var _LanguageMenu = __webpack_require__(8);
+var _LanguageMenu = __webpack_require__(9);
 
 var _LanguageMenu2 = _interopRequireDefault(_LanguageMenu);
+
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
-var articleList = new _ArticleList2.default();
-var subscriptionList = new _SubscriptionList2.default(articleList);
+var subscriptionList = new _SubscriptionList2.default();
+var articleList = new _ArticleList2.default(subscriptionList);
 var feedSubscriber = new _FeedSubscriber2.default(subscriptionList);
 var languageMenu = new _LanguageMenu2.default(feedSubscriber);
+
+document.addEventListener(_config2.default.EVENT_SUBSCRIPTION, function (e) {
+    articleList.clear();
+    articleList.load(e.detail);
+});
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -12188,9 +12327,9 @@ function noAvatar(image) {
 }
 
 /***/ }),
-/* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -12200,4 +12339,4 @@ module.exports = function() {
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=subscription.entry.js.map
+//# sourceMappingURL=subscription.js.map

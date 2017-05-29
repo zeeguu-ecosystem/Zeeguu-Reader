@@ -8,4 +8,4 @@ then
 fi
 
 source ${ZEEGUU_UMR_VENV_ROOT}/bin/activate
-python src/zeeguu_umr.py
+python src/dev_launch.py

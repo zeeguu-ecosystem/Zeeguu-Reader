@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <HTML>
 <HEAD>
-	<TITLE>Zeeguu UMR</TITLE>
+	<TITLE>Zeeguu Reader</TITLE>
 	<META name="viewport" content="width=device-width, initial-scale=1">
 	<LINK rel="stylesheet" href="{{ url_for('umrblue.static',filename='styles/mdl/material.min.css') }}">
 	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/loader.css') }}" type= "text/css">
@@ -11,10 +11,23 @@
 	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/dialog-polyfill.css') }}" type= "text/css">
 	<SCRIPT src="{{ url_for('umrblue.static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
 	<SCRIPT> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</SCRIPT>
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription.entry.js')}}"></script>
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription.js')}}"></script>
+
+	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
+	<script>
+	    (function(h,o,t,j,a,r){
+		h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+		h._hjSettings={hjid:510081,hjsv:5};
+		a=o.getElementsByTagName('head')[0];
+		r=o.createElement('script');r.async=1;
+		r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+		a.appendChild(r);
+	    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+	</script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
+	  <div class="mdl-layout-icon"></div>
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Settings</span>
@@ -42,13 +55,17 @@
 		<div class="loader">
 			 <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
 		</div>
+		<div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
+		  <div class="mdl-snackbar__text"></div>
+		  <button class="mdl-snackbar__action" type="button"></button>
+		</div>
   </main>
 </div>
 
 <!-- Template for subscribed feed items -->
 <script id="subscription-template" type="text/template">
-	<span removableID="{% raw %}{{subscriptionID}}{% endraw %}" class="mdl-chip mdl-chip--deletable">
-		<span class="mdl-chip__text">{% raw %}{{subscriptionTitle}}{% endraw %}</span>
+	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
 		</a>
@@ -57,12 +74,13 @@
 
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
-	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}"
+		href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
 		<div class ="articleLinkHeader">
 			<div class="articleLinkImage">
 				<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
 			</div>
-			<a class="articleLinkTitle" href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
+			<a class="articleLinkTitle" >
 				{% raw %}{{ articleLinkTitle }}{% endraw %}
 			</a>
 			<div class="articleLinkDifficulty">

@@ -34,15 +34,18 @@ def make_article(url, language):
     article.parse()
 
     title   = wrap_zeeguu_words(article.title)
+    authors = ', '.join(article.authors)
     content = article.text
     content = add_paragraphs(content)
     content = wrap_zeeguu_words(content)
 
     # Create our article using Soup.
     soup = Soup(render_template('article.html', fromLanguage=language), 'html.parser')
+    soup.find('div', {'id': 'articleURL'}).find('a')['href'] = url
     soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'))
+    if authors:
+        soup.find('p',   {'id': 'articleAuthor'}).append(Soup('By: ' + authors, 'html.parser'))
     soup.find('p',   {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
-    soup.find('p',   {'id': 'articleURL'}).append(Soup(url, 'html.parser'))
 
     return str(soup)
 

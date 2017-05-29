@@ -1,1 +1,1 @@
-web: cd src; gunicorn zeeguu_umr:app
+web: python src/dev_launch.py
