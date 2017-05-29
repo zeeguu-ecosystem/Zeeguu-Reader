@@ -21,8 +21,9 @@ def with_session(view):
 
         if 'sessionID' in request.cookies:
             request.sessionID = request.cookies.get('sessionID')
+            print(request.url)
         else:
-            return flask.redirect(ZEEGUU_LOGIN)
+            return flask.redirect(ZEEGUU_LOGIN + '?next=' + request.url)
         return view(*args, **kwargs)
 
     return wrapped_view
