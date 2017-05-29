@@ -9,7 +9,7 @@
 	<SCRIPT>
 		var FROM_LANGUAGE = '{{ fromLanguage }}';
 	</SCRIPT>
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation.entry.js')}}"></script>
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation.js')}}"></script>
 </HEAD>
 <BODY>
 <!-- Top bar -->
@@ -23,7 +23,7 @@
 			<button id = "toggle_undo" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 				<i class="material-icons">undo</i>
 			</button>
-			<button id = "toggle_translate" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+			<button id = "toggle_copy" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 				<i class="material-icons">content_copy</i>
 			</button>
 		</div>

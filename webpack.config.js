@@ -11,7 +11,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, './src/umr/static/scripts/dist'),
-        filename: '[name].entry.js'
+        filename: '[name].js'
     },
 	module: {
 	 loaders: [
