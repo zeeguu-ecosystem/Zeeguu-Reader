@@ -30,7 +30,7 @@ $(document).ready(function() {
      * with previous one in the stack and listeners are re-attached. */
     $(config.HTML_ID_TOGGLEUNDO).click(function()
     {
-        if(alterMenu.isOpen()) alterMenu.close();
+        if (alterMenu.isOpen()) alterMenu.close();
         $(config.HTML_ZEEGUUTAG).off();
         translator.undoTranslate();
         attachZeeguuListeners();
