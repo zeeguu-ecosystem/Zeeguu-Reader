@@ -1,2 +1,3 @@
 include umr/templates/*
 recursive-include umr/static *
+prune umr/static/scripts/app

@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "./node_modules/.bin/webpack",
     "production": "NODE_ENV=production webpack",
-    "watch": "npm run dev -- --watch"
+    "watch": "npm run dev -- --watch",
+    "heroku-postbuild": "webpack -p --progress"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +31,6 @@
   "dependencies": {
     "dialog-polyfill": "^0.4.7",
     "jquery": "^3.2.1",
-    "mustache": "^2.3.0",
-    "underscore": "^1.8.3"
+    "mustache": "^2.3.0"
   }
 }
