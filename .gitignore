@@ -3,4 +3,5 @@
 .cache
 node_modules
 doc/dist
+src/umr/static/scripts/dist
 npm-debug.log
