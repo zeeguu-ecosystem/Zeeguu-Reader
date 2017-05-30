@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -52,6 +52,7 @@
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#translation" data-ice="link">Translation</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#zeeguurequests" data-ice="link">ZeeguuRequests</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#cache" data-ice="link">Cache</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#notifier" data-ice="link">Notifier</a></li>
 <li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;" data-link="manual/design/UI.html"><a href="manual/design/UI.html" data-ice="link">UI Design</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#goals" data-ice="link">Goals</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#implementation" data-ice="link">Implementation</a></li>
@@ -61,7 +62,6 @@
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#newspaper" data-ice="link">Newspaper</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#beautifulsoup" data-ice="link">Beautifulsoup</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#pytest" data-ice="link">Pytest</a></li>
-<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#gunicorn" data-ice="link">Gunicorn</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#javascript" data-ice="link">Javascript</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#mdl" data-ice="link">MDL</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#nodejs" data-ice="link">NodeJS</a></li>
@@ -79,7 +79,6 @@
 <li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#local-deployment" data-ice="link">Local deployment</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#remote-deployment" data-ice="link">Remote deployment</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#heroku" data-ice="link">Heroku</a></li>
-<li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#apache" data-ice="link">Apache</a></li>
 </ul>
   </div>
 <div data-ice="manual" data-toc-name="usage">
@@ -93,6 +92,13 @@
 <li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html" data-ice="link">Try it!</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#stable" data-ice="link">Stable</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#development" data-ice="link">Development</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;&#x25A0;" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html" data-ice="link">Support List</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#working" data-ice="link">Working</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#broken" data-ice="link">Broken</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#shows-cookie-dialog" data-ice="link">Shows cookie dialog</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#not-returning-articles" data-ice="link">Not returning articles</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#-near-empty-articles" data-ice="link">(Near) empty articles</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#undetermined" data-ice="link">Undetermined</a></li>
 </ul>
   </div>
 <div data-ice="manual" data-toc-name="reference">
@@ -115,16 +121,16 @@
 <p>The development of the Universal Multilingual Reader started off with the following design goals in mind:</p>
 <ul>
 <li>Aim for a clear separation of concerns in order to improve modularity of the system.</li>
-<li>Comprehensability of code.</li>
+<li>Comprehensibility of the code.</li>
 <li>Compatability amoung most modern web browsers and platforms.</li>
 <li>Fault tolerance.</li>
 <li>Responsiveness.</li>
 <li>The implementation should strive for efficiency and avoid redundancy.</li>
 </ul>
-<p>In the following sections, we will show you how we tried to follow these goals.</p>
+<p>In the following sections, we will present how we tried to follow these goals.</p>
 <h2 id="making-modules">Making modules</h2>
-<p><a href="https://en.wikipedia.org/wiki/ECMAScript">Ecmascript</a> 2015 (ES2015) introduced a significant addition to the syntax Javascript implements, amoung which, most important to us, are <em>modules</em>. However, current browser support for ES2015 is low: we do not have the luxury of only deveoping for the possible future where compatability might increase. To resolve this issue, transpilers like <a href="https://babeljs.io/">Babel</a> exist: a program that convert next generation Javascript into current day ubiquitously compatible Javascript. </p>
-<p><a href="https://webpack.js.org/">Webpack</a> builds on top of Babel, which allows you to enerate a single (neatly minified) backwards compatible file for each entrypoint. Using Webpack we write all our code in the readable and modular ES2016 definition, define a <code>main.js</code> for every package as an entry point, and then transpile it to two single files.  These  minified files can be included into our HTML documents, which can invoke the files to allow them to perform their tasks.</p>
+<p><a href="https://en.wikipedia.org/wiki/ECMAScript">Ecmascript</a> 2015 (ES2015) introduced a significant addition to the syntax that Javascript implements, among which, most important to us, are <em>modules</em>. However, current browser support for ES2015 is low: we do not have the luxury of only developing for the possible future where compatability might increase. To resolve this issue, transpilers like <a href="https://babeljs.io/">Babel</a> exist: a program that converts next generation Javascript into current day, ubiquitously compatible, Javascript. </p>
+<p><a href="https://webpack.js.org/">Webpack</a> builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible file for each entrypoint. Using Webpack we write all our code in the readable and modular ES2016 definition, define a <code>main.js</code> for every package as an entry point, and then transpile it to two single files. These minified files can be included into our HTML documents, which can invoke the files to allow them to perform their tasks.</p>
 <ul>
 <li><code>subscription.entry.js</code>.</li>
 <li><code>translation.entry.js</code>.</li>
@@ -132,23 +138,26 @@
 <h2 id="design-overview">Design overview</h2>
 <p>Using these tools, we will were able to define our system as follows:</p>
 <p><img src="./manual/asset/overview.png" alt="Overview Diagram"></p>
-<p>The Flask server defines two endpoints accessable if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. </p>
-<p>The <strong>/articles</strong> endpoint simply delivers the article.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, but all functionality is implemented by the package which it invokes. The subscription package make use of the Cache class in order to store article listings locally, but Caching is not specific to this package.</p>
-<p>The <strong>/article</strong> endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing but again all functionality (like tap-and-translate) is implemented by the package which it invokes. </p>
-<p>Both packages share a need to contact the Zeeguu API once in a while, and thus this functionality has been abstracted into a common class: <code>ZeeguuRequests</code>.</p>
+<p>The Flask server defines two endpoints accessible if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. </p>
+<p>The root endpoint delivers the articles.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, while all the functionality is implemented by the package which it invokes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.</p>
+<p>The <strong>/article</strong> endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing, while all the functionality (like tap-and-translate) is implemented by the package which it invokes. </p>
+<p>Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: <code>ZeeguuRequests</code>.</p>
 <h2 id="in-more-detail">In more detail</h2>
 <h3 id="subscription">Subscription</h3>
 <p><img src="./manual/asset/subscription.png" alt="Subscription UML"></p>
-<p>The subscription package allows for modifying the users feeds and listing the available articles for the feeds the user is currently subscribed to. The <strong>LanguageMenu</strong> class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. <strong>FeedSubscriber</strong> thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. <strong>SubscriptionList</strong> manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. A change to this class calls for a change to the ArticleList. <strong>ArticleList</strong> manages a list of all possible articles to read, and uses the <strong>Cache</strong> class to do this efficiently.</p>
+<p>The subscription package allows for modifying the user&apos;s feeds and listing the available articles for the feeds the user is currently subscribed to. The <strong>LanguageMenu</strong> class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. <strong>FeedSubscriber</strong> thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. <strong>SubscriptionList</strong> manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. It uses the <strong>Notifier</strong> in order to inform the user of subscription problems (such as a failure to subscribe). A change to this class calls for a change to the ArticleList. This happens by firing an Event that ArticleList listenes to, with the changed data appended to the detail attribute of the Event. <strong>ArticleList</strong> manages a list of all possible articles to read, and uses the <strong>Cache</strong> class to do this efficiently. When there are no feeds to render article links for, is calls for the NoFeedTour object to show. The <strong>NoFeedTour</strong> class allows for showing a webpage styling that motivates the user to subscribe to more feeds.</p>
 <h3 id="translation">Translation</h3>
 <p><img src="./manual/asset/translation.png" alt="Translation UML"></p>
-<p>The translation package allows for translating context that is wrapped with the custom html tags (&apos;zeeguu&apos;). The translation is the result of <strong>Translator</strong> interfacing with the Zeeguu API via the <strong>ZeeguuRequests</strong>. The <strong>AlterMenu</strong> serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation. <strong>Notifier</strong> informs the user whenever alternative translations are unavailable. Context subject for translation is also available for text to speech functionality. This is achieved with the <strong>Speaker</strong> class, which contains a dynamic utterance object, for which parameters such as language and text are supplied upon text to speech request.</p>
+<p>The translation package allows for translating context that is wrapped with the custom html tags (&apos;zeeguu&apos;). The translation is the result of <strong>Translator</strong> interfacing with the Zeeguu API via the <strong>ZeeguuRequests</strong>. The <strong>AlterMenu</strong> serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation. Moreover, it gives the user the possibility to suggest his own version of translation. The context, subject for translation, is also available for text to speech functionality. This is achieved with the <strong>Speaker</strong> class, which contains uses an utterance object, for which parameters such as language and text are supplied upon text to speech request. The <strong>UndoStack</strong> provides undo functionality to the reading page, reflected onto the translated words. It is used to save the state of the content page and the changes made to it onto a stack, from which the previous state can then be retrieved and set up.</p>
 <h3 id="zeeguurequests">ZeeguuRequests</h3>
 <p><img src="./manual/asset/ZeeguuRequests.png" alt="Subscription UML"></p>
 <p>The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST and GET endpoints to communicate with. Communication is handled asynchronously to force responsiveness of the application. Thus, server reply messages need to be handled by a callback method that you supply yourselves.</p>
 <h3 id="cache">Cache</h3>
 <p><img src="./manual/asset/Cache.png" alt="Subscription UML"></p>
 <p>The Cache class abstracts the implementation of storing user data locally. It allows us, if supported by the browser, to not be forced in querying zeeguu about identical data we requested shortly before. This increases responsiveness of the application whilst decreasing server workload.</p>
+<h3 id="notifier">Notifier</h3>
+<p><img src="./manual/asset/Notifier.png" alt="Notifier UML">
+The Notifier class binds itself to a document element that is capable of showing small pop-up messages at the bottom of the screen. It will ignore notification requests when they are identical to the currently displayed message, in order to reduce spamming the user with redundant information.</p>
 </div>
 </div>
 </div>

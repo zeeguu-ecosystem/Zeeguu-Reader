@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -33,21 +33,23 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import AlterMenu from &apos;<span><a href="file/app/translation/AlterMenu.js.html#lineNumber9">zeeguu-umr/app/translation/AlterMenu.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import AlterMenu from &apos;<span><a href="file/app/translation/AlterMenu.js.html#lineNumber9">./app/translation/AlterMenu.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
@@ -203,13 +205,13 @@ alter menu (i.e.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-close">close</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-build">build</a></span></span><span data-ice="signature">($tran: <span>jQuery</span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p> Hide the alter menu.</p>
+        <div data-ice="description"><p>Create and open the alternative translation menu.</p>
 </div>
       </div>
     </td>
@@ -231,7 +233,35 @@ alter menu (i.e.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-construct">construct</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, transCount: <span>int</span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-close">close</a></span></span><span data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p> Hide (close) the alter menu.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-construct">construct</a></span></span><span data-ice="signature">($tran: <span>jQuery</span>, transCount: <span>int</span>)</span>
         </p>
       </div>
       <div>
@@ -260,13 +290,13 @@ append these to the alter menu.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-constructAndOpen">constructAndOpen</a></span></span><span data-ice="signature">(htmlTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-isOpen">isOpen</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Create and open the alternative translation menu.</p>
+        <div data-ice="description"><p>Check whether the alter menu is an open state.</p>
 </div>
       </div>
     </td>
@@ -288,13 +318,13 @@ append these to the alter menu.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-isOpen">isOpen</a></span></span><span data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-open">open</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Check whether the alter menu is an open state.</p>
+        <div data-ice="description"><p> Open the alter menu.</p>
 </div>
       </div>
     </td>
@@ -350,7 +380,35 @@ append these to the alter menu.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_place">_place</a></span></span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_appendInputField">_appendInputField</a></span></span><span data-ice="signature">($tran: <span>jQuery</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Appends the input field for user alternative, to the alter menu.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_place">_place</a></span></span><span data-ice="signature">($tran: <span>jQuery</span>)</span>
         </p>
       </div>
       <div>
@@ -541,6 +599,68 @@ alter menu (i.e. open or closed).</p>
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-build">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">build</span><span data-ice="signature">($tran: <span>jQuery</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber24">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Create and open the alternative translation menu. </p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">$tran</td>
+      <td data-ice="type"><span>jQuery</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>jQuery element encompasing the &lt;tran&gt; tag, 
+for which to present the alter menu.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-close">
     <span class="access" data-ice="access">public</span>
     
@@ -552,14 +672,14 @@ alter menu (i.e. open or closed).</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber100">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber114">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p> Hide the alter menu. </p>
+  <div data-ice="description"><p> Hide (close) the alter menu. </p>
 </div>
 
   
@@ -592,11 +712,11 @@ alter menu (i.e. open or closed).</p>
     
     
     
-    <span data-ice="name">construct</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, transCount: <span>int</span>)</span>
+    <span data-ice="name">construct</span><span data-ice="signature">($tran: <span>jQuery</span>, transCount: <span>int</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber43">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber44">source</a></span></span>
     </span>
   </h3>
 
@@ -618,10 +738,10 @@ append these to the alter menu. </p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
+      <td data-ice="name" data-depth="0">$tran</td>
+      <td data-ice="type"><span>jQuery</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Tag from which the alternative transaltions are retrieved.</p>
+      <td data-ice="description"><p>Reference tag from which the alternative translations are retrieved.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
@@ -629,67 +749,6 @@ append these to the alter menu. </p>
       <td data-ice="type"><span>int</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Number of present alternative translations.</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-constructAndOpen">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">constructAndOpen</span><span data-ice="signature">(htmlTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber23">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Create and open the alternative translation menu. </p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">htmlTag</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Document element for which to present the alter menu.</p>
 </td>
     </tr>
 </tbody>
@@ -726,7 +785,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber111">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber134">source</a></span></span>
     </span>
   </h3>
 
@@ -772,6 +831,50 @@ append these to the alter menu. </p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-open">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">open</span><span data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber124">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p> Open the alter menu. </p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-reposition">
     <span class="access" data-ice="access">public</span>
     
@@ -783,7 +886,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber107">source</a></span></span>
     </span>
   </h3>
 
@@ -818,6 +921,67 @@ append these to the alter menu. </p>
 <h2 data-ice="title">Private Methods</h2>
 
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_appendInputField">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_appendInputField</span><span data-ice="signature">($tran: <span>jQuery</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber62">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Appends the input field for user alternative, to the alter menu.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">$tran</td>
+      <td data-ice="type"><span>jQuery</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Reference tag from which the suggested translation is retrieved.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-_place">
     <span class="access" data-ice="access">private</span>
     
@@ -825,11 +989,11 @@ append these to the alter menu. </p>
     
     
     
-    <span data-ice="name">_place</span><span data-ice="signature">(zeeguuTag: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
+    <span data-ice="name">_place</span><span data-ice="signature">($tran: <span>jQuery</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber72">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber88">source</a></span></span>
     </span>
   </h3>
 
@@ -850,8 +1014,8 @@ append these to the alter menu. </p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">zeeguuTag</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
+      <td data-ice="name" data-depth="0">$tran</td>
+      <td data-ice="type"><span>jQuery</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Reference tag for the placement of the alter menu.</p>
 </td>
@@ -890,7 +1054,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber59">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber77">source</a></span></span>
     </span>
   </h3>
 

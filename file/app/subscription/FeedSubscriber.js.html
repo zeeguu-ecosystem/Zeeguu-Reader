@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -33,15 +33,17 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -100,52 +102,26 @@ export default class FeedSubscriber {
      * @param {Object[]} data - A list of feeds the user can subscribe to.
      */
     _loadFeedOptions(data) {
-        var template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
-        for (var i = 0; i &lt; data.length; i++) {
-            var addableData = {
-                addableTitle: data[i][&apos;title&apos;],
-                addableID: data[i][&apos;id&apos;],
-                addableImage: data[i][&apos;image_url&apos;]
-            };
-            var feedOption = $(Mustache.render(template, addableData));
-            var subscribeButton = $(feedOption.find(&quot;.subscribeButton&quot;));
-            var _follow = this._follow.bind(this);
-            subscribeButton.click(function () {
-                _follow($(this).parent());
-            });
-            var feedIcon = $(feedOption.find(&quot;.feedIcon&quot;));
+        let template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
+        for (let i = 0; i &lt; data.length; i++) {
+            let feedOption = $(Mustache.render(template, data[i]));
+            let subscribeButton = $(feedOption.find(&quot;.subscribeButton&quot;));
+
+            subscribeButton.click(
+                function (data, feedOption, subscriptionList) {
+                    return function() {
+                        subscriptionList.follow(data);
+                        $(feedOption).fadeOut();
+                    };
+            }(data[i], feedOption, this.subscriptionList));
+
+            let feedIcon = $(feedOption.find(&quot;.feedIcon&quot;));
             feedIcon.on( &quot;error&quot;, function () {
                 $(this).unbind(&quot;error&quot;).attr(&quot;src&quot;, &quot;static/images/noAvatar.png&quot;);
             });
             $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
         }
     }
-
-    /**
-     * Subscribe to a new feed, calls the zeeguu server.
-     * Uses {@link ZeeguuRequests}.
-     * @param {Element} feed - Document element containing the id of the feed.
-     */
-    _follow(feed) {
-        var feedID = $(feed).attr(&apos;addableID&apos;);
-        var callback = ((data) =&gt; this._onFeedFollowed(feed, data)).bind(this);
-        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feedID}, callback);
-    }
-
-    /**
-     * A feed has just been followed, so we refresh the {@link SubscriptionList} and remove the
-     * mentioned feed from the addable feed list.
-     * Callback function for Zeeguu.
-     * @param {Element} feed - Document element containing the id of the feed.
-     * @param {string} data - Reply from the server.
-     */
-    _onFeedFollowed(feed, data) {
-        if (data == &quot;OK&quot;) {
-            this.subscriptionList.load();
-            $(feed).fadeOut();
-        }
-    }
-
 };
 </code></pre>
 

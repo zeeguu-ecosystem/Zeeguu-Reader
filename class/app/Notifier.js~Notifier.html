@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
+  <base data-ice="baseUrl" href="../../">
   <title data-ice="title">Notifier | Zeeguu UMR Client API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -33,6 +33,7 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
@@ -40,21 +41,21 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Notifier from &apos;<span><a href="file/app/translation/Notifier.js.html#lineNumber7">zeeguu-umr/app/translation/Notifier.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Notifier from &apos;<span><a href="file/app/Notifier.js.html#lineNumber7">./app/Notifier.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/translation/Notifier.js.html#lineNumber7">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/Notifier.js.html#lineNumber7">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -107,7 +108,7 @@ Does not repeat the same message if it currently displays it.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
       <div>
@@ -142,7 +143,7 @@ Does not repeat the same message if it currently displays it.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-member-lastMessage">lastMessage</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html#instance-member-lastMessage">lastMessage</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -176,7 +177,7 @@ Does not repeat the same message if it currently displays it.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-method-notify">notify</a></span></span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html#instance-method-notify">notify</a></span></span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
@@ -213,7 +214,7 @@ Does not repeat the same message if it currently displays it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber11">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/Notifier.js.html#lineNumber11">source</a></span></span>
     </span>
   </h3>
 
@@ -260,7 +261,7 @@ Does not repeat the same message if it currently displays it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber12">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/Notifier.js.html#lineNumber12">source</a></span></span>
     </span>
   </h3>
 
@@ -306,7 +307,7 @@ Does not repeat the same message if it currently displays it.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/Notifier.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 

@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -33,27 +33,29 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import SubscriptionList from &apos;<span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber10">zeeguu-umr/app/subscription/SubscriptionList.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import SubscriptionList from &apos;<span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber11">./app/subscription/SubscriptionList.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber10">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber11">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -106,13 +108,13 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(articleList: <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Bind with the <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span> and initialise an empty list of feeds.</p>
+        <div data-ice="description"><p>Initialise an empty <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span> of feeds and a <span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span> to notify the user of failures.</p>
 </div>
       </div>
     </td>
@@ -141,7 +143,7 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-member-articleList">articleList</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-member-feedList">feedList</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -168,7 +170,7 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-member-feedList">feedList</a></span></span><span data-ice="signature">: <span>*</span></span>
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-member-notifier">notifier</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -209,6 +211,34 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         
         
         <div data-ice="description"><p>Remove all feeds from the list, clear <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span> as well.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-follow">follow</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Subscribe to a new feed, calls the zeeguu server.</p>
 </div>
       </div>
     </td>
@@ -292,6 +322,62 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         <p>
           
           
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_addSubscription">_addSubscription</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Add the feed to the list of subscribed feeds.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_changed">_changed</a></span></span><span data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Fire an event to notify change in this class.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
           <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_loadSubscriptions">_loadSubscriptions</a></span></span><span data-ice="signature">(data: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span>)</span>
         </p>
       </div>
@@ -320,7 +406,35 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_onFeedUnfollowed">_onFeedUnfollowed</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_onFeedFollowed">_onFeedFollowed</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, reply: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>A feed has just been followed, so we call the <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span> to update its list of articles.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_onFeedUnfollowed">_onFeedUnfollowed</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, reply: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
@@ -348,7 +462,7 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_remove">_remove</a></span></span><span data-ice="signature">(feedNode: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_remove">_remove</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -376,7 +490,7 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_unfollow">_unfollow</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_unfollow">_unfollow</a></span></span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -409,7 +523,7 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(articleList: <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">()</span>
     <span class="right-info">
       
       
@@ -420,29 +534,12 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
   
   
   
-  <div data-ice="description"><p>Bind with the <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span> and initialise an empty list of feeds.</p>
+  <div data-ice="description"><p>Initialise an empty <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></span> of feeds and a <span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span> to notify the user of failures.</p>
 </div>
 
   
 
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">articleList</td>
-      <td data-ice="type"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>List of all articles available to the user.</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
+  <div data-ice="properties">
 </div>
 
   
@@ -466,14 +563,14 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-articleList">
+  <h3 data-ice="anchor" id="instance-member-feedList">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">articleList</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">feedList</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
@@ -509,14 +606,14 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-feedList">
+  <h3 data-ice="anchor" id="instance-member-notifier">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">feedList</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">notifier</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
@@ -599,6 +696,68 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-follow">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">follow</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber85">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Subscribe to a new feed, calls the zeeguu server.
+Uses <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span>.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">feed</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Data of the particular feed to subscribe to.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-load">
     <span class="access" data-ice="access">public</span>
     
@@ -655,7 +814,7 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber39">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber38">source</a></span></span>
     </span>
   </h3>
 
@@ -690,6 +849,111 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
 <h2 data-ice="title">Private Methods</h2>
 
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_addSubscription">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_addSubscription</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber63">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Add the feed to the list of subscribed feeds.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">feed</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Data of the particular feed to add to the list.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_changed">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_changed</span><span data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber147">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Fire an event to notify change in this class.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-_loadSubscriptions">
     <span class="access" data-ice="access">private</span>
     
@@ -701,7 +965,7 @@ It updates the <span><a href="class/app/subscription/ArticleList.js~ArticleList.
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber51">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber50">source</a></span></span>
     </span>
   </h3>
 
@@ -753,6 +1017,76 @@ makes a call to <span><a href="class/app/subscription/ArticleList.js~ArticleList
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_onFeedFollowed">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_onFeedFollowed</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, reply: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber98">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>A feed has just been followed, so we call the <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span> to update its list of articles.
+If there was a failure to follow the feed, we notify the user.
+Callback function for Zeeguu.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">feed</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Data of the particular feed that has been subscribed to.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">reply</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Reply from the server.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-_onFeedUnfollowed">
     <span class="access" data-ice="access">private</span>
     
@@ -760,11 +1094,11 @@ makes a call to <span><a href="class/app/subscription/ArticleList.js~ArticleList
     
     
     
-    <span data-ice="name">_onFeedUnfollowed</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>, data: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+    <span data-ice="name">_onFeedUnfollowed</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, reply: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber97">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber125">source</a></span></span>
     </span>
   </h3>
 
@@ -772,6 +1106,7 @@ makes a call to <span><a href="class/app/subscription/ArticleList.js~ArticleList
   
   
   <div data-ice="description"><p>A feed has just been removed, so we remove the mentioned feed from the subscription list.
+On failure we notify the user.
 Callback function for zeeguu.</p>
 </div>
 
@@ -787,13 +1122,13 @@ Callback function for zeeguu.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">feed</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Feed element of the list that is to be removed.</p>
+      <td data-ice="description"><p>Data of the particular feed to that has been unfollowed.</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">data</td>
+      <td data-ice="name" data-depth="0">reply</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Server reply.</p>
@@ -829,11 +1164,11 @@ Callback function for zeeguu.</p>
     
     
     
-    <span data-ice="name">_remove</span><span data-ice="signature">(feedNode: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
+    <span data-ice="name">_remove</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber108">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber139">source</a></span></span>
     </span>
   </h3>
 
@@ -855,10 +1190,10 @@ Makes sure the associated articles are removed as well by notifying <span><a hre
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">feedNode</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
+      <td data-ice="name" data-depth="0">feed</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>The document element (feed) to remove.</p>
+      <td data-ice="description"><p>Data of the particular feed to remove from the list.</p>
 </td>
     </tr>
 </tbody>
@@ -891,11 +1226,11 @@ Makes sure the associated articles are removed as well by notifying <span><a hre
     
     
     
-    <span data-ice="name">_unfollow</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span>)</span>
+    <span data-ice="name">_unfollow</span><span data-ice="signature">(feed: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber84">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/SubscriptionList.js.html#lineNumber112">source</a></span></span>
     </span>
   </h3>
 
@@ -918,9 +1253,9 @@ Uses <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuReque
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">feed</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a></span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Feed element of the list to un-subscribe from.</p>
+      <td data-ice="description"><p>Data of the particular feed to unfollow.</p>
 </td>
     </tr>
 </tbody>

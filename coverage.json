@@ -1,20 +1,22 @@
 {
-  "coverage": "86.36%",
-  "expectCount": 66,
-  "actualCount": 57,
+  "coverage": "85.54%",
+  "expectCount": 83,
+  "actualCount": 71,
   "files": {
     "app/translation/AlterMenu.js": {
-      "expectCount": 11,
-      "actualCount": 9,
+      "expectCount": 13,
+      "actualCount": 11,
       "undocumentLines": [
         15,
         16
       ]
     },
     "app/subscription/ArticleList.js": {
-      "expectCount": 6,
-      "actualCount": 6,
-      "undocumentLines": []
+      "expectCount": 8,
+      "actualCount": 7,
+      "undocumentLines": [
+        18
+      ]
     },
     "app/Cache.js": {
       "expectCount": 6,
@@ -22,8 +24,8 @@
       "undocumentLines": []
     },
     "app/subscription/FeedSubscriber.js": {
-      "expectCount": 10,
-      "actualCount": 8,
+      "expectCount": 8,
+      "actualCount": 6,
       "undocumentLines": [
         16,
         15
@@ -36,14 +38,19 @@
         16
       ]
     },
-    "app/translation/Notifier.js": {
+    "app/subscription/NoFeedTour.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "app/Notifier.js": {
       "expectCount": 4,
       "actualCount": 3,
       "undocumentLines": [
         12
       ]
     },
-    "app/Speaker.js": {
+    "app/translation/Speaker.js": {
       "expectCount": 2,
       "actualCount": 1,
       "undocumentLines": [
@@ -51,17 +58,26 @@
       ]
     },
     "app/subscription/SubscriptionList.js": {
-      "expectCount": 11,
-      "actualCount": 9,
+      "expectCount": 15,
+      "actualCount": 13,
       "undocumentLines": [
         16,
         17
       ]
     },
     "app/translation/Translator.js": {
-      "expectCount": 6,
-      "actualCount": 6,
-      "undocumentLines": []
+      "expectCount": 9,
+      "actualCount": 8,
+      "undocumentLines": [
+        15
+      ]
+    },
+    "app/translation/UndoStack.js": {
+      "expectCount": 5,
+      "actualCount": 4,
+      "undocumentLines": [
+        13
+      ]
     },
     "app/zeeguuRequests.js": {
       "expectCount": 5,

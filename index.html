@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -52,6 +52,7 @@
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#translation" data-ice="link">Translation</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#zeeguurequests" data-ice="link">ZeeguuRequests</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#cache" data-ice="link">Cache</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/design/architecture.html"><a href="manual/design/architecture.html#notifier" data-ice="link">Notifier</a></li>
 <li data-ice="manualNav" class="indent-h1 manual-color manual-color-design" data-section-count="&#x25A0;" data-link="manual/design/UI.html"><a href="manual/design/UI.html" data-ice="link">UI Design</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#goals" data-ice="link">Goals</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/design/UI.html"><a href="manual/design/UI.html#implementation" data-ice="link">Implementation</a></li>
@@ -61,7 +62,6 @@
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#newspaper" data-ice="link">Newspaper</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#beautifulsoup" data-ice="link">Beautifulsoup</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#pytest" data-ice="link">Pytest</a></li>
-<li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#gunicorn" data-ice="link">Gunicorn</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#javascript" data-ice="link">Javascript</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#mdl" data-ice="link">MDL</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/design/dependencies.html"><a href="manual/design/dependencies.html#nodejs" data-ice="link">NodeJS</a></li>
@@ -79,7 +79,6 @@
 <li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#local-deployment" data-ice="link">Local deployment</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#remote-deployment" data-ice="link">Remote deployment</a></li>
 <li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#heroku" data-ice="link">Heroku</a></li>
-<li data-ice="manualNav" class="indent-h3" data-link="manual/installation/build_and_run.html"><a href="manual/installation/build_and_run.html#apache" data-ice="link">Apache</a></li>
 </ul>
   </div>
 <div data-ice="manual" data-toc-name="usage">
@@ -93,6 +92,13 @@
 <li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html" data-ice="link">Try it!</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#stable" data-ice="link">Stable</a></li>
 <li data-ice="manualNav" class="indent-h2" data-link="manual/usage/tryit.html"><a href="manual/usage/tryit.html#development" data-ice="link">Development</a></li>
+<li data-ice="manualNav" class="indent-h1 manual-color manual-color-usage" data-section-count="&#x25A0;&#x25A0;" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html" data-ice="link">Support List</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#working" data-ice="link">Working</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#broken" data-ice="link">Broken</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#shows-cookie-dialog" data-ice="link">Shows cookie dialog</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#not-returning-articles" data-ice="link">Not returning articles</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#-near-empty-articles" data-ice="link">(Near) empty articles</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/usage/support_list.html"><a href="manual/usage/support_list.html#undetermined" data-ice="link">Undetermined</a></li>
 </ul>
   </div>
 <div data-ice="manual" data-toc-name="reference">
@@ -129,7 +135,7 @@
 <p>Zeeguu UMR is at its core a University project (<a href="http://www.rug.nl">Rijksuniversiteit Groningen</a>, Netherlands), developed by two students:</p>
 <p><a href="https://github.com/DanChirtoaca"><img src="https://avatars1.githubusercontent.com/DanChirtoaca?s=32" alt=" Dan Chirtoaca"></a> Dan Chirtoaca,
 <a href="https://github.com/Lukeslux"><img src="https://avatars1.githubusercontent.com/Lukeslux?s=32" alt="Luc van den Brand"></a> Luc van den Brand.</p>
-<p>Under the supervision of : <a href="https://github.com/Lukeslux"><img src="https://avatars1.githubusercontent.com/mircealungu?s=32" alt="Mircea Lungu"></a> Dr. Mircea Lungu.</p>
+<p>Under the supervision of : <a href="https://github.com/MirceaLungu"><img src="https://avatars1.githubusercontent.com/mircealungu?s=32" alt="Mircea Lungu"></a> Dr. Mircea Lungu.</p>
 </div>
 
   <p class="manual-badge" data-ice="manualBadge"><img src="./manual-badge.svg"></p>
@@ -164,15 +170,16 @@
       <div class="manual-card">
         <div data-ice="card"><h1>Architectural Design</h1><p>The development of the Universal Multilingual Reader started off with the following design goals in mind:</p><ul>
 <li>Aim for a clear separation of concerns in order to improve modularity of the system.</li>
-<li>Comprehensability of code.</li>
+<li>Comprehensibility of the code.</li>
 <li>Compatability amoung most modern web browsers and platforms.</li>
 <li>Fault tolerance.</li>
 <li>Responsiveness.</li>
 <li>The implementation should strive for efficiency and avoid redundancy.</li>
-</ul><p>In the following sections, we will show you how we tried to follow these goals.</p><h2>Making modules</h2><p><a href="https://en.wikipedia.org/wiki/ECMAScript">Ecmascript</a> 2015 (ES2015) introduced a significant addition to the syntax Javascript implements, amoung which, most important to us, are <em>modules</em>. However, current browser support for ES2015 is low: we do not have the luxury of only deveoping for the possible future where compatability might increase. To resolve this issue, transpilers like <a href="https://babeljs.io/">Babel</a> exist: a program that convert next generation Javascript into current day ubiquitously compatible Javascript. </p><p><a href="https://webpack.js.org/">Webpack</a> builds on top of Babel, which allows you to enerate a single (neatly minified) backwards compatible file for each entrypoint. Using Webpack we write all our code in the readable and modular ES2016 definition, define a <code>main.js</code> for every package as an entry point, and then transpile it to two single files.  These  minified files can be included into our HTML documents, which can invoke the files to allow them to perform their tasks.</p><ul>
+</ul><p>In the following sections, we will present how we tried to follow these goals.</p><h2>Making modules</h2><p><a href="https://en.wikipedia.org/wiki/ECMAScript">Ecmascript</a> 2015 (ES2015) introduced a significant addition to the syntax that Javascript implements, among which, most important to us, are <em>modules</em>. However, current browser support for ES2015 is low: we do not have the luxury of only developing for the possible future where compatability might increase. To resolve this issue, transpilers like <a href="https://babeljs.io/">Babel</a> exist: a program that converts next generation Javascript into current day, ubiquitously compatible, Javascript. </p><p><a href="https://webpack.js.org/">Webpack</a> builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible file for each entrypoint. Using Webpack we write all our code in the readable and modular ES2016 definition, define a <code>main.js</code> for every package as an entry point, and then transpile it to two single files. These minified files can be included into our HTML documents, which can invoke the files to allow them to perform their tasks.</p><ul>
 <li><code>subscription.entry.js</code>.</li>
 <li><code>translation.entry.js</code>.</li>
-</ul><h2>Design overview</h2><p>Using these tools, we will were able to define our system as follows:</p><p><img src="./manual/asset/overview.png" alt="Overview Diagram"></p><p>The Flask server defines two endpoints accessable if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. </p><p>The <strong>/articles</strong> endpoint simply delivers the article.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, but all functionality is implemented by the package which it invokes. The subscription package make use of the Cache class in order to store article listings locally, but Caching is not specific to this package.</p><p>The <strong>/article</strong> endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing but again all functionality (like tap-and-translate) is implemented by the package which it invokes. </p><p>Both packages share a need to contact the Zeeguu API once in a while, and thus this functionality has been abstracted into a common class: <code>ZeeguuRequests</code>.</p><h2>In more detail</h2><h3>Subscription</h3><p><img src="./manual/asset/subscription.png" alt="Subscription UML"></p><p>The subscription package allows for modifying the users feeds and listing the available articles for the feeds the user is currently subscribed to. The <strong>LanguageMenu</strong> class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. <strong>FeedSubscriber</strong> thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. <strong>SubscriptionList</strong> manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. A change to this class calls for a change to the ArticleList. <strong>ArticleList</strong> manages a list of all possible articles to read, and uses the <strong>Cache</strong> class to do this efficiently.</p><h3>Translation</h3><p><img src="./manual/asset/translation.png" alt="Translation UML"></p><p>The translation package allows for translating context that is wrapped with the custom html tags (&apos;zeeguu&apos;). The translation is the result of <strong>Translator</strong> interfacing with the Zeeguu API via the <strong>ZeeguuRequests</strong>. The <strong>AlterMenu</strong> serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation. <strong>Notifier</strong> informs the user whenever alternative translations are unavailable. Context subject for translation is also available for text to speech functionality. This is achieved with the <strong>Speaker</strong> class, which contains a dynamic utterance object, for which parameters such as language and text are supplied upon text to speech request.</p><h3>ZeeguuRequests</h3><p><img src="./manual/asset/ZeeguuRequests.png" alt="Subscription UML"></p><p>The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST and GET endpoints to communicate with. Communication is handled asynchronously to force responsiveness of the application. Thus, server reply messages need to be handled by a callback method that you supply yourselves.</p><h3>Cache</h3><p><img src="./manual/asset/Cache.png" alt="Subscription UML"></p><p>The Cache class abstracts the implementation of storing user data locally. It allows us, if supported by the browser, to not be forced in querying zeeguu about identical data we requested shortly before. This increases responsiveness of the application whilst decreasing server workload.</p></div>
+</ul><h2>Design overview</h2><p>Using these tools, we will were able to define our system as follows:</p><p><img src="./manual/asset/overview.png" alt="Overview Diagram"></p><p>The Flask server defines two endpoints accessible if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. </p><p>The root endpoint delivers the articles.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, while all the functionality is implemented by the package which it invokes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.</p><p>The <strong>/article</strong> endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing, while all the functionality (like tap-and-translate) is implemented by the package which it invokes. </p><p>Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: <code>ZeeguuRequests</code>.</p><h2>In more detail</h2><h3>Subscription</h3><p><img src="./manual/asset/subscription.png" alt="Subscription UML"></p><p>The subscription package allows for modifying the user&apos;s feeds and listing the available articles for the feeds the user is currently subscribed to. The <strong>LanguageMenu</strong> class retrieves the available languages and requests FeedSubscriber  to update the list of available subscriptions whenever a particular language is selected. <strong>FeedSubscriber</strong> thus retrieves feed options and allows for subscribing to those feeds. Subscribing to a feed notifies SubscriptionList. <strong>SubscriptionList</strong> manages the list of all currently subscribed-to feeds and allows for removing a feed from that list. It uses the <strong>Notifier</strong> in order to inform the user of subscription problems (such as a failure to subscribe). A change to this class calls for a change to the ArticleList. This happens by firing an Event that ArticleList listenes to, with the changed data appended to the detail attribute of the Event. <strong>ArticleList</strong> manages a list of all possible articles to read, and uses the <strong>Cache</strong> class to do this efficiently. When there are no feeds to render article links for, is calls for the NoFeedTour object to show. The <strong>NoFeedTour</strong> class allows for showing a webpage styling that motivates the user to subscribe to more feeds.</p><h3>Translation</h3><p><img src="./manual/asset/translation.png" alt="Translation UML"></p><p>The translation package allows for translating context that is wrapped with the custom html tags (&apos;zeeguu&apos;). The translation is the result of <strong>Translator</strong> interfacing with the Zeeguu API via the <strong>ZeeguuRequests</strong>. The <strong>AlterMenu</strong> serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation. Moreover, it gives the user the possibility to suggest his own version of translation. The context, subject for translation, is also available for text to speech functionality. This is achieved with the <strong>Speaker</strong> class, which contains uses an utterance object, for which parameters such as language and text are supplied upon text to speech request. The <strong>UndoStack</strong> provides undo functionality to the reading page, reflected onto the translated words. It is used to save the state of the content page and the changes made to it onto a stack, from which the previous state can then be retrieved and set up.</p><h3>ZeeguuRequests</h3><p><img src="./manual/asset/ZeeguuRequests.png" alt="Subscription UML"></p><p>The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST and GET endpoints to communicate with. Communication is handled asynchronously to force responsiveness of the application. Thus, server reply messages need to be handled by a callback method that you supply yourselves.</p><h3>Cache</h3><p><img src="./manual/asset/Cache.png" alt="Subscription UML"></p><p>The Cache class abstracts the implementation of storing user data locally. It allows us, if supported by the browser, to not be forced in querying zeeguu about identical data we requested shortly before. This increases responsiveness of the application whilst decreasing server workload.</p><h3>Notifier</h3><p><img src="./manual/asset/Notifier.png" alt="Notifier UML">
+The Notifier class binds itself to a document element that is capable of showing small pop-up messages at the bottom of the screen. It will ignore notification requests when they are identical to the currently displayed message, in order to reduce spamming the user with redundant information.</p></div>
         <a data-ice="link" href="manual/design/architecture.html"></a>
       </div>
     </div>
@@ -186,14 +193,14 @@
 <div class="manual-card-wrap" data-ice="cards">
       <h1 data-ice="label" class="manual-color manual-color-design" data-section-count="&#x25A0;&#x25A0;&#x25A0;"><span data-ice="label-inner">Dependencies</span></h1>
       <div class="manual-card">
-        <div data-ice="card"><h1>Dependencies</h1><p>Just like almost any other piece of code, it does not exist in isolation. Our project stands on the shoulders of giants, of we will discuss the biggest ones below (some dependencies require other dependencies, these are not mentioned).</p><h2>Python</h2><p>You can find a listing of <strong>all</strong> dependencies in our <code>requirements.txt</code> file. We use Python 3.6 in order to make use of the latest advancements in the dependencies we use (for example, Newspaper for Python 2 is depricated and does not parse webpages as well).</p><h3>Flask</h3><p>A framework was needed to allow us to run a <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> server in Python. We decided on using the <a href="http://flask.pocoo.org/">Flask microframework</a> for its comprehensability, simplicity and its active community supporting it. Furthermore, it allows us to share and reuse code more easily between other services of Zeeguu which also implement most of their functionality using Flask.</p><p>Flask (originally created as <a href="http://lucumr.pocoo.org/2010/4/3/april-1st-post-mortem/">an april-fools joke</a>) is, as of this moment in writing, the most popular Python web development framework on GitHub. </p><h3>Newspaper</h3><p>We use the <a href="https://newspaper.readthedocs.io/en/latest/">Newspaper</a> library in order to intelligently filter cluttered web-pages and extract only the important parts: the title and the content.</p><h3>Beautifulsoup</h3><p><a href="https://www.crummy.com/software/BeautifulSoup/">Beautifulsoup</a> gives us the ability to easily query and modify elements of HTML on the server, which is needed in order to wrap words with the Zeeguu tag.</p><h3>Pytest</h3><p><a href="https://docs.pytest.org/en/latest/">Pytest</a> is a widely adopted testing framework for python. It&apos;s more simple and elegant than the build-in testing tools Python provides (decreasing the chance of bugs in our bug-testing tools).</p><h3>Gunicorn</h3><p><a href="http://gunicorn.org/">Gunicorn</a> is only used on the Heroku server. It allows it to handle multiple users concurrently.</p><h2>Javascript</h2><p>You can find a listing of <strong>all</strong> dependencies in our <code>package.json</code> file.</p><h3>MDL</h3><p>We use the <a href="https://getmdl.io/started/">Material Design Lite</a> (MDL) library to allow for cross-device Material Design styled web pages. These pages gracefully degrade in older browsers. MDL is very light weight, runs locally, and does not rely on any javascript frameworks.</p><h3>NodeJS</h3><p><a href="https://nodejs.org/en/">NodeJS</a> is used to manage our dependencies and keeping everyting up-to-date. The <code>package.json</code> file lists these dependencies (where we define a difference between release and development requirements).</p><h3>WebPack</h3><p><a href="https://webpack.js.org/">Webpack</a>, as discussed earlier, allows us to transpile our Ecmascript 2015 code to backwards-compatible Javascript whilst minifying and compining the modules into neat and efficient files.</p><h3>Dialog Polyfill</h3><p><a href="https://github.com/GoogleChrome/dialog-polyfill">Dialog Polyfill</a> fixes dialog window support for browsers that do not have it, such as Firefox.</p><h3>Mustache</h3><p><a href="https://mustache.github.io">Mustache</a> is a template rendering library. Templates can be reused to adaptivly modify the content of our pages based on user feedback. For example, we use it to generate the list of available articles.</p></div>
+        <div data-ice="card"><h1>Dependencies</h1><p>Just like almost any other piece of code, it does not exist in isolation. Our project stands on the shoulders of giants, of we will discuss the biggest ones below (some dependencies require other dependencies, these are not mentioned).</p><h2>Python</h2><p>You can find a listing of <strong>all</strong> dependencies in our <code>requirements.txt</code> file. We use Python 3.6 in order to make use of the latest advancements in the dependencies we use (for example, Newspaper for Python 2 is depricated and does not parse webpages as well).</p><h3>Flask</h3><p>A framework was needed to allow us to run a <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a> server in Python. We decided on using the <a href="http://flask.pocoo.org/">Flask microframework</a> for its comprehensability, simplicity and its active community supporting it. Furthermore, it allows us to share and reuse code more easily between other services of Zeeguu which also implement most of their functionality using Flask.</p><p>Flask (originally created as <a href="http://lucumr.pocoo.org/2010/4/3/april-1st-post-mortem/">an april-fools joke</a>) is, as of this moment in writing, the most popular Python web development framework on GitHub. </p><h3>Newspaper</h3><p>We use the <a href="https://newspaper.readthedocs.io/en/latest/">Newspaper</a> library in order to intelligently filter cluttered web-pages and extract only the important parts: the title and the content.</p><h3>Beautifulsoup</h3><p><a href="https://www.crummy.com/software/BeautifulSoup/">Beautifulsoup</a> gives us the ability to easily query and modify elements of HTML on the server, which is needed in order to wrap words with the Zeeguu tag.</p><h3>Pytest</h3><p><a href="https://docs.pytest.org/en/latest/">Pytest</a> is a widely adopted testing framework for python. It&apos;s more simple and elegant than the build-in testing tools Python provides (decreasing the chance of bugs in our bug-testing tools).</p><h2>Javascript</h2><p>You can find a listing of <strong>all</strong> dependencies in our <code>package.json</code> file.</p><h3>MDL</h3><p>We use the <a href="https://getmdl.io/started/">Material Design Lite</a> (MDL) library to allow for cross-device Material Design styled web pages. These pages gracefully degrade in older browsers. MDL is very light weight, runs locally, and does not rely on any javascript frameworks.</p><h3>NodeJS</h3><p><a href="https://nodejs.org/en/">NodeJS</a> is used to manage our dependencies and keeping everyting up-to-date. The <code>package.json</code> file lists these dependencies (where we define a difference between release and development requirements).</p><h3>WebPack</h3><p><a href="https://webpack.js.org/">Webpack</a>, as discussed earlier, allows us to transpile our Ecmascript 2015 code to backwards-compatible Javascript whilst minifying and compining the modules into neat and efficient files.</p><h3>Dialog Polyfill</h3><p><a href="https://github.com/GoogleChrome/dialog-polyfill">Dialog Polyfill</a> fixes dialog window support for browsers that do not have it, such as Firefox.</p><h3>Mustache</h3><p><a href="https://mustache.github.io">Mustache</a> is a template rendering library. Templates can be reused to adaptivly modify the content of our pages based on user feedback. For example, we use it to generate the list of available articles.</p></div>
         <a data-ice="link" href="manual/design/dependencies.html"></a>
       </div>
     </div>
 <div class="manual-card-wrap" data-ice="cards">
       <h1 data-ice="label" class="manual-color manual-color-installation" data-section-count="&#x25A0;&#x25A0;"><span data-ice="label-inner">How to Build and Run</span></h1>
       <div class="manual-card">
-        <div data-ice="card"><h1>How to Build and Run</h1><h2>Sources</h2><p>All files needed to setup your own version of Zeeguu UMR can be cloned from this repository. The <strong>master</strong> branch contains the latest stable release, whilst <strong>development_core</strong> contains the in-development version.</p><h2>Setting up your development environment</h2><p>The sources include a small script called <code>dev_setup.sh</code>, which you should be able to execute on most UNIX compliant environments. It will try to install the needed packages, after which it will setup a virtual python environment consistent with <a href="https://virtualenvwrapper.readthedocs.io">virtualenv-wrapper</a> conventions. </p><p>In the case your system does not allow for this shell script to do all the work for you, or you desire a more custom configuration, you should be able to look at the script and perform the listed tasks manually.</p><h2>Local deployment</h2><p>Local deployment of the Zeeguu UMR system consists of the deployment of a Flask app, which is a relatively straightforward procedure automated in the <code>dev_launch.sh</code> script. Executing this script will launch your Flask server on <code>yourIP:5000</code>, but this can be easily changed to any IP-address or port you desire.</p><h2>Remote deployment</h2><h3>Heroku</h3><p>There are many methods and services that allow you to launch Zeeguu UMR on a non-local network, but we chose for the <a href="https://www.heroku.com">Heroku Cloud Platform</a>. It provides a basic free hosting plan that is good enough for development build publishing. In their implementation, you can simply push your code-base to your server-associated repository, and it will be build and executed there automatically. </p><p>If you intend to deploy on this platform as well, the repository has the required <em>Procfile</em> already included. In short: it simply launches <code>zeeguu_umr.py</code> with <a href="http://gunicorn.org">gunicorn</a>.</p><h3>Apache</h3><p>If you intend to deploy on a WSGI compliant server, we have included a <code>.wsgi</code> file which will allow you to do that.</p></div>
+        <div data-ice="card"><h1>How to Build and Run</h1><h2>Sources</h2><p>All files needed to setup your own version of Zeeguu UMR can be cloned from this repository. The <strong>master</strong> branch contains the latest stable release, whilst <strong>development_core</strong> contains the in-development version.</p><h2>Setting up your development environment</h2><p>The sources include a small script called <code>dev_setup.sh</code>, which you should be able to execute on most UNIX compliant environments. It will try to install the needed packages, after which it will setup a virtual python environment consistent with <a href="https://virtualenvwrapper.readthedocs.io">virtualenv-wrapper</a> conventions. </p><p>In the case your system does not allow for this shell script to do all the work for you, or you desire a more custom configuration, you should be able to look at the script and perform the listed tasks manually.</p><h2>Local deployment</h2><p>Before deployment, it is important to transpile and bundle our Ecmascript into the necessary entry-point files for Zeeguu UMR to run (refer to the Design documentation for information as to <em>why</em> this is done). If you managed to successfully setup your development environment, this should be as simple as running the command <code>webpack</code> in the root directory of this repository. The included configuration should take care of the rest.</p><p>Local deployment of the Zeeguu UMR system consists of the deployment of a Flask app, which is a relatively straightforward procedure automated in the <code>dev_launch.sh</code> script. Executing this script will launch your Flask server on <code>yourIP:5000</code>, but this can be easily changed to any IP-address or port you desire.</p><h2>Remote deployment</h2><h3>Heroku</h3><p>There are many methods and services that allow you to launch Zeeguu UMR on a non-local network, but we chose for the <a href="https://www.heroku.com">Heroku Cloud Platform</a>. It provides a basic free hosting plan that is good enough for development build publishing. In their implementation, you can simply push your code-base to your server-associated repository, and it will be build and executed there automatically. </p><p>If you intend to deploy on this platform as well, the repository has the required <em>Procfile</em> already included. In short: it simply runs <code>dev_launch.py</code>.</p></div>
         <a data-ice="link" href="manual/installation/build_and_run.html"></a>
       </div>
     </div>
@@ -214,6 +221,33 @@
       <div class="manual-card">
         <div data-ice="card"><h1>Try it!</h1><p>Feel like testing our service yourself, or just want to learn a new language? Zeeguu UMR is not just some dusty code in a repository: we are in production!</p><h2>Stable</h2><p>The stable release, our <strong>master</strong> branch, can be found on <a href="https://www.zeeguu.unibe.ch">Zeeguu</a> itself. This is where you can also practice with exercises based on your reading experience, and track your progress.</p><h2>Development</h2><p>The <strong>development</strong> branch of UMR is automatically deployed on <a href="https://zeeguu-umr.herokuapp.com/debug_login">Heroku</a> for every test-passing commit we make to it, so this is where you will always find the most-recent (but potentially less stable) version. Our Heroku account is a free one, with a significantly limited amount of memory and speed, so do not expect fast service there.</p></div>
         <a data-ice="link" href="manual/usage/tryit.html"></a>
+      </div>
+    </div>
+<div class="manual-card-wrap" data-ice="cards">
+      <h1 data-ice="label" class="manual-color manual-color-usage" data-section-count="&#x25A0;&#x25A0;"><span data-ice="label-inner">Support List</span></h1>
+      <div class="manual-card">
+        <div data-ice="card"><h1>Support List</h1><p>This is a list of all article sources that have been tested (or still need to be tested) to work for the reader. When a feed does not <em>&apos;work&apos;</em>, it means that articles return empty or unreadable content.</p><h2>Working</h2><ul>
+<li><a href="http://www.telegraaf.nl">http://www.telegraaf.nl</a></li>
+<li><a href="http://www.standaard.be">http://www.standaard.be</a></li>
+<li><a href="https://tweakers.net">https://tweakers.net</a></li>
+<li><a href="http://www.metronieuws.nl">http://www.metronieuws.nl</a></li>
+<li><a href="http://lefigaro.fr">http://lefigaro.fr</a></li>
+<li><a href="http://tetu.com">http://tetu.com</a></li>
+<li><a href="http://www.lemonde.fr">http://www.lemonde.fr</a></li>
+<li><a href="http://elpais.com">http://elpais.com</a></li>
+<li><a href="http://denlillebogblog.dk">http://denlillebogblog.dk</a></li>
+</ul><h2>Broken</h2><h3>Shows cookie dialog</h3><ul>
+<li><a href="https://www.nd.nl">https://www.nd.nl</a></li>
+</ul><h3>Not returning articles</h3><ul>
+<li><a href="https://hotnews.ro">https://hotnews.ro</a></li>
+<li><a href="https://www.lequipe.fr/">https://www.lequipe.fr/</a></li>
+</ul><h3>(Near) empty articles</h3><ul>
+<li><a href="http://chocolateandzucchini.com">http://chocolateandzucchini.com</a></li>
+</ul><h2>Undetermined</h2><ul>
+<li><a href="http://bild.de">http://bild.de</a></li>
+<li><a href="http://faz.net">http://faz.net</a></li>
+</ul></div>
+        <a data-ice="link" href="manual/usage/support_list.html"></a>
       </div>
     </div>
 <div class="manual-card-wrap" data-ice="cards">
@@ -379,7 +413,35 @@ the <span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html"
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span>
+          <span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Shows or hides style for when there is no feed.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span>
         </p>
       </div>
       <div>
@@ -407,7 +469,7 @@ the <span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html"
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span>
+          <span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span>
         </p>
       </div>
       <div>
@@ -469,6 +531,35 @@ the <span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html"
         
         
         <div data-ice="description"><p> Class that allows for translating zeeguu tags.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Class that allows for saving the state of the page content after each
+translation and restore upon request.</p>
 </div>
       </div>
     </td>

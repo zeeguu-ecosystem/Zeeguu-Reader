@@ -1,6 +1,10 @@
 {
   "name": "zeeguu-umr",
+<<<<<<< HEAD
   "version": "0.2.0",
+=======
+  "version": "0.5.0",
+>>>>>>> master
   "description": "Multilanguage Article Reader for the Zeeguu platform",
   "repository" : { 
     "type" : "git", 

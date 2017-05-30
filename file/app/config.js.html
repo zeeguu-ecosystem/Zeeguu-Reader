@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -33,15 +33,17 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -59,16 +61,23 @@
     GET_FEED_ITEMS: &apos;/get_feed_items_with_metrics&apos;,
     GET_AVAILABLE_LANGUAGES: &apos;/available_languages&apos;,
     TO_LANGUAGE: &apos;en&apos;,
+    ENTER_KEY: 13,
+    TEXT_SUGGESTION: &apos;Suggestion...&apos;,
+    TEXT_NO_ALTERNATIVES: &apos;Sorry, no alternatives.&apos;,
     HTML_ZEEGUUTAG: &apos;ZEEGUU&apos;,
     HTML_ORIGINAL: &apos;orig&apos;,
     HTML_TRANSLATED: &apos;tran&apos;,
     HTML_ATTRIBUTE_TRANSCOUNT: &apos;transCount&apos;,
     HTML_ATTRIBUTE_TRANSLATION: &apos;translation&apos;,
+    HTML_ATTRIBUTE_CHOSEN: &apos;chosen&apos;,
+    HTML_ATTRIBUTE_SUGGESTION: &apos;suggestion&apos;,
     HTML_ID_ARTICLE_URL: &apos;#articleURL&apos;,
     HTML_ID_ARTICLE_TITLE: &apos;#articleTitle&apos;,
-    HTML_ID_TOGGLETRANSLATE: &apos;#toggle_translate&apos;,
+    HTML_ID_TOGGLECOPY: &apos;#toggle_copy&apos;,
+    HTML_ID_TOGGLEUNDO: &apos;#toggle_undo&apos;,
     HTML_ID_ALTERMENU: &apos;#alterMenu&apos;,
     HTML_ID_ALTERMENUCONTAINER: &apos;#alterMenuContainer&apos;,
+    HTML_ID_USER_ALTERNATIVE: &apos;#userAlternative&apos;,
     HTML_ID_ARTICLELINK_TEMPLATE: &apos;#articleLink-template&apos;,
     HTML_ID_ARTICLELINK_LIST: &apos;#articleLinkList&apos;,
     HTML_ID_SUBSCRIPTION_TEMPLATE: &apos;#subscription-template&apos;,
@@ -76,8 +85,15 @@
     HTML_ID_ADDSUBSCRIPTION_TEMPLATE: &apos;#feedAddable-template&apos;,
     HTML_ID_ADDSUBSCRIPTION_LIST: &apos;#addableFeedList&apos;,
     HTML_ID_LANGUAGEOPTION_TEMPLATE: &apos;#languageOption-template&apos;,
+    HTML_CLASS_ARTICLELINK: &apos;.articleLinkEntry&apos;,
     HTML_CLASS_LOADER: &apos;.loader&apos;,
-    HTML_CLASS_EMPTY_PAGE: &apos;.emptyPage&apos;
+    HTML_CLASS_EMPTY_PAGE: &apos;.emptyPage&apos;,
+    HTML_CLASS_PAGECONTENT: &apos;.page-content&apos;,
+    HTML_CLASS_TOUR: &apos;.tour&apos;,
+    HTML_CLASS_WIGGLE: &apos;wiggle&apos;,
+    CLASS_LOADING: &apos;loading&apos;,
+    CLASS_NOSELECT: &apos;noselect&apos;,
+    EVENT_SUBSCRIPTION: &apos;subscription-list-loaded&apos;
 };
 </code></pre>
 

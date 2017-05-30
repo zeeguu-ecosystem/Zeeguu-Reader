@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">app/subscription/main.js | Zeeguu UMR Client API Document</title>
+  <title data-ice="title">app/subscription/NoFeedTour.js | Zeeguu UMR Client API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -48,56 +48,33 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">app/subscription/main.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
-import ArticleList from &apos;./ArticleList&apos;;
-import SubscriptionList from &apos;./SubscriptionList&apos;;
-import FeedSubscriber from &apos;./FeedSubscriber&apos;;
-import dialogPolyfill from &apos;dialog-polyfill&apos;;
-import LanguageMenu from &apos;./LanguageMenu&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">app/subscription/NoFeedTour.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;
 import config from &apos;../config&apos;;
 
-/* Script that binds listeners to html events, such that the
- * correct object is called to handle it. */
-let subscriptionList = new SubscriptionList();
-let articleList = new ArticleList(subscriptionList);
-let feedSubscriber = new FeedSubscriber(subscriptionList);
-let languageMenu = new LanguageMenu(feedSubscriber);
+/**
+ * Shows or hides style for when there is no feed.
+ */
+export default class NoFeedTour {
+    /**
+     * Show a tour styling, guiding the user to new feeds.
+     */
+    show() {
+        $(config.HTML_CLASS_EMPTY_PAGE).show();
+        $(config.HTML_CLASS_TOUR).addClass(config.HTML_CLASS_WIGGLE);
+        $(&apos;.mdl-layout__drawer-button&apos;).addClass(config.HTML_CLASS_WIGGLE);
+    }
 
-document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
-    articleList.clear();
-    articleList.load(e.detail);
-});
-
-/* When the document has finished loading,
- * bind all necessary listeners. */
-$(document).ready(function() {
-    subscriptionList.load();
-    feedSubscriber.load();
-    languageMenu.load();
-
-    let addFeedDialog = document.querySelector(&apos;dialog&apos;);
-    let showAddFeedDialogButton = document.querySelector(&apos;.show-modal&apos;);
-
-    // Some browsers do not support dialog, for that we use Polyfill.
-    if (!addFeedDialog.showModal)
-        dialogPolyfill.registerDialog(addFeedDialog);
-
-    // Open and closing of the dialog is handled here.
-    showAddFeedDialogButton.addEventListener(&apos;click&apos;, function () {
-        addFeedDialog.showModal();
-        $(&apos;#&apos; + feedSubscriber.getCurrentLanguage()).focus();
-    });
-
-    addFeedDialog.querySelector(&apos;.close&apos;).addEventListener(&apos;click&apos;, function () {
-        addFeedDialog.close();
-    });
-});
-
-/* Called when no image could be loaded as an article avatar. */
-function noAvatar(image) {
-    image.src = noAvatarURL;
-}</code></pre>
+    /**
+     * Hides the tour styling.
+     */
+    hide() {
+        $(config.HTML_CLASS_EMPTY_PAGE).hide();
+        $(config.HTML_CLASS_TOUR).removeClass(config.HTML_CLASS_WIGGLE);
+        $(&apos;.mdl-layout__drawer-button&apos;).removeClass(config.HTML_CLASS_WIGGLE);
+    }
+}
+</code></pre>
 
 </div>
 

@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -33,15 +33,17 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Speaker.js~Speaker.html">Speaker</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -49,7 +51,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">app/translation/AlterMenu.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
 import config from &apos;../config&apos;
-import Notifier from &apos;./Notifier&apos;
+import Notifier from &apos;../Notifier&apos;
 
 /**
  * Class that allows for choosing alternative zeeguu translations from
@@ -67,38 +69,56 @@ export default class AlterMenu {
 
     /**
      * Create and open the alternative translation menu. 
-     * @param {Element} htmlTag - Document element for which to present the alter menu.
+     * @param {jQuery} $tran - jQuery element encompasing the &lt;tran&gt; tag, 
+     * for which to present the alter menu.
      */
-    constructAndOpen(htmlTag) {
+    build($tran) {
         // Check how many alternatives there are, if less than 2: abort.
-        var transCount = parseInt(htmlTag.getAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT));
+        var transCount = parseInt($tran.attr(config.HTML_ATTRIBUTE_TRANSCOUNT));
         if (transCount &lt; 2) {
-            this.notifier.notify(&quot;Sorry, no alternatives.&quot;);
+            this.notifier.notify(config.TEXT_NO_ALTERNATIVES);
             return;
         }
-        this.construct(htmlTag, transCount);
-        this._place(htmlTag);
-        $(config.HTML_ID_ALTERMENU).slideDown(function () {
-            this.menuOpen = true
-        }.bind(this));
+        this.construct($tran, transCount);
+        this._place($tran);
+        $(config.HTML_ID_ALTERMENU).hide();
+
+        this.open();
     };
 
     /**
      * Add buttons with click listeners that replace the translation and
      * append these to the alter menu. 
-     * @param {Element} zeeguuTag - Tag from which the alternative transaltions are retrieved.
+     * @param {jQuery} $tran - Reference tag from which the alternative translations are retrieved.
      * @param {int} transCount - Number of present alternative translations. 
      */
-    construct(zeeguuTag, transCount) {
+    construct($tran, transCount) {
+
         $(config.HTML_ID_ALTERMENU).empty();
         for (var i = 0; i &lt; transCount; i++) {
             var button = document.createElement(&apos;button&apos;);
-            var alternative = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i);
+            var alternative = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + i);
             button.textContent = alternative;
             $(button).addClass(&quot;mdl-button&quot;).addClass(&quot;mdl-js-button&quot;).addClass(&quot;mdl-js-ripple-effect&quot;);
             $(config.HTML_ID_ALTERMENU).append($(button));
-            $(button).click({zeeguuTag: zeeguuTag, alternative: i}, this._swapPrimaryTranslation);
+            $(button).click({$tran: $tran, alternative: i}, this._swapPrimaryTranslation);
         }
+        this._appendInputField($tran);
+    }
+
+    /** 
+     * Appends the input field for user alternative, to the alter menu.
+     * @param {jQuery} $tran - Reference tag from which the suggested translation is retrieved.
+     */
+    _appendInputField($tran) {
+        var input_field = document.createElement(&apos;input&apos;);
+        var suggestion  = $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION);
+        var value = (suggestion === &apos;&apos; ? config.TEXT_SUGGESTION : suggestion);
+        $(input_field).addClass(&apos;mdl-textfield__input&apos;);
+        $(input_field).attr(&apos;type&apos;, &apos;text&apos;);
+        $(input_field).attr(&apos;id&apos;, config.HTML_ID_USER_ALTERNATIVE);        
+        $(input_field).attr(&apos;value&apos;, value);
+        $(config.HTML_ID_ALTERMENU).append($(input_field));
     }
 
     /**
@@ -106,33 +126,30 @@ export default class AlterMenu {
      * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
      */
     _swapPrimaryTranslation(selectedAlternative) {
-        var zeeguuTag = selectedAlternative.data.zeeguuTag;
+        var $tran = selectedAlternative.data.$tran;
         var alternative = selectedAlternative.data.alternative;
-        var oldText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + &apos;0&apos;);
-        var newText = zeeguuTag.getAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative);
-        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + &apos;0&apos;, newText);
-        zeeguuTag.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + alternative, oldText);
+        var newText = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + alternative);
+        $tran.attr(config.HTML_ATTRIBUTE_CHOSEN, newText);
     }
 
     /**
      * Place the alter menu below the supplied zeeguuTag.
-     * @param {Element} zeeguuTag - Reference tag for the placement of the alter menu.
+     * @param {jQuery} $tran - Reference tag for the placement of the alter menu.
      */
-    _place(zeeguuTag) {
-        var position = $(zeeguuTag).position();
-        var tagHeight = $(zeeguuTag).outerHeight();
-        var tagWidth = $(zeeguuTag).outerWidth();
+    _place($tran) {
+        var position = $tran.position();
+        var tagHeight = $tran.outerHeight();
+        var tagWidth = $tran.outerWidth();
         var menuWidth = $(config.HTML_ID_ALTERMENU).outerWidth();
         var topScroll = $(&quot;.mdl-layout__content&quot;).scrollTop();
-        $(zeeguuTag).append($(config.HTML_ID_ALTERMENU));
+        $tran.append($(config.HTML_ID_ALTERMENU));
         $(config.HTML_ID_ALTERMENU).css({
             position: &quot;absolute&quot;,
-            maxWidth: &quot;80%&quot;,
+            maxWidth: &quot;35%&quot;,
             display: &quot;inline-block&quot;,
             left: position.left + (tagWidth - menuWidth) / 2 + &quot;px&quot;,
             top: position.top + tagHeight + topScroll + &quot;px&quot;
-        });
-        $(config.HTML_ID_ALTERMENU).hide();
+        });        
     }
 
     /**
@@ -140,16 +157,24 @@ export default class AlterMenu {
      */
     reposition() {
         this._place($(config.HTML_ID_ALTERMENU).parent());
-        $(config.HTML_ID_ALTERMENU).show();
     };
 
     /**
-     *  Hide the alter menu. 
+     *  Hide (close) the alter menu. 
      */
     close() {
         $(config.HTML_ID_ALTERMENU).slideUp(function () {
             $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
             this.menuOpen = false;
+        }.bind(this));
+    };
+
+    /**
+     *  Open the alter menu. 
+     */
+    open() {
+        $(config.HTML_ID_ALTERMENU).slideDown(function () {
+            this.menuOpen = true
         }.bind(this));
     };
 

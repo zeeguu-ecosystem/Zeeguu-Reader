@@ -1,62 +1,74 @@
 window.esdocSearchIndex = [
   [
-    "zeeguu-umr/app/translation/altermenu.js~altermenu",
+    "./app/translation/altermenu.js~altermenu",
     "class/app/translation/AlterMenu.js~AlterMenu.html",
-    "<span>AlterMenu</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/AlterMenu.js</span>",
+    "<span>AlterMenu</span> <span class=\"search-result-import-path\">./app/translation/AlterMenu.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/subscription/articlelist.js~articlelist",
+    "./app/subscription/articlelist.js~articlelist",
     "class/app/subscription/ArticleList.js~ArticleList.html",
-    "<span>ArticleList</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/ArticleList.js</span>",
+    "<span>ArticleList</span> <span class=\"search-result-import-path\">./app/subscription/ArticleList.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/cache.js~cache",
+    "./app/cache.js~cache",
     "class/app/Cache.js~Cache.html",
-    "<span>Cache</span> <span class=\"search-result-import-path\">zeeguu-umr/app/Cache.js</span>",
+    "<span>Cache</span> <span class=\"search-result-import-path\">./app/Cache.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/subscription/feedsubscriber.js~feedsubscriber",
+    "./app/subscription/feedsubscriber.js~feedsubscriber",
     "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html",
-    "<span>FeedSubscriber</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/FeedSubscriber.js</span>",
+    "<span>FeedSubscriber</span> <span class=\"search-result-import-path\">./app/subscription/FeedSubscriber.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/subscription/languagemenu.js~languagemenu",
+    "./app/subscription/languagemenu.js~languagemenu",
     "class/app/subscription/LanguageMenu.js~LanguageMenu.html",
-    "<span>LanguageMenu</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/LanguageMenu.js</span>",
+    "<span>LanguageMenu</span> <span class=\"search-result-import-path\">./app/subscription/LanguageMenu.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/translation/notifier.js~notifier",
-    "class/app/translation/Notifier.js~Notifier.html",
-    "<span>Notifier</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/Notifier.js</span>",
+    "./app/subscription/nofeedtour.js~nofeedtour",
+    "class/app/subscription/NoFeedTour.js~NoFeedTour.html",
+    "<span>NoFeedTour</span> <span class=\"search-result-import-path\">./app/subscription/NoFeedTour.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/speaker.js~speaker",
-    "class/app/Speaker.js~Speaker.html",
-    "<span>Speaker</span> <span class=\"search-result-import-path\">zeeguu-umr/app/Speaker.js</span>",
+    "./app/notifier.js~notifier",
+    "class/app/Notifier.js~Notifier.html",
+    "<span>Notifier</span> <span class=\"search-result-import-path\">./app/Notifier.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/subscription/subscriptionlist.js~subscriptionlist",
+    "./app/translation/speaker.js~speaker",
+    "class/app/translation/Speaker.js~Speaker.html",
+    "<span>Speaker</span> <span class=\"search-result-import-path\">./app/translation/Speaker.js</span>",
+    "class"
+  ],
+  [
+    "./app/subscription/subscriptionlist.js~subscriptionlist",
     "class/app/subscription/SubscriptionList.js~SubscriptionList.html",
-    "<span>SubscriptionList</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/SubscriptionList.js</span>",
+    "<span>SubscriptionList</span> <span class=\"search-result-import-path\">./app/subscription/SubscriptionList.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/translation/translator.js~translator",
+    "./app/translation/translator.js~translator",
     "class/app/translation/Translator.js~Translator.html",
-    "<span>Translator</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/Translator.js</span>",
+    "<span>Translator</span> <span class=\"search-result-import-path\">./app/translation/Translator.js</span>",
     "class"
   ],
   [
-    "zeeguu-umr/app/zeeguurequests.js~zeeguurequests",
+    "./app/translation/undostack.js~undostack",
+    "class/app/translation/UndoStack.js~UndoStack.html",
+    "<span>UndoStack</span> <span class=\"search-result-import-path\">./app/translation/UndoStack.js</span>",
+    "class"
+  ],
+  [
+    "./app/zeeguurequests.js~zeeguurequests",
     "class/app/zeeguuRequests.js~ZeeguuRequests.html",
-    "<span>ZeeguuRequests</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "<span>ZeeguuRequests</span> <span class=\"search-result-import-path\">./app/zeeguuRequests.js</span>",
     "class"
   ],
   [
@@ -426,15 +438,27 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "app/speaker.js",
-    "file/app/Speaker.js.html",
-    "app/Speaker.js",
+    "app/notifier.js",
+    "file/app/Notifier.js.html",
+    "app/Notifier.js",
     "file"
   ],
   [
-    "app/speaker.js~speaker#speak",
-    "class/app/Speaker.js~Speaker.html#instance-method-speak",
-    "app/Speaker.js~Speaker#speak",
+    "app/notifier.js~notifier#constructor",
+    "class/app/Notifier.js~Notifier.html#instance-constructor-constructor",
+    "app/Notifier.js~Notifier#constructor",
+    "method"
+  ],
+  [
+    "app/notifier.js~notifier#lastmessage",
+    "class/app/Notifier.js~Notifier.html#instance-member-lastMessage",
+    "app/Notifier.js~Notifier#lastMessage",
+    "member"
+  ],
+  [
+    "app/notifier.js~notifier#notify",
+    "class/app/Notifier.js~Notifier.html#instance-method-notify",
+    "app/Notifier.js~Notifier#notify",
     "method"
   ],
   [
@@ -468,10 +492,22 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/subscription/articlelist.js~articlelist#constructor",
+    "class/app/subscription/ArticleList.js~ArticleList.html#instance-constructor-constructor",
+    "app/subscription/ArticleList.js~ArticleList#constructor",
+    "method"
+  ],
+  [
     "app/subscription/articlelist.js~articlelist#load",
     "class/app/subscription/ArticleList.js~ArticleList.html#instance-method-load",
     "app/subscription/ArticleList.js~ArticleList#load",
     "method"
+  ],
+  [
+    "app/subscription/articlelist.js~articlelist#nofeedtour",
+    "class/app/subscription/ArticleList.js~ArticleList.html#instance-member-noFeedTour",
+    "app/subscription/ArticleList.js~ArticleList#noFeedTour",
+    "member"
   ],
   [
     "app/subscription/articlelist.js~articlelist#remove",
@@ -486,21 +522,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "app/subscription/feedsubscriber.js~feedsubscriber#_follow",
-    "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-_follow",
-    "app/subscription/FeedSubscriber.js~FeedSubscriber#_follow",
-    "method"
-  ],
-  [
     "app/subscription/feedsubscriber.js~feedsubscriber#_loadfeedoptions",
     "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-_loadFeedOptions",
     "app/subscription/FeedSubscriber.js~FeedSubscriber#_loadFeedOptions",
-    "method"
-  ],
-  [
-    "app/subscription/feedsubscriber.js~feedsubscriber#_onfeedfollowed",
-    "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-_onFeedFollowed",
-    "app/subscription/FeedSubscriber.js~FeedSubscriber#_onFeedFollowed",
     "method"
   ],
   [
@@ -570,15 +594,51 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/subscription/nofeedtour.js",
+    "file/app/subscription/NoFeedTour.js.html",
+    "app/subscription/NoFeedTour.js",
+    "file"
+  ],
+  [
+    "app/subscription/nofeedtour.js~nofeedtour#hide",
+    "class/app/subscription/NoFeedTour.js~NoFeedTour.html#instance-method-hide",
+    "app/subscription/NoFeedTour.js~NoFeedTour#hide",
+    "method"
+  ],
+  [
+    "app/subscription/nofeedtour.js~nofeedtour#show",
+    "class/app/subscription/NoFeedTour.js~NoFeedTour.html#instance-method-show",
+    "app/subscription/NoFeedTour.js~NoFeedTour#show",
+    "method"
+  ],
+  [
     "app/subscription/subscriptionlist.js",
     "file/app/subscription/SubscriptionList.js.html",
     "app/subscription/SubscriptionList.js",
     "file"
   ],
   [
+    "app/subscription/subscriptionlist.js~subscriptionlist#_addsubscription",
+    "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_addSubscription",
+    "app/subscription/SubscriptionList.js~SubscriptionList#_addSubscription",
+    "method"
+  ],
+  [
+    "app/subscription/subscriptionlist.js~subscriptionlist#_changed",
+    "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_changed",
+    "app/subscription/SubscriptionList.js~SubscriptionList#_changed",
+    "method"
+  ],
+  [
     "app/subscription/subscriptionlist.js~subscriptionlist#_loadsubscriptions",
     "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_loadSubscriptions",
     "app/subscription/SubscriptionList.js~SubscriptionList#_loadSubscriptions",
+    "method"
+  ],
+  [
+    "app/subscription/subscriptionlist.js~subscriptionlist#_onfeedfollowed",
+    "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-_onFeedFollowed",
+    "app/subscription/SubscriptionList.js~SubscriptionList#_onFeedFollowed",
     "method"
   ],
   [
@@ -600,12 +660,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "app/subscription/subscriptionlist.js~subscriptionlist#articlelist",
-    "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-member-articleList",
-    "app/subscription/SubscriptionList.js~SubscriptionList#articleList",
-    "member"
-  ],
-  [
     "app/subscription/subscriptionlist.js~subscriptionlist#clear",
     "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-clear",
     "app/subscription/SubscriptionList.js~SubscriptionList#clear",
@@ -624,10 +678,22 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "app/subscription/subscriptionlist.js~subscriptionlist#follow",
+    "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-follow",
+    "app/subscription/SubscriptionList.js~SubscriptionList#follow",
+    "method"
+  ],
+  [
     "app/subscription/subscriptionlist.js~subscriptionlist#load",
     "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-load",
     "app/subscription/SubscriptionList.js~SubscriptionList#load",
     "method"
+  ],
+  [
+    "app/subscription/subscriptionlist.js~subscriptionlist#notifier",
+    "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-member-notifier",
+    "app/subscription/SubscriptionList.js~SubscriptionList#notifier",
+    "member"
   ],
   [
     "app/subscription/subscriptionlist.js~subscriptionlist#refresh",
@@ -648,6 +714,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "app/translation/altermenu.js~altermenu#_appendinputfield",
+    "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_appendInputField",
+    "app/translation/AlterMenu.js~AlterMenu#_appendInputField",
+    "method"
+  ],
+  [
     "app/translation/altermenu.js~altermenu#_place",
     "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_place",
     "app/translation/AlterMenu.js~AlterMenu#_place",
@@ -660,6 +732,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/translation/altermenu.js~altermenu#build",
+    "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-build",
+    "app/translation/AlterMenu.js~AlterMenu#build",
+    "method"
+  ],
+  [
     "app/translation/altermenu.js~altermenu#close",
     "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-close",
     "app/translation/AlterMenu.js~AlterMenu#close",
@@ -669,12 +747,6 @@ window.esdocSearchIndex = [
     "app/translation/altermenu.js~altermenu#construct",
     "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-construct",
     "app/translation/AlterMenu.js~AlterMenu#construct",
-    "method"
-  ],
-  [
-    "app/translation/altermenu.js~altermenu#constructandopen",
-    "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-constructAndOpen",
-    "app/translation/AlterMenu.js~AlterMenu#constructAndOpen",
     "method"
   ],
   [
@@ -702,33 +774,27 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "app/translation/altermenu.js~altermenu#open",
+    "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-open",
+    "app/translation/AlterMenu.js~AlterMenu#open",
+    "method"
+  ],
+  [
     "app/translation/altermenu.js~altermenu#reposition",
     "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-reposition",
     "app/translation/AlterMenu.js~AlterMenu#reposition",
     "method"
   ],
   [
-    "app/translation/notifier.js",
-    "file/app/translation/Notifier.js.html",
-    "app/translation/Notifier.js",
+    "app/translation/speaker.js",
+    "file/app/translation/Speaker.js.html",
+    "app/translation/Speaker.js",
     "file"
   ],
   [
-    "app/translation/notifier.js~notifier#constructor",
-    "class/app/translation/Notifier.js~Notifier.html#instance-constructor-constructor",
-    "app/translation/Notifier.js~Notifier#constructor",
-    "method"
-  ],
-  [
-    "app/translation/notifier.js~notifier#lastmessage",
-    "class/app/translation/Notifier.js~Notifier.html#instance-member-lastMessage",
-    "app/translation/Notifier.js~Notifier#lastMessage",
-    "member"
-  ],
-  [
-    "app/translation/notifier.js~notifier#notify",
-    "class/app/translation/Notifier.js~Notifier.html#instance-method-notify",
-    "app/translation/Notifier.js~Notifier#notify",
+    "app/translation/speaker.js~speaker#speak",
+    "class/app/translation/Speaker.js~Speaker.html#instance-method-speak",
+    "app/translation/Speaker.js~Speaker#speak",
     "method"
   ],
   [
@@ -756,6 +822,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/translation/translator.js~translator#constructor",
+    "class/app/translation/Translator.js~Translator.html#instance-constructor-constructor",
+    "app/translation/Translator.js~Translator#constructor",
+    "method"
+  ],
+  [
     "app/translation/translator.js~translator#istranslated",
     "class/app/translation/Translator.js~Translator.html#instance-method-isTranslated",
     "app/translation/Translator.js~Translator#isTranslated",
@@ -765,6 +837,48 @@ window.esdocSearchIndex = [
     "app/translation/translator.js~translator#translate",
     "class/app/translation/Translator.js~Translator.html#instance-method-translate",
     "app/translation/Translator.js~Translator#translate",
+    "method"
+  ],
+  [
+    "app/translation/translator.js~translator#undostack",
+    "class/app/translation/Translator.js~Translator.html#instance-member-undoStack",
+    "app/translation/Translator.js~Translator#undoStack",
+    "member"
+  ],
+  [
+    "app/translation/translator.js~translator#undotranslate",
+    "class/app/translation/Translator.js~Translator.html#instance-method-undoTranslate",
+    "app/translation/Translator.js~Translator#undoTranslate",
+    "method"
+  ],
+  [
+    "app/translation/undostack.js",
+    "file/app/translation/UndoStack.js.html",
+    "app/translation/UndoStack.js",
+    "file"
+  ],
+  [
+    "app/translation/undostack.js~undostack#constructor",
+    "class/app/translation/UndoStack.js~UndoStack.html#instance-constructor-constructor",
+    "app/translation/UndoStack.js~UndoStack#constructor",
+    "method"
+  ],
+  [
+    "app/translation/undostack.js~undostack#pushstate",
+    "class/app/translation/UndoStack.js~UndoStack.html#instance-method-pushState",
+    "app/translation/UndoStack.js~UndoStack#pushState",
+    "method"
+  ],
+  [
+    "app/translation/undostack.js~undostack#stack",
+    "class/app/translation/UndoStack.js~UndoStack.html#instance-member-stack",
+    "app/translation/UndoStack.js~UndoStack#stack",
+    "member"
+  ],
+  [
+    "app/translation/undostack.js~undostack#undostate",
+    "class/app/translation/UndoStack.js~UndoStack.html#instance-method-undoState",
+    "app/translation/UndoStack.js~UndoStack#undoState",
     "method"
   ],
   [
