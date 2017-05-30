@@ -11621,17 +11621,13 @@ var ArticleList = function () {
             (0, _jquery2.default)(_config2.default.HTML_CLASS_ARTICLELINK).one('click', function (event) {
                 if (!event.isPropagationStopped()) {
                     event.stopPropagation();
-                    (0, _jquery2.default)(this).find('.articleLinkSummary').animate({
-                        height: '+=30em'
-                    }, 200);
-                    (0, _jquery2.default)(this).animate({
-                        scrollTop: (0, _jquery2.default)(this).offset().top,
-                        height: '+=30em'
+                    (0, _jquery2.default)(this).siblings().animate({
+                        opacity: 0.25
                     }, 200, function () {
                         // Animation complete.
+                        (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).fadeOut();
                         location.href = (0, _jquery2.default)(this).attr('href');
                     });
-                    (0, _jquery2.default)(_config2.default.HTML_CLASS_PAGECONTENT).fadeOut();
                 }
             });
         }
