@@ -11,6 +11,14 @@ This is a list of all article sources that have been tested (or still need to be
 - http://www.lemonde.fr
 - http://elpais.com
 - http://denlillebogblog.dk
+- http://www.1jour1actu.com/
+- http://www.okapi.fr/
+- http://www.phosphore.com/
+- https://www.marianne.net/
+- http://www.parismatch.com/
+- http://www.leparisien.fr/
+- http://www.lefigaro.fr/
+- http://www.lemonde.fr/
 
 ## Broken
 ### Shows cookie dialog
@@ -22,6 +30,7 @@ This is a list of all article sources that have been tested (or still need to be
 
 ### (Near) empty articles
 - http://chocolateandzucchini.com
+- http://www.liberation.fr
 
 ## Undetermined
 - http://bild.de
