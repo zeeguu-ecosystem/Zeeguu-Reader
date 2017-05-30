@@ -10,7 +10,7 @@
     "dev": "./node_modules/.bin/webpack",
     "production": "NODE_ENV=production webpack",
     "watch": "npm run dev -- --watch",
-    "heroku-postbuild": "webpack --progress"
+    "heroku-postbuild": "webpack -p --progress"
   },
   "keywords": [],
   "author": "",
