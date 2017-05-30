@@ -10699,7 +10699,10 @@ var speaker = new _Speaker2.default();
     /* When the undo is clicked, content page is replaced
      * with previous one in the stack and listeners are re-attached. */
     (0, _jquery2.default)(_config2.default.HTML_ID_TOGGLEUNDO).click(function () {
-        if (alterMenu.isOpen()) alterMenu.close();
+        if (alterMenu.isOpen()) {
+            alterMenu.close();
+            return;
+        }
         (0, _jquery2.default)(_config2.default.HTML_ZEEGUUTAG).off();
         translator.undoTranslate();
         attachZeeguuListeners();
