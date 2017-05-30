@@ -32,6 +32,5 @@
     "dialog-polyfill": "^0.4.7",
     "jquery": "^3.2.1",
     "mustache": "^2.3.0",
-    "webpack": "^2.3.1"
   }
 }
