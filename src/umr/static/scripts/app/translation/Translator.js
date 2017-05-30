@@ -13,6 +13,7 @@ export default class Translator {
      */
     constructor() {
         this.undoStack = new UndoStack();
+        this.connectivesSet = this._buildConnectivesSet();
     }
 
     /**
@@ -23,7 +24,7 @@ export default class Translator {
      */
     translate(zeeguuTag) {
         this.undoStack.pushState();
-        var temp_translation = this._mergeZeeguu(zeeguuTag);
+        var tmp_trans = this._mergeZeeguu(zeeguuTag);
 
         var text = zeeguuTag.textContent.trim();
         var context = this._getContext(zeeguuTag);
@@ -35,7 +36,7 @@ export default class Translator {
 
         $(orig).text(text);
         $(zeeguuTag).addClass(config.CLASS_LOADING);
-        $(tran).attr('chosen', temp_translation);
+        $(tran).attr('chosen', tmp_trans);
         $(zeeguuTag).empty().append(orig, tran);
 
         var callback = (data) => this._setTranslations(zeeguuTag, data);
@@ -53,11 +54,11 @@ export default class Translator {
 
     /**
      * Checks whether given zeeguuTag is already translated.
-     * @param {Element} zeeguuTag - Document element that wraps translatable content. 
+     * @param {jQuery} $zeeguu - Zeeguu reference tag that wraps translatable content. 
      * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
      */
-    isTranslated(zeeguuTag) {
-        return $(zeeguuTag).has(config.HTML_TRANSLATED).length;
+    isTranslated($zeeguu) {
+        return $zeeguu.has(config.HTML_TRANSLATED).length;
     }
 
     /**
@@ -90,37 +91,60 @@ export default class Translator {
 
     /**
      * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-     * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+     * @param {Element} zeeguuTag - Zeeguu tag for which to perform merge with the surrounding tags. 
+     * @return {string} - Temporary mock translation text.
      */
     _mergeZeeguu(zeeguuTag) {
-        var temp_translation = '';
-        var spaces = '';
+        var tmp_trans = '';
+        var connectives = '';
+        var padding_len = zeeguuTag.textContent.length; // approximates the size of the to be translated word
+
         var node = zeeguuTag.previousSibling;
-        while (node && node.textContent == ' ') {
+
+        while (node && this.connectivesSet.has(node.textContent.trim())) {
+            connectives = node.textContent + connectives;
             node = node.previousSibling;
-            spaces += ' ';
         }
-        var paddingLength = zeeguuTag.textContent.length; // used to approximate the size of the to be translated word
 
-        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {
-            zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
-            temp_translation = temp_translation.concat($(node).find('tran').attr('chosen'));
+        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated($(node))) {            
+            zeeguuTag.textContent = node.textContent + connectives + zeeguuTag.textContent;
+            tmp_trans = tmp_trans.concat($(node).find('tran').attr('chosen'));
+            node.parentNode.removeChild(node.nextSibling);
             node.parentNode.removeChild(node);
         }
-        spaces = '';
-        temp_translation = temp_translation.concat(' ', '..'.repeat(paddingLength), ' ');
+
+        tmp_trans = tmp_trans.concat(' ' + '..'.repeat(padding_len) + ' ');
+        connectives = '';
         node = zeeguuTag.nextSibling;
-        while (node && node.textContent == ' ') {
+        while (node && this.connectivesSet.has(node.textContent.trim())) {
+            connectives += node.textContent;
             node = node.nextSibling;
-            spaces += ' ';
-
         }
-        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated(node)) {
-            zeeguuTag.textContent += spaces + node.textContent;
-            temp_translation = temp_translation.concat($(node).find('tran').attr('chosen'));
+
+        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated($(node))) {
+            zeeguuTag.textContent += connectives + node.textContent;
+            tmp_trans = tmp_trans.concat($(node).find('tran').attr('chosen'));
+            node.parentNode.removeChild(node.previousSibling);
             node.parentNode.removeChild(node);
         }
-        return temp_translation;
+        return tmp_trans;
+    }
+
+    /**
+     * Build the used connectives set, for which the merge function will merge over.
+     * @return {Set} - The set containing the available connectives.
+     */
+    _buildConnectivesSet() {
+        let set = new Set();
+        set.add('');
+        set.add(',');
+        set.add('-');
+        set.add(':');
+        set.add(';');
+        set.add('\'');
+        set.add('’');
+        set.add('‘');
+        return set;
     }
 
 };

@@ -10437,6 +10437,7 @@ var Translator = function () {
         _classCallCheck(this, Translator);
 
         this.undoStack = new _UndoStack2.default();
+        this.connectivesSet = this._buildConnectivesSet();
     }
 
     /**
@@ -10453,7 +10454,7 @@ var Translator = function () {
             var _this = this;
 
             this.undoStack.pushState();
-            var temp_translation = this._mergeZeeguu(zeeguuTag);
+            var tmp_trans = this._mergeZeeguu(zeeguuTag);
 
             var text = zeeguuTag.textContent.trim();
             var context = this._getContext(zeeguuTag);
@@ -10465,7 +10466,7 @@ var Translator = function () {
 
             (0, _jquery2.default)(orig).text(text);
             (0, _jquery2.default)(zeeguuTag).addClass(_config2.default.CLASS_LOADING);
-            (0, _jquery2.default)(tran).attr('chosen', temp_translation);
+            (0, _jquery2.default)(tran).attr('chosen', tmp_trans);
             (0, _jquery2.default)(zeeguuTag).empty().append(orig, tran);
 
             var callback = function callback(data) {
@@ -10487,14 +10488,14 @@ var Translator = function () {
 
         /**
          * Checks whether given zeeguuTag is already translated.
-         * @param {Element} zeeguuTag - Document element that wraps translatable content. 
+         * @param {jQuery} $zeeguu - Zeeguu reference tag that wraps translatable content. 
          * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
          */
 
     }, {
         key: 'isTranslated',
-        value: function isTranslated(zeeguuTag) {
-            return (0, _jquery2.default)(zeeguuTag).has(_config2.default.HTML_TRANSLATED).length;
+        value: function isTranslated($zeeguu) {
+            return $zeeguu.has(_config2.default.HTML_TRANSLATED).length;
         }
 
         /**
@@ -10532,39 +10533,66 @@ var Translator = function () {
 
         /**
          * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-         * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+         * @param {Element} zeeguuTag - Zeeguu tag for which to perform merge with the surrounding tags. 
+         * @return {string} - Temporary mock translation text.
          */
 
     }, {
         key: '_mergeZeeguu',
         value: function _mergeZeeguu(zeeguuTag) {
-            var temp_translation = '';
-            var spaces = '';
-            var node = zeeguuTag.previousSibling;
-            while (node && node.textContent == ' ') {
-                node = node.previousSibling;
-                spaces += ' ';
-            }
-            var paddingLength = zeeguuTag.textContent.length; // used to approximate the size of the to be translated word
+            var tmp_trans = '';
+            var connectives = '';
+            var padding_len = zeeguuTag.textContent.length; // approximates the size of the to be translated word
 
-            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
-                zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
-                temp_translation = temp_translation.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
+            var node = zeeguuTag.previousSibling;
+
+            while (node && this.connectivesSet.has(node.textContent.trim())) {
+                connectives = node.textContent + connectives;
+                node = node.previousSibling;
+            }
+
+            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated((0, _jquery2.default)(node))) {
+                zeeguuTag.textContent = node.textContent + connectives + zeeguuTag.textContent;
+                tmp_trans = tmp_trans.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
+                node.parentNode.removeChild(node.nextSibling);
                 node.parentNode.removeChild(node);
             }
-            spaces = '';
-            temp_translation = temp_translation.concat(' ', '..'.repeat(paddingLength), ' ');
+
+            tmp_trans = tmp_trans.concat(' ' + '..'.repeat(padding_len) + ' ');
+            connectives = '';
             node = zeeguuTag.nextSibling;
-            while (node && node.textContent == ' ') {
+            while (node && this.connectivesSet.has(node.textContent.trim())) {
+                connectives += node.textContent;
                 node = node.nextSibling;
-                spaces += ' ';
             }
-            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated(node)) {
-                zeeguuTag.textContent += spaces + node.textContent;
-                temp_translation = temp_translation.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
+
+            if (node && node.nodeName == _config2.default.HTML_ZEEGUUTAG && this.isTranslated((0, _jquery2.default)(node))) {
+                zeeguuTag.textContent += connectives + node.textContent;
+                tmp_trans = tmp_trans.concat((0, _jquery2.default)(node).find('tran').attr('chosen'));
+                node.parentNode.removeChild(node.previousSibling);
                 node.parentNode.removeChild(node);
             }
-            return temp_translation;
+            return tmp_trans;
+        }
+
+        /**
+         * Build the used connectives set, for which the merge function will merge over.
+         * @return {Set} - The set containing the available connectives.
+         */
+
+    }, {
+        key: '_buildConnectivesSet',
+        value: function _buildConnectivesSet() {
+            var set = new Set();
+            set.add('');
+            set.add(',');
+            set.add('-');
+            set.add(':');
+            set.add(';');
+            set.add('\'');
+            set.add('’');
+            set.add('‘');
+            return set;
         }
     }]);
 
@@ -10771,7 +10799,7 @@ function attachZeeguuListeners() {
         if (alterMenu.isOpen()) return;
 
         var $target = (0, _jquery2.default)(event.target);
-        if ($target.is(_config2.default.HTML_ZEEGUUTAG) && !translator.isTranslated(this)) {
+        if ($target.is(_config2.default.HTML_ZEEGUUTAG) && !translator.isTranslated($target)) {
             // A non-translated word is clicked, so we translate it.
             translator.translate(this);
         } else if ($target.is(_config2.default.HTML_ORIGINAL)) {
