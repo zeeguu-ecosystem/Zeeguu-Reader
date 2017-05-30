@@ -104,7 +104,7 @@ function attachZeeguuListeners () {
             return;
 
         let $target = $(event.target);
-        if ( $target.is(config.HTML_ZEEGUUTAG) && !translator.isTranslated(this) ) {
+        if ( $target.is(config.HTML_ZEEGUUTAG) && !translator.isTranslated($target) ) {
             // A non-translated word is clicked, so we translate it.
             translator.translate(this);
         } else if ($target.is(config.HTML_ORIGINAL) ) {
