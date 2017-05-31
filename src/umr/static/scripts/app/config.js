@@ -9,6 +9,7 @@ export default {
     GET_FEEDS_BEING_FOLLOWED: '/get_feeds_being_followed',
     GET_FEED_ITEMS: '/get_feed_items_with_metrics',
     GET_AVAILABLE_LANGUAGES: '/available_languages',
+    GET_LEARNED_LANGUAGE: '/learned_language',
     POST_TRANSLATION_SUGGESTION: '/contribute_translation',
     TO_LANGUAGE: 'en',
     ENTER_KEY: 13,
