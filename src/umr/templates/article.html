@@ -16,9 +16,10 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
 		<div class="mdl-layout__header-row">
-			<button id = "toggle_back" onclick="window.history.back()" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-    		<i class="material-icons">arrow_back</i>
-    	</button>
+			<a id = "toggle_back" href="{{ url_for('umrblue.articles') }}"
+			   class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+    			<i class="material-icons">arrow_back</i>
+    		</a>
 			<div class="mdl-layout-spacer"></div>
 			<button id = "toggle_undo" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 				<i class="material-icons">undo</i>
