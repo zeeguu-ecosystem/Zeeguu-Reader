@@ -53,6 +53,23 @@ export default class Translator {
     }
 
     /**
+     * Sends a post request to Zeeguu about a contribution/suggestion for a translation from user.
+     * @param {jQuery} $zeeguu - Zeeguu reference tag for which to send the user suggestion.
+     */
+    sendSuggestion ($zeeguu) {
+        var word = $zeeguu.children(config.HTML_ORIGINAL).text();
+        var context = this._getContext($zeeguu.get(0));
+        var url = $(config.HTML_ID_ARTICLE_URL).find('a').attr('href');
+        var title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        var translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
+
+        var callback = (data) => console.log(data);
+        // Launch Zeeguu request to supply translation suggestion.
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
+                           {word: word, context: context, url: url, title: title, translation: translation}, callback);
+    }
+
+    /**
      * Checks whether given zeeguuTag is already translated.
      * @param {jQuery} $zeeguu - Zeeguu reference tag that wraps translatable content. 
      * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    

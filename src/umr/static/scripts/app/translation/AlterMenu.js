@@ -31,7 +31,6 @@ export default class AlterMenu {
         this.construct($tran, transCount);
         this._place($tran);
         $(config.HTML_ID_ALTERMENU).hide();
-
         this.open();
     };
 
