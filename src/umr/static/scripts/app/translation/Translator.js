@@ -14,6 +14,11 @@ export default class Translator {
     constructor() {
         this.undoStack = new UndoStack();
         this.connectivesSet = this._buildConnectivesSet();
+        this.fromLanguage = FROM_LANGUAGE;
+        this.toLanguage = config.TO_LANGUAGE; // en is default
+        ZeeguuRequests.get(config.GET_NATIVE_LANGUAGE, {}, function (language) {
+            this.toLanguage = language;
+        }.bind(this));
     }
 
     /**
@@ -41,7 +46,7 @@ export default class Translator {
 
         var callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
-        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + config.TO_LANGUAGE,
+        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + this.fromLanguage + '/' + this.toLanguage,
                            {word: text, context: context, url: url, title: title}, callback);
     }
 
@@ -50,6 +55,22 @@ export default class Translator {
      */
     undoTranslate() {
         this.undoStack.undoState();
+    }
+
+    /**
+     * Sends a post request to Zeeguu about a contribution/suggestion for a translation from user.
+     * @param {jQuery} $zeeguu - Zeeguu reference tag for which to send the user suggestion.
+     */
+    sendSuggestion ($zeeguu) {
+        var word = $zeeguu.children(config.HTML_ORIGINAL).text();
+        var context = this._getContext($zeeguu.get(0));
+        var url = $(config.HTML_ID_ARTICLE_URL).find('a').attr('href');
+        var title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        var translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
+
+        // Launch Zeeguu request to supply translation suggestion.
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + this.fromLanguage + '/' + this.toLanguage,
+                           {word: word, context: context, url: url, title: title, translation: translation});
     }
 
     /**

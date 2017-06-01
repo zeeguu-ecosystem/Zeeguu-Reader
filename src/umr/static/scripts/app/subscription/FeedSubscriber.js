@@ -16,7 +16,11 @@ export default class FeedSubscriber {
     constructor(subscriptionList, languageMenu) {
         this.subscriptionList = subscriptionList;
         this.languageMenu = languageMenu;
-        this.currentLanguage = 'nl';
+        this.currentLanguage = 'nl'; // default
+        ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, 
+            function (lang) {
+                this.currentLanguage = lang;
+            }.bind(this));
     }
 
     /**
@@ -64,6 +68,14 @@ export default class FeedSubscriber {
      */
     getCurrentLanguage() {
         return this.currentLanguage;
+    }
+
+    /**
+     * Sets the current language that user is studying (based on zeeguu settings).
+     * @param {string} langauge - The language code.
+     */
+    _setCurrentLanguage(language) {
+        this.currentLanguage = language;
     }
 
     /**

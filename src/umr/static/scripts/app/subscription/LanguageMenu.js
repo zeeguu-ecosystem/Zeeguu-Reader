@@ -41,5 +41,6 @@ export default class LanguageMenu {
             });
             $("#languageOptionList").append(languageOption);
         }
+        $('#' + feedSubscriber.getCurrentLanguage()).focus();
     }
 };
