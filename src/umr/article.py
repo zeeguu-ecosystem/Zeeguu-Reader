@@ -16,23 +16,32 @@ def get_article():
     and return a properly processed version of the article.
     """
     article_url = request.args['articleURL']
-    article_language = request.args['articleLanguage']
- 
     print("User with session " + request.sessionID + " retrieved " + article_url)
-    return make_article(article_url, article_language)
+
+    if 'articleLanguage' in request.args:
+        return make_article(article_url, request.args['articleLanguage'])
+        
+    return make_article(article_url)
 
 
-def make_article(url, language):
+def make_article(url, language=None):
     """Create a neatly formatted translatable article html page.
     Keyword arguments:
     session  -- a valid Zeeguu session key
     url      -- the url of the article
     language -- the language the article is written in
     """
-    article = Article(url=url, language=language)
+    if language:
+        article = Article(url=url, language=language)
+    else:
+        article = Article(url=url)
+
     article.download()
     article.parse()
 
+    if not language:
+        language = article.extractor.language
+    
     title   = wrap_zeeguu_words(article.title)
     authors = ', '.join(article.authors)
     content = article.text
