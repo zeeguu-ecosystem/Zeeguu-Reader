@@ -2,7 +2,6 @@ import $ from 'jquery';
 import ArticleList from './ArticleList';
 import SubscriptionList from './SubscriptionList';
 import FeedSubscriber from './FeedSubscriber';
-import dialogPolyfill from 'dialog-polyfill';
 import LanguageMenu from './LanguageMenu';
 import config from '../config';
 
