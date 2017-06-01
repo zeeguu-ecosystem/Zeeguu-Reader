@@ -27,16 +27,19 @@
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
-	  <div class="mdl-layout-icon"></div>
+	  <div class="mdl-layout__header-row">
+		  <div class="mdl-layout-spacer"></div>
+		  <a href="/whatnext" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+			  <i class="material-icons">home_back</i>
+		  </a>
+	  </div>
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">
-		<img url= "{{ url_for('umrblue.static',filename='images/elephlogo.png') }}">
-		<a href="/whatnext">↞ Home</a>
+		My Sources
 	</span>
     <nav class="mdl-navigation">
 	  <div class="options">
-		  <b>My sources:</b><br /><br />
 		  <!-- List of feeds currently subscribed to. -->
 		  <div id="subscriptionList"></div>
 			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
