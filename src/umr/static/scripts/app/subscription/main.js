@@ -27,28 +27,6 @@ $(document).ready(function() {
     $(showAddFeedDialogButton).click(function () {
         feedSubscriber.open();
     });
-
-
-    /*
-    let addFeedDialog = document.querySelector('dialog');
-    let showAddFeedDialogButton = document.querySelector('.show-modal');
-
-
-    // Some browsers do not support dialog, for that we use Polyfill.
-    if (!addFeedDialog.showModal)
-        dialogPolyfill.registerDialog(addFeedDialog);
-
-    // Open and closing of the dialog is handled here.
-    showAddFeedDialogButton.addEventListener('click', function () {
-        addFeedDialog.showModal();
-        $('#' + feedSubscriber.getCurrentLanguage()).focus();
-    });
-
-    addFeedDialog.querySelector('.close').addEventListener('click', function () {
-        addFeedDialog.close();
-    });*/
-
-
 });
 
 /* Called when no image could be loaded as an article avatar. */
