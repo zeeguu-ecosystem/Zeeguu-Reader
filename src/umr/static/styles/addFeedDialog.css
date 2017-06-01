@@ -5,7 +5,9 @@
 
 #languageOptionList {
   text-align:center;
-  margin-bottom: 1em;
+  height:1em;
+  vertical-align: text-top;
+  margin-bottom: 4em;
 }
 
 .langButton {
@@ -24,7 +26,7 @@
 
 .addableTitle {
   display:block;
-  max-width: 6em;
+  max-width: 20em;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -51,6 +53,6 @@
 }
 
 .list-control {
-  max-height: 45vh;
+  max-height: 35vh;
   overflow-y: scroll;
 }

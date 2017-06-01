@@ -2,9 +2,9 @@
   "name": "zeeguu-umr",
   "version": "0.5.0",
   "description": "Multilanguage Article Reader for the Zeeguu platform",
-  "repository" : { 
-    "type" : "git", 
-    "url" : "https://github.com/mircealungu/Unified-Multilanguage-Reader.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mircealungu/Unified-Multilanguage-Reader.git"
   },
   "scripts": {
     "dev": "./node_modules/.bin/webpack",
@@ -31,6 +31,7 @@
   "dependencies": {
     "dialog-polyfill": "^0.4.7",
     "jquery": "^3.2.1",
-    "mustache": "^2.3.0"
+    "mustache": "^2.3.0",
+    "sweetalert": "^1.1.3"
   }
 }
