@@ -16,7 +16,11 @@ export default class FeedSubscriber {
     constructor(subscriptionList, languageMenu) {
         this.subscriptionList = subscriptionList;
         this.languageMenu = languageMenu;
-        this.currentLanguage = 'nl';
+        this.currentLanguage = 'nl'; // default
+        ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, 
+            function (lang) {
+                this.currentLanguage = lang;
+            }.bind(this));
     }
 
     /**
