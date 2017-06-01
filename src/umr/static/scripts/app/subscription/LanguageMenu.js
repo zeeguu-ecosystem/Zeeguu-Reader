@@ -38,9 +38,11 @@ export default class LanguageMenu {
             languageOption.on('click', function () {
                 feedSubscriber.clear();
                 feedSubscriber.load($(this).attr('id'));
+                $(this).siblings().removeClass(config.HTML_CLASS_FOCUSED);
+                $(this).addClass(config.HTML_CLASS_FOCUSED);
             });
             $("#languageOptionList").append(languageOption);
         }
-        $('#' + feedSubscriber.getCurrentLanguage()).focus();
+        $('#' + feedSubscriber.getCurrentLanguage()).addClass(config.HTML_CLASS_FOCUSED);
     }
 };

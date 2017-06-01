@@ -44,6 +44,7 @@ export default {
     HTML_CLASS_PAGECONTENT: '.page-content',
     HTML_CLASS_TOUR: '.tour',
     HTML_CLASS_WIGGLE: 'wiggle',
+    HTML_CLASS_FOCUSED: 'focused',
     CLASS_LOADING: 'loading',
     CLASS_NOSELECT: 'noselect',
     EVENT_SUBSCRIPTION: 'subscription-list-loaded'

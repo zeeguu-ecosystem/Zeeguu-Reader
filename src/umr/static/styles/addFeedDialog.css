@@ -20,8 +20,24 @@
   outline:none;
 }
 
-.langButton:focus {
-  background-color: lightgrey;
+.langButton.focused {
+  position:relative;
+  animation: move_up 0.2s forwards;
+}
+
+@keyframes move_up {
+  0%
+  {
+    top: 0;
+  }
+  80%
+  {
+    top:-0.5em;
+  }
+  100%
+  {
+    top:-0.3em;
+  }
 }
 
 .addableTitle {
