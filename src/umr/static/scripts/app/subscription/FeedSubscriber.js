@@ -13,9 +13,19 @@ export default class FeedSubscriber {
      */
     constructor(subscriptionList) {
         this.subscriptionList = subscriptionList;
-        this.currentLanguage = 'nl'; // default 
-        var callback = (data) => this._setCurrentLanguage(data);
-        ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, callback);
+    }
+
+    /**
+     * Call Zeeguu and requests recommended feeds for the given language.
+     * If the language is not given, it simply uses the last used language.
+     * Uses {@link ZeeguuRequests}.
+     */
+    load() {
+        ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, function (language) {
+            this._setCurrentLanguage(language);
+            ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
+                                {}, this._loadFeedOptions.bind(this));
+        }.bind(this));
     }
 
     /**

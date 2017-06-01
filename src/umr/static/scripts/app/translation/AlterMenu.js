@@ -24,9 +24,8 @@ export default class AlterMenu {
     build($tran) {
         // Check how many alternatives there are, if less than 2: abort.
         var transCount = parseInt($tran.attr(config.HTML_ATTRIBUTE_TRANSCOUNT));
-        if (transCount < 2) {
+        if (transCount < 2) { // one translation means no alternatives
             this.notifier.notify(config.TEXT_NO_ALTERNATIVES);
-            return;
         }
         this.construct($tran, transCount);
         this._place($tran);
