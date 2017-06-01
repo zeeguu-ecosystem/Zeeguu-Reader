@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
+import swal from 'sweetalert';
 
 /**
  * Allows the user to add feed subscriptions.
@@ -10,22 +11,31 @@ export default class FeedSubscriber {
     /**
      * Link the {@link SubscriptionList} with this instance so we can update it on change.
      * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.
+     * @param {LanguageMenu} languageMenu - Menu to allow for switch feeds per language.
      */
-    constructor(subscriptionList) {
+    constructor(subscriptionList, languageMenu) {
         this.subscriptionList = subscriptionList;
+        this.languageMenu = languageMenu;
+        this.currentLanguage = 'nl';
     }
 
     /**
-     * Call Zeeguu and requests recommended feeds for the given language.
-     * If the language is not given, it simply uses the last used language.
-     * Uses {@link ZeeguuRequests}.
+     * Open the dialog window containing the list of feeds.
+     * Uses the sweetalert library.
      */
-    load() {
-        ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, function (language) {
-            this._setCurrentLanguage(language);
-            ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
-                                {}, this._loadFeedOptions.bind(this));
-        }.bind(this));
+    open() {
+        let template = $(config.HTML_ID_ADD_SUBSCRIPTION_DIALOG_TEMPLATE).html();
+        swal({
+            title: 'Available Sources',
+            text: template,
+            html: true,
+            allowOutsideClick: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+        });
+
+        this.languageMenu.load(this);
+        this.load();
     }
 
     /**
@@ -35,8 +45,7 @@ export default class FeedSubscriber {
      * @param {string} language - Language code.
      * @example load('nl');
      */
-    load(language) {
-        language = typeof language !== 'undefined' ? language : this.currentLanguage;
+    load(language = this.currentLanguage) {
         ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
                                 {}, this._loadFeedOptions.bind(this));
         this.currentLanguage = language;

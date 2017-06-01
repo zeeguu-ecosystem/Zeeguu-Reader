@@ -9,38 +9,32 @@ import ZeeguuRequests from '../zeeguuRequests';
  */
 export default class LanguageMenu {
     /**
-     * Link the {@link FeedSubscriber} to this instance.
-     * @param {FeedSubcriber} feedSubscriber - List of non-subscribed feeds to update.
-     */
-    constructor(feedSubscriber) {
-        this.feedSubscriber = feedSubscriber;
-    }
-
-    /**
      * Load the available languages for the dialog.
      * Uses {@link ZeeguuRequests}.
+     * @param {FeedSubscriber} feedSubscriber - List of non-subscribed feeds to update.
      */
-    load() {
-        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
+    load(feedSubscriber) {
+        let callback = ((data) => this._loadLanguageOptions(data, feedSubscriber)).bind(this);
+        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, callback);
     }
 
     /**
      * Generates all the available language options as buttons in the dialog.
      * Callback function from the zeeguu request.
      * @param {string} data - JSON string of an array of language codes.
+     * @param {FeedSubscriber} feedSubscriber - List of non-subscribed feeds to update.
      */
-    _loadLanguageOptions(data)
+    _loadLanguageOptions(data, feedSubscriber)
     {
-        var options = JSON.parse(data);
-        var template = $(config.HTML_ID_LANGUAGEOPTION_TEMPLATE).html();
+        let options = JSON.parse(data);
+        let template = $(config.HTML_ID_LANGUAGEOPTION_TEMPLATE).html();
         options.sort();
-        for (var i=0; i < options.length; ++i)
+        for (let i=0; i < options.length; ++i)
         {
-            var languageOptionData = {
+            let languageOptionData = {
                 languageOptionCode: options[i]
-            }
-            var languageOption = $(Mustache.render(template, languageOptionData));
-            var feedSubscriber = this.feedSubscriber;
+            };
+            let languageOption = $(Mustache.render(template, languageOptionData));
             languageOption.on('click', function () {
                 feedSubscriber.clear();
                 feedSubscriber.load($(this).attr('id'));

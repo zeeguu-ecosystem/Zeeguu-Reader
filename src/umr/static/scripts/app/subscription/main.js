@@ -2,7 +2,6 @@ import $ from 'jquery';
 import ArticleList from './ArticleList';
 import SubscriptionList from './SubscriptionList';
 import FeedSubscriber from './FeedSubscriber';
-import dialogPolyfill from 'dialog-polyfill';
 import LanguageMenu from './LanguageMenu';
 import config from '../config';
 
@@ -10,8 +9,8 @@ import config from '../config';
  * correct object is called to handle it. */
 let subscriptionList = new SubscriptionList();
 let articleList = new ArticleList(subscriptionList);
-let feedSubscriber = new FeedSubscriber(subscriptionList);
-let languageMenu = new LanguageMenu(feedSubscriber);
+let languageMenu = new LanguageMenu();
+let feedSubscriber = new FeedSubscriber(subscriptionList, languageMenu);
 
 document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
     articleList.clear();
@@ -23,10 +22,17 @@ document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
 $(document).ready(function() {
     subscriptionList.load();
     feedSubscriber.load();
-    languageMenu.load();
 
+    let showAddFeedDialogButton = document.querySelector('.show-modal');
+    $(showAddFeedDialogButton).click(function () {
+        feedSubscriber.open();
+    });
+
+
+    /*
     let addFeedDialog = document.querySelector('dialog');
     let showAddFeedDialogButton = document.querySelector('.show-modal');
+
 
     // Some browsers do not support dialog, for that we use Polyfill.
     if (!addFeedDialog.showModal)
@@ -40,7 +46,9 @@ $(document).ready(function() {
 
     addFeedDialog.querySelector('.close').addEventListener('click', function () {
         addFeedDialog.close();
-    });
+    });*/
+
+
 });
 
 /* Called when no image could be loaded as an article avatar. */
