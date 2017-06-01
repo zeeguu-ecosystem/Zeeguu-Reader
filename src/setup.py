@@ -1,20 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-from setuptools import setup, find_packages
-from setuptools.command.bdist_egg import bdist_egg as _bdist_egg
-from subprocess import check_call
 import os
 
-class InstallWithWebpack(_bdist_egg):
-    def run(self):
-        check_call("webpack", cwd='../')
-        _bdist_egg.run(self)
+import setuptools
 
-setup(
-    cmdclass={'easy_install': InstallWithWebpack},
+setuptools.setup(
     name="umr",
-    version="0.5",
-    packages=find_packages(),
+    version="0.6",
+    packages=setuptools.find_packages(),
     include_package_data=True,
     zip_safe=False,
     author="Luc & Dan",
