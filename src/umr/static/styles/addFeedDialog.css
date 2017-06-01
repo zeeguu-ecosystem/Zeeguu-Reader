@@ -53,6 +53,5 @@
 }
 
 .list-control {
-  max-height: 35vh;
   overflow-y: scroll;
 }
