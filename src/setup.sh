@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run this script to setup your development environment.
+# Run this script to package umr.
 
 TOP=$(cd $(dirname $0) && pwd -L)
 
