@@ -18,6 +18,11 @@ export default class Notifier {
      */
     notify (message) {
         let snackbar = document.querySelector('.mdl-js-snackbar');
+        $(snackbar).css({
+            position: "relative !important",
+            borderRadius: "3em 3em 3em 3em",
+            bottom: "2em"
+        })
         if (this.lastMessage === message && $(snackbar).hasClass('mdl-snackbar--active'))
             return;
         snackbar.MaterialSnackbar.showSnackbar({message: message});
