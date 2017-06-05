@@ -17,6 +17,7 @@
   margin-right: auto;
   width: 100%;
   max-width: 80em;
+  cursor: pointer;
 }
 
 .articleLinkEntry
@@ -161,11 +162,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: default;
 }
 
 a
 {
    color: black !important;
+   cursor: pointer;
+}
+
+#return_home
+{
+  color: rgba(0,0,0,.26) !important;
 }
 
 .mdl-layout__drawer-button

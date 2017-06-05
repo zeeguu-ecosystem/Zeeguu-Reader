@@ -36,6 +36,7 @@ export default class FeedSubscriber {
             allowOutsideClick: true,
             showConfirmButton: false,
             showCancelButton: true,
+            cancelButtonText: 'Close',
         });
 
         this.languageMenu.load(this);
