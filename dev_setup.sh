@@ -11,7 +11,7 @@ fi
 echo "Hello developer! Let's get you setup! :)"
 
 # Required packages.
-read -p "Install dependencies with apt? Will need root priviliges." -n 1 -r
+read -p "Install dependencies with apt? Will need root priviliges. [Y/n]" -n 1 -r
 echo    # move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then

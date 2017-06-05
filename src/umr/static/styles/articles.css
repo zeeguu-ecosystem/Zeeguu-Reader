@@ -163,6 +163,11 @@ a
    color: black !important;
 }
 
+#return_home
+{
+  color: rgba(0,0,0,.26) !important;
+}
+
 .mdl-layout__drawer-button
 {
   color: black !important;
