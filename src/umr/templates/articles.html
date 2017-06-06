@@ -10,9 +10,6 @@
 	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/articles.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/dialog-polyfill.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/sweetalert.css') }}" type= "text/css">
-	<SCRIPT src="{{ url_for('umrblue.static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
-	<SCRIPT> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</SCRIPT>
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription.js')}}"></script>
 
 	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
 	<script>
@@ -25,6 +22,10 @@
 		a.appendChild(r);
 	    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 	</script>
+
+	<SCRIPT src="{{ url_for('umrblue.static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
+	<SCRIPT> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</SCRIPT>
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.6.0.js')}}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
