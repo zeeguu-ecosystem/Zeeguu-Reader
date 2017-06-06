@@ -82,23 +82,24 @@
 
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
-	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}"
-		href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
-		<div class ="articleLinkHeader">
-			<div class="articleLinkImage">
-				<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+		<a href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
+			<div class ="articleLinkHeader">
+				<div class="articleLinkImage">
+					<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+				</div>
+				<span class="articleLinkTitle" >
+					{% raw %}{{ articleLinkTitle }}{% endraw %}
+				</span>
+				<div class="articleLinkDifficulty">
+					<span class ="articleLinkDifficultyText {% raw %}{{articleDifficultyDiscrete}}{% endraw %}"> {% raw %}{{articleDifficulty}}{% endraw %} </span>
+					<span class="linkLanguageIcon flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %}"></span>
+				</div>
 			</div>
-			<a class="articleLinkTitle" >
-				{% raw %}{{ articleLinkTitle }}{% endraw %}
-			</a>
-			<div class="articleLinkDifficulty">
-				<span class ="articleLinkDifficultyText {% raw %}{{articleDifficultyDiscrete}}{% endraw %}"> {% raw %}{{articleDifficulty}}{% endraw %} </span>
-				<span class="linkLanguageIcon flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %}"></span>
+			<div class="articleLinkSummary">
+				{% raw %}{{articleSummary}}{% endraw %}
 			</div>
-		</div>
-		<div class="articleLinkSummary">
-			{% raw %}{{articleSummary}}{% endraw %}
-		</div>
+		</a>
 	</li>
 </script>
 

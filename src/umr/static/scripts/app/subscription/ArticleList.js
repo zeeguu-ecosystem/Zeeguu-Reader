@@ -120,7 +120,6 @@ export default class ArticleList {
                     // Animation complete.
                     $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
-                location.href = $(this).attr('href');
             }
         });
     }
