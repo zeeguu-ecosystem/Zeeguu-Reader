@@ -158,7 +158,6 @@ export default class Translator {
     _buildConnectivesSet() {
         let set = new Set();
         set.add('');
-        set.add(',');
         set.add('-');
         set.add(':');
         set.add(';');

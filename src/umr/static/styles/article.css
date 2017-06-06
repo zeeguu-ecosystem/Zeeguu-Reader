@@ -121,23 +121,17 @@ h5,h6
   font-size: 0.7em;
 }
 
-#articleAuthor
+#articleInfo
 {
   font-size: 1em;
   text-align: right;
   color: grey;
-}
-
-#articleURL
-{
-  text-align: center;
-  font-size: 1em;
+  font-style: italic;
 }
 
 a
 {
   color: grey;
-  text-decoration: none;
 }
 
 a:hover

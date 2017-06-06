@@ -50,10 +50,10 @@ def make_article(url, language=None):
 
     # Create our article using Soup.
     soup = Soup(render_template('article.html', fromLanguage=language), 'html.parser')
-    soup.find('div', {'id': 'articleURL'}).find('a')['href'] = url
+    soup.find('span', {'id': 'articleURL'}).find('a')['href'] = url
     soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'))
     if authors:
-        soup.find('p',   {'id': 'articleAuthor'}).append(Soup('By: ' + authors, 'html.parser'))
+        soup.find('p',   {'id': 'articleInfo'}).append(Soup('By: ' + authors, 'html.parser'))
     soup.find('p',   {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
 
     return str(soup)
@@ -72,7 +72,7 @@ def wrap_zeeguu_words(text):
     """
     soup = Soup(text, 'html.parser')
     for text in soup.findAll(text=True):
-        word = "([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_'-]+)"
+        word = "([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_'’-]+)"
         if re.search(word, text):
             wrapped_text = re.sub(word, '<' + WORD_TAG + '>' + r'\1' + "</" + WORD_TAG + '>', text)
             text.replaceWith(Soup(wrapped_text, 'html.parser'))
