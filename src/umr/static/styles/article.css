@@ -121,23 +121,17 @@ h5,h6
   font-size: 0.7em;
 }
 
-#articleAuthor
+#articleInfo
 {
   font-size: 1em;
   text-align: right;
   color: grey;
-}
-
-#articleURL
-{
-  text-align: center;
-  font-size: 1em;
+  font-style: italic;
 }
 
 a
 {
   color: grey;
-  text-decoration: none;
 }
 
 a:hover
@@ -151,6 +145,22 @@ a:hover
   margin-right: auto;
   width:80%;
   text-align:justify;
+}
+
+#like_button
+{
+  padding-bottom: 2em;
+  text-align:center;
+}
+
+#toggle_like:hover
+{
+  background-color: #CEEBFB;
+}
+
+.liked
+{
+  background-color: #A3D6F5;
 }
 
 .noselect 

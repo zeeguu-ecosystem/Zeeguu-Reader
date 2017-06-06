@@ -47,10 +47,16 @@
   <main class="mdl-layout__content">
     <div class="page-content">
 			<P id="articleTitle" class="title translatable"></P>
-			<P id="articleAuthor"></P>
+			<P id="articleInfo">
+				<SPAN id="articleURL">From: <A>source</A> | </SPAN>
+			</P>
 			<DIV id="articleContent" class="translatable"></DIV><BR />
-			<DIV id="articleURL"><A>Click to go to original source.</A></DIV><BR />
-    </div>
+			<div id = "like_button">
+				<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+					<i class="material-icons">thumb_up</i>
+				</button>
+			</div>
+		</div>
   </main>
   <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
 	  <div class="mdl-snackbar__text"></div>

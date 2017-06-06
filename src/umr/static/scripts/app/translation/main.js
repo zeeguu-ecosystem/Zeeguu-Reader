@@ -38,6 +38,13 @@ $(document).ready(function() {
         translator.undoTranslate();
         attachZeeguuListeners();
     });
+
+    /* When the like button is clicked, set its background color. */
+    $(config.HTML_ID_TOGGLELIKE).click(function()
+    {
+        if ($(this).hasClass('liked')) $(this).removeClass('liked');
+        else $(this).addClass('liked');
+    });
 });
 
 /* Clicking anywhere in the document when the 
