@@ -48,5 +48,5 @@ export default {
     CLASS_LOADING: 'loading',
     CLASS_NOSELECT: 'noselect',
     EVENT_SUBSCRIPTION: 'subscription-list-loaded',
-    LOGGY_TOKEN: '306a94c3-68c2-4e6b-a95c-d52d7a11e279'
+    LOGGLY_TOKEN: '306a94c3-68c2-4e6b-a95c-d52d7a11e279'
 };

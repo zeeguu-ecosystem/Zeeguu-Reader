@@ -11,7 +11,7 @@ const KEY_MAP_FEED_ARTICLE = "feed_article_map";
 /* Setup remote logging. */
 let logger = new LogglyTracker();
 logger.push({
-    'logglyKey': config.LOGGY_TOKEN,
+    'logglyKey': config.LOGGLY_TOKEN,
     'sendConsoleErrors' : true,
     'tag' : 'ArticleList'
 });

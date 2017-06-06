@@ -8,7 +8,7 @@ import 'loggly-jslogger';
 /* Setup remote logging. */
 let logger = new LogglyTracker();
 logger.push({
-    'logglyKey': config.LOGGY_TOKEN,
+    'logglyKey': config.LOGGLY_TOKEN,
     'sendConsoleErrors' : true,
     'tag' : 'SubscriptionList'
 });
