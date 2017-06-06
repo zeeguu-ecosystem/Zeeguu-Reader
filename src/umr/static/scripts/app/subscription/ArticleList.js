@@ -4,8 +4,17 @@ import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 import Cache from '../Cache';
 import NoFeedTour from './NoFeedTour';
+import 'loggly-jslogger';
 
 const KEY_MAP_FEED_ARTICLE = "feed_article_map";
+
+/* Setup remote logging. */
+let logger = new LogglyTracker();
+logger.push({
+    'logglyKey': config.LOGGY_TOKEN,
+    'sendConsoleErrors' : true,
+    'tag' : 'ArticleList'
+});
 
 /**
  * Manages a list of article links, stores them in {@link Cache} if possible.
@@ -82,7 +91,7 @@ export default class ArticleList {
      */
     _renderArticleLinks(subscription, articleLinks) {
         if (articleLinks.length < 1)
-            console.log("No articles for " + subscription.title + ".");
+            logger.push("No articles for " + subscription.title + ".");
 
         let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
