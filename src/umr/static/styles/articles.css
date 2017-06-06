@@ -51,6 +51,17 @@
   box-shadow: 0px 0px 40px #e5e5e5;
 }
 
+.articleLinkEntry a
+{
+  color:black;
+  text-decoration:none;
+}
+
+.articleLinkEntry a:visited
+{
+  color:grey !important;
+}
+
 .articleLinkHeader
 {
   display: table;
