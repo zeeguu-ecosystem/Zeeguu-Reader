@@ -3,6 +3,15 @@ import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 import Notifier from '../Notifier';
+import 'loggly-jslogger';
+
+/* Setup remote logging. */
+let logger = new LogglyTracker();
+logger.push({
+    'logglyKey': config.LOGGLY_TOKEN,
+    'sendConsoleErrors' : true,
+    'tag' : 'SubscriptionList'
+});
 
 /**
  * Shows a list of all subscribed feeds, allows the user to remove them.
@@ -100,7 +109,7 @@ export default class SubscriptionList {
             this._changed();
         } else {
             this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
-            console.log("Could not follow '" + feed.title + "'. Server reply: \n" + reply);
+            logger.push("Could not follow '" + feed.title + "'. Server reply: \n" + reply);
         }
     }
 
@@ -127,7 +136,7 @@ export default class SubscriptionList {
             this._changed();
         } else {
             this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
-            console.log("Could not unfollow '" + feed.title + "'. Server reply: \n" + reply);
+            logger.push("Could not unfollow '" + feed.title + "'. Server reply: \n" + reply);
         }
     }
 

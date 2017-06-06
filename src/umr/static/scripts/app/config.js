@@ -47,5 +47,6 @@ export default {
     HTML_CLASS_FOCUSED: 'focused',
     CLASS_LOADING: 'loading',
     CLASS_NOSELECT: 'noselect',
-    EVENT_SUBSCRIPTION: 'subscription-list-loaded'
+    EVENT_SUBSCRIPTION: 'subscription-list-loaded',
+    LOGGLY_TOKEN: '306a94c3-68c2-4e6b-a95c-d52d7a11e279'
 };
