@@ -39,6 +39,7 @@ $(document).ready(function() {
         attachZeeguuListeners();
     });
 
+    /* When the like button is clicked, set its background color. */
     $(config.HTML_ID_TOGGLELIKE).click(function()
     {
         if ($(this).hasClass('liked')) $(this).removeClass('liked');

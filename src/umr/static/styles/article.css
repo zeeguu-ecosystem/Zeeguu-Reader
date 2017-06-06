@@ -150,6 +150,7 @@ a:hover
 #like_button
 {
   padding-bottom: 2em;
+  text-align:center;
 }
 
 #toggle_like:hover
