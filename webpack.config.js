@@ -4,6 +4,11 @@ const webpack = require('webpack'),
 
 var inProduction = process.env.NODE_ENV === 'production';
 
+function getVersion()
+{
+	return require("./package.json").version;
+}
+
 module.exports = {
     entry: {
 		subscription: './src/umr/static/scripts/app/subscription/main.js',
@@ -11,7 +16,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, './src/umr/static/scripts/dist'),
-        filename: '[name].js'
+        filename: '[name]-' + getVersion() + '.js'
     },
 	module: {
 	 loaders: [
