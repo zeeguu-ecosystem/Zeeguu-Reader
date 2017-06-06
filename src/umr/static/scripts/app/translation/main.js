@@ -38,6 +38,12 @@ $(document).ready(function() {
         translator.undoTranslate();
         attachZeeguuListeners();
     });
+
+    $(config.HTML_ID_TOGGLELIKE).click(function()
+    {
+        if ($(this).hasClass('liked')) $(this).removeClass('liked');
+        else $(this).addClass('liked');
+    });
 });
 
 /* Clicking anywhere in the document when the 

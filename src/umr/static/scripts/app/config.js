@@ -27,6 +27,7 @@ export default {
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     HTML_ID_TOGGLECOPY: '#toggle_copy',
     HTML_ID_TOGGLEUNDO: '#toggle_undo',
+    HTML_ID_TOGGLELIKE: '#toggle_like',
     HTML_ID_ALTERMENU: '#alterMenu',
     HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
     HTML_ID_USER_ALTERNATIVE: '#userAlternative',

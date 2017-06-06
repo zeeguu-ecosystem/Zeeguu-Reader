@@ -147,6 +147,21 @@ a:hover
   text-align:justify;
 }
 
+#like_button
+{
+  padding-bottom: 2em;
+}
+
+#toggle_like:hover
+{
+  background-color: #CEEBFB;
+}
+
+.liked
+{
+  background-color: #A3D6F5;
+}
+
 .noselect 
 {
   -webkit-touch-callout: none; /* iOS Safari */
