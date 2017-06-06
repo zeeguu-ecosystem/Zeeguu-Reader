@@ -5,6 +5,19 @@
 	<LINK rel="stylesheet" href="{{ url_for('umrblue.static',filename='styles/mdl/material.min.css') }}">
 	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/article.css') }}" type= "text/css">
 	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
+	<script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:510081,hjsv:5};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+	</script>
+
 	<SCRIPT src="{{ url_for('umrblue.static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
 	<SCRIPT>
 		var FROM_LANGUAGE = '{{ fromLanguage }}';
