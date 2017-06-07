@@ -3,6 +3,11 @@
   box-shadow: 0px 1em 2em #FFFFFF !important;
 }
 
+.home-button
+{
+    color: #030303 !important;
+}
+
 #articleLinkList
 {
   list-style-position: inside;
@@ -12,6 +17,7 @@
   margin-right: auto;
   width: 100%;
   max-width: 80em;
+  cursor: pointer;
 }
 
 .articleLinkEntry
@@ -23,13 +29,13 @@
   border-spacing: 10px;
 }
 
-@keyframes articleLinkShow 
+@keyframes articleLinkShow
 {
-  0% 
+  0%
   {
     opacity: 0;
   }
-  100% 
+  100%
   {
      opacity: 1;
   }
@@ -118,7 +124,7 @@
   width:100%;
 }
 
-.articleLinkTitle:hover
+.articleLinkEntry:hover .articleLinkTitle
 {
   font-weight: bold!important;
   border:none;
@@ -156,11 +162,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: default;
 }
 
 a
 {
    color: black !important;
+   cursor: pointer;
+}
+
+#return_home
+{
+  color: rgba(0,0,0,.26) !important;
 }
 
 .mdl-layout__drawer-button

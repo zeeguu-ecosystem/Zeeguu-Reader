@@ -47,6 +47,11 @@ zeeguu tran[chosen]:after
   right: -0.5em;
 }
 
+#toggle_undo
+{
+  color: rgba(0,0,0,.26);
+}
+
 #altermenu
 {
 	display: none;
@@ -84,6 +89,12 @@ zeeguu tran[chosen]:after
 .mdl-layout__drawer-button 
 {
   color: black;
+}
+
+.mdl-js-snackbar
+{
+  border-radius: 3em 3em 3em 3em;
+  bottom: 2em;
 }
 
 p.title
@@ -151,6 +162,7 @@ a:hover
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+                 cursor: pointer;
 }
 
 @keyframes fadein 

@@ -44,23 +44,26 @@ $(document).ready(function() {
  * alter menu is open, except for the input field,
  * will close the alter menu.*/
 $(document).click(function(event) {
-    let target = $(event.target);
-    if (!target.is('input') && alterMenu.isOpen()) {
+    let $target = $(event.target);
+    if (!$target.is('input') && alterMenu.isOpen()) {
         alterMenu.close();
-    } else if (target.is('input') && target.val() === config.TEXT_SUGGESTION) {
-        target.attr('value', '');
+    } else if ($target.is('input') && $target.val() === config.TEXT_SUGGESTION) {
+        $target.attr('value', '');
     }
 });
 
 /* Listens on keypress 'enter' to set the user suggestion 
- * as the chosen translation. */
+ * as the chosen translation and sends the user's contribution
+ * to Zeeguu. */
 $(document).keypress(function(event) {
-    let target = $(event.target);
-    if (target.is('input') && event.which === config.ENTER_KEY) {
-        let trans = target.parent().parent();
-        if (target.val() !== '') {
-            trans.attr(config.HTML_ATTRIBUTE_CHOSEN, target.val());
-            trans.attr(config.HTML_ATTRIBUTE_SUGGESTION, target.val());
+    let $target = $(event.target);
+    if ($target.is('input') && event.which === config.ENTER_KEY) {
+        let $zeeguu = $target.closest(config.HTML_ZEEGUUTAG);
+        let $trans  = $zeeguu.children(config.HTML_TRANSLATED);
+        if ($target.val() !== '') {
+            $trans.attr(config.HTML_ATTRIBUTE_CHOSEN, $target.val());
+            $trans.attr(config.HTML_ATTRIBUTE_SUGGESTION, $target.val());
+            translator.sendSuggestion($zeeguu);
         }
         alterMenu.close();
     }
@@ -104,7 +107,7 @@ function attachZeeguuListeners () {
             return;
 
         let $target = $(event.target);
-        if ( $target.is(config.HTML_ZEEGUUTAG) && !translator.isTranslated(this) ) {
+        if ( $target.is(config.HTML_ZEEGUUTAG) && !translator.isTranslated($target) ) {
             // A non-translated word is clicked, so we translate it.
             translator.translate(this);
         } else if ($target.is(config.HTML_ORIGINAL) ) {

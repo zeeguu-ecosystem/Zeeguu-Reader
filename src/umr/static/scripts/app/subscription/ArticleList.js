@@ -105,17 +105,13 @@ export default class ArticleList {
         $(config.HTML_CLASS_ARTICLELINK).one('click', function (event) {
             if (!event.isPropagationStopped()) {
                 event.stopPropagation();
-                $(this).find('.articleLinkSummary').animate({
-                    height: '+=30em'
-                }, 200);
-                $(this).animate({
-                    scrollTop: $(this).offset().top,
-                    height: '+=30em'
+                $(this).siblings().animate({
+                    opacity: 0.25,
                 }, 200, function () {
                     // Animation complete.
-                    location.href = $(this).attr('href');
+                    $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
-                $(config.HTML_CLASS_PAGECONTENT).fadeOut();
+                location.href = $(this).attr('href');
             }
         });
     }

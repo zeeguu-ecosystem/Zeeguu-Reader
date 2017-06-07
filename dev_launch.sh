@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Run this script to host on your machine.
 
+# Compile scripts.
+webpack
+
+# Launch flask server.
 if [ -z ${ZEEGUU_UMR_VENV_ROOT+x} ]
 then
     ZEEGUU_UMR_VENV_ROOT="$HOME/.virtualenvs/zeeguu_umr"

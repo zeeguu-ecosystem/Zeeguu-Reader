@@ -5,7 +5,9 @@
 
 #languageOptionList {
   text-align:center;
-  margin-bottom: 1em;
+  height:1em;
+  vertical-align: text-top;
+  margin-bottom: 4em;
 }
 
 .langButton {
@@ -18,13 +20,29 @@
   outline:none;
 }
 
-.langButton:focus {
-  background-color: lightgrey;
+.langButton.focused {
+  position:relative;
+  animation: move_up 0.2s forwards;
+}
+
+@keyframes move_up {
+  0%
+  {
+    top: 0;
+  }
+  80%
+  {
+    top:-0.5em;
+  }
+  100%
+  {
+    top:-0.3em;
+  }
 }
 
 .addableTitle {
   display:block;
-  max-width: 6em;
+  max-width: 20em;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -51,6 +69,5 @@
 }
 
 .list-control {
-  max-height: 45vh;
   overflow-y: scroll;
 }
