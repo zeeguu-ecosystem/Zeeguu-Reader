@@ -161,10 +161,11 @@ a:hover
 
 #toggle_like:hover
 {
-  background-color: #CEEBFB;
+  background-color: none;
+  cursor: pointer;
 }
 
-.liked
+#toggle_like:not(.mdl-button--disabled)
 {
   background-color: #A3D6F5;
 }

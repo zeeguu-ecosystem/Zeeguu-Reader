@@ -14,10 +14,10 @@ const speaker = new Speaker();
  * bind all necessary listeners. */
 $(document).ready(function() {
     // Disable selection by default.
-    disableToggleCopy(); 
+    disableToggleCopy();
     attachZeeguuListeners();
 
-    /* When the copy toggle is switched on, 
+    /* When the copy toggle is switched on,
      * copying is enabled and translation gets disabled and vice-versa. */
     $(config.HTML_ID_TOGGLECOPY).click(function()
     {
@@ -42,12 +42,12 @@ $(document).ready(function() {
     /* When the like button is clicked, set its background color. */
     $(config.HTML_ID_TOGGLELIKE).click(function()
     {
-        if ($(this).hasClass('liked')) $(this).removeClass('liked');
-        else $(this).addClass('liked');
+        if ($(this).hasClass('mdl-button--disabled')) $(this).removeClass('mdl-button--disabled');
+        else $(this).addClass('mdl-button--disabled');
     });
 });
 
-/* Clicking anywhere in the document when the 
+/* Clicking anywhere in the document when the
  * alter menu is open, except for the input field,
  * will close the alter menu.*/
 $(document).click(function(event) {
@@ -59,7 +59,7 @@ $(document).click(function(event) {
     }
 });
 
-/* Listens on keypress 'enter' to set the user suggestion 
+/* Listens on keypress 'enter' to set the user suggestion
  * as the chosen translation and sends the user's contribution
  * to Zeeguu. */
 $(document).keypress(function(event) {
@@ -76,7 +76,7 @@ $(document).keypress(function(event) {
     }
 });
 
-/* Every time the screen orientation changes, 
+/* Every time the screen orientation changes,
  * the alter menu will be closed. */
 $(window).on("orientationchange",function() {
   alterMenu.close();
