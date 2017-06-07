@@ -32,7 +32,7 @@ zeeguu tran
   border-bottom: 0.1em solid #FFFFFF;
 }
 
-zeeguu tran[chosen]:after 
+zeeguu tran[chosen]:after
 {
 	content: attr(chosen);
 }
@@ -86,7 +86,7 @@ zeeguu tran[chosen]:after
 }
 
 .mdl-layout__header,
-.mdl-layout__drawer-button 
+.mdl-layout__drawer-button
 {
   color: black;
 }
@@ -155,15 +155,16 @@ a:hover
 
 #toggle_like:hover
 {
-  background-color: #CEEBFB;
+  background-color: none;
+  cursor: pointer;
 }
 
-.liked
+#toggle_like:not(.mdl-button--disabled)
 {
   background-color: #A3D6F5;
 }
 
-.noselect 
+.noselect
 {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -175,13 +176,13 @@ a:hover
                  cursor: pointer;
 }
 
-@keyframes fadein 
+@keyframes fadein
 {
-  0% 
+  0%
   {
     opacity: 0.4;
   }
-  100% 
+  100%
   {
      opacity: 1;
   }
