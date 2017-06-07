@@ -1,3 +1,9 @@
+*
+{
+  -webkit-backface-visibility:  hidden;
+  -webkit-tap-highlight-color:  transparent;
+}
+
 .is-casting-shadow
 {
   box-shadow: 0px 1em 2em #FFFFFF !important;
