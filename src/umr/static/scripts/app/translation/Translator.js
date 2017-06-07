@@ -107,7 +107,9 @@ export default class Translator {
      * @return {string} - Textual context.
      */
     _getContext(zeeguuTag) {
-        return zeeguuTag.parentElement.textContent;
+        let zeeguuParentClone = zeeguuTag.parentElement.cloneNode(true);        
+        $(zeeguuParentClone).find(config.HTML_ID_ALTERMENU).remove();
+        return zeeguuParentClone.textContent;
     }
 
     /**
