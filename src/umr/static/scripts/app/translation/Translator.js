@@ -32,7 +32,7 @@ export default class Translator {
         let tmp_trans = this._mergeZeeguu(zeeguuTag);
 
         let text = zeeguuTag.textContent.trim();
-        let context = this._getContext(zeeguuTag);
+        let context = Translator._getContext(zeeguuTag);
         let url = window.location.href;
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
@@ -63,7 +63,7 @@ export default class Translator {
      */
     sendSuggestion ($zeeguu) {
         let word = $zeeguu.children(config.HTML_ORIGINAL).text();
-        let context = this._getContext($zeeguu.get(0));
+        let context = Translator._getContext($zeeguu.get(0));
         let url = window.location.href;
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
         let translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
@@ -106,7 +106,7 @@ export default class Translator {
      * @param {Element} zeeguuTag - Document element for which to extract textual context
      * @return {string} - Textual context.
      */
-    _getContext(zeeguuTag) {
+    static _getContext(zeeguuTag) {
         let zeeguuParentClone = zeeguuTag.parentElement.cloneNode(true);        
         $(zeeguuParentClone).find(config.HTML_ID_ALTERMENU).remove();
         return zeeguuParentClone.textContent;

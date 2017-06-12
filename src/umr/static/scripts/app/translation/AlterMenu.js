@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import config from '../config'
 import Notifier from '../Notifier'
+import Translator from './Translator'
 
 /**
  * Class that allows for choosing alternative zeeguu translations from
@@ -49,8 +50,29 @@ export default class AlterMenu {
             $(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
             $(config.HTML_ID_ALTERMENU).append($(button));
             $(button).click({$tran: $tran, alternative: i}, this._swapPrimaryTranslation);
+            if(i>1) $(button).click({$tran: $tran, alternative: i}, this._sendSwappedTranslation);
         }
         this._appendInputField($tran);
+    }
+
+    /**
+     * Send the chosen translation from the list of choices to Zeeguu.
+     * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
+     */
+    _sendSwappedTranslation(selectedAlternative) {
+        let $tran = selectedAlternative.data.$tran;
+        
+        let word = $tran.parent().children(config.HTML_ORIGINAL).text();
+        let translation = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + selectedAlternative.data.alternative);
+        let context = Translator._getContext($tran.parent().get(0));
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        let selected_from_predefined_choices = true;
+
+        // Launch Zeeguu request to supply translation suggestion.
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + this.fromLanguage + '/' + this.toLanguage,
+                           {word: word, context: context, url: url, title: title, translation: translation, 
+                            selected_from_predefined_choices: selected_from_predefined_choices});
     }
 
     /** 
