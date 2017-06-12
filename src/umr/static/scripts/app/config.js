@@ -12,7 +12,6 @@ export default {
     GET_LEARNED_LANGUAGE: '/learned_language',
     GET_NATIVE_LANGUAGE: '/native_language',
     POST_TRANSLATION_SUGGESTION: '/contribute_translation',
-    TO_LANGUAGE: 'en',
     ENTER_KEY: 13,
     TEXT_SUGGESTION: 'Suggestion...',
     TEXT_NO_ALTERNATIVES: 'Sorry, no alternatives.',
