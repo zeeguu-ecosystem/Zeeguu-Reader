@@ -107,6 +107,7 @@ export default class ArticleList {
                 articleIcon: subscription.image_url
             };
             let element = Mustache.render(template, templateAttributes);
+
             $(config.HTML_ID_ARTICLELINK_LIST).append(element);
         }
 
