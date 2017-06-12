@@ -2,6 +2,7 @@ import $ from 'jquery';
 import config from '../config'
 import Notifier from '../Notifier'
 import Translator from './Translator'
+import ZeeguuRequests from '../zeeguuRequests'
 
 /**
  * Class that allows for choosing alternative zeeguu translations from
@@ -41,7 +42,6 @@ export default class AlterMenu {
      * @param {int} transCount - Number of present alternative translations. 
      */
     construct($tran, transCount) {
-
         $(config.HTML_ID_ALTERMENU).empty();
         for (var i = 0; i < transCount; i++) {
             var button = document.createElement('button');
@@ -50,7 +50,7 @@ export default class AlterMenu {
             $(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
             $(config.HTML_ID_ALTERMENU).append($(button));
             $(button).click({$tran: $tran, alternative: i}, this._swapPrimaryTranslation);
-            if(i>1) $(button).click({$tran: $tran, alternative: i}, this._sendSwappedTranslation);
+            $(button).click({$tran: $tran, alternative: i}, this._sendSwappedTranslation.bind(this));
         }
         this._appendInputField($tran);
     }
@@ -61,7 +61,7 @@ export default class AlterMenu {
      */
     _sendSwappedTranslation(selectedAlternative) {
         let $tran = selectedAlternative.data.$tran;
-        
+    
         let word = $tran.parent().children(config.HTML_ORIGINAL).text();
         let translation = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + selectedAlternative.data.alternative);
         let context = Translator._getContext($tran.parent().get(0));
@@ -70,7 +70,7 @@ export default class AlterMenu {
         let selected_from_predefined_choices = true;
 
         // Launch Zeeguu request to supply translation suggestion.
-        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + this.fromLanguage + '/' + this.toLanguage,
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: word, context: context, url: url, title: title, translation: translation, 
                             selected_from_predefined_choices: selected_from_predefined_choices});
     }

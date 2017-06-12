@@ -14,10 +14,8 @@ export default class Translator {
     constructor() {
         this.undoStack = new UndoStack();
         this.connectivesSet = this._buildConnectivesSet();
-        this.fromLanguage = FROM_LANGUAGE;
-        this.toLanguage = config.TO_LANGUAGE; // en is default
         ZeeguuRequests.get(config.GET_NATIVE_LANGUAGE, {}, function (language) {
-            this.toLanguage = language;
+            TO_LANGUAGE = language;
         }.bind(this));
     }
 
@@ -46,7 +44,7 @@ export default class Translator {
 
         let callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
-        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + this.fromLanguage + '/' + this.toLanguage,
+        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
     }
 
@@ -69,7 +67,7 @@ export default class Translator {
         let translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
 
         // Launch Zeeguu request to supply translation suggestion.
-        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + this.fromLanguage + '/' + this.toLanguage,
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: word, context: context, url: url, title: title, translation: translation});
     }
 
