@@ -22,7 +22,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  max-width: 80em;
+  max-width: 60em;
   cursor: pointer;
 }
 
@@ -130,12 +130,13 @@
 
 .articleLinkTitle
 {
+  font-size: large;
   border:none;
   overflow: hidden;
   white-space: nowrap;
   display: block;
   text-overflow: ellipsis;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
   outline: none;
   width:100%;
@@ -153,10 +154,10 @@
 
 .articleLinkSummary {
   margin:auto;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  max-width: 50em;
-  height: 4.35em;
+  padding-left: 1em;
+  padding-right: 1em;
+  max-width: 59em;
+  height: 6.2em;
   overflow: hidden;
 }
 
