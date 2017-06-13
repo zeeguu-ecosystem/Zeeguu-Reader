@@ -3,12 +3,14 @@ import config from '../config';
 import Translator from './Translator';
 import AlterMenu from './AlterMenu'
 import Speaker from './Speaker';
+import Starer from '../Starer';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 const translator = new Translator();
 const alterMenu = new AlterMenu();
 const speaker = new Speaker();
+const starer = new Starer();
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -42,8 +44,13 @@ $(document).ready(function() {
     /* When the like button is clicked, set its background color. */
     $(config.HTML_ID_TOGGLELIKE).click(function()
     {
-        if ($(this).hasClass('mdl-button--disabled')) $(this).removeClass('mdl-button--disabled');
-        else $(this).addClass('mdl-button--disabled');
+        $(this).toggleClass('mdl-button--disabled');
+    });
+
+    /* Toggle listener for star button. */
+    $(config.HTML_ID_TOGGLESTAR).click(function()
+    {
+        starer.toggle();
     });
 });
 

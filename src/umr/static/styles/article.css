@@ -170,6 +170,11 @@ a:hover
   background-color: #A3D6F5;
 }
 
+.material-icons.star.on
+{
+  display: none;
+}
+
 .noselect
 {
   -webkit-touch-callout: none; /* iOS Safari */
