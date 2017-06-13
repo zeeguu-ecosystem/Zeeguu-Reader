@@ -127,16 +127,17 @@
 
 .articleLinkTitle
 {
+  display: table-cell;
   font-size: large;
   border:none;
   overflow: hidden;
   white-space: nowrap;
-  display: block;
   text-overflow: ellipsis;
   text-align: left;
+  vertical-align: middle;
   text-decoration: none;
   outline: none;
-  width:100%;
+  width: 100%;
 }
 
 .articleLinkEntry:hover .articleLinkTitle
