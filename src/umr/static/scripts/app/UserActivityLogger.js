@@ -28,8 +28,7 @@ export default class UserActivityLogger {
 
     /**
      * Handle the reply from zeeguu.
-     * @param reply
-     * @private
+     * @param {string} reply - Success status, 'OK' if all went well.
      */
     static _onReply(reply) {
         if (reply !== 'OK')
