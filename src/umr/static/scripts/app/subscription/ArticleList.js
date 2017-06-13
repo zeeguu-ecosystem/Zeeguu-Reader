@@ -4,9 +4,11 @@ import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 import Cache from '../Cache';
 import NoFeedTour from './NoFeedTour';
+import UserActivityLogger from '../UserActivityLogger';
 import 'loggly-jslogger';
 
-const KEY_MAP_FEED_ARTICLE = "feed_article_map";
+const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
+const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -111,16 +113,26 @@ export default class ArticleList {
             $(config.HTML_ID_ARTICLELINK_LIST).append(element);
         }
 
-        // Make the link expand on click, then redirect to the article.
         $(config.HTML_CLASS_ARTICLELINK).one('click', function (event) {
             if (!event.isPropagationStopped()) {
                 event.stopPropagation();
+
+                // Animate the click on an article.
                 $(this).siblings().animate({
                     opacity: 0.25,
                 }, 200, function () {
                     // Animation complete.
                     $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
+
+                // Log that an article has been opened.
+                let url = $(this).find('a')[0].href;
+                let articleInfo = {};
+                url.split('?')[1].split('&').forEach(function(part) {
+                    let item = part.split("=");
+                    articleInfo[item[0]] = decodeURIComponent(item[1]);
+                });
+                UserActivityLogger.log(USER_EVENT_CLICKED_ARTICLE, url, articleInfo);
             }
         });
     }
