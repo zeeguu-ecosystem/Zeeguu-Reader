@@ -15,12 +15,15 @@ export default class UserActivityLogger {
      * @param {Object} extra_data - Optional additional information.
      */
     static log(event, value = '', extra_data = {}) {
-        let data = {time: new Date(),
+        let date = new Date();
+        let time = date.getUTCFullYear() + '-' + date.getUTCMonth() + '-' + date.getUTCDate()
+                 + 'T' + date.getUTCHours() + ':' + date.getUTCMinutes() + ':' + date.getUTCMinutes();
+        let eventInformation = {time: time,
                     event: 'UMR - ' + event,
                     value:value,
-                    extra_data: extra_data};
-        console.log(data);
-        ZeeguuRequests.post(POST_USER_ACTIVITY_ENDPOINT, data, this._onReply);
+                    extra_data: JSON.stringify(extra_data)
+        };
+        ZeeguuRequests.post(POST_USER_ACTIVITY_ENDPOINT, event_information, this._onReply);
     }
 
     /**
@@ -30,6 +33,6 @@ export default class UserActivityLogger {
      */
     static _onReply(reply) {
         if (reply !== 'OK')
-            console.log('Failed to record user activity, reply: '+reply);
+            console.log('Failed to record user activity, reply: ' + reply);
     }
 }
