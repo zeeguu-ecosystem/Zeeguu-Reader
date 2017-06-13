@@ -88,18 +88,16 @@
 				<div class="articleLinkImage">
 					<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
 				</div>
-				<span class="articleLinkTitle" >
+				<div class="articleLinkTitle" >
 					{% raw %}{{ articleLinkTitle }}{% endraw %}
-				</span>
+				</div>
 				<div class="articleLinkDifficulty">
 					<span class ="articleLinkDifficultyText {% raw %}{{articleDifficultyDiscrete}}{% endraw %}"> {% raw %}{{articleDifficulty}}{% endraw %} </span>
 					<span class="linkLanguageIcon flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %}"></span>
 				</div>
 			</div>
 			<div class="articleLinkSummary">
-				<p>
 				{% raw %}{{articleSummary}}{% endraw %}
-				</p>
 			</div>
 		</a>
 	</li>
