@@ -20,7 +20,7 @@ export default class UserActivityLogger {
                     value:value,
                     extra_data: extra_data};
         console.log(data);
-        //ZeeguuRequests.post(POST_USER_ACTIVITY_ENDPOINT, data, this._onReply);
+        ZeeguuRequests.post(POST_USER_ACTIVITY_ENDPOINT, data, this._onReply);
     }
 
     /**
