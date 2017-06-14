@@ -59,7 +59,7 @@
     <section class="mdl-layout__tab-panel is-active" id="inbox">
         <div class="page-content">
             <!-- List of articles -->
-            <ul id="articleLinkList"></ul>
+            <ul id="articleLinkList" class="articleLinkList"></ul>
             <BR />
             <div class="emptyPage">
                 <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
@@ -75,7 +75,7 @@
     </section>
     <section class="mdl-layout__tab-panel" id="starred">
         <div class="page-content">
-            Nothing here...
+            <ul id="starredArticleList" class="articleLinkList"></ul>
         </div>
     </section>
   </main>

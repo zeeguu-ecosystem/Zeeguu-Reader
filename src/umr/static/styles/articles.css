@@ -33,7 +33,7 @@
   color: #ffc700;
 }
 
-#articleLinkList
+.articleLinkList
 {
   list-style-position: inside;
   list-style-type: none;
