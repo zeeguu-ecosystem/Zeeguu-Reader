@@ -3,6 +3,10 @@ import config from '../config'
 import Notifier from '../Notifier'
 import Translator from './Translator'
 import ZeeguuRequests from '../zeeguuRequests'
+import UserActivityLogger from '../UserActivityLogger';
+
+const USER_EVENT_CLOSED_ALTERMENU = 'CLOSE ALTERMENU';
+const USER_EVENT_OPENED_ALTERMENU = 'OPEN ALTERMENU';
 
 /**
  * Class that allows for choosing alternative zeeguu translations from
@@ -132,6 +136,9 @@ export default class AlterMenu {
      *  Hide (close) the alter menu. 
      */
     close() {
+        let word = $(config.HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
+        UserActivityLogger.log(USER_EVENT_CLOSED_ALTERMENU, word);
+
         $(config.HTML_ID_ALTERMENU).slideUp(function () {
             $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
             this.menuOpen = false;
@@ -142,6 +149,9 @@ export default class AlterMenu {
      *  Open the alter menu. 
      */
     open() {
+        let word = $(config.HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
+        UserActivityLogger.log(USER_EVENT_OPENED_ALTERMENU, word);
+        
         $(config.HTML_ID_ALTERMENU).slideDown(function () {
             this.menuOpen = true
         }.bind(this));
