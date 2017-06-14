@@ -39,7 +39,7 @@ export default class Starer {
 
     _toggleIcon() {
         $(config.HTML_ID_TOGGLESTAR).children().each(function() {
-            $(this).toggleClass("on");
+            $(this).toggleClass("off");
         });
     }
 }
