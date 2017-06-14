@@ -170,9 +170,14 @@ a:hover
   background-color: #A3D6F5;
 }
 
-.material-icons.star.on
+.material-icons.star.off
 {
   display: none;
+}
+
+.material-icons.star
+{
+  color: #F4C430;
 }
 
 .noselect
