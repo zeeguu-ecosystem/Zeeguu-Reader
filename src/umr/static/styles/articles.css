@@ -13,7 +13,27 @@
   color: #030303 !important;
 }
 
-#articleLinkList
+.mdl-layout__tab-bar
+{
+  background-color: #f7f7f7;
+}
+
+.mdl-layout__tab .material-icons
+{
+  vertical-align: middle;
+}
+
+.inbox-icon
+{
+  color: #7c7b74;
+}
+
+.star-icon
+{
+  color: #ffc700;
+}
+
+.articleLinkList
 {
   list-style-position: inside;
   list-style-type: none;
