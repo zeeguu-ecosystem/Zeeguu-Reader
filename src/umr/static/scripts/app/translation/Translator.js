@@ -1,7 +1,12 @@
 import $ from 'jquery';
-import ZeeguuRequests from '../zeeguuRequests'
-import UndoStack from './UndoStack'
-import config from '../config'
+import config from '../config';
+import UndoStack from './UndoStack';
+import ZeeguuRequests from '../zeeguuRequests';
+import UserActivityLogger from '../UserActivityLogger';
+
+const USER_EVENT_TRANSLATE = 'TRANSLATE TEXT';
+const USER_EVENT_UNDO_TRANSLATE = 'UNDO TEXT TRANSLATION';
+const USER_EVENT_SEND_SUGGESTION = 'SEND SUGGESTION';
 
 /**
  *  Class that allows for translating zeeguu tags.
@@ -46,6 +51,8 @@ export default class Translator {
         // Launch Zeeguu request to fill translation options.
         ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
+        
+        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: FROM_LANGUAGE});
     }
 
     /**
@@ -53,6 +60,9 @@ export default class Translator {
      */
     undoTranslate() {
         this.undoStack.undoState();
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        UserActivityLogger.log(USER_EVENT_UNDO_TRANSLATE, '', {url: url, title: title, language: FROM_LANGUAGE});
     }
 
     /**
@@ -69,6 +79,9 @@ export default class Translator {
         // Launch Zeeguu request to supply translation suggestion.
         ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: word, context: context, url: url, title: title, translation: translation});
+
+        UserActivityLogger.log(USER_EVENT_SEND_SUGGESTION, word, 
+                               {url: url, title: title, language: FROM_LANGUAGE, translation: translation});
     }
 
     /**
