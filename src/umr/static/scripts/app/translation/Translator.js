@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import ZeeguuRequests from '../zeeguuRequests'
-import UndoStack from './UndoStack'
-import config from '../config'
+import ZeeguuRequests from '../zeeguuRequests';
+import UndoStack from './UndoStack';
+import config from '../config';
 
 /**
  *  Class that allows for translating zeeguu tags.

@@ -1,8 +1,8 @@
 import $ from 'jquery';
-import config from '../config'
-import Notifier from '../Notifier'
-import Translator from './Translator'
-import ZeeguuRequests from '../zeeguuRequests'
+import config from '../config';
+import Notifier from '../Notifier';
+import Translator from './Translator';
+import ZeeguuRequests from '../zeeguuRequests';
 import UserActivityLogger from '../UserActivityLogger';
 
 const USER_EVENT_CLOSED_ALTERMENU = 'CLOSE ALTERMENU';
