@@ -13,6 +13,11 @@ const alterMenu = new AlterMenu();
 const speaker = new Speaker();
 const starer = new Starer();
 
+const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
+const USER_EVENT_DISABLE_COPY = 'DISABLE COPY';
+const USER_EVENT_CHANGE_ORIENTATION = 'CHANGE ORIENTATION';
+const USER_EVENT_LIKE_ARTICLE = 'LIKE ARTICLE';
+
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function() {
@@ -46,6 +51,10 @@ $(document).ready(function() {
     $(config.HTML_ID_TOGGLELIKE).click(function()
     {
         $(this).toggleClass('mdl-button--disabled');
+
+        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        UserActivityLogger.log(USER_EVENT_LIKE_ARTICLE, url, {title: title});
     });
 
     /* Toggle listener for star button. */
@@ -88,6 +97,7 @@ $(document).keypress(function(event) {
  * the alter menu will be closed. */
 $(window).on("orientationchange",function() {
   alterMenu.close();
+  UserActivityLogger.log(USER_EVENT_CHANGE_ORIENTATION);
 });
 
 /* Disable selection. */
@@ -96,6 +106,7 @@ function disableToggleCopy() {
         $(this).addClass(config.CLASS_NOSELECT);
     });
     $(config.HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
+    UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
 }
 
 /* Enable selection. */
@@ -104,6 +115,7 @@ function enableToggleCopy() {
         $(this).removeClass(config.CLASS_NOSELECT);
     });
     $(config.HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
+    UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
 }
 
 function isToggledCopy() {
