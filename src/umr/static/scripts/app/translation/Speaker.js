@@ -15,7 +15,6 @@ export default class Speaker {
         utterance.text = text;
         speechSynthesis.speak(utterance);
 
-        let speechInfo = {language : language};
-        UserActivityLogger.log(USER_EVENT_TEXT_TO_SPEECH, text, speechInfo);
+        UserActivityLogger.log(USER_EVENT_TEXT_TO_SPEECH, text, {language : language});
     }
 };

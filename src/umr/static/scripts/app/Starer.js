@@ -25,16 +25,16 @@ export default class Starer {
     toggle() {
         let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
-        let articleInfo = {title: title};
+
         if (this.on) {
             // Launch Zeeguu request to notify about unstarring of article by user.
             ZeeguuRequests.post(config.POST_UNSTAR_ARTICLE, {url: url});
-            UserActivityLogger.log(USER_EVENT_UNSTAR_ARTICLE, url, articleInfo);
+            UserActivityLogger.log(USER_EVENT_UNSTAR_ARTICLE, url, {title: title, language: FROM_LANGUAGE});
     
         } else { // it's off            
             // Launch Zeeguu request to notify about starring an article.
             ZeeguuRequests.post(config.POST_STAR_ARTICLE, {url: url, title: title, language_id: FROM_LANGUAGE});
-            UserActivityLogger.log(USER_EVENT_STAR_ARTICLE, url, articleInfo);
+            UserActivityLogger.log(USER_EVENT_STAR_ARTICLE, url, {title: title, language: FROM_LANGUAGE});
         }
         this._toggleState();
         this._toggleIcon();

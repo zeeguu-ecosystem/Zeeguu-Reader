@@ -4,6 +4,7 @@ import Translator from './Translator';
 import AlterMenu from './AlterMenu'
 import Speaker from './Speaker';
 import Starer from '../Starer';
+import UserActivityLogger from '../UserActivityLogger';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
