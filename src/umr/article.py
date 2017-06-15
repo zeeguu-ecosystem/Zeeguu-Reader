@@ -54,7 +54,7 @@ def make_article(url, language=None):
     soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'))
     if authors:
         soup.find('p',   {'id': 'articleInfo'}).append(Soup(' | By: ' + authors, 'html.parser'))
-    soup.find('p',   {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
+    soup.find('span',   {'id': 'articleTitle'}).append(Soup(title, 'html.parser'))
 
     return str(soup)
 

@@ -19,7 +19,7 @@ export default class Starer {
      * Zeeguu accordingly.
      */
     toggle() {
-        let url = window.location.href;
+        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
         if (this.on) {
             // Launch Zeeguu request to notify about unstarring of article by user.
             ZeeguuRequests.post(config.POST_UNSTAR_ARTICLE, {url: url});
@@ -39,7 +39,7 @@ export default class Starer {
 
     _toggleIcon() {
         $(config.HTML_ID_TOGGLESTAR).children().each(function() {
-            $(this).toggleClass("on");
+            $(this).toggleClass("off");
         });
     }
 }

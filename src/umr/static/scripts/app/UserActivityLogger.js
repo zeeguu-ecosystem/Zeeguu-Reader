@@ -18,7 +18,7 @@ export default class UserActivityLogger {
         let date = new Date();
         let time = date.getUTCFullYear() + '-' + date.getUTCMonth() + '-' + date.getUTCDate()
                  + 'T' + date.getUTCHours() + ':' + date.getUTCMinutes() + ':' + date.getUTCMinutes();
-        let eventInformation = {time: time,
+        let event_information = {time: time,
                     event: 'UMR - ' + event,
                     value:value,
                     extra_data: JSON.stringify(extra_data)
