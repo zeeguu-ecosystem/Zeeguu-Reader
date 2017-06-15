@@ -5,6 +5,8 @@ import ZeeguuRequests from '../zeeguuRequests';
 
 const GET_STARRED_ARTICLES = '/get_starred_articles';
 const HTML_ID_STARRED_ARTICLE_LIST = '#starredArticleList';
+const HTML_ID_STARRED_ARTICLELINK_TEMPLATE = '#starred-articleLink-template';
+const HTML_CLASS_CLEAR = '.clear';
 
 /**
  * Retrieves and renders a list of starred articles.
@@ -24,7 +26,7 @@ export default class StarredArticleList {
      * @param {Object[]} articleLinks - List containing articles.
      */
     _renderArticleLinks(articleLinks) {
-        let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
+        let template = $(HTML_ID_STARRED_ARTICLELINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
             let templateAttributes = {
@@ -39,12 +41,19 @@ export default class StarredArticleList {
             $(HTML_ID_STARRED_ARTICLE_LIST).append(element);
         }
 
-        $(config.HTML_CLASS_ARTICLELINK).one('click', function (event) {
+        $(HTML_CLASS_CLEAR).on('click', function () {
+            ZeeguuRequests.post(config.POST_UNSTAR_ARTICLE, {url: this.dataset.href});
+            $(this).parent().parent().fadeOut(200, function () {
+                $(this).remove();
+            });
+        });
+
+        $(config.HTML_CLASS_ARTICLELINK_FADEOUT).one('click', function (event) {
             if (!event.isPropagationStopped()) {
                 event.stopPropagation();
 
                 // Animate the click on an article.
-                $(this).siblings().animate({
+                $(this).parent().parent().siblings().animate({
                     opacity: 0.25,
                 }, 200, function () {
                     // Animation complete.
