@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import config from './config';
 import ZeeguuRequests from './zeeguuRequests';
-import UserActivityLogger from '../UserActivityLogger';
+import UserActivityLogger from './UserActivityLogger';
 
 const USER_EVENT_STAR_ARTICLE = 'STAR ARTICLE';
 const USER_EVENT_UNSTAR_ARTICLE = 'UNSTAR ARTICLE';
