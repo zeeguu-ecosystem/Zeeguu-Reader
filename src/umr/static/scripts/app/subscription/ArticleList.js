@@ -113,7 +113,7 @@ export default class ArticleList {
             $(config.HTML_ID_ARTICLELINK_LIST).append(element);
         }
 
-        $(config.HTML_CLASS_ARTICLELINK).one('click', function (event) {
+        $(config.HTML_CLASS_ARTICLELINK_FADEOUT).one('click', function (event) {
             if (!event.isPropagationStopped()) {
                 event.stopPropagation();
 
