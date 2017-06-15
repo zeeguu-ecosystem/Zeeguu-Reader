@@ -27,13 +27,17 @@
 	<SCRIPT> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</SCRIPT>
 	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.6.0.js')}}"></script>
 </HEAD>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
   <header class="mdl-layout__header mdl-layout__header--transparent">
 	  <div class="mdl-layout__header-row">
 		  <div class="mdl-layout-spacer"></div>
 		  <a href="/whatnext" id = "return_home" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 			  <i class="material-icons">home_back</i>
 		  </a>
+	  </div>
+	  <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+		  <a href="#inbox" class="mdl-layout__tab is-active"><i class="material-icons inbox-icon">inbox</i></a>
+		  <a href="#starred" class="mdl-layout__tab"><i class="material-icons star-icon">star</i></a>
 	  </div>
   </header>
   <div class="mdl-layout__drawer">
@@ -52,21 +56,28 @@
     </nav>
   </div>
   <main class="mdl-layout__content">
-    <div class="page-content">
-		<!-- List of articles -->
-		<ul id="articleLinkList"></ul>
-    </div>
-		<BR />
-	    <div class="emptyPage">
-			<img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
-		</div>
-		<div class="loader">
-			<img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
-		</div>
-		<div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
-		  <div class="mdl-snackbar__text"></div>
-		  <button class="mdl-snackbar__action" type="button"></button>
-		</div>
+    <section class="mdl-layout__tab-panel is-active" id="inbox">
+        <div class="page-content">
+            <!-- List of articles -->
+            <ul id="articleLinkList" class="articleLinkList"></ul>
+            <BR />
+            <div class="emptyPage">
+                <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
+            </div>
+            <div class="loader">
+                <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
+            </div>
+            <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+        </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="starred">
+        <div class="page-content">
+            <ul id="starredArticleList" class="articleLinkList"></ul>
+        </div>
+    </section>
   </main>
 </div>
 

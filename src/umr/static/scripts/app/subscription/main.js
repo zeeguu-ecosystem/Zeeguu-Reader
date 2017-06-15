@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import ArticleList from './ArticleList';
+import StarredArticleList from './StarredArticleList';
 import SubscriptionList from './SubscriptionList';
 import FeedSubscriber from './FeedSubscriber';
 import LanguageMenu from './LanguageMenu';
@@ -9,6 +10,7 @@ import config from '../config';
  * correct object is called to handle it. */
 let subscriptionList = new SubscriptionList();
 let articleList = new ArticleList(subscriptionList);
+let starredArticleList = new StarredArticleList();
 let languageMenu = new LanguageMenu();
 let feedSubscriber = new FeedSubscriber(subscriptionList, languageMenu);
 
@@ -20,6 +22,7 @@ document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function() {
+    starredArticleList.load();
     subscriptionList.load();
     feedSubscriber.load();
 
