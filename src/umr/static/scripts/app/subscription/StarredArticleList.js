@@ -4,6 +4,7 @@ import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 
 const GET_STARRED_ARTICLES = '/get_starred_articles';
+const HTML_ID_EMPTY_STARRED_ARTICLE_LIST = '#emptyStarredArticleListImage';
 const HTML_ID_STARRED_ARTICLE_LIST = '#starredArticleList';
 const HTML_ID_STARRED_ARTICLELINK_TEMPLATE = '#starred-articleLink-template';
 const HTML_CLASS_CLEAR = '.clear';
@@ -26,6 +27,12 @@ export default class StarredArticleList {
      * @param {Object[]} articleLinks - List containing articles.
      */
     _renderArticleLinks(articleLinks) {
+        if (articleLinks.length === 0) {
+            $(HTML_ID_EMPTY_STARRED_ARTICLE_LIST).show();
+            return;
+        }
+        $(HTML_ID_EMPTY_STARRED_ARTICLE_LIST).hide();
+
         let template = $(HTML_ID_STARRED_ARTICLELINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
@@ -44,6 +51,9 @@ export default class StarredArticleList {
         $(HTML_CLASS_CLEAR).on('click', function () {
             ZeeguuRequests.post(config.POST_UNSTAR_ARTICLE, {url: this.dataset.href});
             $(this).parent().parent().fadeOut(200, function () {
+                let remaining = ($(this).siblings(config.HTML_CLASS_ARTICLELINK_ENTRY)).length;
+                if (remaining === 0)
+                    $(HTML_ID_EMPTY_STARRED_ARTICLE_LIST).show();
                 $(this).remove();
             });
         });
