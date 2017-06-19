@@ -61,7 +61,7 @@
             <!-- List of articles -->
             <ul id="articleLinkList" class="articleLinkList"></ul>
             <BR />
-            <div class="emptyPage">
+            <div id="emptyArticleListImage" class="emptyPage">
                 <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
             </div>
             <div class="loader">
@@ -73,9 +73,12 @@
             </div>
         </div>
     </section>
-    <section class="mdl-layout__tab-panel" id="starred">
+    <section class="mdl-layout__tab-panel" id="starred" disabled>
         <div class="page-content">
             <ul id="starredArticleList" class="articleLinkList"></ul>
+			<div id="emptyStarredArticleListImage" class="emptyPage">
+				<img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
+			</div>
         </div>
     </section>
   </main>
