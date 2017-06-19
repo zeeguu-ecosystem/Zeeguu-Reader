@@ -42,6 +42,7 @@ export default {
     HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
     HTML_ID_ADD_SUBSCRIPTION_DIALOG_TEMPLATE: '#add-subscription-dialog-template',
     HTML_CLASS_ARTICLELINK_FADEOUT: '.fadeoutOnClick',
+    HTML_CLASS_ARTICLELINK_ENTRY: '.articleLinkEntry',
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_LOADING: '.loading',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
