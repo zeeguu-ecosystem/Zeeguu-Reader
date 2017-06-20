@@ -12,7 +12,6 @@ import '../../../styles/material-icons.css';
 import '../../../styles/loader.css';
 import '../../../styles/login.css';
 import '../../../styles/articles.css';
-import '../../../styles/dialog-polyfill.css';
 import '../../../styles/sweetalert.css';
 
 /* Script that binds listeners to html events, such that the
