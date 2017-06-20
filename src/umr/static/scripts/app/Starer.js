@@ -12,10 +12,18 @@ const OFF = 'off';
  */
 export default class Starer {
     /**
-     * Sets the default state of the starer to false (i.e. untoggled)
+     * Initializes the state of the starer (default is false).
      */
-    constructor() {
-        this.on = false; 
+    constructor(state=false) {
+        this.on = state; 
+    }
+
+    /**
+     * Sets the state of the starer.
+     * @param {boolean} state - Defines the state for the starer: true - 'on' or false - 'off' 
+     */
+    setState(state) {
+        this.on = state;
     }
 
     /**
