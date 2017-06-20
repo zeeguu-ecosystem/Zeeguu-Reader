@@ -18,12 +18,15 @@ const USER_EVENT_DISABLE_COPY = 'DISABLE COPY';
 const USER_EVENT_CHANGE_ORIENTATION = 'CHANGE ORIENTATION';
 const USER_EVENT_LIKE_ARTICLE = 'LIKE ARTICLE';
 
+const STAR_BORDER = 'star_border';
+
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function() {
     // Disable selection by default.
     disableToggleCopy();
     attachZeeguuListeners();
+    setStarerState();
 
     /* When the copy toggle is switched on,
      * copying is enabled and translation gets disabled and vice-versa. */
@@ -120,6 +123,10 @@ function enableToggleCopy() {
 
 function isToggledCopy() {
     return !$(config.HTML_ID_TOGGLECOPY).hasClass('mdl-button--disabled');
+}
+
+function setStarerState() {
+    starer.setState($('.material-icons.star.off').text() === STAR_BORDER);
 }
 
 /* Attach Zeeguu tag click listener. */
