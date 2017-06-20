@@ -6,6 +6,11 @@ import Speaker from './Speaker';
 import Starer from '../Starer';
 import UserActivityLogger from '../UserActivityLogger';
 
+import '../../../styles/mdl/material.min.js';
+import '../../../styles/mdl/material.min.css';
+import '../../../styles/article.css';
+import '../../../styles/material-icons.css';
+
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 const translator = new Translator();

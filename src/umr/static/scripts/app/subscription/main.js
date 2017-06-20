@@ -6,6 +6,15 @@ import FeedSubscriber from './FeedSubscriber';
 import LanguageMenu from './LanguageMenu';
 import config from '../config';
 
+import '../../../styles/mdl/material.min.js';
+import '../../../styles/mdl/material.min.css';
+import '../../../styles/material-icons.css';
+import '../../../styles/loader.css';
+import '../../../styles/login.css';
+import '../../../styles/articles.css';
+import '../../../styles/dialog-polyfill.css';
+import '../../../styles/sweetalert.css';
+
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 let subscriptionList = new SubscriptionList();
