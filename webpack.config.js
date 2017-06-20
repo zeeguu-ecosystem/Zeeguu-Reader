@@ -19,6 +19,10 @@ module.exports = {
         filename: '[name]-' + getVersion() + '.js'
     },
 	module: {
+	  rules: [{
+		  test: /\.css$/,
+          use: [ 'style-loader', 'css-loader' ]
+	  }],
 	 loaders: [
 		 {
 			 test: /\.js$/,
