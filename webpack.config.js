@@ -1,6 +1,6 @@
 const webpack = require('webpack'),
     path = require('path'),
-    ExtractTestPlugin = require("extract-text-webpack-plugin");
+    ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var inProduction = process.env.NODE_ENV === 'production';
 
@@ -19,6 +19,12 @@ module.exports = {
         filename: '[name]-' + getVersion() + '.js'
     },
 	module: {
+	 rules: [{
+		  test: /\.css$/,
+          use: ExtractTextPlugin.extract({
+                use: 'css-loader'
+          })
+	 }],
 	 loaders: [
 		 {
 			 test: /\.js$/,
@@ -29,6 +35,9 @@ module.exports = {
 		 }
 	 ]
 	},
+	plugins: [
+        new ExtractTextPlugin('css/[name]-' + getVersion() + '.css'),
+    ],
 	stats: {
 		colors: true
 	},

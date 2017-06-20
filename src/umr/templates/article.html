@@ -1,10 +1,7 @@
-<HTML>
-<HEAD>
-	<TITLE>Zeeguu Reader</TITLE>
-	<META name="viewport" content="width=device-width, initial-scale=1">
-	<LINK rel="stylesheet" href="{{ url_for('umrblue.static',filename='styles/mdl/material.min.css') }}">
-	<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/article.css') }}" type= "text/css">
-	<LINK rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<html>
+<head>
+	<title>Zeeguu Reader</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
 	<script>
@@ -18,14 +15,16 @@
         })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 	</script>
 
-	<SCRIPT src="{{ url_for('umrblue.static',filename='styles/mdl/material.min.js') }}"></SCRIPT>
-	<SCRIPT>
+	<script>
 		var FROM_LANGUAGE = '{{ fromLanguage }}';
 		var TO_LANGUAGE = 'en';
-	</SCRIPT>
+	</script>
+
+	<!-- Include the translation package. -->
+	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/translation-0.7.0.css')}}">
 	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation-0.7.0.js')}}"></script>
-</HEAD>
-<BODY>
+</head>
+<body>
 <!-- Top bar -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -78,5 +77,5 @@
 	<div id="alterMenu"></div>
 </div>
 
-</BODY>
-</HTML>
+</body>
+</html>
