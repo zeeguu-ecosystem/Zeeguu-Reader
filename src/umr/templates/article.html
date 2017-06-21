@@ -45,26 +45,29 @@
 
 <!-- Article content. -->
   <main class="mdl-layout__content">
-    <div class="page-content">
-		<P class="title translatable">
-			<span id = "star_button">
-				<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-					<i class="material-icons star">star_border</i>
-					<i class="material-icons star off">star</i>
+	<div class="page-content-container"> 
+		<div class="page-content">
+			<p class="title translatable">
+				<span id = "star_button">
+					<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+						<i class="material-icons star">star_border</i>
+						<i class="material-icons star off">star</i>
+					</button>
+				</span>
+				<span id = "articleTitle"></span>
+			</p>
+			<p id="articleInfo">
+				<span id="articleURL">From: <a target="_blank">source</a></span>
+			</P>
+			<div id="articleContent" class="translatable"></div><br />
+			<div id = "like_button">
+				<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--disabled">
+					<i class="material-icons">thumb_up</i>
 				</button>
-			</span>
-			<span id = "articleTitle"></span>
-		</P>
-		<P id="articleInfo">
-			<SPAN id="articleURL">From: <A>source</A></SPAN>
-		</P>
-		<DIV id="articleContent" class="translatable"></DIV><BR />
-		<div id = "like_button">
-			<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--disabled">
-				<i class="material-icons">thumb_up</i>
-			</button>
+			</div>		
 		</div>
 	</div>
+    
   </main>
   <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
 	  <div class="mdl-snackbar__text"></div>

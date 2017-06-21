@@ -4,15 +4,17 @@
   -webkit-tap-highlight-color:  transparent;
 }
 
+.mdl-layout__content {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  background-color: #f2f2f2;
+  overflow-y: overlay;
+}
+
 .is-casting-shadow
 {
-  box-shadow: 0px 1.5em 2em #FFFFFF !important;
+  box-shadow: 0em 0em 1em lightgray !important;
 }
-
-.mdl-layout__content {
-  padding-top: 2em;
-}
-
 
 zeeguu.loading
 {
@@ -154,13 +156,25 @@ a:hover
 {
   margin-left: auto;
   margin-right: auto;
-  width:80%;
+  width: 80%;
   text-align:justify;
+  padding-top: 3em;
+  padding-bottom: 3em; 
+}
+
+.page-content-container
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 60em;
+  background-color: white;
+  border-radius: 0.3em;
+  box-shadow: 0em 0em 2em lightgray;
 }
 
 #like_button
 {
-  padding-bottom: 2em;
   text-align:center;
 }
 
