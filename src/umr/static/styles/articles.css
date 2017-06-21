@@ -9,6 +9,11 @@
   overflow-y: overlay;
 }
 
+.is-casting-shadow
+{
+  box-shadow: 0em 0em 1em lightgray !important;
+}
+
 .home-button
 {
   color: #030303 !important;
