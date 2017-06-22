@@ -29,7 +29,7 @@ export default class UndoStack {
     undoState() {
         var $saved = this.stack.pop();
         if ($saved) {
-            $(config.HTML_CLASS_PAGECONTENT).remove();
+            $(config.HTML_CLASS_PAGECONTENTCONTAINER).remove();
             $('.mdl-layout__content').prepend($saved);    
         }
     }
