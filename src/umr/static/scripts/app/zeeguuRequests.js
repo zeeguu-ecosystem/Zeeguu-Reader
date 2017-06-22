@@ -36,7 +36,7 @@ export default class ZeeguuRequests {
      * @param {string[]} requestData - Parameters to append.
      * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.
      */
-    static get (endpoint, requestData, responseHandler) {
+    static get (endpoint, requestData, responseHandler = function() {}) {
         requestData.session = this.session();
         $.get(
             config.ZEEGUU_SERVER + endpoint,
@@ -51,7 +51,7 @@ export default class ZeeguuRequests {
      * @param {string[]} requestData - Parameters to append.
      * @param {function(data : string)} responseHandler - A function that can asynchronously handle the reply.
      */
-    static post (endpoint, requestData, responseHandler) {
+    static post (endpoint, requestData, responseHandler = function() {}) {
         $.post(
             config.ZEEGUU_SERVER + endpoint + "?session=" + this.session(),
             requestData,

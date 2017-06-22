@@ -3,12 +3,27 @@ import config from '../config';
 import Translator from './Translator';
 import AlterMenu from './AlterMenu'
 import Speaker from './Speaker';
+import Starer from '../Starer';
+import UserActivityLogger from '../UserActivityLogger';
+
+import '../../../styles/mdl/material.min.js';
+import '../../../styles/mdl/material.min.css';
+import '../../../styles/article.css';
+import '../../../styles/material-icons.css';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 const translator = new Translator();
 const alterMenu = new AlterMenu();
 const speaker = new Speaker();
+const starer = new Starer();
+
+const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
+const USER_EVENT_DISABLE_COPY = 'DISABLE COPY';
+const USER_EVENT_CHANGE_ORIENTATION = 'CHANGE ORIENTATION';
+const USER_EVENT_LIKE_ARTICLE = 'LIKE ARTICLE';
+
+const STAR_BORDER = 'star_border';
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -16,6 +31,7 @@ $(document).ready(function() {
     // Disable selection by default.
     disableToggleCopy();
     attachZeeguuListeners();
+    setStarerState();
 
     /* When the copy toggle is switched on,
      * copying is enabled and translation gets disabled and vice-versa. */
@@ -42,8 +58,17 @@ $(document).ready(function() {
     /* When the like button is clicked, set its background color. */
     $(config.HTML_ID_TOGGLELIKE).click(function()
     {
-        if ($(this).hasClass('mdl-button--disabled')) $(this).removeClass('mdl-button--disabled');
-        else $(this).addClass('mdl-button--disabled');
+        $(this).toggleClass('mdl-button--disabled');
+
+        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        UserActivityLogger.log(USER_EVENT_LIKE_ARTICLE, url, {title: title});
+    });
+
+    /* Toggle listener for star button. */
+    $(config.HTML_ID_TOGGLESTAR).click(function()
+    {
+        starer.toggle();
     });
 });
 
@@ -80,6 +105,7 @@ $(document).keypress(function(event) {
  * the alter menu will be closed. */
 $(window).on("orientationchange",function() {
   alterMenu.close();
+  UserActivityLogger.log(USER_EVENT_CHANGE_ORIENTATION);
 });
 
 /* Disable selection. */
@@ -88,6 +114,7 @@ function disableToggleCopy() {
         $(this).addClass(config.CLASS_NOSELECT);
     });
     $(config.HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
+    UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
 }
 
 /* Enable selection. */
@@ -96,10 +123,15 @@ function enableToggleCopy() {
         $(this).removeClass(config.CLASS_NOSELECT);
     });
     $(config.HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
+    UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
 }
 
 function isToggledCopy() {
     return !$(config.HTML_ID_TOGGLECOPY).hasClass('mdl-button--disabled');
+}
+
+function setStarerState() {
+    starer.setState($('.material-icons.star.off').text() === STAR_BORDER);
 }
 
 /* Attach Zeeguu tag click listener. */
