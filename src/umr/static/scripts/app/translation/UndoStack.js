@@ -17,7 +17,7 @@ export default class UndoStack {
      * Push state onto the stack.
      */
     pushState() {
-        let $saved = $(config.HTML_CLASS_PAGECONTENTCONTAINER).clone();
+        let $saved = $(config.HTML_CLASS_PAGECONTENT).clone();
         let $zeeguu = $saved.find(config.HTML_ZEEGUUTAG + config.HTML_CLASS_LOADING);
         let word = $zeeguu.text();
         $zeeguu.empty().removeClass(config.CLASS_LOADING).text(word);
@@ -29,8 +29,8 @@ export default class UndoStack {
     undoState() {
         var $saved = this.stack.pop();
         if ($saved) {
-            $(config.HTML_CLASS_PAGECONTENTCONTAINER).remove();
-            $('.mdl-layout__content').prepend($saved);    
+            $(config.HTML_CLASS_PAGECONTENT).remove();
+            $(config.HTML_CLASS_CONTENTCONTAINER).prepend($saved);    
         }
     }
 };
