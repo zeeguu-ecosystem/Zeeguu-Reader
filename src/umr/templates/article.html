@@ -40,31 +40,31 @@
 			<button id = "toggle_copy" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 				<i class="material-icons">content_copy</i>
 			</button>
+			<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+				<i class="material-icons star">star_border</i>
+				<i class="material-icons star off">star</i>
+			</button>
 		</div>
  	</header>
 
 <!-- Article content. -->
   <main class="mdl-layout__content">
 	<div class="page-content-container"> 
-		<div class="page-content">
-			<p class="title translatable">
-				<span id = "star_button">
-					<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-						<i class="material-icons star">star_border</i>
-						<i class="material-icons star off">star</i>
-					</button>
-				</span>
-				<span id = "articleTitle"></span>
-			</p>
-			<p id="articleInfo">
-				<span id="articleURL">From: <a target="_blank">source</a></span>
-			</P>
-			<div id="articleContent" class="translatable"></div><br />
-			<div id = "like_button">
-				<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--disabled">
-					<i class="material-icons">thumb_up</i>
-				</button>
-			</div>		
+		<div class="content-container">
+			<div class="page-content">
+				<p class="title translatable">
+					<span id = "articleTitle"></span>
+				</p>
+				<p id="articleInfo">
+					<span id="articleURL">From: <a target="_blank">source</a></span>
+				</p>	
+				<div id="articleContent" class="translatable"></div><br />		
+			</div>
+		</div>
+		<div id = "like_button">
+			<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--disabled">
+				<i class="material-icons">thumb_up</i>
+			</button>
 		</div>
 	</div>
     

@@ -52,15 +52,21 @@ zeeguu tran[chosen]:after
 
 #toggle_back
 {
-  left: -2.6em;
+  left: -2.5em;
+}
+
+#toggle_undo
+{
+  right: 1em;
+  color: rgba(0,0,0,.26);
 }
 
 #toggle_copy
 {
-  right: -0.5em;
+  right: 0.5em;
 }
 
-#toggle_undo
+#toggle_star
 {
   color: rgba(0,0,0,.26);
 }
@@ -159,7 +165,6 @@ a:hover
   width: 80%;
   text-align:justify;
   padding-top: 3em;
-  padding-bottom: 3em; 
 }
 
 .page-content-container
@@ -176,6 +181,7 @@ a:hover
 #like_button
 {
   text-align:center;
+  padding-bottom: 3em;
 }
 
 #toggle_like:hover
@@ -192,11 +198,6 @@ a:hover
 .material-icons.star.off
 {
   display: none;
-}
-
-.material-icons.star
-{
-  color: #F4C430;
 }
 
 .noselect
