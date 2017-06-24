@@ -1,10 +1,15 @@
 import $ from 'jquery';
-import ZeeguuRequests from '../zeeguuRequests'
-import UndoStack from './UndoStack'
-import config from '../config'
+import config from '../config';
+import UndoStack from './UndoStack';
+import ZeeguuRequests from '../zeeguuRequests';
+import UserActivityLogger from '../UserActivityLogger';
+
+const USER_EVENT_TRANSLATE = 'TRANSLATE TEXT';
+const USER_EVENT_UNDO_TRANSLATE = 'UNDO TEXT TRANSLATION';
+const USER_EVENT_SEND_SUGGESTION = 'SEND SUGGESTION';
 
 /**
- *  Class that allows for translating zeeguu tags. 
+ *  Class that allows for translating zeeguu tags.
  */
 export default class Translator {
 
@@ -14,10 +19,8 @@ export default class Translator {
     constructor() {
         this.undoStack = new UndoStack();
         this.connectivesSet = this._buildConnectivesSet();
-        this.fromLanguage = FROM_LANGUAGE;
-        this.toLanguage = config.TO_LANGUAGE; // en is default
         ZeeguuRequests.get(config.GET_NATIVE_LANGUAGE, {}, function (language) {
-            this.toLanguage = language;
+            TO_LANGUAGE = language;
         }.bind(this));
     }
 
@@ -25,29 +28,31 @@ export default class Translator {
      * Merge the surrounding translated zeeguuTags
      * and insert translations for the tag's content by calling Zeeguu.
      * Uses {@link ZeeguuRequests}.
-     * @param {Element} zeeguuTag - Document element containing the content to be translated. 
+     * @param {Element} zeeguuTag - Document element containing the content to be translated.
      */
     translate(zeeguuTag) {
         this.undoStack.pushState();
-        var tmp_trans = this._mergeZeeguu(zeeguuTag);
+        let tmp_trans = this._mergeZeeguu(zeeguuTag);
 
-        var text = zeeguuTag.textContent.trim();
-        var context = this._getContext(zeeguuTag);
-        var url = $(config.HTML_ID_ARTICLE_URL).find('a').attr('href');
-        var title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        let text = zeeguuTag.textContent.trim();
+        let context = Translator._getContext(zeeguuTag);
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
-        var orig = document.createElement(config.HTML_ORIGINAL);
-        var tran = document.createElement(config.HTML_TRANSLATED);
+        let orig = document.createElement(config.HTML_ORIGINAL);
+        let tran = document.createElement(config.HTML_TRANSLATED);
 
         $(orig).text(text);
         $(zeeguuTag).addClass(config.CLASS_LOADING);
         $(tran).attr('chosen', tmp_trans);
         $(zeeguuTag).empty().append(orig, tran);
 
-        var callback = (data) => this._setTranslations(zeeguuTag, data);
+        let callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
-        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + this.fromLanguage + '/' + this.toLanguage,
+        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
+        
+        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: FROM_LANGUAGE});
     }
 
     /**
@@ -55,6 +60,9 @@ export default class Translator {
      */
     undoTranslate() {
         this.undoStack.undoState();
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        UserActivityLogger.log(USER_EVENT_UNDO_TRANSLATE, '', {url: url, title: title, language: FROM_LANGUAGE});
     }
 
     /**
@@ -62,21 +70,24 @@ export default class Translator {
      * @param {jQuery} $zeeguu - Zeeguu reference tag for which to send the user suggestion.
      */
     sendSuggestion ($zeeguu) {
-        var word = $zeeguu.children(config.HTML_ORIGINAL).text();
-        var context = this._getContext($zeeguu.get(0));
-        var url = $(config.HTML_ID_ARTICLE_URL).find('a').attr('href');
-        var title = $(config.HTML_ID_ARTICLE_TITLE).text();
-        var translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
+        let word = $zeeguu.children(config.HTML_ORIGINAL).text();
+        let context = Translator._getContext($zeeguu.get(0));
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        let translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
 
         // Launch Zeeguu request to supply translation suggestion.
-        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + this.fromLanguage + '/' + this.toLanguage,
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: word, context: context, url: url, title: title, translation: translation});
+
+        UserActivityLogger.log(USER_EVENT_SEND_SUGGESTION, word, 
+                               {url: url, title: title, language: FROM_LANGUAGE, translation: translation});
     }
 
     /**
      * Checks whether given zeeguuTag is already translated.
-     * @param {jQuery} $zeeguu - Zeeguu reference tag that wraps translatable content. 
-     * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
+     * @param {jQuery} $zeeguu - Zeeguu reference tag that wraps translatable content.
+     * @return {Boolean} - True only if the passed zeeguuTag already has translation data.
      */
     isTranslated($zeeguu) {
         return $zeeguu.has(config.HTML_TRANSLATED).length;
@@ -85,7 +96,7 @@ export default class Translator {
     /**
      * Handle the Zeeguu request returned values. Append the returned translations.
      * @param {Element} zeeguuTag - Document element containing the original text and the translations.
-     * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
+     * @param {Object[]} translations - A list of translations to be added to the given htmlTag content.
      */
     _setTranslations(zeeguuTag, translations) {
         var tran = zeeguuTag.children[1];
@@ -96,23 +107,25 @@ export default class Translator {
             tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
 
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
-        tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');        
+        tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
         $(zeeguuTag).removeClass(config.CLASS_LOADING);
     }
 
     /**
-     * Returns surrounding textual context for a given zeeguuTag by extracting the text from 
+     * Returns surrounding textual context for a given zeeguuTag by extracting the text from
      * its wrapping parent element.
      * @param {Element} zeeguuTag - Document element for which to extract textual context
      * @return {string} - Textual context.
      */
-    _getContext(zeeguuTag) {
-        return zeeguuTag.parentElement.textContent;
+    static _getContext(zeeguuTag) {
+        let zeeguuParentClone = zeeguuTag.parentElement.cloneNode(true);        
+        $(zeeguuParentClone).find(config.HTML_ID_ALTERMENU).remove();
+        return zeeguuParentClone.textContent;
     }
 
     /**
-     * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-     * @param {Element} zeeguuTag - Zeeguu tag for which to perform merge with the surrounding tags. 
+     * Merge the translated zeeguuTags surrounding the given zeeguuTag.
+     * @param {Element} zeeguuTag - Zeeguu tag for which to perform merge with the surrounding tags.
      * @return {string} - Temporary mock translation text.
      */
     _mergeZeeguu(zeeguuTag) {
@@ -127,7 +140,7 @@ export default class Translator {
             node = node.previousSibling;
         }
 
-        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated($(node))) {            
+        if (node && node.nodeName == config.HTML_ZEEGUUTAG && this.isTranslated($(node))) {
             zeeguuTag.textContent = node.textContent + connectives + zeeguuTag.textContent;
             tmp_trans = tmp_trans.concat($(node).find('tran').attr('chosen'));
             node.parentNode.removeChild(node.nextSibling);
@@ -158,7 +171,6 @@ export default class Translator {
     _buildConnectivesSet() {
         let set = new Set();
         set.add('');
-        set.add(',');
         set.add('-');
         set.add(':');
         set.add(';');

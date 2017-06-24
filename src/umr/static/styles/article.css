@@ -1,6 +1,19 @@
+*
+{
+  -webkit-backface-visibility:  hidden;
+  -webkit-tap-highlight-color:  transparent;
+}
+
+.mdl-layout__content {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  background-color: #f2f2f2;
+  overflow-y: overlay;
+}
+
 .is-casting-shadow
 {
-  box-shadow: 0px 1em 2em #FFFFFF !important;
+  box-shadow: 0em 0em 1em lightgray !important;
 }
 
 zeeguu.loading
@@ -32,22 +45,28 @@ zeeguu tran
   border-bottom: 0.1em solid #FFFFFF;
 }
 
-zeeguu tran[chosen]:after 
+zeeguu tran[chosen]:after
 {
 	content: attr(chosen);
 }
 
 #toggle_back
 {
-  left: -2.6em;
+  left: -2.5em;
+}
+
+#toggle_undo
+{
+  right: 1em;
+  color: rgba(0,0,0,.26);
 }
 
 #toggle_copy
 {
-  right: -0.5em;
+  right: 0.5em;
 }
 
-#toggle_undo
+#toggle_star
 {
   color: rgba(0,0,0,.26);
 }
@@ -86,7 +105,7 @@ zeeguu tran[chosen]:after
 }
 
 .mdl-layout__header,
-.mdl-layout__drawer-button 
+.mdl-layout__drawer-button
 {
   color: black;
 }
@@ -121,23 +140,17 @@ h5,h6
   font-size: 0.7em;
 }
 
-#articleAuthor
+#articleInfo
 {
   font-size: 1em;
   text-align: right;
   color: grey;
-}
-
-#articleURL
-{
-  text-align: center;
-  font-size: 1em;
+  font-style: italic;
 }
 
 a
 {
   color: grey;
-  text-decoration: none;
 }
 
 a:hover
@@ -149,11 +162,45 @@ a:hover
 {
   margin-left: auto;
   margin-right: auto;
-  width:80%;
+  width: 80%;
   text-align:justify;
+  padding-top: 3em;
 }
 
-.noselect 
+.page-content-container
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 60em;
+  background-color: white;
+  border-radius: 0.3em;
+  box-shadow: 0em 0em 2em lightgray;
+}
+
+#like_button
+{
+  text-align:center;
+  padding-bottom: 3em;
+}
+
+#toggle_like:hover
+{
+  background-color: none;
+  cursor: pointer;
+}
+
+#toggle_like:not(.mdl-button--disabled)
+{
+  background-color: #A3D6F5;
+}
+
+.material-icons.star.off
+{
+  display: none;
+}
+
+.noselect
 {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -165,13 +212,13 @@ a:hover
                  cursor: pointer;
 }
 
-@keyframes fadein 
+@keyframes fadein
 {
-  0% 
+  0%
   {
     opacity: 0.4;
   }
-  100% 
+  100%
   {
      opacity: 1;
   }

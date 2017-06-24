@@ -1,6 +1,13 @@
 import $ from 'jquery';
-import config from '../config'
-import Notifier from '../Notifier'
+import config from '../config';
+import Notifier from '../Notifier';
+import Translator from './Translator';
+import ZeeguuRequests from '../zeeguuRequests';
+import UserActivityLogger from '../UserActivityLogger';
+
+const USER_EVENT_CLOSED_ALTERMENU = 'CLOSE ALTERMENU';
+const USER_EVENT_OPENED_ALTERMENU = 'OPEN ALTERMENU';
+const MIN_TRANS_COUNT = 2;
 
 /**
  * Class that allows for choosing alternative zeeguu translations from
@@ -23,8 +30,11 @@ export default class AlterMenu {
      */
     build($tran) {
         // Check how many alternatives there are, if less than 2: abort.
-        var transCount = parseInt($tran.attr(config.HTML_ATTRIBUTE_TRANSCOUNT));
-        if (transCount < 2 && $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION) === '') { // one translation means no alternatives
+        let countAttr = $tran.attr(config.HTML_ATTRIBUTE_TRANSCOUNT);
+        if (!countAttr) return;
+
+        var transCount = parseInt(countAttr);
+        if (transCount < MIN_TRANS_COUNT && $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION) === '') { // one translation means no alternatives
             this.notifier.notify(config.TEXT_NO_ALTERNATIVES);
         }
         this.construct($tran, transCount);
@@ -40,7 +50,6 @@ export default class AlterMenu {
      * @param {int} transCount - Number of present alternative translations. 
      */
     construct($tran, transCount) {
-
         $(config.HTML_ID_ALTERMENU).empty();
         for (var i = 0; i < transCount; i++) {
             var button = document.createElement('button');
@@ -49,8 +58,29 @@ export default class AlterMenu {
             $(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
             $(config.HTML_ID_ALTERMENU).append($(button));
             $(button).click({$tran: $tran, alternative: i}, this._swapPrimaryTranslation);
+            $(button).click({$tran: $tran, alternative: i}, this._sendSwappedTranslation.bind(this));
         }
         this._appendInputField($tran);
+    }
+
+    /**
+     * Send the chosen translation from the list of choices to Zeeguu.
+     * @param {Object} selectedAlternative - Attribute that determines the selected alternative.  
+     */
+    _sendSwappedTranslation(selectedAlternative) {
+        let $tran = selectedAlternative.data.$tran;
+    
+        let word = $tran.parent().children(config.HTML_ORIGINAL).text();
+        let translation = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + selectedAlternative.data.alternative);
+        let context = Translator._getContext($tran.parent().get(0));
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        let selected_from_predefined_choices = true;
+
+        // Launch Zeeguu request to supply translation suggestion.
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
+                           {word: word, context: context, url: url, title: title, translation: translation, 
+                            selected_from_predefined_choices: selected_from_predefined_choices});
     }
 
     /** 
@@ -110,6 +140,9 @@ export default class AlterMenu {
      *  Hide (close) the alter menu. 
      */
     close() {
+        let word = $(config.HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
+        UserActivityLogger.log(USER_EVENT_CLOSED_ALTERMENU, word);
+
         $(config.HTML_ID_ALTERMENU).slideUp(function () {
             $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
             this.menuOpen = false;
@@ -120,6 +153,9 @@ export default class AlterMenu {
      *  Open the alter menu. 
      */
     open() {
+        let word = $(config.HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
+        UserActivityLogger.log(USER_EVENT_OPENED_ALTERMENU, word);
+        
         $(config.HTML_ID_ALTERMENU).slideDown(function () {
             this.menuOpen = true
         }.bind(this));

@@ -4,8 +4,19 @@ import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
 import Cache from '../Cache';
 import NoFeedTour from './NoFeedTour';
+import UserActivityLogger from '../UserActivityLogger';
+import 'loggly-jslogger';
 
-const KEY_MAP_FEED_ARTICLE = "feed_article_map";
+const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
+const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
+
+/* Setup remote logging. */
+let logger = new LogglyTracker();
+logger.push({
+    'logglyKey': config.LOGGLY_TOKEN,
+    'sendConsoleErrors' : true,
+    'tag' : 'ArticleList'
+});
 
 /**
  * Manages a list of article links, stores them in {@link Cache} if possible.
@@ -82,7 +93,7 @@ export default class ArticleList {
      */
     _renderArticleLinks(subscription, articleLinks) {
         if (articleLinks.length < 1)
-            console.log("No articles for " + subscription.title + ".");
+            logger.push("No articles for " + subscription.title + ".");
 
         let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
@@ -98,20 +109,30 @@ export default class ArticleList {
                 articleIcon: subscription.image_url
             };
             let element = Mustache.render(template, templateAttributes);
+
             $(config.HTML_ID_ARTICLELINK_LIST).append(element);
         }
 
-        // Make the link expand on click, then redirect to the article.
-        $(config.HTML_CLASS_ARTICLELINK).one('click', function (event) {
+        $(config.HTML_CLASS_ARTICLELINK_FADEOUT).one('click', function (event) {
             if (!event.isPropagationStopped()) {
                 event.stopPropagation();
+
+                // Animate the click on an article.
                 $(this).siblings().animate({
                     opacity: 0.25,
                 }, 200, function () {
                     // Animation complete.
                     $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
-                location.href = $(this).attr('href');
+
+                // Log that an article has been opened.
+                let url = $(this).find('a')[0].href;
+                let articleInfo = {};
+                url.split('?')[1].split('&').forEach(function(part) {
+                    let item = part.split("=");
+                    articleInfo[item[0]] = decodeURIComponent(item[1]);
+                });
+                UserActivityLogger.log(USER_EVENT_CLICKED_ARTICLE, url, articleInfo);
             }
         });
     }
