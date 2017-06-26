@@ -3,7 +3,6 @@ import ArticleList from './ArticleList';
 import StarredArticleList from './StarredArticleList';
 import SubscriptionList from './SubscriptionList';
 import FeedSubscriber from './FeedSubscriber';
-import LanguageMenu from './LanguageMenu';
 import config from '../config';
 
 import '../../../styles/mdl/material.min.js';
@@ -18,9 +17,8 @@ import '../../../styles/sweetalert.css';
  * correct object is called to handle it. */
 let subscriptionList = new SubscriptionList();
 let articleList = new ArticleList(subscriptionList);
+let feedSubscriber = new FeedSubscriber(subscriptionList);
 let starredArticleList = new StarredArticleList();
-let languageMenu = new LanguageMenu();
-let feedSubscriber = new FeedSubscriber(subscriptionList, languageMenu);
 
 document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
     articleList.clear();

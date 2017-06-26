@@ -23,7 +23,7 @@ export default class UndoStack {
      */
     pushState() {
         let $saved = $(HTML_CLASS_PAGECONTENT).clone();
-        let $zeeguu = $saved.find(config.HTML_ZEEGUUTAG + config.HTML_CLASS_LOADING);
+        let $zeeguu = $saved.find(config.HTML_ZEEGUUTAG + '.' + config.CLASS_LOADING);
         let word = $zeeguu.text();
         $zeeguu.empty().removeClass(config.CLASS_LOADING).text(word);
         this.stack.push($saved);

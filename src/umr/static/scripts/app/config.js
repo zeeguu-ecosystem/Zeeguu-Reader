@@ -1,7 +1,6 @@
 export default {
     /* These are all constants used in the UMR javascript. */
-    ZEEGUU_SERVER: 'https://zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION: 'sessionID',
+
     RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',
     FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',
     UNFOLLOW_FEED_ENDPOINT: '/stop_following_feed',
@@ -15,7 +14,6 @@ export default {
     POST_STAR_ARTICLE: '/star_article',
     POST_UNSTAR_ARTICLE: '/unstar_article',
     
-
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
@@ -26,24 +24,12 @@ export default {
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     
-    HTML_ID_USER_ALTERNATIVE: '#userAlternative',
-    HTML_ID_ARTICLELINK_TEMPLATE: '#articleLink-template',
-    HTML_ID_ARTICLELINK_LIST: '#articleLinkList',
-    HTML_ID_SUBSCRIPTION_TEMPLATE: '#subscription-template',
-    HTML_ID_SUBSCRIPTION_LIST: "#subscriptionList",
-    HTML_ID_ADDSUBSCRIPTION_TEMPLATE: '#feedAddable-template',
-    HTML_ID_ADDSUBSCRIPTION_LIST: '#addableFeedList',
-    HTML_ID_LANGUAGEOPTION_TEMPLATE: '#languageOption-template',
-    HTML_ID_ADD_SUBSCRIPTION_DIALOG_TEMPLATE: '#add-subscription-dialog-template',
     HTML_CLASS_ARTICLELINK_FADEOUT: '.fadeoutOnClick',
     HTML_CLASS_ARTICLELINK_ENTRY: '.articleLinkEntry',
     HTML_CLASS_LOADER: '.loader',
-    HTML_CLASS_LOADING: '.loading',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
-    HTML_CLASS_TOUR: '.tour',
-    HTML_CLASS_WIGGLE: 'wiggle',
+
     HTML_CLASS_FOCUSED: 'focused',
     CLASS_LOADING: 'loading',
-    EVENT_SUBSCRIPTION: 'subscription-list-loaded',
     LOGGLY_TOKEN: '306a94c3-68c2-4e6b-a95c-d52d7a11e279'
 };

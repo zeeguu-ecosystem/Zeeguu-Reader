@@ -9,6 +9,7 @@ const HTML_ID_ALTERMENU = '#alterMenu';
 const HTML_ID_ALTERMENUCONTAINER = '#alterMenuContainer';
 const TEXT_SUGGESTION = 'Suggestion...';
 const TEXT_NO_ALTERNATIVES = 'Sorry, no alternatives.';
+const HTML_ID_USER_ALTERNATIVE = '#userAlternative';
 
 const USER_EVENT_CLOSED_ALTERMENU = 'CLOSE ALTERMENU';
 const USER_EVENT_OPENED_ALTERMENU = 'OPEN ALTERMENU';
@@ -98,7 +99,7 @@ export default class AlterMenu {
         var value = (suggestion === '' ? TEXT_SUGGESTION : suggestion);
         $(input_field).addClass('mdl-textfield__input');
         $(input_field).attr('type', 'text');
-        $(input_field).attr('id', config.HTML_ID_USER_ALTERNATIVE);        
+        $(input_field).attr('id', HTML_ID_USER_ALTERNATIVE);        
         $(input_field).attr('value', value);
         $(HTML_ID_ALTERMENU).append($(input_field));
     }

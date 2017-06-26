@@ -9,6 +9,8 @@ import 'loggly-jslogger';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
 const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
+const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
+const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -57,7 +59,7 @@ export default class ArticleList {
      * Remove all articles from the list.
      */
     clear() {
-        $(config.HTML_ID_ARTICLELINK_LIST).empty();
+        $(HTML_ID_ARTICLE_LINK_LIST).empty();
     }
 
     /**
@@ -95,7 +97,7 @@ export default class ArticleList {
         if (articleLinks.length < 1)
             logger.push("No articles for " + subscription.title + ".");
 
-        let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
+        let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
             let templateAttributes = {
@@ -110,7 +112,7 @@ export default class ArticleList {
             };
             let element = Mustache.render(template, templateAttributes);
 
-            $(config.HTML_ID_ARTICLELINK_LIST).append(element);
+            $(HTML_ID_ARTICLE_LINK_LIST).append(element);
         }
 
         $(config.HTML_CLASS_ARTICLELINK_FADEOUT).one('click', function (event) {
