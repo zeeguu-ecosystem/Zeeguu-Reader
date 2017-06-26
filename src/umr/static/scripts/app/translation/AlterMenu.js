@@ -15,12 +15,10 @@ const MIN_TRANS_COUNT = 2;
  */
 export default class AlterMenu {
     /**
-     * Initialize the notifier field and the control field for the state of the
-     * alter menu (i.e. open or closed).
+     * Initialize the control field for the state of the alter menu (i.e. open or closed).
      */
     constructor() {
         this.menuOpen = false;
-        this.notifier = new Notifier();
     }
 
     /**
@@ -35,7 +33,7 @@ export default class AlterMenu {
 
         var transCount = parseInt(countAttr);
         if (transCount < MIN_TRANS_COUNT && $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION) === '') { // one translation means no alternatives
-            this.notifier.notify(config.TEXT_NO_ALTERNATIVES);
+            Notifier.notify(config.TEXT_NO_ALTERNATIVES);
         }
         this.construct($tran, transCount);
         this._place($tran);
