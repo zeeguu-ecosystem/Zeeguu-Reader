@@ -13,6 +13,7 @@ import '../../../styles/material-icons.css';
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
+
 const translator = new Translator();
 const alterMenu = new AlterMenu();
 const speaker = new Speaker();
@@ -29,6 +30,8 @@ const HTML_ID_TOGGLECOPY = '#toggle_copy';
 const HTML_ID_TOGGLEUNDO = '#toggle_undo';
 const HTML_ID_TOGGLELIKE = '#toggle_like';
 const HTML_ID_TOGGLESTAR = '#toggle_star';
+const CLASS_NOSELECT = 'noselect';
+const ENTER_KEY = 13;
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -94,7 +97,7 @@ $(document).click(function(event) {
  * to Zeeguu. */
 $(document).keypress(function(event) {
     let $target = $(event.target);
-    if ($target.is('input') && event.which === config.ENTER_KEY) {
+    if ($target.is('input') && event.which === ENTER_KEY) {
         let $zeeguu = $target.closest(config.HTML_ZEEGUUTAG);
         let $trans  = $zeeguu.children(config.HTML_TRANSLATED);
         if ($target.val() !== '') {
@@ -116,7 +119,7 @@ $(window).on("orientationchange",function() {
 /* Disable selection. */
 function disableToggleCopy() {
     $("p").each (function () {
-        $(this).addClass(config.CLASS_NOSELECT);
+        $(this).addClass(CLASS_NOSELECT);
     });
     $(HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
     UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
@@ -125,7 +128,7 @@ function disableToggleCopy() {
 /* Enable selection. */
 function enableToggleCopy() {
     $("p").each (function () {
-        $(this).removeClass(config.CLASS_NOSELECT);
+        $(this).removeClass(CLASS_NOSELECT);
     });
     $(HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
     UserActivityLogger.log(USER_EVENT_ENABLE_COPY);

@@ -7,6 +7,8 @@ import UserActivityLogger from '../UserActivityLogger';
 
 const HTML_ID_ALTERMENU = '#alterMenu';
 const HTML_ID_ALTERMENUCONTAINER = '#alterMenuContainer';
+const TEXT_SUGGESTION = 'Suggestion...';
+const TEXT_NO_ALTERNATIVES = 'Sorry, no alternatives.';
 
 const USER_EVENT_CLOSED_ALTERMENU = 'CLOSE ALTERMENU';
 const USER_EVENT_OPENED_ALTERMENU = 'OPEN ALTERMENU';
@@ -38,11 +40,11 @@ export default class AlterMenu {
 
         var transCount = parseInt(countAttr);
         if (transCount < MIN_TRANS_COUNT && $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION) === '') { // one translation means no alternatives
-            this.notifier.notify(config.TEXT_NO_ALTERNATIVES);
+            this.notifier.notify(TEXT_NO_ALTERNATIVES);
         }
         this.construct($tran, transCount);
         this._place($tran);
-        $(config.HTML_ID_ALTERMENU).hide();
+        $(HTML_ID_ALTERMENU).hide();
         this.open();
     };
 
@@ -93,7 +95,7 @@ export default class AlterMenu {
     _appendInputField($tran) {
         var input_field = document.createElement('input');
         var suggestion  = $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION);
-        var value = (suggestion === '' ? config.TEXT_SUGGESTION : suggestion);
+        var value = (suggestion === '' ? TEXT_SUGGESTION : suggestion);
         $(input_field).addClass('mdl-textfield__input');
         $(input_field).attr('type', 'text');
         $(input_field).attr('id', config.HTML_ID_USER_ALTERNATIVE);        
@@ -120,7 +122,7 @@ export default class AlterMenu {
         var position = $tran.position();
         var tagHeight = $tran.outerHeight();
         var tagWidth = $tran.outerWidth();
-        var menuWidth = $(config.HTML_ID_ALTERMENU).outerWidth();
+        var menuWidth = $(HTML_ID_ALTERMENU).outerWidth();
         var topScroll = $(".mdl-layout__content").scrollTop();
         $tran.append($(HTML_ID_ALTERMENU));
         $(HTML_ID_ALTERMENU).css({

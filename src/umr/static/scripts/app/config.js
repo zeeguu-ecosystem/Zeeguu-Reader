@@ -14,9 +14,8 @@ export default {
     POST_TRANSLATION_SUGGESTION: '/contribute_translation',
     POST_STAR_ARTICLE: '/star_article',
     POST_UNSTAR_ARTICLE: '/unstar_article',
-    ENTER_KEY: 13,
-    TEXT_SUGGESTION: 'Suggestion...',
-    TEXT_NO_ALTERNATIVES: 'Sorry, no alternatives.',
+    
+
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
@@ -41,13 +40,10 @@ export default {
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_LOADING: '.loading',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
-    HTML_CLASS_PAGECONTENT: '.page-content',
-    HTML_CLASS_CONTENTCONTAINER: '.content-container',
     HTML_CLASS_TOUR: '.tour',
     HTML_CLASS_WIGGLE: 'wiggle',
     HTML_CLASS_FOCUSED: 'focused',
     CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect',
     EVENT_SUBSCRIPTION: 'subscription-list-loaded',
     LOGGLY_TOKEN: '306a94c3-68c2-4e6b-a95c-d52d7a11e279'
 };
