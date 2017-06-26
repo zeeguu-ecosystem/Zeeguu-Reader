@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import config from './config'
 
+const ZEEGUU_SERVER = 'https://zeeguu.unibe.ch/api';
+const ZEEGUU_SESSION = 'sessionID';
 /**
  * Abstracts request to the Zeeguu API.
  * @see https://www.zeeguu.unibe.ch
@@ -11,7 +13,7 @@ export default class ZeeguuRequests {
      * @returns {?string} session - The session ID of the user, if present.
      */
     static session () {
-        return this._readCookie(config.ZEEGUU_SESSION);
+        return this._readCookie(ZEEGUU_SESSION);
     }
 
     /**
@@ -39,7 +41,7 @@ export default class ZeeguuRequests {
     static get (endpoint, requestData, responseHandler = function() {}) {
         requestData.session = this.session();
         $.get(
-            config.ZEEGUU_SERVER + endpoint,
+            ZEEGUU_SERVER + endpoint,
             requestData,
             responseHandler
         );
@@ -53,7 +55,7 @@ export default class ZeeguuRequests {
      */
     static post (endpoint, requestData, responseHandler = function() {}) {
         $.post(
-            config.ZEEGUU_SERVER + endpoint + "?session=" + this.session(),
+            ZEEGUU_SERVER + endpoint + "?session=" + this.session(),
             requestData,
             responseHandler
         );

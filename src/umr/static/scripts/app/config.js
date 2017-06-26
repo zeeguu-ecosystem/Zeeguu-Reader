@@ -1,7 +1,6 @@
 export default {
     /* These are all constants used in the UMR javascript. */
-    ZEEGUU_SERVER: 'https://zeeguu.unibe.ch/api',
-    ZEEGUU_SESSION: 'sessionID',
+
     RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',
     FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',
     UNFOLLOW_FEED_ENDPOINT: '/stop_following_feed',
@@ -14,9 +13,7 @@ export default {
     POST_TRANSLATION_SUGGESTION: '/contribute_translation',
     POST_STAR_ARTICLE: '/star_article',
     POST_UNSTAR_ARTICLE: '/unstar_article',
-    ENTER_KEY: 13,
-    TEXT_SUGGESTION: 'Suggestion...',
-    TEXT_NO_ALTERNATIVES: 'Sorry, no alternatives.',
+    
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
@@ -26,22 +23,13 @@ export default {
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
-    HTML_ID_TOGGLECOPY: '#toggle_copy',
-    HTML_ID_TOGGLEUNDO: '#toggle_undo',
-    HTML_ID_TOGGLELIKE: '#toggle_like',
-    HTML_ID_TOGGLESTAR: '#toggle_star',
-    HTML_ID_ALTERMENU: '#alterMenu',
-    HTML_ID_ALTERMENUCONTAINER: '#alterMenuContainer',
-    HTML_ID_USER_ALTERNATIVE: '#userAlternative',
+    
     HTML_CLASS_ARTICLELINK_FADEOUT: '.fadeoutOnClick',
     HTML_CLASS_ARTICLELINK_ENTRY: '.articleLinkEntry',
     HTML_CLASS_LOADER: '.loader',
-    HTML_CLASS_LOADING: '.loading',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
-    HTML_CLASS_PAGECONTENT: '.page-content',
-    HTML_CLASS_CONTENTCONTAINER: '.content-container',
+
     HTML_CLASS_FOCUSED: 'focused',
     CLASS_LOADING: 'loading',
-    CLASS_NOSELECT: 'noselect',
     LOGGLY_TOKEN: '306a94c3-68c2-4e6b-a95c-d52d7a11e279'
 };
