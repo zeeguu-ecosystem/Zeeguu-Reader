@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
+import LanguageMenu from './LanguageMenu';
 import swal from 'sweetalert';
 
 /**
@@ -11,11 +12,10 @@ export default class FeedSubscriber {
     /**
      * Link the {@link SubscriptionList} with this instance so we can update it on change.
      * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.
-     * @param {LanguageMenu} languageMenu - Menu to allow for switch feeds per language.
      */
-    constructor(subscriptionList, languageMenu) {
+    constructor(subscriptionList) {
         this.subscriptionList = subscriptionList;
-        this.languageMenu = languageMenu;
+        this.languageMenu = new LanguageMenu(this);
         this.currentLanguage = 'nl'; // default
         ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, 
             function (lang) {
@@ -73,7 +73,7 @@ export default class FeedSubscriber {
 
     /**
      * Sets the current language that user is studying (based on zeeguu settings).
-     * @param {string} langauge - The language code.
+     * @param {string} language - The language code.
      */
     _setCurrentLanguage(language) {
         this.currentLanguage = language;
