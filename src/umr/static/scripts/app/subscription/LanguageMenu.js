@@ -4,6 +4,7 @@ import Mustache from 'mustache';
 import ZeeguuRequests from '../zeeguuRequests';
 
 const HTML_ID_LANGUAGE_OPTION_LIST = '#languageOptionList';
+const HTML_ID_LANGUAGE_OPTION_TEMPLATE = '#languageOption-template';
 
 /**
  * Retrieves the available languages of Zeeguu and fills
@@ -35,7 +36,7 @@ export default class LanguageMenu {
     _loadLanguageOptions(data)
     {
         let options = JSON.parse(data);
-        let template = $(config.HTML_ID_LANGUAGEOPTION_TEMPLATE).html();
+        let template = $(HTML_ID_LANGUAGE_OPTION_TEMPLATE).html();
         options.sort();
         for (let i=0; i < options.length; ++i)
         {
