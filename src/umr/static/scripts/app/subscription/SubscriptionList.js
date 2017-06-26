@@ -7,6 +7,7 @@ import 'loggly-jslogger';
 
 const HTML_ID_SUBSCRIPTION_LIST = '#subscriptionList';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template';
+const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -77,7 +78,7 @@ export default class SubscriptionList {
 
         let template = $(HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         let subscription = $(Mustache.render(template, feed));
-        let removeButton = $(subscription.find(".removeButton"));
+        let removeButton = $(subscription.find(HTML_CLASS_REMOVE_BUTTON));
         let _unfollow = this._unfollow.bind(this);
         removeButton.click(function(feed) {
             return function () {

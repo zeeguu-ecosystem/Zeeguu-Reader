@@ -39,9 +39,7 @@ export default class StarredArticleList {
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
                 articleLinkLanguage: articleLink.language,
-                articleLinkURL: articleLink.url,
-                articleSummary: '',
-                articleIcon: '/static/images/noAvatar.png'
+                articleLinkURL: articleLink.url
             };
             let element = Mustache.render(template, templateAttributes);
 
