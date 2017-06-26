@@ -6,6 +6,9 @@ import UserActivityLogger from './UserActivityLogger';
 const USER_EVENT_STAR_ARTICLE = 'STAR ARTICLE';
 const USER_EVENT_UNSTAR_ARTICLE = 'UNSTAR ARTICLE';
 const OFF = 'off';
+
+const HTML_ID_TOGGLESTAR = '#toggle_star';
+
 /**
  * Implements the functionality for starring an article, together with 
  * notifying Zeeguu about the changes.
@@ -53,7 +56,7 @@ export default class Starer {
     }
 
     _toggleIcon() {
-        $(config.HTML_ID_TOGGLESTAR).children().each(function() {
+        $(HTML_ID_TOGGLESTAR).children().each(function() {
             $(this).toggleClass(OFF);
         });
     }

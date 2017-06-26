@@ -25,6 +25,11 @@ const USER_EVENT_LIKE_ARTICLE = 'LIKE ARTICLE';
 
 const STAR_BORDER = 'star_border';
 
+const HTML_ID_TOGGLECOPY = '#toggle_copy';
+const HTML_ID_TOGGLEUNDO = '#toggle_undo';
+const HTML_ID_TOGGLELIKE = '#toggle_like';
+const HTML_ID_TOGGLESTAR = '#toggle_star';
+
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function() {
@@ -35,7 +40,7 @@ $(document).ready(function() {
 
     /* When the copy toggle is switched on,
      * copying is enabled and translation gets disabled and vice-versa. */
-    $(config.HTML_ID_TOGGLECOPY).click(function()
+    $(HTML_ID_TOGGLECOPY).click(function()
     {
         // Selection is disabled -> enable it.
         if ($(this).hasClass('mdl-button--disabled')) enableToggleCopy();
@@ -44,7 +49,7 @@ $(document).ready(function() {
 
     /* When the undo is clicked, content page is replaced
      * with previous one in the stack and listeners are re-attached. */
-    $(config.HTML_ID_TOGGLEUNDO).click(function()
+    $(HTML_ID_TOGGLEUNDO).click(function()
     {
         if (alterMenu.isOpen()) {
             alterMenu.close();
@@ -56,7 +61,7 @@ $(document).ready(function() {
     });
 
     /* When the like button is clicked, set its background color. */
-    $(config.HTML_ID_TOGGLELIKE).click(function()
+    $(HTML_ID_TOGGLELIKE).click(function()
     {
         $(this).toggleClass('mdl-button--disabled');
 
@@ -66,7 +71,7 @@ $(document).ready(function() {
     });
 
     /* Toggle listener for star button. */
-    $(config.HTML_ID_TOGGLESTAR).click(function()
+    $(HTML_ID_TOGGLESTAR).click(function()
     {
         starer.toggle();
     });
@@ -113,7 +118,7 @@ function disableToggleCopy() {
     $("p").each (function () {
         $(this).addClass(config.CLASS_NOSELECT);
     });
-    $(config.HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
+    $(HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
     UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
 }
 
@@ -122,12 +127,12 @@ function enableToggleCopy() {
     $("p").each (function () {
         $(this).removeClass(config.CLASS_NOSELECT);
     });
-    $(config.HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
+    $(HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
     UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
 }
 
 function isToggledCopy() {
-    return !$(config.HTML_ID_TOGGLECOPY).hasClass('mdl-button--disabled');
+    return !$(HTML_ID_TOGGLECOPY).hasClass('mdl-button--disabled');
 }
 
 function setStarerState() {

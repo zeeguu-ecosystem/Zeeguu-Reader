@@ -5,6 +5,9 @@ import Translator from './Translator';
 import ZeeguuRequests from '../zeeguuRequests';
 import UserActivityLogger from '../UserActivityLogger';
 
+const HTML_ID_ALTERMENU = '#alterMenu';
+const HTML_ID_ALTERMENUCONTAINER = '#alterMenuContainer';
+
 const USER_EVENT_CLOSED_ALTERMENU = 'CLOSE ALTERMENU';
 const USER_EVENT_OPENED_ALTERMENU = 'OPEN ALTERMENU';
 const MIN_TRANS_COUNT = 2;
@@ -50,13 +53,13 @@ export default class AlterMenu {
      * @param {int} transCount - Number of present alternative translations. 
      */
     construct($tran, transCount) {
-        $(config.HTML_ID_ALTERMENU).empty();
+        $(HTML_ID_ALTERMENU).empty();
         for (var i = 0; i < transCount; i++) {
             var button = document.createElement('button');
             var alternative = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + i);
             button.textContent = alternative;
             $(button).addClass("mdl-button").addClass("mdl-js-button").addClass("mdl-js-ripple-effect");
-            $(config.HTML_ID_ALTERMENU).append($(button));
+            $(HTML_ID_ALTERMENU).append($(button));
             $(button).click({$tran: $tran, alternative: i}, this._swapPrimaryTranslation);
             $(button).click({$tran: $tran, alternative: i}, this._sendSwappedTranslation.bind(this));
         }
@@ -95,7 +98,7 @@ export default class AlterMenu {
         $(input_field).attr('type', 'text');
         $(input_field).attr('id', config.HTML_ID_USER_ALTERNATIVE);        
         $(input_field).attr('value', value);
-        $(config.HTML_ID_ALTERMENU).append($(input_field));
+        $(HTML_ID_ALTERMENU).append($(input_field));
     }
 
     /**
@@ -119,8 +122,8 @@ export default class AlterMenu {
         var tagWidth = $tran.outerWidth();
         var menuWidth = $(config.HTML_ID_ALTERMENU).outerWidth();
         var topScroll = $(".mdl-layout__content").scrollTop();
-        $tran.append($(config.HTML_ID_ALTERMENU));
-        $(config.HTML_ID_ALTERMENU).css({
+        $tran.append($(HTML_ID_ALTERMENU));
+        $(HTML_ID_ALTERMENU).css({
             position: "absolute",
             maxWidth: "35%",
             display: "inline-block",
@@ -133,18 +136,18 @@ export default class AlterMenu {
      * Update the position of the alter menu.
      */
     reposition() {
-        this._place($(config.HTML_ID_ALTERMENU).parent());
+        this._place($(HTML_ID_ALTERMENU).parent());
     };
 
     /**
      *  Hide (close) the alter menu. 
      */
     close() {
-        let word = $(config.HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
+        let word = $(HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
         UserActivityLogger.log(USER_EVENT_CLOSED_ALTERMENU, word);
 
-        $(config.HTML_ID_ALTERMENU).slideUp(function () {
-            $(config.HTML_ID_ALTERMENUCONTAINER).append($(config.HTML_ID_ALTERMENU));
+        $(HTML_ID_ALTERMENU).slideUp(function () {
+            $(HTML_ID_ALTERMENUCONTAINER).append($(HTML_ID_ALTERMENU));
             this.menuOpen = false;
         }.bind(this));
     };
@@ -153,10 +156,10 @@ export default class AlterMenu {
      *  Open the alter menu. 
      */
     open() {
-        let word = $(config.HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
+        let word = $(HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
         UserActivityLogger.log(USER_EVENT_OPENED_ALTERMENU, word);
         
-        $(config.HTML_ID_ALTERMENU).slideDown(function () {
+        $(HTML_ID_ALTERMENU).slideDown(function () {
             this.menuOpen = true
         }.bind(this));
     };
