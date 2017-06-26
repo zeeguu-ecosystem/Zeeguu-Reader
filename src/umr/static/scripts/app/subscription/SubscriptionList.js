@@ -5,6 +5,9 @@ import ZeeguuRequests from '../zeeguuRequests';
 import Notifier from '../Notifier';
 import 'loggly-jslogger';
 
+const HTML_ID_SUBSCRIPTION_LIST = '#subscriptionList';
+const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template';
+
 /* Setup remote logging. */
 let logger = new LogglyTracker();
 logger.push({
@@ -38,7 +41,7 @@ export default class SubscriptionList {
      * Remove all feeds from the list, clear {@link ArticleList} as well.
      */
     clear() {
-        $(config.HTML_ID_SUBSCRIPTION_LIST).empty();
+        $(HTML_ID_SUBSCRIPTION_LIST).empty();
     };
 
     /**
@@ -57,7 +60,6 @@ export default class SubscriptionList {
      * @param {Object[]} data - List containing the feeds the user is subscribed to.
      */
     _loadSubscriptions(data) {
-        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         for (let i = 0; i < data.length; i++) {
             this._addSubscription(data[i]);
         }
@@ -73,7 +75,7 @@ export default class SubscriptionList {
         if (this.feedList.has(feed.id))
             return;
 
-        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+        let template = $(HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         let subscription = $(Mustache.render(template, feed));
         let removeButton = $(subscription.find(".removeButton"));
         let _unfollow = this._unfollow.bind(this);
@@ -82,7 +84,7 @@ export default class SubscriptionList {
                 _unfollow(feed);
             };
         }(feed));
-        $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+        $(HTML_ID_SUBSCRIPTION_LIST).append(subscription);
         this.feedList.set(feed.id, feed);
     }
 

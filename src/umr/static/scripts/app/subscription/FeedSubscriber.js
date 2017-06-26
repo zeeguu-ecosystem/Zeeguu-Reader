@@ -2,7 +2,14 @@ import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
 import ZeeguuRequests from '../zeeguuRequests';
+import LanguageMenu from './LanguageMenu';
 import swal from 'sweetalert';
+
+const HTML_ID_DIALOG_TEMPLATE = '#add-subscription-dialog-template';
+const HTML_ID_ADD_FEED_LIST = '#addableFeedList';
+const HTML_ID_FEED_TEMPLATE = '#feedAddable-template';
+const HTML_CLASS_SUBSCRIBE_BUTTON = ".subscribeButton";
+const HTML_CLASS_FEED_ICON = '.feedIcon';
 
 /**
  * Allows the user to add feed subscriptions.
@@ -11,11 +18,10 @@ export default class FeedSubscriber {
     /**
      * Link the {@link SubscriptionList} with this instance so we can update it on change.
      * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.
-     * @param {LanguageMenu} languageMenu - Menu to allow for switch feeds per language.
      */
-    constructor(subscriptionList, languageMenu) {
+    constructor(subscriptionList) {
         this.subscriptionList = subscriptionList;
-        this.languageMenu = languageMenu;
+        this.languageMenu = new LanguageMenu(this);
         this.currentLanguage = 'nl'; // default
         ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, 
             function (lang) {
@@ -28,7 +34,7 @@ export default class FeedSubscriber {
      * Uses the sweetalert library.
      */
     open() {
-        let template = $(config.HTML_ID_ADD_SUBSCRIPTION_DIALOG_TEMPLATE).html();
+        let template = $(HTML_ID_DIALOG_TEMPLATE).html();
         swal({
             title: 'Available Sources',
             text: template,
@@ -60,7 +66,7 @@ export default class FeedSubscriber {
      * Clear the list of feed options.
      */
     clear() {
-        $(config.HTML_ID_ADDSUBSCRIPTION_LIST).empty();
+        $(HTML_ID_ADD_FEED_LIST).empty();
     }
 
     /**
@@ -73,7 +79,7 @@ export default class FeedSubscriber {
 
     /**
      * Sets the current language that user is studying (based on zeeguu settings).
-     * @param {string} langauge - The language code.
+     * @param {string} language - The language code.
      */
     _setCurrentLanguage(language) {
         this.currentLanguage = language;
@@ -85,10 +91,10 @@ export default class FeedSubscriber {
      * @param {Object[]} data - A list of feeds the user can subscribe to.
      */
     _loadFeedOptions(data) {
-        let template = $(config.HTML_ID_ADDSUBSCRIPTION_TEMPLATE).html();
+        let template = $(HTML_ID_FEED_TEMPLATE).html();
         for (let i = 0; i < data.length; i++) {
             let feedOption = $(Mustache.render(template, data[i]));
-            let subscribeButton = $(feedOption.find(".subscribeButton"));
+            let subscribeButton = $(feedOption.find(HTML_CLASS_SUBSCRIBE_BUTTON));
 
             subscribeButton.click(
                 function (data, feedOption, subscriptionList) {
@@ -98,11 +104,11 @@ export default class FeedSubscriber {
                     };
             }(data[i], feedOption, this.subscriptionList));
 
-            let feedIcon = $(feedOption.find(".feedIcon"));
+            let feedIcon = $(feedOption.find(HTML_CLASS_FEED_ICON));
             feedIcon.on( "error", function () {
                 $(this).unbind("error").attr("src", "static/images/noAvatar.png");
             });
-            $(config.HTML_ID_ADDSUBSCRIPTION_LIST).append(feedOption);
+            $(HTML_ID_ADD_FEED_LIST).append(feedOption);
         }
     }
 };

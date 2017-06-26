@@ -1,7 +1,8 @@
 import $ from 'jquery'
-import config from '../config';
 
-const HTML_ID_EMPTY_ARTICLE_LIST = '#emptyArticleListImage'
+const HTML_ID_EMPTY_ARTICLE_LIST = '#emptyArticleListImage';
+const HTML_CLASS_TOUR = '.tour';
+const HTML_CLASS_NAME_WIGGLE = 'wiggle';
 
 /**
  * Shows or hides style for when there is no feed.
@@ -12,8 +13,8 @@ export default class NoFeedTour {
      */
     show() {
         $(HTML_ID_EMPTY_ARTICLE_LIST).show();
-        $(config.HTML_CLASS_TOUR).addClass(config.HTML_CLASS_WIGGLE);
-        $('.mdl-layout__drawer-button').addClass(config.HTML_CLASS_WIGGLE);
+        $(HTML_CLASS_TOUR).addClass(HTML_CLASS_NAME_WIGGLE);
+        $('.mdl-layout__drawer-button').addClass(HTML_CLASS_NAME_WIGGLE);
     }
 
     /**
@@ -21,7 +22,7 @@ export default class NoFeedTour {
      */
     hide() {
         $(HTML_ID_EMPTY_ARTICLE_LIST).hide();
-        $(config.HTML_CLASS_TOUR).removeClass(config.HTML_CLASS_WIGGLE);
-        $('.mdl-layout__drawer-button').removeClass(config.HTML_CLASS_WIGGLE);
+        $(HTML_CLASS_TOUR).removeClass(HTML_CLASS_NAME_WIGGLE);
+        $('.mdl-layout__drawer-button').removeClass(HTML_CLASS_NAME_WIGGLE);
     }
 }
