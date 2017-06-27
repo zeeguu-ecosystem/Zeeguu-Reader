@@ -1,9 +1,13 @@
 import $ from 'jquery'
 import Mustache from 'mustache';
 import config from '../config';
-import ZeeguuRequests from '../zeeguuRequests';
 import Notifier from '../Notifier';
 import 'loggly-jslogger';
+import ZeeguuRequests from '../zeeguuRequests';
+import {GET_FEEDS_BEING_FOLLOWED} from '../zeeguuRequests';
+import {FOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
+import {UNFOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
+
 
 const HTML_ID_SUBSCRIPTION_LIST = '#subscriptionList';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template';
@@ -34,7 +38,7 @@ export default class SubscriptionList {
      *  Uses {@link ZeeguuRequests}.
      */
     load() {
-        ZeeguuRequests.get(config.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
+        ZeeguuRequests.get(GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
     };
 
     /**
@@ -96,7 +100,7 @@ export default class SubscriptionList {
     follow(feed) {
         this._addSubscription(feed);
         let callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
-        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
+        ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
     }
 
     /**
@@ -123,7 +127,7 @@ export default class SubscriptionList {
     _unfollow(feed) {
         this._remove(feed);
         let callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
-        ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
+        ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
     }
 
     /**

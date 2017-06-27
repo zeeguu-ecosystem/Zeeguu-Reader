@@ -1,19 +1,5 @@
 export default {
-    /* These are all constants used in the UMR javascript. */
-
-    RECOMMENDED_FEED_ENDPOINT: '/interesting_feeds',
-    FOLLOW_FEED_ENDPOINT: '/start_following_feed_with_id',
-    UNFOLLOW_FEED_ENDPOINT: '/stop_following_feed',
-    GET_TRANSLATIONS_ENDPOINT: '/get_possible_translations',
-    GET_FEEDS_BEING_FOLLOWED: '/get_feeds_being_followed',
-    GET_FEED_ITEMS: '/get_feed_items_with_metrics',
-    GET_AVAILABLE_LANGUAGES: '/available_languages',
-    GET_LEARNED_LANGUAGE: '/learned_language',
-    GET_NATIVE_LANGUAGE: '/native_language',
-    POST_TRANSLATION_SUGGESTION: '/contribute_translation',
-    POST_STAR_ARTICLE: '/star_article',
-    POST_UNSTAR_ARTICLE: '/unstar_article',
-    
+    /* These are all the shared constants used in the UMR javascript. */    
     HTML_ZEEGUUTAG: 'ZEEGUU',
     HTML_ORIGINAL: 'orig',
     HTML_TRANSLATED: 'tran',
@@ -31,5 +17,7 @@ export default {
 
     HTML_CLASS_FOCUSED: 'focused',
     CLASS_LOADING: 'loading',
+    EVENT_SUBSCRIPTION: 'event-subscription',
+    TEXT_SUGGESTION: 'Suggestion...',
     LOGGLY_TOKEN: '306a94c3-68c2-4e6b-a95c-d52d7a11e279'
 };

@@ -2,6 +2,8 @@ import $ from 'jquery';
 import config from '../config';
 import Mustache from 'mustache';
 import ZeeguuRequests from '../zeeguuRequests';
+import {GET_AVAILABLE_LANGUAGES} from '../zeeguuRequests';
+
 
 const HTML_ID_LANGUAGE_OPTION_LIST = '#languageOptionList';
 const HTML_ID_LANGUAGE_OPTION_TEMPLATE = '#languageOption-template';
@@ -25,7 +27,7 @@ export default class LanguageMenu {
      * Uses {@link ZeeguuRequests}.
      */
     load() {
-        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
+        ZeeguuRequests.get(GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
     }
 
     /**

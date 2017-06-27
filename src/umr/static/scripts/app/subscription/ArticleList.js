@@ -1,11 +1,12 @@
 import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
-import ZeeguuRequests from '../zeeguuRequests';
 import Cache from '../Cache';
 import NoFeedTour from './NoFeedTour';
 import UserActivityLogger from '../UserActivityLogger';
 import 'loggly-jslogger';
+import ZeeguuRequests from '../zeeguuRequests';
+import {GET_FEED_ITEMS} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
 const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
@@ -50,7 +51,7 @@ export default class ArticleList {
             } else {
                 $(config.HTML_CLASS_LOADER).show();
                 let callback = (articleLinks) => this._loadArticleLinks(subscription, articleLinks);
-                ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
+                ZeeguuRequests.get(GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
             }
         }
     }

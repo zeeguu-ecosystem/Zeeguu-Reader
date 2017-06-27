@@ -16,7 +16,6 @@ export default class Notifier {
      */
     static notify (message) {
         let snackbar = document.querySelector(HTML_CLASS_SNACKBAR);
-        console.log($(snackbar).hasClass(HTML_CLASS_SNACKBAR_ACTIVE));
         if (lastMessage === message && $(snackbar).hasClass(HTML_CLASS_SNACKBAR_ACTIVE))
             return;
         snackbar.MaterialSnackbar.showSnackbar({message: message});

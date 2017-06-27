@@ -2,12 +2,13 @@ import $ from 'jquery';
 import config from '../config';
 import Notifier from '../Notifier';
 import Translator from './Translator';
-import ZeeguuRequests from '../zeeguuRequests';
 import UserActivityLogger from '../UserActivityLogger';
+import ZeeguuRequests from '../zeeguuRequests';
+import {POST_TRANSLATION_SUGGESTION} from '../zeeguuRequests';
+
 
 const HTML_ID_ALTERMENU = '#alterMenu';
 const HTML_ID_ALTERMENUCONTAINER = '#alterMenuContainer';
-const TEXT_SUGGESTION = 'Suggestion...';
 const TEXT_NO_ALTERNATIVES = 'Sorry, no alternatives.';
 const HTML_ID_USER_ALTERNATIVE = '#userAlternative';
 
@@ -82,7 +83,7 @@ export default class AlterMenu {
         let selected_from_predefined_choices = true;
 
         // Launch Zeeguu request to supply translation suggestion.
-        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
+        ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: word, context: context, url: url, title: title, translation: translation, 
                             selected_from_predefined_choices: selected_from_predefined_choices});
     }
@@ -92,9 +93,9 @@ export default class AlterMenu {
      * @param {jQuery} $tran - Reference tag from which the suggested translation is retrieved.
      */
     _appendInputField($tran) {
-        var input_field = document.createElement('input');
-        var suggestion  = $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION);
-        var value = (suggestion === '' ? TEXT_SUGGESTION : suggestion);
+        let input_field = document.createElement('input');
+        let suggestion  = $tran.attr(config.HTML_ATTRIBUTE_SUGGESTION);
+        var value = (suggestion === '' ? config.TEXT_SUGGESTION : suggestion);
         $(input_field).addClass('mdl-textfield__input');
         $(input_field).attr('type', 'text');
         $(input_field).attr('id', HTML_ID_USER_ALTERNATIVE);        
