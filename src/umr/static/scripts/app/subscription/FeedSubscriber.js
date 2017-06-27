@@ -1,9 +1,12 @@
 import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
-import ZeeguuRequests from '../zeeguuRequests';
 import LanguageMenu from './LanguageMenu';
 import swal from 'sweetalert';
+import ZeeguuRequests from '../zeeguuRequests';
+import {GET_LEARNED_LANGUAGE} from '../zeeguuRequests';
+import {RECOMMENDED_FEED_ENDPOINT} from '../zeeguuRequests';
+
 
 const HTML_ID_DIALOG_TEMPLATE = '#add-subscription-dialog-template';
 const HTML_ID_ADD_FEED_LIST = '#addableFeedList';
@@ -23,7 +26,7 @@ export default class FeedSubscriber {
         this.subscriptionList = subscriptionList;
         this.languageMenu = new LanguageMenu(this);
         this.currentLanguage = 'nl'; // default
-        ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, 
+        ZeeguuRequests.get(GET_LEARNED_LANGUAGE, {}, 
             function (lang) {
                 this.currentLanguage = lang;
             }.bind(this));
@@ -57,7 +60,7 @@ export default class FeedSubscriber {
      * @example load('nl');
      */
     load(language = this.currentLanguage) {
-        ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + '/' + language,
+        ZeeguuRequests.get(RECOMMENDED_FEED_ENDPOINT + '/' + language,
                                 {}, this._loadFeedOptions.bind(this));
         this.currentLanguage = language;
     }

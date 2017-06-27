@@ -1,6 +1,5 @@
-import ZeeguuRequests from './zeeguuRequests'
-
-const POST_USER_ACTIVITY_ENDPOINT = '/upload_user_activity_data';
+import ZeeguuRequests from './zeeguuRequests';
+import {POST_USER_ACTIVITY_ENDPOINT} from './zeeguuRequests';
 
 /**
  * Abstracts logging a user event.
