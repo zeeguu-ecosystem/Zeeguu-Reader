@@ -30,6 +30,8 @@ const HTML_ID_TOGGLECOPY = '#toggle_copy';
 const HTML_ID_TOGGLEUNDO = '#toggle_undo';
 const HTML_ID_TOGGLELIKE = '#toggle_like';
 const HTML_ID_TOGGLESTAR = '#toggle_star';
+const CLASS_MDL_BUTTON_DISABLED = 'mdl-button--disabled';
+const CLASS_MATERIAL_STAR_OFF = '.material-icons.star.off';
 const CLASS_NOSELECT = 'noselect';
 const ENTER_KEY = 13;
 
@@ -46,7 +48,7 @@ $(document).ready(function() {
     $(HTML_ID_TOGGLECOPY).click(function()
     {
         // Selection is disabled -> enable it.
-        if ($(this).hasClass('mdl-button--disabled')) enableToggleCopy();
+        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) enableToggleCopy();
         else disableToggleCopy();
     });
 
@@ -66,7 +68,7 @@ $(document).ready(function() {
     /* When the like button is clicked, set its background color. */
     $(HTML_ID_TOGGLELIKE).click(function()
     {
-        $(this).toggleClass('mdl-button--disabled');
+        $(this).toggleClass(CLASS_MDL_BUTTON_DISABLED);
 
         let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
@@ -121,7 +123,7 @@ function disableToggleCopy() {
     $("p").each (function () {
         $(this).addClass(CLASS_NOSELECT);
     });
-    $(HTML_ID_TOGGLECOPY).addClass('mdl-button--disabled');
+    $(HTML_ID_TOGGLECOPY).addClass(CLASS_MDL_BUTTON_DISABLED);
     UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
 }
 
@@ -130,16 +132,16 @@ function enableToggleCopy() {
     $("p").each (function () {
         $(this).removeClass(CLASS_NOSELECT);
     });
-    $(HTML_ID_TOGGLECOPY).removeClass('mdl-button--disabled');
+    $(HTML_ID_TOGGLECOPY).removeClass(CLASS_MDL_BUTTON_DISABLED);
     UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
 }
 
 function isToggledCopy() {
-    return !$(HTML_ID_TOGGLECOPY).hasClass('mdl-button--disabled');
+    return !$(HTML_ID_TOGGLECOPY).hasClass(CLASS_MDL_BUTTON_DISABLED);
 }
 
 function setStarerState() {
-    starer.setState($('.material-icons.star.off').text() === STAR_BORDER);
+    starer.setState($(CLASS_MATERIAL_STAR_OFF).text() === STAR_BORDER);
 }
 
 /* Attach Zeeguu tag click listener. */
