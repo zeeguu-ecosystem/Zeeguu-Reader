@@ -1,9 +1,9 @@
 import $ from 'jquery';
-import config from './config';
-import UserActivityLogger from './UserActivityLogger';
-import ZeeguuRequests from './zeeguuRequests';
-import {POST_UNSTAR_ARTICLE} from './zeeguuRequests';
-import {POST_STAR_ARTICLE} from './zeeguuRequests';
+import config from '../config';
+import UserActivityLogger from '../UserActivityLogger';
+import ZeeguuRequests from '../zeeguuRequests';
+import {POST_UNSTAR_ARTICLE} from '../zeeguuRequests';
+import {POST_STAR_ARTICLE} from '../zeeguuRequests';
 
 
 const USER_EVENT_STAR_ARTICLE = 'STAR ARTICLE';
