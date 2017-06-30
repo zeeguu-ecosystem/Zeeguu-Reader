@@ -15,7 +15,8 @@
     "installation": ["./doc/manual/usage/build_and_run.md"],
     "usage":    ["./doc/manual/usage/workflow.md",
 				 "./doc/manual/usage/tryit.md",
-				 "./doc/manual/usage/support_list.md"]
+				 "./doc/manual/usage/support_list.md"],
+	"advanced": ["./doc/manual/advanced/results.md"]
   },
   "experimentalProposal": 
   {
