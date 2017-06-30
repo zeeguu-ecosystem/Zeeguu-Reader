@@ -13,10 +13,14 @@ In the following sections, we will present how we tried to follow these goals.
 ## Making modules
 [Ecmascript](https://en.wikipedia.org/wiki/ECMAScript) 2015 (ES2015) introduced a significant addition to the syntax that Javascript implements, among which, most important to us, are *modules*. However, current browser support for ES2015 is low: we do not have the luxury of only developing for the possible future where compatability might increase. To resolve this issue, transpilers like [Babel](https://babeljs.io/) exist: a program that converts next generation Javascript into current day, ubiquitously compatible, Javascript. 
 
-[Webpack](https://webpack.js.org/) builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible file for each entrypoint. Using Webpack we write all our code in the readable and modular ES2016 definition, define a `main.js` for every package as an entry point, and then transpile it to two single files. These minified files can be included into our HTML documents, which can invoke the files to allow them to perform their tasks.
+[Webpack](https://webpack.js.org/) builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible file for each entrypoint and the css files used by it. Using Webpack we write all our code in the readable and modular ES2016 definition, define a `main.js` for every package as an entry point, and then transpile it into four single files (2 JavaScript, 2 CSS). These minified files can be included into our HTML documents, which allows the browser to invoke those files and allow them to perform their tasks.
 
-- `subscription.entry.js`.
-- `translation.entry.js`.
+- `subscription.entry.MAJOR.MINOR.PATCH.js`
+- `subscription.MAJOR.MINOR.PATCH.css`
+- `translation.entry.MAJOR.MINOR.PATCH.js`
+- `translation.MAJOR.MINOR.PATCH.css`
+
+Semantic versioning is applied to the naming of these files in order to prevent caching of outdated versions. This version is defined in the `package.json` configuration file.
 
 ## Design overview
 Using these tools, we will were able to define our system as follows:
