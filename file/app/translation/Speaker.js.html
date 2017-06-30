@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -49,7 +52,10 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">app/translation/Speaker.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import UserActivityLogger from &apos;../UserActivityLogger&apos;;
+
+const USER_EVENT_TEXT_TO_SPEECH = &apos;SPEAK TEXT&apos;;
+
 /* Class that allows text to speech for supplied text and language. */
 export default class Speaker {
     /**
@@ -62,6 +68,8 @@ export default class Speaker {
         utterance.lang = language;
         utterance.text = text;
         speechSynthesis.speak(utterance);
+
+        UserActivityLogger.log(USER_EVENT_TEXT_TO_SPEECH, text, {language : language});
     }
 };</code></pre>
 

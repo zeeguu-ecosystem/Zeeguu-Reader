@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -54,6 +57,15 @@ import Mustache from &apos;mustache&apos;;
 import config from &apos;../config&apos;;
 import ZeeguuRequests from &apos;../zeeguuRequests&apos;;
 import Notifier from &apos;../Notifier&apos;;
+import &apos;loggly-jslogger&apos;;
+
+/* Setup remote logging. */
+let logger = new LogglyTracker();
+logger.push({
+    &apos;logglyKey&apos;: config.LOGGLY_TOKEN,
+    &apos;sendConsoleErrors&apos; : true,
+    &apos;tag&apos; : &apos;SubscriptionList&apos;
+});
 
 /**
  * Shows a list of all subscribed feeds, allows the user to remove them.
@@ -151,7 +163,7 @@ export default class SubscriptionList {
             this._changed();
         } else {
             this.notifier.notify(&quot;Network Error - Could not follow &quot; + feed.title + &quot;.&quot;);
-            console.log(&quot;Could not follow &apos;&quot; + feed.title + &quot;&apos;. Server reply: \n&quot; + reply);
+            logger.push(&quot;Could not follow &apos;&quot; + feed.title + &quot;&apos;. Server reply: \n&quot; + reply);
         }
     }
 
@@ -178,7 +190,7 @@ export default class SubscriptionList {
             this._changed();
         } else {
             this.notifier.notify(&quot;Network Error - Could not unfollow &quot; + feed.title + &quot;.&quot;);
-            console.log(&quot;Could not unfollow &apos;&quot; + feed.title + &quot;&apos;. Server reply: \n&quot; + reply);
+            logger.push(&quot;Could not unfollow &apos;&quot; + feed.title + &quot;&apos;. Server reply: \n&quot; + reply);
         }
     }
 

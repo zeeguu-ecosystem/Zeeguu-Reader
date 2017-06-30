@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">Notifier | Zeeguu UMR Client API Document</title>
+  <title data-ice="title">StarredArticleList | Zeeguu UMR Client API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -19,7 +19,7 @@
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
-  <a data-ice="repoURL" href="https://github.com/mircealungu/Unified-Multilanguage-Reader.git" class="repo-url-github">Repository</a>
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -33,32 +33,36 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Translator.js~Translator.html">Translator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html">UndoStack</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Notifier from &apos;<span><a href="file/app/translation/Notifier.js.html#lineNumber7">zeeguu-umr/app/translation/Notifier.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import StarredArticleList from &apos;<span><a href="file/app/subscription/StarredArticleList.js.html#lineNumber15">./app/subscription/StarredArticleList.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/translation/Notifier.js.html#lineNumber7">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/subscription/StarredArticleList.js.html#lineNumber15">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">Notifier</h1>
+  <h1 data-ice="name">StarredArticleList</h1>
 
   
 
@@ -74,8 +78,7 @@
 
   
   
-  <div class="description" data-ice="description"><p>Presents small pop-up messages (notifications).
-Does not repeat the same message if it currently displays it.</p>
+  <div class="description" data-ice="description"><p>Retrieves and renders a list of starred articles.</p>
 </div>
   
 
@@ -90,75 +93,8 @@ Does not repeat the same message if it currently displays it.</p>
 
 
 
-<div data-ice="constructorSummary"><h2>Constructor Summary</h2><table class="summary" data-ice="summary">
-  <thead><tr><td data-ice="title" colspan="3">Public Constructor</td></tr></thead>
-  <tbody>
-  
-  <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Initializes the previously displayed message field.</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
-<div data-ice="memberSummary"><h2>Member Summary</h2><table class="summary" data-ice="summary">
-  <thead><tr><td data-ice="title" colspan="3">Public Members</td></tr></thead>
-  <tbody>
-  
-  <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-member-lastMessage">lastMessage</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
+
+
 <div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
   <tbody>
@@ -176,13 +112,47 @@ Does not repeat the same message if it currently displays it.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/Notifier.js~Notifier.html#instance-method-notify">notify</a></span></span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html#instance-method-load">load</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Notify the user with the supplied message.</p>
+        <div data-ice="description"><p>Make an asynchronous call using <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span> to retrieve the starred articles.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+<table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Private Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html#instance-method-_renderArticleLinks">_renderArticleLinks</a></span></span><span data-ice="signature">(articleLinks: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Build a list of articles.</p>
 </div>
       </div>
     </td>
@@ -199,121 +169,78 @@ Does not repeat the same message if it currently displays it.</p>
 
 
 
-<div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
 
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-constructor-constructor">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">constructor</span><span data-ice="signature">()</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber11">source</a></span></span>
-    </span>
-  </h3>
 
-  
-  
-  
-  <div data-ice="description"><p>Initializes the previously displayed message field. Empty at creation.</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-</div>
-<div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
-
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-lastMessage">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span data-ice="name">lastMessage</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber12">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-</div>
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-notify">
+  <h3 data-ice="anchor" id="instance-method-load">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">notify</span><span data-ice="signature">(message: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+    <span data-ice="name">load</span><span data-ice="signature">()</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/Notifier.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/StarredArticleList.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Notify the user with the supplied message.</p>
+  <div data-ice="description"><p>Make an asynchronous call using <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span> to retrieve the starred articles.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<h2 data-ice="title">Private Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_renderArticleLinks">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_renderArticleLinks</span><span data-ice="signature">(articleLinks: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/StarredArticleList.js.html#lineNumber29">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Build a list of articles.
+Shares code with the <span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span> class,
+and thus its a bit smelly.</p>
 </div>
 
   
@@ -327,10 +254,10 @@ Does not repeat the same message if it currently displays it.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">message</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="name" data-depth="0">articleLinks</td>
+      <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Message to be displayed.</p>
+      <td data-ice="description"><p>List containing articles.</p>
 </td>
     </tr>
 </tbody>

@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -49,13 +52,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import AlterMenu from &apos;<span><a href="file/app/translation/AlterMenu.js.html#lineNumber9">./app/translation/AlterMenu.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import AlterMenu from &apos;<span><a href="file/app/translation/AlterMenu.js.html#lineNumber16">./app/translation/AlterMenu.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/translation/AlterMenu.js.html#lineNumber9">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/translation/AlterMenu.js.html#lineNumber16">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -436,6 +439,34 @@ append these to the alter menu.</p>
         <p>
           
           
+          <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_sendSwappedTranslation">_sendSwappedTranslation</a></span></span><span data-ice="signature">(selectedAlternative: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Send the chosen translation from the list of choices to Zeeguu.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
           <span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_swapPrimaryTranslation">_swapPrimaryTranslation</a></span></span><span data-ice="signature">(selectedAlternative: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
         </p>
       </div>
@@ -473,7 +504,7 @@ append these to the alter menu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber14">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber21">source</a></span></span>
     </span>
   </h3>
 
@@ -521,7 +552,7 @@ alter menu (i.e. open or closed).</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -564,7 +595,7 @@ alter menu (i.e. open or closed).</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
@@ -610,7 +641,7 @@ alter menu (i.e. open or closed).</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber31">source</a></span></span>
     </span>
   </h3>
 
@@ -672,7 +703,7 @@ for which to present the alter menu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber114">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber142">source</a></span></span>
     </span>
   </h3>
 
@@ -716,7 +747,7 @@ for which to present the alter menu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber52">source</a></span></span>
     </span>
   </h3>
 
@@ -785,7 +816,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber134">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber168">source</a></span></span>
     </span>
   </h3>
 
@@ -842,7 +873,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber124">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber155">source</a></span></span>
     </span>
   </h3>
 
@@ -886,7 +917,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber107">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber135">source</a></span></span>
     </span>
   </h3>
 
@@ -932,7 +963,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber62">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber90">source</a></span></span>
     </span>
   </h3>
 
@@ -993,7 +1024,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber116">source</a></span></span>
     </span>
   </h3>
 
@@ -1043,6 +1074,67 @@ append these to the alter menu. </p>
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_sendSwappedTranslation">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_sendSwappedTranslation</span><span data-ice="signature">(selectedAlternative: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber70">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Send the chosen translation from the list of choices to Zeeguu.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">selectedAlternative</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Attribute that determines the selected alternative.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-_swapPrimaryTranslation">
     <span class="access" data-ice="access">private</span>
     
@@ -1054,7 +1146,7 @@ append these to the alter menu. </p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber77">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/translation/AlterMenu.js.html#lineNumber105">source</a></span></span>
     </span>
   </h3>
 

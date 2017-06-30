@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -49,13 +52,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import FeedSubscriber from &apos;<span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber9">./app/subscription/FeedSubscriber.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import FeedSubscriber from &apos;<span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber10">./app/subscription/FeedSubscriber.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber9">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber10">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -107,7 +110,7 @@
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(subscriptionList: <span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span>)</span>
+          <span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(subscriptionList: <span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span>, languageMenu: <span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span>)</span>
         </p>
       </div>
       <div>
@@ -143,6 +146,33 @@
           
           
           <span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-member-currentLanguage">currentLanguage</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-member-languageMenu">languageMenu</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -274,6 +304,34 @@
       
     </td>
   </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-open">open</a></span></span><span data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Open the dialog window containing the list of feeds.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
 </tbody>
 </table>
 <table class="summary" data-ice="summary">
@@ -309,6 +367,34 @@ Callback function for zeeguu.</p>
       
     </td>
   </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-_setCurrentLanguage">_setCurrentLanguage</a></span></span><span data-ice="signature">(langauge: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Sets the current language that user is studying (based on zeeguu settings).</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
 </tbody>
 </table>
 </div>
@@ -327,11 +413,11 @@ Callback function for zeeguu.</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(subscriptionList: <span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(subscriptionList: <span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span>, languageMenu: <span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber14">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber16">source</a></span></span>
     </span>
   </h3>
 
@@ -356,6 +442,13 @@ Callback function for zeeguu.</p>
       <td data-ice="type"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>Local (!) list of currently subscribed-to feeds.</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">languageMenu</td>
+      <td data-ice="type"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Menu to allow for switch feeds per language.</p>
 </td>
     </tr>
 </tbody>
@@ -395,7 +488,50 @@ Callback function for zeeguu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber19">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-languageMenu">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">languageMenu</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber18">source</a></span></span>
     </span>
   </h3>
 
@@ -438,7 +574,7 @@ Callback function for zeeguu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber17">source</a></span></span>
     </span>
   </h3>
 
@@ -484,7 +620,7 @@ Callback function for zeeguu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber36">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber62">source</a></span></span>
     </span>
   </h3>
 
@@ -528,7 +664,7 @@ Callback function for zeeguu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -585,7 +721,7 @@ Callback function for zeeguu.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 
@@ -643,6 +779,51 @@ Uses <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuReque
   
   
 </div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-open">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">open</span><span data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber30">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Open the dialog window containing the list of feeds.
+Uses the sweetalert library.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
 <h2 data-ice="title">Private Methods</h2>
 
 <div class="detail" data-ice="detail">
@@ -657,7 +838,7 @@ Uses <span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuReque
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber53">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber87">source</a></span></span>
     </span>
   </h3>
 
@@ -683,6 +864,67 @@ Callback function for zeeguu.</p>
       <td data-ice="type"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>A list of feeds the user can subscribe to.</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_setCurrentLanguage">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_setCurrentLanguage</span><span data-ice="signature">(langauge: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/subscription/FeedSubscriber.js.html#lineNumber78">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Sets the current language that user is studying (based on zeeguu settings).</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">langauge</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>The language code.</p>
 </td>
     </tr>
 </tbody>

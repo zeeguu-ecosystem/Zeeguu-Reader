@@ -48,6 +48,18 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "./app/starer.js~starer",
+    "class/app/Starer.js~Starer.html",
+    "<span>Starer</span> <span class=\"search-result-import-path\">./app/Starer.js</span>",
+    "class"
+  ],
+  [
+    "./app/subscription/starredarticlelist.js~starredarticlelist",
+    "class/app/subscription/StarredArticleList.js~StarredArticleList.html",
+    "<span>StarredArticleList</span> <span class=\"search-result-import-path\">./app/subscription/StarredArticleList.js</span>",
+    "class"
+  ],
+  [
     "./app/subscription/subscriptionlist.js~subscriptionlist",
     "class/app/subscription/SubscriptionList.js~SubscriptionList.html",
     "<span>SubscriptionList</span> <span class=\"search-result-import-path\">./app/subscription/SubscriptionList.js</span>",
@@ -63,6 +75,12 @@ window.esdocSearchIndex = [
     "./app/translation/undostack.js~undostack",
     "class/app/translation/UndoStack.js~UndoStack.html",
     "<span>UndoStack</span> <span class=\"search-result-import-path\">./app/translation/UndoStack.js</span>",
+    "class"
+  ],
+  [
+    "./app/useractivitylogger.js~useractivitylogger",
+    "class/app/UserActivityLogger.js~UserActivityLogger.html",
+    "<span>UserActivityLogger</span> <span class=\"search-result-import-path\">./app/UserActivityLogger.js</span>",
     "class"
   ],
   [
@@ -462,6 +480,66 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/starer.js",
+    "file/app/Starer.js.html",
+    "app/Starer.js",
+    "file"
+  ],
+  [
+    "app/starer.js~starer#_toggleicon",
+    "class/app/Starer.js~Starer.html#instance-method-_toggleIcon",
+    "app/Starer.js~Starer#_toggleIcon",
+    "method"
+  ],
+  [
+    "app/starer.js~starer#_togglestate",
+    "class/app/Starer.js~Starer.html#instance-method-_toggleState",
+    "app/Starer.js~Starer#_toggleState",
+    "method"
+  ],
+  [
+    "app/starer.js~starer#constructor",
+    "class/app/Starer.js~Starer.html#instance-constructor-constructor",
+    "app/Starer.js~Starer#constructor",
+    "method"
+  ],
+  [
+    "app/starer.js~starer#on",
+    "class/app/Starer.js~Starer.html#instance-member-on",
+    "app/Starer.js~Starer#on",
+    "member"
+  ],
+  [
+    "app/starer.js~starer#setstate",
+    "class/app/Starer.js~Starer.html#instance-method-setState",
+    "app/Starer.js~Starer#setState",
+    "method"
+  ],
+  [
+    "app/starer.js~starer#toggle",
+    "class/app/Starer.js~Starer.html#instance-method-toggle",
+    "app/Starer.js~Starer#toggle",
+    "method"
+  ],
+  [
+    "app/useractivitylogger.js",
+    "file/app/UserActivityLogger.js.html",
+    "app/UserActivityLogger.js",
+    "file"
+  ],
+  [
+    "app/useractivitylogger.js~useractivitylogger._onreply",
+    "class/app/UserActivityLogger.js~UserActivityLogger.html#static-method-_onReply",
+    "app/UserActivityLogger.js~UserActivityLogger._onReply",
+    "method"
+  ],
+  [
+    "app/useractivitylogger.js~useractivitylogger.log",
+    "class/app/UserActivityLogger.js~UserActivityLogger.html#static-method-log",
+    "app/UserActivityLogger.js~UserActivityLogger.log",
+    "method"
+  ],
+  [
     "app/config.js",
     "file/app/config.js.html",
     "app/config.js",
@@ -528,6 +606,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/subscription/feedsubscriber.js~feedsubscriber#_setcurrentlanguage",
+    "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-_setCurrentLanguage",
+    "app/subscription/FeedSubscriber.js~FeedSubscriber#_setCurrentLanguage",
+    "method"
+  ],
+  [
     "app/subscription/feedsubscriber.js~feedsubscriber#clear",
     "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-clear",
     "app/subscription/FeedSubscriber.js~FeedSubscriber#clear",
@@ -552,9 +636,21 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/subscription/feedsubscriber.js~feedsubscriber#languagemenu",
+    "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-member-languageMenu",
+    "app/subscription/FeedSubscriber.js~FeedSubscriber#languageMenu",
+    "member"
+  ],
+  [
     "app/subscription/feedsubscriber.js~feedsubscriber#load",
     "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-load",
     "app/subscription/FeedSubscriber.js~FeedSubscriber#load",
+    "method"
+  ],
+  [
+    "app/subscription/feedsubscriber.js~feedsubscriber#open",
+    "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html#instance-method-open",
+    "app/subscription/FeedSubscriber.js~FeedSubscriber#open",
     "method"
   ],
   [
@@ -574,18 +670,6 @@ window.esdocSearchIndex = [
     "class/app/subscription/LanguageMenu.js~LanguageMenu.html#instance-method-_loadLanguageOptions",
     "app/subscription/LanguageMenu.js~LanguageMenu#_loadLanguageOptions",
     "method"
-  ],
-  [
-    "app/subscription/languagemenu.js~languagemenu#constructor",
-    "class/app/subscription/LanguageMenu.js~LanguageMenu.html#instance-constructor-constructor",
-    "app/subscription/LanguageMenu.js~LanguageMenu#constructor",
-    "method"
-  ],
-  [
-    "app/subscription/languagemenu.js~languagemenu#feedsubscriber",
-    "class/app/subscription/LanguageMenu.js~LanguageMenu.html#instance-member-feedSubscriber",
-    "app/subscription/LanguageMenu.js~LanguageMenu#feedSubscriber",
-    "member"
   ],
   [
     "app/subscription/languagemenu.js~languagemenu#load",
@@ -609,6 +693,24 @@ window.esdocSearchIndex = [
     "app/subscription/nofeedtour.js~nofeedtour#show",
     "class/app/subscription/NoFeedTour.js~NoFeedTour.html#instance-method-show",
     "app/subscription/NoFeedTour.js~NoFeedTour#show",
+    "method"
+  ],
+  [
+    "app/subscription/starredarticlelist.js",
+    "file/app/subscription/StarredArticleList.js.html",
+    "app/subscription/StarredArticleList.js",
+    "file"
+  ],
+  [
+    "app/subscription/starredarticlelist.js~starredarticlelist#_renderarticlelinks",
+    "class/app/subscription/StarredArticleList.js~StarredArticleList.html#instance-method-_renderArticleLinks",
+    "app/subscription/StarredArticleList.js~StarredArticleList#_renderArticleLinks",
+    "method"
+  ],
+  [
+    "app/subscription/starredarticlelist.js~starredarticlelist#load",
+    "class/app/subscription/StarredArticleList.js~StarredArticleList.html#instance-method-load",
+    "app/subscription/StarredArticleList.js~StarredArticleList#load",
     "method"
   ],
   [
@@ -726,6 +828,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/translation/altermenu.js~altermenu#_sendswappedtranslation",
+    "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_sendSwappedTranslation",
+    "app/translation/AlterMenu.js~AlterMenu#_sendSwappedTranslation",
+    "method"
+  ],
+  [
     "app/translation/altermenu.js~altermenu#_swapprimarytranslation",
     "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-_swapPrimaryTranslation",
     "app/translation/AlterMenu.js~AlterMenu#_swapPrimaryTranslation",
@@ -804,9 +912,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "app/translation/translator.js~translator#_getcontext",
-    "class/app/translation/Translator.js~Translator.html#instance-method-_getContext",
-    "app/translation/Translator.js~Translator#_getContext",
+    "app/translation/translator.js~translator#_buildconnectivesset",
+    "class/app/translation/Translator.js~Translator.html#instance-method-_buildConnectivesSet",
+    "app/translation/Translator.js~Translator#_buildConnectivesSet",
     "method"
   ],
   [
@@ -822,6 +930,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/translation/translator.js~translator#connectivesset",
+    "class/app/translation/Translator.js~Translator.html#instance-member-connectivesSet",
+    "app/translation/Translator.js~Translator#connectivesSet",
+    "member"
+  ],
+  [
     "app/translation/translator.js~translator#constructor",
     "class/app/translation/Translator.js~Translator.html#instance-constructor-constructor",
     "app/translation/Translator.js~Translator#constructor",
@@ -831,6 +945,12 @@ window.esdocSearchIndex = [
     "app/translation/translator.js~translator#istranslated",
     "class/app/translation/Translator.js~Translator.html#instance-method-isTranslated",
     "app/translation/Translator.js~Translator#isTranslated",
+    "method"
+  ],
+  [
+    "app/translation/translator.js~translator#sendsuggestion",
+    "class/app/translation/Translator.js~Translator.html#instance-method-sendSuggestion",
+    "app/translation/Translator.js~Translator#sendSuggestion",
     "method"
   ],
   [
@@ -849,6 +969,12 @@ window.esdocSearchIndex = [
     "app/translation/translator.js~translator#undotranslate",
     "class/app/translation/Translator.js~Translator.html#instance-method-undoTranslate",
     "app/translation/Translator.js~Translator#undoTranslate",
+    "method"
+  ],
+  [
+    "app/translation/translator.js~translator._getcontext",
+    "class/app/translation/Translator.js~Translator.html#static-method-_getContext",
+    "app/translation/Translator.js~Translator._getContext",
     "method"
   ],
   [

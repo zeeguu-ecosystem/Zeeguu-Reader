@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">UndoStack | Zeeguu UMR Client API Document</title>
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">Starer | Zeeguu UMR Client API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -52,17 +52,17 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import UndoStack from &apos;<span><a href="file/app/translation/UndoStack.js.html#lineNumber8">./app/translation/UndoStack.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Starer from &apos;<span><a href="file/app/Starer.js.html#lineNumber13">./app/Starer.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/app/translation/UndoStack.js.html#lineNumber8">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/app/Starer.js.html#lineNumber13">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">UndoStack</h1>
+  <h1 data-ice="name">Starer</h1>
 
   
 
@@ -78,8 +78,8 @@
 
   
   
-  <div class="description" data-ice="description"><p>Class that allows for saving the state of the page content after each
-translation and restore upon request.</p>
+  <div class="description" data-ice="description"><p>Implements the functionality for starring an article, together with 
+notifying Zeeguu about the changes.</p>
 </div>
   
 
@@ -111,13 +111,13 @@ translation and restore upon request.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/app/Starer.js~Starer.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Initialize the stack for saving the states.</p>
+        <div data-ice="description"><p>Initializes the state of the starer (default is false).</p>
 </div>
       </div>
     </td>
@@ -146,7 +146,7 @@ translation and restore upon request.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html#instance-member-stack">stack</a></span></span><span data-ice="signature">: <span><span>*</span><span>[]</span></span></span>
+          <span data-ice="name"><span><a href="class/app/Starer.js~Starer.html#instance-member-on">on</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -180,13 +180,13 @@ translation and restore upon request.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html#instance-method-pushState">pushState</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/app/Starer.js~Starer.html#instance-method-setState">setState</a></span></span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Push state onto the stack.</p>
+        <div data-ice="description"><p>Sets the state of the starer.</p>
 </div>
       </div>
     </td>
@@ -208,14 +208,75 @@ translation and restore upon request.</p>
         <p>
           
           
-          <span data-ice="name"><span><a href="class/app/translation/UndoStack.js~UndoStack.html#instance-method-undoState">undoState</a></span></span><span data-ice="signature">()</span>
+          <span data-ice="name"><span><a href="class/app/Starer.js~Starer.html#instance-method-toggle">toggle</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Revert to previous state stored on the stack.</p>
+        <div data-ice="description"><p>Toggles the star on/off based on its current state and notifies
+Zeeguu accordingly.</p>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+<table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Private Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/Starer.js~Starer.html#instance-method-_toggleIcon">_toggleIcon</a></span></span><span data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          <span data-ice="name"><span><a href="class/app/Starer.js~Starer.html#instance-method-_toggleState">_toggleState</a></span></span><span data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
       </div>
     </td>
     <td>
@@ -241,23 +302,40 @@ translation and restore upon request.</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">()</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/UndoStack.js.html#lineNumber12">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/Starer.js.html#lineNumber17">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Initialize the stack for saving the states.</p>
+  <div data-ice="description"><p>Initializes the state of the starer (default is false).</p>
 </div>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">state</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: false</li></ul></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   
@@ -281,18 +359,18 @@ translation and restore upon request.</p>
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-stack">
+  <h3 data-ice="anchor" id="instance-member-on">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">stack</span><span data-ice="signature">: <span><span>*</span><span>[]</span></span></span>
+    <span data-ice="name">on</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/UndoStack.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/Starer.js.html#lineNumber18">source</a></span></span>
     </span>
   </h3>
 
@@ -327,25 +405,87 @@ translation and restore upon request.</p>
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-pushState">
+  <h3 data-ice="anchor" id="instance-method-setState">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span data-ice="name">pushState</span><span data-ice="signature">()</span>
+    <span data-ice="name">setState</span><span data-ice="signature">(state: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/UndoStack.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/Starer.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Push state onto the stack.</p>
+  <div data-ice="description"><p>Sets the state of the starer.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">state</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>Defines the state for the starer: true - &apos;on&apos; or false - &apos;off&apos;</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-toggle">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">toggle</span><span data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/Starer.js.html#lineNumber33">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Toggles the star on/off based on its current state and notifies
+Zeeguu accordingly.</p>
 </div>
 
   
@@ -370,27 +510,71 @@ translation and restore upon request.</p>
   
   
 </div>
+<h2 data-ice="title">Private Methods</h2>
+
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-undoState">
-    <span class="access" data-ice="access">public</span>
+  <h3 data-ice="anchor" id="instance-method-_toggleIcon">
+    <span class="access" data-ice="access">private</span>
     
     
     
     
     
-    <span data-ice="name">undoState</span><span data-ice="signature">()</span>
+    <span data-ice="name">_toggleIcon</span><span data-ice="signature">()</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/app/translation/UndoStack.js.html#lineNumber29">source</a></span></span>
+      <span data-ice="source"><span><a href="file/app/Starer.js.html#lineNumber55">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Revert to previous state stored on the stack.</p>
+  
+
+  
+
+  <div data-ice="properties">
 </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-_toggleState">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span data-ice="name">_toggleState</span><span data-ice="signature">()</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/app/Starer.js.html#lineNumber51">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
 
   
 

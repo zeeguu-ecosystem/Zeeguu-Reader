@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -50,12 +53,17 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">app/translation/Translator.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
-import ZeeguuRequests from &apos;../zeeguuRequests&apos;
-import UndoStack from &apos;./UndoStack&apos;
-import config from &apos;../config&apos;
+import config from &apos;../config&apos;;
+import UndoStack from &apos;./UndoStack&apos;;
+import ZeeguuRequests from &apos;../zeeguuRequests&apos;;
+import UserActivityLogger from &apos;../UserActivityLogger&apos;;
+
+const USER_EVENT_TRANSLATE = &apos;TRANSLATE TEXT&apos;;
+const USER_EVENT_UNDO_TRANSLATE = &apos;UNDO TEXT TRANSLATION&apos;;
+const USER_EVENT_SEND_SUGGESTION = &apos;SEND SUGGESTION&apos;;
 
 /**
- *  Class that allows for translating zeeguu tags. 
+ *  Class that allows for translating zeeguu tags.
  */
 export default class Translator {
 
@@ -64,35 +72,41 @@ export default class Translator {
      */
     constructor() {
         this.undoStack = new UndoStack();
+        this.connectivesSet = this._buildConnectivesSet();
+        ZeeguuRequests.get(config.GET_NATIVE_LANGUAGE, {}, function (language) {
+            TO_LANGUAGE = language;
+        }.bind(this));
     }
 
     /**
      * Merge the surrounding translated zeeguuTags
      * and insert translations for the tag&apos;s content by calling Zeeguu.
      * Uses {@link ZeeguuRequests}.
-     * @param {Element} zeeguuTag - Document element containing the content to be translated. 
+     * @param {Element} zeeguuTag - Document element containing the content to be translated.
      */
     translate(zeeguuTag) {
         this.undoStack.pushState();
-        var temp_translation = this._mergeZeeguu(zeeguuTag);
+        let tmp_trans = this._mergeZeeguu(zeeguuTag);
 
-        var text = zeeguuTag.textContent.trim();
-        var context = this._getContext(zeeguuTag);
-        var url = $(config.HTML_ID_ARTICLE_URL).find(&apos;a&apos;).attr(&apos;href&apos;);
-        var title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        let text = zeeguuTag.textContent.trim();
+        let context = Translator._getContext(zeeguuTag);
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
-        var orig = document.createElement(config.HTML_ORIGINAL);
-        var tran = document.createElement(config.HTML_TRANSLATED);
+        let orig = document.createElement(config.HTML_ORIGINAL);
+        let tran = document.createElement(config.HTML_TRANSLATED);
 
         $(orig).text(text);
         $(zeeguuTag).addClass(config.CLASS_LOADING);
-        $(tran).attr(&apos;chosen&apos;, temp_translation);
+        $(tran).attr(&apos;chosen&apos;, tmp_trans);
         $(zeeguuTag).empty().append(orig, tran);
 
-        var callback = (data) =&gt; this._setTranslations(zeeguuTag, data);
+        let callback = (data) =&gt; this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
-        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + &apos;/&apos; + FROM_LANGUAGE + &apos;/&apos; + config.TO_LANGUAGE,
+        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + &apos;/&apos; + FROM_LANGUAGE + &apos;/&apos; + TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
+        
+        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: FROM_LANGUAGE});
     }
 
     /**
@@ -100,21 +114,43 @@ export default class Translator {
      */
     undoTranslate() {
         this.undoStack.undoState();
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        UserActivityLogger.log(USER_EVENT_UNDO_TRANSLATE, &apos;&apos;, {url: url, title: title, language: FROM_LANGUAGE});
+    }
+
+    /**
+     * Sends a post request to Zeeguu about a contribution/suggestion for a translation from user.
+     * @param {jQuery} $zeeguu - Zeeguu reference tag for which to send the user suggestion.
+     */
+    sendSuggestion ($zeeguu) {
+        let word = $zeeguu.children(config.HTML_ORIGINAL).text();
+        let context = Translator._getContext($zeeguu.get(0));
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        let translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
+
+        // Launch Zeeguu request to supply translation suggestion.
+        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + &apos;/&apos; + FROM_LANGUAGE + &apos;/&apos; + TO_LANGUAGE,
+                           {word: word, context: context, url: url, title: title, translation: translation});
+
+        UserActivityLogger.log(USER_EVENT_SEND_SUGGESTION, word, 
+                               {url: url, title: title, language: FROM_LANGUAGE, translation: translation});
     }
 
     /**
      * Checks whether given zeeguuTag is already translated.
-     * @param {Element} zeeguuTag - Document element that wraps translatable content. 
-     * @return {Boolean} - True only if the passed zeeguuTag already has translation data.    
+     * @param {jQuery} $zeeguu - Zeeguu reference tag that wraps translatable content.
+     * @return {Boolean} - True only if the passed zeeguuTag already has translation data.
      */
-    isTranslated(zeeguuTag) {
-        return $(zeeguuTag).has(config.HTML_TRANSLATED).length;
+    isTranslated($zeeguu) {
+        return $zeeguu.has(config.HTML_TRANSLATED).length;
     }
 
     /**
      * Handle the Zeeguu request returned values. Append the returned translations.
      * @param {Element} zeeguuTag - Document element containing the original text and the translations.
-     * @param {Object[]} translations - A list of translations to be added to the given htmlTag content. 
+     * @param {Object[]} translations - A list of translations to be added to the given htmlTag content.
      */
     _setTranslations(zeeguuTag, translations) {
         var tran = zeeguuTag.children[1];
@@ -125,56 +161,81 @@ export default class Translator {
             tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
 
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
-        tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, &apos;&apos;);        
+        tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, &apos;&apos;);
         $(zeeguuTag).removeClass(config.CLASS_LOADING);
     }
 
     /**
-     * Returns surrounding textual context for a given zeeguuTag by extracting the text from 
+     * Returns surrounding textual context for a given zeeguuTag by extracting the text from
      * its wrapping parent element.
      * @param {Element} zeeguuTag - Document element for which to extract textual context
      * @return {string} - Textual context.
      */
-    _getContext(zeeguuTag) {
-        return zeeguuTag.parentElement.textContent;
+    static _getContext(zeeguuTag) {
+        let zeeguuParentClone = zeeguuTag.parentElement.cloneNode(true);        
+        $(zeeguuParentClone).find(config.HTML_ID_ALTERMENU).remove();
+        return zeeguuParentClone.textContent;
     }
 
     /**
-     * Merge the translated zeeguuTags surrounding the given zeeguuTag. 
-     * @param {Element} zeeguuTag - Tag for which to perform merge with the surrounding tags. 
+     * Merge the translated zeeguuTags surrounding the given zeeguuTag.
+     * @param {Element} zeeguuTag - Zeeguu tag for which to perform merge with the surrounding tags.
+     * @return {string} - Temporary mock translation text.
      */
     _mergeZeeguu(zeeguuTag) {
-        var temp_translation = &apos;&apos;;
-        var spaces = &apos;&apos;;
+        var tmp_trans = &apos;&apos;;
+        var connectives = &apos;&apos;;
+        var padding_len = zeeguuTag.textContent.length; // approximates the size of the to be translated word
+
         var node = zeeguuTag.previousSibling;
-        while (node &amp;&amp; node.textContent == &apos; &apos;) {
+
+        while (node &amp;&amp; this.connectivesSet.has(node.textContent.trim())) {
+            connectives = node.textContent + connectives;
             node = node.previousSibling;
-            spaces += &apos; &apos;;
         }
-        var paddingLength = zeeguuTag.textContent.length; // used to approximate the size of the to be translated word
 
-        if (node &amp;&amp; node.nodeName == config.HTML_ZEEGUUTAG &amp;&amp; this.isTranslated(node)) {
-            zeeguuTag.textContent = node.textContent + spaces + zeeguuTag.textContent;
-            temp_translation = temp_translation.concat($(node).find(&apos;tran&apos;).attr(&apos;chosen&apos;));
+        if (node &amp;&amp; node.nodeName == config.HTML_ZEEGUUTAG &amp;&amp; this.isTranslated($(node))) {
+            zeeguuTag.textContent = node.textContent + connectives + zeeguuTag.textContent;
+            tmp_trans = tmp_trans.concat($(node).find(&apos;tran&apos;).attr(&apos;chosen&apos;));
+            node.parentNode.removeChild(node.nextSibling);
             node.parentNode.removeChild(node);
         }
-        spaces = &apos;&apos;;
-        temp_translation = temp_translation.concat(&apos; &apos;, &apos;..&apos;.repeat(paddingLength), &apos; &apos;);
+
+        tmp_trans = tmp_trans.concat(&apos; &apos; + &apos;..&apos;.repeat(padding_len) + &apos; &apos;);
+        connectives = &apos;&apos;;
         node = zeeguuTag.nextSibling;
-        while (node &amp;&amp; node.textContent == &apos; &apos;) {
+        while (node &amp;&amp; this.connectivesSet.has(node.textContent.trim())) {
+            connectives += node.textContent;
             node = node.nextSibling;
-            spaces += &apos; &apos;;
-
         }
-        if (node &amp;&amp; node.nodeName == config.HTML_ZEEGUUTAG &amp;&amp; this.isTranslated(node)) {
-            zeeguuTag.textContent += spaces + node.textContent;
-            temp_translation = temp_translation.concat($(node).find(&apos;tran&apos;).attr(&apos;chosen&apos;));
+
+        if (node &amp;&amp; node.nodeName == config.HTML_ZEEGUUTAG &amp;&amp; this.isTranslated($(node))) {
+            zeeguuTag.textContent += connectives + node.textContent;
+            tmp_trans = tmp_trans.concat($(node).find(&apos;tran&apos;).attr(&apos;chosen&apos;));
+            node.parentNode.removeChild(node.previousSibling);
             node.parentNode.removeChild(node);
         }
-        return temp_translation;
+        return tmp_trans;
     }
 
-};</code></pre>
+    /**
+     * Build the used connectives set, for which the merge function will merge over.
+     * @return {Set} - The set containing the available connectives.
+     */
+    _buildConnectivesSet() {
+        let set = new Set();
+        set.add(&apos;&apos;);
+        set.add(&apos;-&apos;);
+        set.add(&apos;:&apos;);
+        set.add(&apos;;&apos;);
+        set.add(&apos;\&apos;&apos;);
+        set.add(&apos;&#x2019;&apos;);
+        set.add(&apos;&#x2018;&apos;);
+        return set;
+    }
+
+};
+</code></pre>
 
 </div>
 

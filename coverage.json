@@ -1,21 +1,21 @@
 {
-  "coverage": "85.54%",
-  "expectCount": 83,
-  "actualCount": 71,
+  "coverage": "84.15%",
+  "expectCount": 101,
+  "actualCount": 85,
   "files": {
     "app/translation/AlterMenu.js": {
-      "expectCount": 13,
-      "actualCount": 11,
+      "expectCount": 14,
+      "actualCount": 12,
       "undocumentLines": [
-        15,
-        16
+        22,
+        23
       ]
     },
     "app/subscription/ArticleList.js": {
       "expectCount": 8,
       "actualCount": 7,
       "undocumentLines": [
-        18
+        29
       ]
     },
     "app/Cache.js": {
@@ -24,19 +24,18 @@
       "undocumentLines": []
     },
     "app/subscription/FeedSubscriber.js": {
-      "expectCount": 8,
-      "actualCount": 6,
+      "expectCount": 11,
+      "actualCount": 8,
       "undocumentLines": [
-        16,
-        15
+        19,
+        18,
+        17
       ]
     },
     "app/subscription/LanguageMenu.js": {
-      "expectCount": 5,
-      "actualCount": 4,
-      "undocumentLines": [
-        16
-      ]
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
     },
     "app/subscription/NoFeedTour.js": {
       "expectCount": 3,
@@ -54,22 +53,37 @@
       "expectCount": 2,
       "actualCount": 1,
       "undocumentLines": [
-        3
+        6
       ]
+    },
+    "app/Starer.js": {
+      "expectCount": 7,
+      "actualCount": 4,
+      "undocumentLines": [
+        55,
+        51,
+        18
+      ]
+    },
+    "app/subscription/StarredArticleList.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
     },
     "app/subscription/SubscriptionList.js": {
       "expectCount": 15,
       "actualCount": 13,
       "undocumentLines": [
-        16,
-        17
+        25,
+        26
       ]
     },
     "app/translation/Translator.js": {
-      "expectCount": 9,
-      "actualCount": 8,
+      "expectCount": 12,
+      "actualCount": 10,
       "undocumentLines": [
-        15
+        21,
+        20
       ]
     },
     "app/translation/UndoStack.js": {
@@ -78,6 +92,11 @@
       "undocumentLines": [
         13
       ]
+    },
+    "app/UserActivityLogger.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
     },
     "app/zeeguuRequests.js": {
       "expectCount": 5,

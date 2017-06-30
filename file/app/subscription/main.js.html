@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -51,18 +54,27 @@
 <div class="content" data-ice="content"><h1 data-ice="title">app/subscription/main.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import $ from &apos;jquery&apos;;
 import ArticleList from &apos;./ArticleList&apos;;
+import StarredArticleList from &apos;./StarredArticleList&apos;;
 import SubscriptionList from &apos;./SubscriptionList&apos;;
 import FeedSubscriber from &apos;./FeedSubscriber&apos;;
-import dialogPolyfill from &apos;dialog-polyfill&apos;;
 import LanguageMenu from &apos;./LanguageMenu&apos;;
 import config from &apos;../config&apos;;
+
+import &apos;../../../styles/mdl/material.min.js&apos;;
+import &apos;../../../styles/mdl/material.min.css&apos;;
+import &apos;../../../styles/material-icons.css&apos;;
+import &apos;../../../styles/loader.css&apos;;
+import &apos;../../../styles/login.css&apos;;
+import &apos;../../../styles/articles.css&apos;;
+import &apos;../../../styles/sweetalert.css&apos;;
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 let subscriptionList = new SubscriptionList();
 let articleList = new ArticleList(subscriptionList);
-let feedSubscriber = new FeedSubscriber(subscriptionList);
-let languageMenu = new LanguageMenu(feedSubscriber);
+let starredArticleList = new StarredArticleList();
+let languageMenu = new LanguageMenu();
+let feedSubscriber = new FeedSubscriber(subscriptionList, languageMenu);
 
 document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
     articleList.clear();
@@ -72,25 +84,13 @@ document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function() {
+    starredArticleList.load();
     subscriptionList.load();
     feedSubscriber.load();
-    languageMenu.load();
 
-    let addFeedDialog = document.querySelector(&apos;dialog&apos;);
     let showAddFeedDialogButton = document.querySelector(&apos;.show-modal&apos;);
-
-    // Some browsers do not support dialog, for that we use Polyfill.
-    if (!addFeedDialog.showModal)
-        dialogPolyfill.registerDialog(addFeedDialog);
-
-    // Open and closing of the dialog is handled here.
-    showAddFeedDialogButton.addEventListener(&apos;click&apos;, function () {
-        addFeedDialog.showModal();
-        $(&apos;#&apos; + feedSubscriber.getCurrentLanguage()).focus();
-    });
-
-    addFeedDialog.querySelector(&apos;.close&apos;).addEventListener(&apos;click&apos;, function () {
-        addFeedDialog.close();
+    $(showAddFeedDialogButton).click(function () {
+        feedSubscriber.open();
     });
 });
 

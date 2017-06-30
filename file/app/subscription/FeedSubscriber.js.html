@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -53,6 +56,7 @@
 import Mustache from &apos;mustache&apos;;
 import config from &apos;../config&apos;;
 import ZeeguuRequests from &apos;../zeeguuRequests&apos;;
+import swal from &apos;sweetalert&apos;;
 
 /**
  * Allows the user to add feed subscriptions.
@@ -61,10 +65,36 @@ export default class FeedSubscriber {
     /**
      * Link the {@link SubscriptionList} with this instance so we can update it on change.
      * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.
+     * @param {LanguageMenu} languageMenu - Menu to allow for switch feeds per language.
      */
-    constructor(subscriptionList) {
+    constructor(subscriptionList, languageMenu) {
         this.subscriptionList = subscriptionList;
-        this.currentLanguage = &apos;nl&apos;;
+        this.languageMenu = languageMenu;
+        this.currentLanguage = &apos;nl&apos;; // default
+        ZeeguuRequests.get(config.GET_LEARNED_LANGUAGE, {}, 
+            function (lang) {
+                this.currentLanguage = lang;
+            }.bind(this));
+    }
+
+    /**
+     * Open the dialog window containing the list of feeds.
+     * Uses the sweetalert library.
+     */
+    open() {
+        let template = $(config.HTML_ID_ADD_SUBSCRIPTION_DIALOG_TEMPLATE).html();
+        swal({
+            title: &apos;Available Sources&apos;,
+            text: template,
+            html: true,
+            allowOutsideClick: true,
+            showConfirmButton: false,
+            showCancelButton: true,
+            cancelButtonText: &apos;Close&apos;,
+        });
+
+        this.languageMenu.load(this);
+        this.load();
     }
 
     /**
@@ -74,8 +104,7 @@ export default class FeedSubscriber {
      * @param {string} language - Language code.
      * @example load(&apos;nl&apos;);
      */
-    load(language) {
-        language = typeof language !== &apos;undefined&apos; ? language : this.currentLanguage;
+    load(language = this.currentLanguage) {
         ZeeguuRequests.get(config.RECOMMENDED_FEED_ENDPOINT + &apos;/&apos; + language,
                                 {}, this._loadFeedOptions.bind(this));
         this.currentLanguage = language;
@@ -94,6 +123,14 @@ export default class FeedSubscriber {
      */
     getCurrentLanguage() {
         return this.currentLanguage;
+    }
+
+    /**
+     * Sets the current language that user is studying (based on zeeguu settings).
+     * @param {string} langauge - The language code.
+     */
+    _setCurrentLanguage(language) {
+        this.currentLanguage = language;
     }
 
     /**

@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -55,8 +58,19 @@ import config from &apos;../config&apos;;
 import ZeeguuRequests from &apos;../zeeguuRequests&apos;;
 import Cache from &apos;../Cache&apos;;
 import NoFeedTour from &apos;./NoFeedTour&apos;;
+import UserActivityLogger from &apos;../UserActivityLogger&apos;;
+import &apos;loggly-jslogger&apos;;
 
-const KEY_MAP_FEED_ARTICLE = &quot;feed_article_map&quot;;
+const KEY_MAP_FEED_ARTICLE = &apos;feed_article_map&apos;;
+const USER_EVENT_CLICKED_ARTICLE = &apos;OPEN ARTICLE&apos;;
+
+/* Setup remote logging. */
+let logger = new LogglyTracker();
+logger.push({
+    &apos;logglyKey&apos;: config.LOGGLY_TOKEN,
+    &apos;sendConsoleErrors&apos; : true,
+    &apos;tag&apos; : &apos;ArticleList&apos;
+});
 
 /**
  * Manages a list of article links, stores them in {@link Cache} if possible.
@@ -133,7 +147,7 @@ export default class ArticleList {
      */
     _renderArticleLinks(subscription, articleLinks) {
         if (articleLinks.length &lt; 1)
-            console.log(&quot;No articles for &quot; + subscription.title + &quot;.&quot;);
+            logger.push(&quot;No articles for &quot; + subscription.title + &quot;.&quot;);
 
         let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
         for (let i = 0; i &lt; articleLinks.length; i++) {
@@ -149,24 +163,30 @@ export default class ArticleList {
                 articleIcon: subscription.image_url
             };
             let element = Mustache.render(template, templateAttributes);
+
             $(config.HTML_ID_ARTICLELINK_LIST).append(element);
         }
 
-        // Make the link expand on click, then redirect to the article.
-        $(config.HTML_CLASS_ARTICLELINK).one(&apos;click&apos;, function (event) {
+        $(config.HTML_CLASS_ARTICLELINK_FADEOUT).one(&apos;click&apos;, function (event) {
             if (!event.isPropagationStopped()) {
                 event.stopPropagation();
-                $(this).find(&apos;.articleLinkSummary&apos;).animate({
-                    height: &apos;+=30em&apos;
-                }, 200);
-                $(this).animate({
-                    scrollTop: $(this).offset().top,
-                    height: &apos;+=30em&apos;
+
+                // Animate the click on an article.
+                $(this).siblings().animate({
+                    opacity: 0.25,
                 }, 200, function () {
                     // Animation complete.
-                    location.href = $(this).attr(&apos;href&apos;);
+                    $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
-                $(config.HTML_CLASS_PAGECONTENT).fadeOut();
+
+                // Log that an article has been opened.
+                let url = $(this).find(&apos;a&apos;)[0].href;
+                let articleInfo = {};
+                url.split(&apos;?&apos;)[1].split(&apos;&amp;&apos;).forEach(function(part) {
+                    let item = part.split(&quot;=&quot;);
+                    articleInfo[item[0]] = decodeURIComponent(item[1]);
+                });
+                UserActivityLogger.log(USER_EVENT_CLICKED_ARTICLE, url, articleInfo);
             }
         });
     }

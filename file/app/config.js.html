@@ -34,11 +34,14 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Cache.js~Cache.html">Cache</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Notifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/Starer.js~Starer.html">Starer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/UserActivityLogger.js~UserActivityLogger.html">UserActivityLogger</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/zeeguuRequests.js~ZeeguuRequests.html">ZeeguuRequests</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">subscription</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/ArticleList.js~ArticleList.html">ArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/FeedSubscriber.js~FeedSubscriber.html">FeedSubscriber</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/LanguageMenu.js~LanguageMenu.html">LanguageMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/NoFeedTour.js~NoFeedTour.html">NoFeedTour</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/StarredArticleList.js~StarredArticleList.html">StarredArticleList</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/subscription/SubscriptionList.js~SubscriptionList.html">SubscriptionList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">translation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/AlterMenu.js~AlterMenu.html">AlterMenu</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/translation/Speaker.js~Speaker.html">Speaker</a></span></span></li>
@@ -60,7 +63,11 @@
     GET_FEEDS_BEING_FOLLOWED: &apos;/get_feeds_being_followed&apos;,
     GET_FEED_ITEMS: &apos;/get_feed_items_with_metrics&apos;,
     GET_AVAILABLE_LANGUAGES: &apos;/available_languages&apos;,
-    TO_LANGUAGE: &apos;en&apos;,
+    GET_LEARNED_LANGUAGE: &apos;/learned_language&apos;,
+    GET_NATIVE_LANGUAGE: &apos;/native_language&apos;,
+    POST_TRANSLATION_SUGGESTION: &apos;/contribute_translation&apos;,
+    POST_STAR_ARTICLE: &apos;/star_article&apos;,
+    POST_UNSTAR_ARTICLE: &apos;/unstar_article&apos;,
     ENTER_KEY: 13,
     TEXT_SUGGESTION: &apos;Suggestion...&apos;,
     TEXT_NO_ALTERNATIVES: &apos;Sorry, no alternatives.&apos;,
@@ -75,6 +82,8 @@
     HTML_ID_ARTICLE_TITLE: &apos;#articleTitle&apos;,
     HTML_ID_TOGGLECOPY: &apos;#toggle_copy&apos;,
     HTML_ID_TOGGLEUNDO: &apos;#toggle_undo&apos;,
+    HTML_ID_TOGGLELIKE: &apos;#toggle_like&apos;,
+    HTML_ID_TOGGLESTAR: &apos;#toggle_star&apos;,
     HTML_ID_ALTERMENU: &apos;#alterMenu&apos;,
     HTML_ID_ALTERMENUCONTAINER: &apos;#alterMenuContainer&apos;,
     HTML_ID_USER_ALTERNATIVE: &apos;#userAlternative&apos;,
@@ -85,15 +94,21 @@
     HTML_ID_ADDSUBSCRIPTION_TEMPLATE: &apos;#feedAddable-template&apos;,
     HTML_ID_ADDSUBSCRIPTION_LIST: &apos;#addableFeedList&apos;,
     HTML_ID_LANGUAGEOPTION_TEMPLATE: &apos;#languageOption-template&apos;,
-    HTML_CLASS_ARTICLELINK: &apos;.articleLinkEntry&apos;,
+    HTML_ID_ADD_SUBSCRIPTION_DIALOG_TEMPLATE: &apos;#add-subscription-dialog-template&apos;,
+    HTML_CLASS_ARTICLELINK_FADEOUT: &apos;.fadeoutOnClick&apos;,
+    HTML_CLASS_ARTICLELINK_ENTRY: &apos;.articleLinkEntry&apos;,
     HTML_CLASS_LOADER: &apos;.loader&apos;,
+    HTML_CLASS_LOADING: &apos;.loading&apos;,
     HTML_CLASS_EMPTY_PAGE: &apos;.emptyPage&apos;,
     HTML_CLASS_PAGECONTENT: &apos;.page-content&apos;,
+    HTML_CLASS_CONTENTCONTAINER: &apos;.content-container&apos;,
     HTML_CLASS_TOUR: &apos;.tour&apos;,
     HTML_CLASS_WIGGLE: &apos;wiggle&apos;,
+    HTML_CLASS_FOCUSED: &apos;focused&apos;,
     CLASS_LOADING: &apos;loading&apos;,
     CLASS_NOSELECT: &apos;noselect&apos;,
-    EVENT_SUBSCRIPTION: &apos;subscription-list-loaded&apos;
+    EVENT_SUBSCRIPTION: &apos;subscription-list-loaded&apos;,
+    LOGGLY_TOKEN: &apos;306a94c3-68c2-4e6b-a95c-d52d7a11e279&apos;
 };
 </code></pre>
 
