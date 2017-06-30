@@ -2,7 +2,9 @@ import UserActivityLogger from '../UserActivityLogger';
 
 const USER_EVENT_TEXT_TO_SPEECH = 'SPEAK TEXT';
 
-/* Class that allows text to speech for supplied text and language. */
+/**
+ * Class that allows text to speech for supplied text and language.
+ */
 export default class Speaker {
     /**
      * Performs the speech synthesis of the supplied parameters.

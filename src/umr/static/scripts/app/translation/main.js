@@ -3,7 +3,7 @@ import config from '../config';
 import Translator from './Translator';
 import AlterMenu from './AlterMenu'
 import Speaker from './Speaker';
-import Starer from '../Starer';
+import Starer from './Starer';
 import UserActivityLogger from '../UserActivityLogger';
 
 import '../../../styles/mdl/material.min.js';
