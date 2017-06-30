@@ -3,27 +3,27 @@ The development of the Universal Multilingual Reader started off with the follow
 
 - Aim for a clear separation of concerns in order to improve modularity of the system.
 - Comprehensibility of the code.
-- Compatability amoung most modern web browsers and platforms.
+- Compatibility among most modern web browsers and platforms.
 - Fault tolerance.
 - Responsiveness.
 - The implementation should strive for efficiency and avoid redundancy.
 
-In the following sections, we will present how we tried to follow these goals.
+In the following sections, we will present how these goals are followed.
 
 ## Making modules
-[Ecmascript](https://en.wikipedia.org/wiki/ECMAScript) 2015 (ES2015) introduced a significant addition to the syntax that Javascript implements, among which, most important to us, are *modules*. However, current browser support for ES2015 is low: we do not have the luxury of only developing for the possible future where compatability might increase. To resolve this issue, transpilers like [Babel](https://babeljs.io/) exist: a program that converts next generation Javascript into current day, ubiquitously compatible, Javascript. 
+[ECMAscript](https://en.wikipedia.org/wiki/ECMAScript) 2015 (ES2015) introduced a significant addition to the syntax that Javascript implements, among which, most important to us, are *modules*. However, current browser support for ES2015 is low: we do not have the luxury of only developing for the possible future where compatability might increase. To resolve this issue, transpilers like [Babel](https://babeljs.io/) exist: a program that converts next generation Javascript into current day, ubiquitously compatible, Javascript. 
 
-[Webpack](https://webpack.js.org/) builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible file for each entrypoint and the css files used by it. Using Webpack we write all our code in the readable and modular ES2016 definition, define a `main.js` for every package as an entry point, and then transpile it into four single files (2 JavaScript, 2 CSS). These minified files can be included into our HTML documents, which allows the browser to invoke those files and allow them to perform their tasks.
+[Webpack](https://webpack.js.org/) builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible files for each package entrypoint and the css files used by it. Using Webpack we write all the code in the readable and modular ES2015 definition, define a `main.js` for every package as an entry point, and then transpile it into 4 single files (2 JavaScript, 2 CSS). These files can be included into our HTML documents, which allows the browser to invoke those files and allow them to perform their tasks.
 
-- `subscription.entry.MAJOR.MINOR.PATCH.js`
+- `subscription.MAJOR.MINOR.PATCH.js`
 - `subscription.MAJOR.MINOR.PATCH.css`
-- `translation.entry.MAJOR.MINOR.PATCH.js`
+- `translation.MAJOR.MINOR.PATCH.js`
 - `translation.MAJOR.MINOR.PATCH.css`
 
-[Semantic versioning](http://semver.org/) is applied to the naming of these files in order to prevent caching of outdated versions. This version is defined in the `package.json` configuration file.
+[Semantic versioning](http://semver.org/) is applied to the naming of these files in order to prevent caching of outdated versions. The version number is defined in the `package.json` configuration file.
 
 ## Design overview
-Using these tools, we will were able to define our system as follows:
+Using these tools, we are able to define the system as follows:
 
 ![Overview Diagram](asset/overview.png)
 
@@ -31,7 +31,7 @@ The Flask blueprint defines two endpoints that are accessible if the session key
 
 The root endpoint delivers the articles.html page on a valid GET request. This page defines the structure of the articles listing and the subscription menu, while all the styles and functionality is implemented by the package file which it invokes and the CSS it includes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
 
-The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all the structure of the article listing, while all the styles and functionality (like tap-and-translate) are implemented by the package file which it invokes and the CSS it includes. 
+The **/article** endpoint takes as its arguments the article that the user decides to read. Optionally, the language of the article and whether it is a starred article can be supplied as parameters as well. After the article is processed it is delivered, embedded into the article.html page. This page defines all the structure of the article listing, while all the styles and functionality (like tap-and-translate) are implemented by the package file that it invokes and the CSS that it includes. 
 
 Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: `ZeeguuRequests`. The `Notifier` class (used to notify users of special circumstances) and the `UserActivityLogger` (used to log user activities on the Zeeguu server) are shared for similar reasons.
 
@@ -44,7 +44,7 @@ The subscription package allows for modifying the user's feeds and listing the a
 ### Translation
 ![Translation UML](asset/translation.png)
 
-The translation package allows for translating context that is wrapped with the custom html tags ('zeeguu'). The translation is the result of **Translator** interfacing with the Zeeguu API via the **ZeeguuRequests**. The **AlterMenu** serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation. Moreover, it gives the user the possibility to suggest his own version of translation. The context, subject for translation, is also available for text to speech functionality. This is achieved with the **Speaker** class, which contains uses an utterance object, for which parameters such as language and text are supplied upon text to speech request. The **UndoStack** provides undo functionality to the reading page, reflected onto the translated words. It is used to save the state of the content page and the changes made to it onto a stack, from which the previous state can then be retrieved and set up.
+The translation package allows for translating context that is wrapped with the custom html tags ('zeeguu'). The translation is the result of **Translator** interfacing with the Zeeguu API via the **ZeeguuRequests**. The **Translator** has also the responsiblity to merge consecutively translated words into a single translation request. The **AlterMenu** serves as a display for the available alternative translations from a request. It has the functionality to update the currently set (visible) translation, with the one chosen from its underlying list. Moreover, it gives the user the possibility to suggest his own version of translation. It also uses the **Notifier** in order to inform the user whenever there are no available alternatives. The context, subject for translation, is also available for text to speech functionality. This is achieved with the **Speaker** class, which uses an utterance object, for which parameters such as language and text are supplied upon text to speech request. The **UndoStack** provides undo functionality to the reading page, reflected onto the translated words. It is used to save the state of the page content and the changes made to it, before each translation request, onto a stack, from which the previous state can then be retrieved and set up. Additionaly, the **Starer** class offers the posibility to mark and unmark an article as 'starred', which gets saved in a separate list on Zeeguu that is then later retrieved by the **Subscription** package. 
 
 ### ZeeguuRequests
 ![Subscription UML](asset/ZeeguuRequests.png)
