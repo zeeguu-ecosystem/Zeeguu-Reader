@@ -54,10 +54,16 @@ export default class Starer {
         this._toggleIcon();
     }
 
+    /**
+     * Toggles the internal state of this class between true and false.
+     */
     _toggleState() {
         this.on = (this.on ? false : true);
     }
 
+    /**
+     * Toggles the icon of the star by adding or removing a class representing OFF.
+     */
     _toggleIcon() {
         $(HTML_ID_TOGGLESTAR).children().each(function() {
             $(this).toggleClass(OFF);
