@@ -27,13 +27,13 @@ Using these tools, we will were able to define our system as follows:
 
 ![Overview Diagram](asset/overview.png)
 
-The Flask server defines two endpoints accessible if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. 
+The Flask blueprint defines two endpoints that are accessible if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. 
 
-The root endpoint delivers the articles.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, while all the functionality is implemented by the package which it invokes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
+The root endpoint delivers the articles.html page on a valid GET request. This page defines the structure of the articles listing and the subscription menu, while all the styles and functionality is implemented by the package files which it invokes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
 
-The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing, while all the functionality (like tap-and-translate) is implemented by the package which it invokes. 
+The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all the structure of the article listing, while all the styles and functionality (like tap-and-translate) are implemented by the package which it invokes. 
 
-Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: `ZeeguuRequests`.
+Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: `ZeeguuRequests`. The `Notifier` class (used to notify users of special circumstances) and the `UserActivityLogger` (used to log user activities on the Zeeguu server) are shared for similar reasons.
 
 ## In more detail
 ### Subscription
