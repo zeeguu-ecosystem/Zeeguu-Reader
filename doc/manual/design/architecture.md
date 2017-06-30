@@ -13,23 +13,27 @@ In the following sections, we will present how we tried to follow these goals.
 ## Making modules
 [Ecmascript](https://en.wikipedia.org/wiki/ECMAScript) 2015 (ES2015) introduced a significant addition to the syntax that Javascript implements, among which, most important to us, are *modules*. However, current browser support for ES2015 is low: we do not have the luxury of only developing for the possible future where compatability might increase. To resolve this issue, transpilers like [Babel](https://babeljs.io/) exist: a program that converts next generation Javascript into current day, ubiquitously compatible, Javascript. 
 
-[Webpack](https://webpack.js.org/) builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible file for each entrypoint. Using Webpack we write all our code in the readable and modular ES2016 definition, define a `main.js` for every package as an entry point, and then transpile it to two single files. These minified files can be included into our HTML documents, which can invoke the files to allow them to perform their tasks.
+[Webpack](https://webpack.js.org/) builds on top of Babel, which allows you to generate a single (neatly minified) backwards compatible file for each entrypoint and the css files used by it. Using Webpack we write all our code in the readable and modular ES2016 definition, define a `main.js` for every package as an entry point, and then transpile it into four single files (2 JavaScript, 2 CSS). These minified files can be included into our HTML documents, which allows the browser to invoke those files and allow them to perform their tasks.
 
-- `subscription.entry.js`.
-- `translation.entry.js`.
+- `subscription.entry.MAJOR.MINOR.PATCH.js`
+- `subscription.MAJOR.MINOR.PATCH.css`
+- `translation.entry.MAJOR.MINOR.PATCH.js`
+- `translation.MAJOR.MINOR.PATCH.css`
+
+[Semantic versioning](http://semver.org/) is applied to the naming of these files in order to prevent caching of outdated versions. This version is defined in the `package.json` configuration file.
 
 ## Design overview
 Using these tools, we will were able to define our system as follows:
 
 ![Overview Diagram](asset/overview.png)
 
-The Flask server defines two endpoints accessible if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. 
+The Flask blueprint defines two endpoints that are accessible if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. 
 
-The root endpoint delivers the articles.html page on a valid GET request. This page defines all styles and structure of the articles listing and the subscription menu, while all the functionality is implemented by the package which it invokes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
+The root endpoint delivers the articles.html page on a valid GET request. This page defines the structure of the articles listing and the subscription menu, while all the styles and functionality is implemented by the package file which it invokes and the CSS it includes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
 
-The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all styles and structure of the article listing, while all the functionality (like tap-and-translate) is implemented by the package which it invokes. 
+The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all the structure of the article listing, while all the styles and functionality (like tap-and-translate) are implemented by the package file which it invokes and the CSS it includes. 
 
-Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: `ZeeguuRequests`.
+Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: `ZeeguuRequests`. The `Notifier` class (used to notify users of special circumstances) and the `UserActivityLogger` (used to log user activities on the Zeeguu server) are shared for similar reasons.
 
 ## In more detail
 ### Subscription
@@ -47,6 +51,11 @@ The translation package allows for translating context that is wrapped with the 
 
 The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST and GET endpoints to communicate with. Communication is handled asynchronously to force responsiveness of the application. Thus, server reply messages need to be handled by a callback method that you supply yourselves.
 
+## UserActivityLogger
+![UserActivityLogger UML](asset/UserActivityLogger.png)
+
+Zeeguu provides an endpoint to log events along with their associated data. To ensure proper logging, the UserActitivtyLogger further abstracts this endpoint into a method call of the name `log`. The provided name given to an event is automatically prefixed with "UMR - ", in order to distinquish our logs from other services logging their activities.
+
 ### Cache
 ![Subscription UML](asset/Cache.png)
 
@@ -54,4 +63,5 @@ The Cache class abstracts the implementation of storing user data locally. It al
 
 ### Notifier
 ![Notifier UML](asset/Notifier.png)
-The Notifier class binds itself to a document element that is capable of showing small pop-up messages at the bottom of the screen. It will ignore notification requests when they are identical to the currently displayed message, in order to reduce spamming the user with redundant information.
+
+The Notifier class relies on the precense of a MDL document element that is capable of showing small pop-up messages at the bottom of the screen. It will ignore notification requests when they are identical to the currently displayed message, in order to reduce spamming the user with redundant information.
