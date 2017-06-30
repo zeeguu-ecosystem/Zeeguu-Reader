@@ -20,7 +20,7 @@ In the following sections, we will present how we tried to follow these goals.
 - `translation.entry.MAJOR.MINOR.PATCH.js`
 - `translation.MAJOR.MINOR.PATCH.css`
 
-Semantic versioning is applied to the naming of these files in order to prevent caching of outdated versions. This version is defined in the `package.json` configuration file.
+[Semantic versioning](http://semver.org/) is applied to the naming of these files in order to prevent caching of outdated versions. This version is defined in the `package.json` configuration file.
 
 ## Design overview
 Using these tools, we will were able to define our system as follows:
@@ -29,9 +29,9 @@ Using these tools, we will were able to define our system as follows:
 
 The Flask blueprint defines two endpoints that are accessible if the session key is stored in a cookie. If this session is not found, the server redirects the user to the Zeeguu login page. 
 
-The root endpoint delivers the articles.html page on a valid GET request. This page defines the structure of the articles listing and the subscription menu, while all the styles and functionality is implemented by the package files which it invokes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
+The root endpoint delivers the articles.html page on a valid GET request. This page defines the structure of the articles listing and the subscription menu, while all the styles and functionality is implemented by the package file which it invokes and the CSS it includes. The subscription package makes use of the Cache class in order to store article listings locally, but Caching is not specific to this package.
 
-The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all the structure of the article listing, while all the styles and functionality (like tap-and-translate) are implemented by the package which it invokes. 
+The **/article** endpoint takes as its arguments the article that the user decides to read, processes the article, and then delivers it included with the article.html page on a valid GET request. This page defines all the structure of the article listing, while all the styles and functionality (like tap-and-translate) are implemented by the package file which it invokes and the CSS it includes. 
 
 Both packages share a need to contact the Zeeguu API upon specific data requests. Thus the functionality that provides the system with that ability, has been abstracted into a common class: `ZeeguuRequests`. The `Notifier` class (used to notify users of special circumstances) and the `UserActivityLogger` (used to log user activities on the Zeeguu server) are shared for similar reasons.
 
@@ -51,6 +51,11 @@ The translation package allows for translating context that is wrapped with the 
 
 The ZeeguuRequest class hides how we communicate with Zeeguu and gives both POST and GET endpoints to communicate with. Communication is handled asynchronously to force responsiveness of the application. Thus, server reply messages need to be handled by a callback method that you supply yourselves.
 
+## UserActivityLogger
+![UserActivityLogger UML](asset/UserActivityLogger.png)
+
+Zeeguu provides an endpoint to log events along with their associated data. To ensure proper logging, the UserActitivtyLogger further abstracts this endpoint into a method call of the name `log`. The provided name given to an event is automatically prefixed with "UMR - ", in order to distinquish our logs from other services logging their activities.
+
 ### Cache
 ![Subscription UML](asset/Cache.png)
 
@@ -58,4 +63,5 @@ The Cache class abstracts the implementation of storing user data locally. It al
 
 ### Notifier
 ![Notifier UML](asset/Notifier.png)
-The Notifier class binds itself to a document element that is capable of showing small pop-up messages at the bottom of the screen. It will ignore notification requests when they are identical to the currently displayed message, in order to reduce spamming the user with redundant information.
+
+The Notifier class relies on the precense of a MDL document element that is capable of showing small pop-up messages at the bottom of the screen. It will ignore notification requests when they are identical to the currently displayed message, in order to reduce spamming the user with redundant information.
