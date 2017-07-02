@@ -1,14 +1,17 @@
 import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
-import ZeeguuRequests from '../zeeguuRequests';
 import Cache from '../Cache';
 import NoFeedTour from './NoFeedTour';
 import UserActivityLogger from '../UserActivityLogger';
 import 'loggly-jslogger';
+import ZeeguuRequests from '../zeeguuRequests';
+import {GET_FEED_ITEMS} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
 const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
+const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
+const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -48,7 +51,7 @@ export default class ArticleList {
             } else {
                 $(config.HTML_CLASS_LOADER).show();
                 let callback = (articleLinks) => this._loadArticleLinks(subscription, articleLinks);
-                ZeeguuRequests.get(config.GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
+                ZeeguuRequests.get(GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
             }
         }
     }
@@ -57,7 +60,7 @@ export default class ArticleList {
      * Remove all articles from the list.
      */
     clear() {
-        $(config.HTML_ID_ARTICLELINK_LIST).empty();
+        $(HTML_ID_ARTICLE_LINK_LIST).empty();
     }
 
     /**
@@ -95,7 +98,7 @@ export default class ArticleList {
         if (articleLinks.length < 1)
             logger.push("No articles for " + subscription.title + ".");
 
-        let template = $(config.HTML_ID_ARTICLELINK_TEMPLATE).html();
+        let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
             let templateAttributes = {
@@ -110,7 +113,7 @@ export default class ArticleList {
             };
             let element = Mustache.render(template, templateAttributes);
 
-            $(config.HTML_ID_ARTICLELINK_LIST).append(element);
+            $(HTML_ID_ARTICLE_LINK_LIST).append(element);
         }
 
         $(config.HTML_CLASS_ARTICLELINK_FADEOUT).one('click', function (event) {

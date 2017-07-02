@@ -1,9 +1,20 @@
 import $ from 'jquery'
 import Mustache from 'mustache';
 import config from '../config';
-import ZeeguuRequests from '../zeeguuRequests';
 import Notifier from '../Notifier';
 import 'loggly-jslogger';
+import UserActivityLogger from '../UserActivityLogger';
+import ZeeguuRequests from '../zeeguuRequests';
+import {GET_FEEDS_BEING_FOLLOWED} from '../zeeguuRequests';
+import {FOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
+import {UNFOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
+
+
+const HTML_ID_SUBSCRIPTION_LIST = '#subscriptionList';
+const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template';
+const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
+const USER_EVENT_FOLLOWED_FEED = 'FOLLOW FEED';
+const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW FEED';
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -19,11 +30,10 @@ logger.push({
  */
 export default class SubscriptionList {
     /**
-     * Initialise an empty {@link Map} of feeds and a {@link Notifier} to notify the user of failures.
+     * Initialise an empty {@link Map} of feeds.
      */
     constructor() {
         this.feedList = new Map();
-        this.notifier = new Notifier();
     }
 
     /**
@@ -31,14 +41,14 @@ export default class SubscriptionList {
      *  Uses {@link ZeeguuRequests}.
      */
     load() {
-        ZeeguuRequests.get(config.GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
+        ZeeguuRequests.get(GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
     };
 
     /**
      * Remove all feeds from the list, clear {@link ArticleList} as well.
      */
     clear() {
-        $(config.HTML_ID_SUBSCRIPTION_LIST).empty();
+        $(HTML_ID_SUBSCRIPTION_LIST).empty();
     };
 
     /**
@@ -57,7 +67,6 @@ export default class SubscriptionList {
      * @param {Object[]} data - List containing the feeds the user is subscribed to.
      */
     _loadSubscriptions(data) {
-        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         for (let i = 0; i < data.length; i++) {
             this._addSubscription(data[i]);
         }
@@ -73,16 +82,16 @@ export default class SubscriptionList {
         if (this.feedList.has(feed.id))
             return;
 
-        let template = $(config.HTML_ID_SUBSCRIPTION_TEMPLATE).html();
+        let template = $(HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         let subscription = $(Mustache.render(template, feed));
-        let removeButton = $(subscription.find(".removeButton"));
+        let removeButton = $(subscription.find(HTML_CLASS_REMOVE_BUTTON));
         let _unfollow = this._unfollow.bind(this);
         removeButton.click(function(feed) {
             return function () {
                 _unfollow(feed);
             };
         }(feed));
-        $(config.HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+        $(HTML_ID_SUBSCRIPTION_LIST).append(subscription);
         this.feedList.set(feed.id, feed);
     }
 
@@ -92,9 +101,10 @@ export default class SubscriptionList {
      * @param {Object} feed - Data of the particular feed to subscribe to.
      */
     follow(feed) {
+        UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, feed.id, feed);
         this._addSubscription(feed);
         let callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
-        ZeeguuRequests.post(config.FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
+        ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
     }
 
     /**
@@ -108,7 +118,7 @@ export default class SubscriptionList {
         if (reply === "OK") {
             this._changed();
         } else {
-            this.notifier.notify("Network Error - Could not follow " + feed.title + ".");
+            Notifier.notify("Network Error - Could not follow " + feed.title + ".");
             logger.push("Could not follow '" + feed.title + "'. Server reply: \n" + reply);
         }
     }
@@ -119,9 +129,10 @@ export default class SubscriptionList {
      * @param {Object} feed - Data of the particular feed to unfollow.
      */
     _unfollow(feed) {
+        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, feed.id, feed);
         this._remove(feed);
         let callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
-        ZeeguuRequests.get(config.UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
+        ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
     }
 
     /**
@@ -135,7 +146,7 @@ export default class SubscriptionList {
         if (reply === "OK") {
             this._changed();
         } else {
-            this.notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
+            Notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
             logger.push("Could not unfollow '" + feed.title + "'. Server reply: \n" + reply);
         }
     }

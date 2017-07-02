@@ -1,33 +1,46 @@
 import $ from 'jquery';
 import config from '../config';
 import Mustache from 'mustache';
+import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
+import {GET_AVAILABLE_LANGUAGES} from '../zeeguuRequests';
+
+
+const HTML_ID_LANGUAGE_OPTION_LIST = '#languageOptionList';
+const HTML_ID_LANGUAGE_OPTION_TEMPLATE = '#languageOption-template';
+const USER_EVENT_SET_LANGUAGE = 'SET LANGUAGE';
 
 /**
  * Retrieves the available languages of Zeeguu and fills
  * the {@link FeedSubscriber}'s dialog with these options.
  */
 export default class LanguageMenu {
+
+    /**
+     * Bind this instance to the associated {@link FeedSubscriber}.
+     * @param {FeedSubscriber} feedSubscriber - List of non-subscribed feeds to update.
+     */
+    constructor(feedSubscriber) {
+        this.feedSubscriber = feedSubscriber;
+    }
+
     /**
      * Load the available languages for the dialog.
      * Uses {@link ZeeguuRequests}.
-     * @param {FeedSubscriber} feedSubscriber - List of non-subscribed feeds to update.
      */
-    load(feedSubscriber) {
-        let callback = ((data) => this._loadLanguageOptions(data, feedSubscriber)).bind(this);
-        ZeeguuRequests.get(config.GET_AVAILABLE_LANGUAGES, {}, callback);
+    load() {
+        ZeeguuRequests.get(GET_AVAILABLE_LANGUAGES, {}, this._loadLanguageOptions.bind(this));
     }
 
     /**
      * Generates all the available language options as buttons in the dialog.
      * Callback function from the zeeguu request.
      * @param {string} data - JSON string of an array of language codes.
-     * @param {FeedSubscriber} feedSubscriber - List of non-subscribed feeds to update.
      */
-    _loadLanguageOptions(data, feedSubscriber)
+    _loadLanguageOptions(data)
     {
         let options = JSON.parse(data);
-        let template = $(config.HTML_ID_LANGUAGEOPTION_TEMPLATE).html();
+        let template = $(HTML_ID_LANGUAGE_OPTION_TEMPLATE).html();
         options.sort();
         for (let i=0; i < options.length; ++i)
         {
@@ -35,14 +48,17 @@ export default class LanguageMenu {
                 languageOptionCode: options[i]
             };
             let languageOption = $(Mustache.render(template, languageOptionData));
+            let feedSubscriber = this.feedSubscriber;
             languageOption.on('click', function () {
+                let language = $(this).attr('id');
+                UserActivityLogger.log(USER_EVENT_SET_LANGUAGE, language, data);
                 feedSubscriber.clear();
-                feedSubscriber.load($(this).attr('id'));
+                feedSubscriber.load(language);
                 $(this).siblings().removeClass(config.HTML_CLASS_FOCUSED);
                 $(this).addClass(config.HTML_CLASS_FOCUSED);
             });
-            $("#languageOptionList").append(languageOption);
+            $(HTML_ID_LANGUAGE_OPTION_LIST).append(languageOption);
         }
-        $('#' + feedSubscriber.getCurrentLanguage()).addClass(config.HTML_CLASS_FOCUSED);
+        $('#' + this.feedSubscriber.getCurrentLanguage()).addClass(config.HTML_CLASS_FOCUSED);
     }
 };

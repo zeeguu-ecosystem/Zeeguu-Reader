@@ -1,13 +1,17 @@
 import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
+import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
+import {GET_STARRED_ARTICLES} from '../zeeguuRequests';
+import {POST_UNSTAR_ARTICLE} from '../zeeguuRequests';
 
-const GET_STARRED_ARTICLES = '/get_starred_articles';
+
 const HTML_ID_EMPTY_STARRED_ARTICLE_LIST = '#emptyStarredArticleListImage';
 const HTML_ID_STARRED_ARTICLE_LIST = '#starredArticleList';
 const HTML_ID_STARRED_ARTICLELINK_TEMPLATE = '#starred-articleLink-template';
 const HTML_CLASS_CLEAR = '.clear';
+const USER_EVENT_CLICKED_ARTICLE = 'OPEN STARRED ARTICLE';
 
 /**
  * Retrieves and renders a list of starred articles.
@@ -39,9 +43,7 @@ export default class StarredArticleList {
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
                 articleLinkLanguage: articleLink.language,
-                articleLinkURL: articleLink.url,
-                articleSummary: '',
-                articleIcon: '/static/images/noAvatar.png'
+                articleLinkURL: articleLink.url
             };
             let element = Mustache.render(template, templateAttributes);
 
@@ -49,7 +51,7 @@ export default class StarredArticleList {
         }
 
         $(HTML_CLASS_CLEAR).on('click', function () {
-            ZeeguuRequests.post(config.POST_UNSTAR_ARTICLE, {url: this.dataset.href});
+            ZeeguuRequests.post(POST_UNSTAR_ARTICLE, {url: this.dataset.href});
             $(this).parent().parent().fadeOut(200, function () {
                 let remaining = ($(this).siblings(config.HTML_CLASS_ARTICLELINK_ENTRY)).length;
                 if (remaining === 0)
@@ -69,6 +71,7 @@ export default class StarredArticleList {
                     // Animation complete.
                     $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
+                UserActivityLogger.log(USER_EVENT_CLICKED_ARTICLE);
             }
         });
     }

@@ -1,8 +1,12 @@
 import $ from 'jquery';
 import config from '../config';
 import UndoStack from './UndoStack';
-import ZeeguuRequests from '../zeeguuRequests';
 import UserActivityLogger from '../UserActivityLogger';
+import ZeeguuRequests from '../zeeguuRequests';
+import {GET_NATIVE_LANGUAGE} from '../zeeguuRequests';
+import {GET_TRANSLATIONS_ENDPOINT} from '../zeeguuRequests';
+import {POST_TRANSLATION_SUGGESTION} from '../zeeguuRequests';
+
 
 const USER_EVENT_TRANSLATE = 'TRANSLATE TEXT';
 const USER_EVENT_UNDO_TRANSLATE = 'UNDO TEXT TRANSLATION';
@@ -19,7 +23,7 @@ export default class Translator {
     constructor() {
         this.undoStack = new UndoStack();
         this.connectivesSet = this._buildConnectivesSet();
-        ZeeguuRequests.get(config.GET_NATIVE_LANGUAGE, {}, function (language) {
+        ZeeguuRequests.get(GET_NATIVE_LANGUAGE, {}, function (language) {
             TO_LANGUAGE = language;
         }.bind(this));
     }
@@ -49,7 +53,7 @@ export default class Translator {
 
         let callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
-        ZeeguuRequests.post(config.GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
+        ZeeguuRequests.post(GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: text, context: context, url: url, title: title}, callback);
         
         UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: FROM_LANGUAGE});
@@ -77,7 +81,7 @@ export default class Translator {
         let translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
 
         // Launch Zeeguu request to supply translation suggestion.
-        ZeeguuRequests.post(config.POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
+        ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
                            {word: word, context: context, url: url, title: title, translation: translation});
 
         UserActivityLogger.log(USER_EVENT_SEND_SUGGESTION, word, 
