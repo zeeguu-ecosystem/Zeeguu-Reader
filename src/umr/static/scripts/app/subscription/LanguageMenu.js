@@ -1,12 +1,14 @@
 import $ from 'jquery';
 import config from '../config';
 import Mustache from 'mustache';
+import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_AVAILABLE_LANGUAGES} from '../zeeguuRequests';
 
 
 const HTML_ID_LANGUAGE_OPTION_LIST = '#languageOptionList';
 const HTML_ID_LANGUAGE_OPTION_TEMPLATE = '#languageOption-template';
+const USER_EVENT_SET_LANGUAGE = 'SET LANGUAGE';
 
 /**
  * Retrieves the available languages of Zeeguu and fills
@@ -48,8 +50,10 @@ export default class LanguageMenu {
             let languageOption = $(Mustache.render(template, languageOptionData));
             let feedSubscriber = this.feedSubscriber;
             languageOption.on('click', function () {
+                let language = $(this).attr('id');
+                UserActivityLogger.log(USER_EVENT_SET_LANGUAGE, language, data);
                 feedSubscriber.clear();
-                feedSubscriber.load($(this).attr('id'));
+                feedSubscriber.load(language);
                 $(this).siblings().removeClass(config.HTML_CLASS_FOCUSED);
                 $(this).addClass(config.HTML_CLASS_FOCUSED);
             });

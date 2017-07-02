@@ -3,6 +3,7 @@ import Mustache from 'mustache';
 import config from '../config';
 import Notifier from '../Notifier';
 import 'loggly-jslogger';
+import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_FEEDS_BEING_FOLLOWED} from '../zeeguuRequests';
 import {FOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
@@ -12,6 +13,8 @@ import {UNFOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
 const HTML_ID_SUBSCRIPTION_LIST = '#subscriptionList';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
+const USER_EVENT_FOLLOWED_FEED = 'FOLLOW FEED';
+const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW FEED';
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -98,6 +101,7 @@ export default class SubscriptionList {
      * @param {Object} feed - Data of the particular feed to subscribe to.
      */
     follow(feed) {
+        UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, feed.id, feed);
         this._addSubscription(feed);
         let callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
         ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
@@ -125,6 +129,7 @@ export default class SubscriptionList {
      * @param {Object} feed - Data of the particular feed to unfollow.
      */
     _unfollow(feed) {
+        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, feed.id, feed);
         this._remove(feed);
         let callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
         ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);

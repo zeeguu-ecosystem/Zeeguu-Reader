@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
+import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_STARRED_ARTICLES} from '../zeeguuRequests';
 import {POST_UNSTAR_ARTICLE} from '../zeeguuRequests';
@@ -10,6 +11,7 @@ const HTML_ID_EMPTY_STARRED_ARTICLE_LIST = '#emptyStarredArticleListImage';
 const HTML_ID_STARRED_ARTICLE_LIST = '#starredArticleList';
 const HTML_ID_STARRED_ARTICLELINK_TEMPLATE = '#starred-articleLink-template';
 const HTML_CLASS_CLEAR = '.clear';
+const USER_EVENT_CLICKED_ARTICLE = 'OPEN STARRED ARTICLE';
 
 /**
  * Retrieves and renders a list of starred articles.
@@ -69,6 +71,7 @@ export default class StarredArticleList {
                     // Animation complete.
                     $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
+                UserActivityLogger.log(USER_EVENT_CLICKED_ARTICLE);
             }
         });
     }

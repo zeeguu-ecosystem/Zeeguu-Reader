@@ -3,6 +3,7 @@ import Mustache from 'mustache';
 import config from '../config';
 import LanguageMenu from './LanguageMenu';
 import swal from 'sweetalert';
+import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_LEARNED_LANGUAGE} from '../zeeguuRequests';
 import {RECOMMENDED_FEED_ENDPOINT} from '../zeeguuRequests';
@@ -13,6 +14,7 @@ const HTML_ID_ADD_FEED_LIST = '#addableFeedList';
 const HTML_ID_FEED_TEMPLATE = '#feedAddable-template';
 const HTML_CLASS_SUBSCRIBE_BUTTON = ".subscribeButton";
 const HTML_CLASS_FEED_ICON = '.feedIcon';
+const USER_EVENT_OPENED_FEEDSUBSCRIBER = 'OPEN FEEDSUBSCRIBER';
 
 /**
  * Allows the user to add feed subscriptions.
@@ -26,7 +28,7 @@ export default class FeedSubscriber {
         this.subscriptionList = subscriptionList;
         this.languageMenu = new LanguageMenu(this);
         this.currentLanguage = 'nl'; // default
-        ZeeguuRequests.get(GET_LEARNED_LANGUAGE, {}, 
+        ZeeguuRequests.get(GET_LEARNED_LANGUAGE, {},
             function (lang) {
                 this.currentLanguage = lang;
             }.bind(this));
@@ -37,6 +39,7 @@ export default class FeedSubscriber {
      * Uses the sweetalert library.
      */
     open() {
+        UserActivityLogger.log(USER_EVENT_OPENED_FEEDSUBSCRIBER, this.currentLanguage);
         let template = $(HTML_ID_DIALOG_TEMPLATE).html();
         swal({
             title: 'Available Sources',
