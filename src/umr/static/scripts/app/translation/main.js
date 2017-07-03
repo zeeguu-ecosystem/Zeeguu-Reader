@@ -56,8 +56,16 @@ $(document).ready(function() {
     $(HTML_ID_TOGGLECOPY).click(function()
     {
         // Selection is disabled -> enable it.
-        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) enableToggleCopy();
-        else disableToggleCopy();
+        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) 
+        {
+            enableToggleCopy();
+            UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
+        }
+        else 
+        {
+            disableToggleCopy();
+            UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
+        }
     });
 
     /* When the undo is clicked, content page is replaced
@@ -132,7 +140,6 @@ function disableToggleCopy() {
         $(this).addClass(CLASS_NOSELECT);
     });
     $(HTML_ID_TOGGLECOPY).addClass(CLASS_MDL_BUTTON_DISABLED);
-    UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
 }
 
 /* Enable selection. */
@@ -141,7 +148,6 @@ function enableToggleCopy() {
         $(this).removeClass(CLASS_NOSELECT);
     });
     $(HTML_ID_TOGGLECOPY).removeClass(CLASS_MDL_BUTTON_DISABLED);
-    UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
 }
 
 function isToggledCopy() {
