@@ -1,3 +1,8 @@
+import UserActivityLogger from './UserActivityLogger';
+
+const EVENT_MISS = 'CACHE MISS';
+const EVENT_HIT = 'CACHE HIT';
+
 /**
  * Interface to the {@link Storage} features that allows for storing and retrieving of objects by marshalling them.
  */
@@ -38,8 +43,12 @@ export default class Cache {
         let object = null;
         if (this.isAvailable()) {
             object = sessionStorage.getItem(key);
-            if (object !== null)
+            if (object !== null) {
                 object = JSON.parse(object);
+                UserActivityLogger.log(EVENT_HIT, key, object);
+            } else {
+                UserActivityLogger.log(EVENT_MISS, key);
+            }
         }
         return object;
     }
