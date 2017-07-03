@@ -23,6 +23,7 @@ const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
 const USER_EVENT_DISABLE_COPY = 'DISABLE COPY';
 const USER_EVENT_CHANGE_ORIENTATION = 'CHANGE ORIENTATION';
 const USER_EVENT_LIKE_ARTICLE = 'LIKE ARTICLE';
+const USER_EVENT_EXIT_ARTICLE = 'ARTICLE CLOSED';
 
 const STAR_BORDER = 'star_border';
 
@@ -43,13 +44,28 @@ $(document).ready(function() {
     attachZeeguuListeners();
     setStarerState();
 
+    /* When the user leaves the article, log it as an event. */
+    window.onbeforeunload = function () {
+        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+        UserActivityLogger.log(USER_EVENT_EXIT_ARTICLE, url, {title: title});
+    };
+
     /* When the copy toggle is switched on,
      * copying is enabled and translation gets disabled and vice-versa. */
     $(HTML_ID_TOGGLECOPY).click(function()
     {
         // Selection is disabled -> enable it.
-        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) enableToggleCopy();
-        else disableToggleCopy();
+        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) 
+        {
+            enableToggleCopy();
+            UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
+        }
+        else 
+        {
+            disableToggleCopy();
+            UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
+        }
     });
 
     /* When the undo is clicked, content page is replaced
@@ -124,7 +140,6 @@ function disableToggleCopy() {
         $(this).addClass(CLASS_NOSELECT);
     });
     $(HTML_ID_TOGGLECOPY).addClass(CLASS_MDL_BUTTON_DISABLED);
-    UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
 }
 
 /* Enable selection. */
@@ -133,7 +148,6 @@ function enableToggleCopy() {
         $(this).removeClass(CLASS_NOSELECT);
     });
     $(HTML_ID_TOGGLECOPY).removeClass(CLASS_MDL_BUTTON_DISABLED);
-    UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
 }
 
 function isToggledCopy() {

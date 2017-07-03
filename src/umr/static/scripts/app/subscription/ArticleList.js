@@ -10,6 +10,8 @@ import {GET_FEED_ITEMS} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
 const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
+const EVENT_ARTICLES_CACHED = 'ARTICLES RETRIEVED FROM CACHE';
+const EVENT_ARTICLES_REQUESTED = 'ARTICLES REQUESTED FROM ZEEGUU';
 const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
 const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
 
@@ -48,10 +50,12 @@ export default class ArticleList {
             if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
                 let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
                 this._renderArticleLinks(subscription, articleLinks);
+                UserActivityLogger.log(EVENT_ARTICLES_CACHED, subscription.id);
             } else {
                 $(config.HTML_CLASS_LOADER).show();
                 let callback = (articleLinks) => this._loadArticleLinks(subscription, articleLinks);
                 ZeeguuRequests.get(GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
+                UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, subscription.id);
             }
         }
     }
