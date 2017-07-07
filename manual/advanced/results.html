@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">Installation</title>
+  <title data-ice="title">Advanced</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -127,23 +127,18 @@
   <div class="manual-breadcrumb-list">
     <a href="./manual/./index.html">Manual</a>
     <span>&#xBB;</span>
-    <span data-ice="title">Installation</span>
+    <span data-ice="title">Advanced</span>
   </div>
-  <div data-ice="content"><h1 id="how-to-build-and-run">How to Build and Run</h1>
-<h2 id="sources">Sources</h2>
-<p>All files needed to setup your own version of Zeeguu UMR can be cloned from this repository. The <strong>master</strong> branch contains the latest stable release, whilst <strong>development_core</strong> contains the in-development version.</p>
-<h2 id="setting-up-your-development-environment">Setting up your development environment</h2>
-<p>The sources include a small script called <code>dev_setup.sh</code>, which you should be able to execute on most UNIX compliant environments. It will try to install the needed packages, after which it will setup a virtual python environment consistent with <a href="https://virtualenvwrapper.readthedocs.io">virtualenv-wrapper</a> conventions. </p>
-<p>In the case your system does not allow for this shell script to do all the work for you, or you desire a more custom configuration, you should be able to look at the script and perform the listed tasks manually.</p>
-<h2 id="local-deployment">Local deployment</h2>
-<p>Before deployment, it is important to transpile and bundle our Ecmascript into the necessary entry-point files for Zeeguu UMR to run (refer to the Design documentation for information as to <em>why</em> this is done). If you managed to successfully setup your development environment, this should be as simple as running the command <code>webpack</code> in the root directory of this repository. The included configuration should take care of the rest.</p>
-<p>Local deployment of the Zeeguu UMR system consists of the deployment of a Flask app, which is a relatively straightforward procedure automated in the <code>dev_launch.sh</code> script. Executing this script will launch your Flask server on <code>yourIP:5000</code>, but this can be easily changed to any IP-address or port you desire.</p>
-<h2 id="remote-deployment">Remote deployment</h2>
-<h3 id="heroku">Heroku</h3>
-<p>There are many methods and services that allow you to launch Zeeguu UMR on a non-local network, but we chose for the <a href="https://www.heroku.com">Heroku Cloud Platform</a>. It provides a basic free hosting plan that is good enough for development build publishing. In their implementation, you can simply push your code-base to your server-associated repository, and it will be build and executed there automatically. </p>
-<p>If you intend to deploy on this platform as well, the repository has the required <em>Procfile</em> already included. In short: it simply runs <code>dev_launch.py</code>. The <code>package.json</code> is setup to trigger a webpack build call before this script is executed however.</p>
-<h3 id="flask-server">Flask server</h3>
-<p>The UMR reader can be build into a library containing the required blueprint by executing <code>setup.sh sdist</code> in your terminal from within the <code>src</code> folder. The generated <code>dist</code> folder will then contain a file called <code>umr-MAJOR.MINOR.PATCH.tar.gz</code>. Install this library if you desire to run UMR as part of a bigger Flask application.</p>
+  <div data-ice="content"><h1 id="statistics">Statistics</h1>
+<p>We gather large amounts of anonymised information about how our system is used, in order to improve the system.</p>
+<h2 id="heatmaps">Heatmaps</h2>
+<p>We use a service called Hotjar to analyse user behavior such as clicking and scrolling trough the content. Information like this can be layerd on top of itself to generate useful heatmaps such as can be seen below.</p>
+<h3 id="articles-page">Articles page</h3>
+<p><img src="./manual/asset/heatmap-articles.jpg" alt="Translation UML"></p>
+<p>This heatmap is based on 1064 individual clicks from 546 users.</p>
+<h3 id="article-page">Article page</h3>
+<p><img src="./manual/asset/heatmap-article.jpg" alt="Translation UML"></p>
+<p>This heatmap is based on 3734 individual clicks from 296 users.</p>
 </div>
 </div>
 </div>

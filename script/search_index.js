@@ -1,92 +1,176 @@
 window.esdocSearchIndex = [
   [
-    "./app/translation/altermenu.js~altermenu",
+    "zeeguu-umr/app/translation/altermenu.js~altermenu",
     "class/app/translation/AlterMenu.js~AlterMenu.html",
-    "<span>AlterMenu</span> <span class=\"search-result-import-path\">./app/translation/AlterMenu.js</span>",
+    "<span>AlterMenu</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/AlterMenu.js</span>",
     "class"
   ],
   [
-    "./app/subscription/articlelist.js~articlelist",
+    "zeeguu-umr/app/subscription/articlelist.js~articlelist",
     "class/app/subscription/ArticleList.js~ArticleList.html",
-    "<span>ArticleList</span> <span class=\"search-result-import-path\">./app/subscription/ArticleList.js</span>",
+    "<span>ArticleList</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/ArticleList.js</span>",
     "class"
   ],
   [
-    "./app/cache.js~cache",
+    "zeeguu-umr/app/cache.js~cache",
     "class/app/Cache.js~Cache.html",
-    "<span>Cache</span> <span class=\"search-result-import-path\">./app/Cache.js</span>",
+    "<span>Cache</span> <span class=\"search-result-import-path\">zeeguu-umr/app/Cache.js</span>",
     "class"
   ],
   [
-    "./app/subscription/feedsubscriber.js~feedsubscriber",
+    "zeeguu-umr/app/zeeguurequests.js~follow_feed_endpoint",
+    "variable/index.html#static-variable-FOLLOW_FEED_ENDPOINT",
+    "<span>FOLLOW_FEED_ENDPOINT</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/subscription/feedsubscriber.js~feedsubscriber",
     "class/app/subscription/FeedSubscriber.js~FeedSubscriber.html",
-    "<span>FeedSubscriber</span> <span class=\"search-result-import-path\">./app/subscription/FeedSubscriber.js</span>",
+    "<span>FeedSubscriber</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/FeedSubscriber.js</span>",
     "class"
   ],
   [
-    "./app/subscription/languagemenu.js~languagemenu",
+    "zeeguu-umr/app/zeeguurequests.js~get_available_languages",
+    "variable/index.html#static-variable-GET_AVAILABLE_LANGUAGES",
+    "<span>GET_AVAILABLE_LANGUAGES</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~get_feeds_being_followed",
+    "variable/index.html#static-variable-GET_FEEDS_BEING_FOLLOWED",
+    "<span>GET_FEEDS_BEING_FOLLOWED</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~get_feed_items",
+    "variable/index.html#static-variable-GET_FEED_ITEMS",
+    "<span>GET_FEED_ITEMS</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~get_learned_language",
+    "variable/index.html#static-variable-GET_LEARNED_LANGUAGE",
+    "<span>GET_LEARNED_LANGUAGE</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~get_native_language",
+    "variable/index.html#static-variable-GET_NATIVE_LANGUAGE",
+    "<span>GET_NATIVE_LANGUAGE</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~get_starred_articles",
+    "variable/index.html#static-variable-GET_STARRED_ARTICLES",
+    "<span>GET_STARRED_ARTICLES</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~get_translations_endpoint",
+    "variable/index.html#static-variable-GET_TRANSLATIONS_ENDPOINT",
+    "<span>GET_TRANSLATIONS_ENDPOINT</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/subscription/languagemenu.js~languagemenu",
     "class/app/subscription/LanguageMenu.js~LanguageMenu.html",
-    "<span>LanguageMenu</span> <span class=\"search-result-import-path\">./app/subscription/LanguageMenu.js</span>",
+    "<span>LanguageMenu</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/LanguageMenu.js</span>",
     "class"
   ],
   [
-    "./app/subscription/nofeedtour.js~nofeedtour",
+    "zeeguu-umr/app/subscription/nofeedtour.js~nofeedtour",
     "class/app/subscription/NoFeedTour.js~NoFeedTour.html",
-    "<span>NoFeedTour</span> <span class=\"search-result-import-path\">./app/subscription/NoFeedTour.js</span>",
+    "<span>NoFeedTour</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/NoFeedTour.js</span>",
     "class"
   ],
   [
-    "./app/notifier.js~notifier",
+    "zeeguu-umr/app/notifier.js~notifier",
     "class/app/Notifier.js~Notifier.html",
-    "<span>Notifier</span> <span class=\"search-result-import-path\">./app/Notifier.js</span>",
+    "<span>Notifier</span> <span class=\"search-result-import-path\">zeeguu-umr/app/Notifier.js</span>",
     "class"
   ],
   [
-    "./app/translation/speaker.js~speaker",
+    "zeeguu-umr/app/zeeguurequests.js~post_star_article",
+    "variable/index.html#static-variable-POST_STAR_ARTICLE",
+    "<span>POST_STAR_ARTICLE</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~post_translation_suggestion",
+    "variable/index.html#static-variable-POST_TRANSLATION_SUGGESTION",
+    "<span>POST_TRANSLATION_SUGGESTION</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~post_unstar_article",
+    "variable/index.html#static-variable-POST_UNSTAR_ARTICLE",
+    "<span>POST_UNSTAR_ARTICLE</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~post_user_activity_endpoint",
+    "variable/index.html#static-variable-POST_USER_ACTIVITY_ENDPOINT",
+    "<span>POST_USER_ACTIVITY_ENDPOINT</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/zeeguurequests.js~recommended_feed_endpoint",
+    "variable/index.html#static-variable-RECOMMENDED_FEED_ENDPOINT",
+    "<span>RECOMMENDED_FEED_ENDPOINT</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/translation/speaker.js~speaker",
     "class/app/translation/Speaker.js~Speaker.html",
-    "<span>Speaker</span> <span class=\"search-result-import-path\">./app/translation/Speaker.js</span>",
+    "<span>Speaker</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/Speaker.js</span>",
     "class"
   ],
   [
-    "./app/starer.js~starer",
-    "class/app/Starer.js~Starer.html",
-    "<span>Starer</span> <span class=\"search-result-import-path\">./app/Starer.js</span>",
+    "zeeguu-umr/app/translation/starer.js~starer",
+    "class/app/translation/Starer.js~Starer.html",
+    "<span>Starer</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/Starer.js</span>",
     "class"
   ],
   [
-    "./app/subscription/starredarticlelist.js~starredarticlelist",
+    "zeeguu-umr/app/subscription/starredarticlelist.js~starredarticlelist",
     "class/app/subscription/StarredArticleList.js~StarredArticleList.html",
-    "<span>StarredArticleList</span> <span class=\"search-result-import-path\">./app/subscription/StarredArticleList.js</span>",
+    "<span>StarredArticleList</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/StarredArticleList.js</span>",
     "class"
   ],
   [
-    "./app/subscription/subscriptionlist.js~subscriptionlist",
+    "zeeguu-umr/app/subscription/subscriptionlist.js~subscriptionlist",
     "class/app/subscription/SubscriptionList.js~SubscriptionList.html",
-    "<span>SubscriptionList</span> <span class=\"search-result-import-path\">./app/subscription/SubscriptionList.js</span>",
+    "<span>SubscriptionList</span> <span class=\"search-result-import-path\">zeeguu-umr/app/subscription/SubscriptionList.js</span>",
     "class"
   ],
   [
-    "./app/translation/translator.js~translator",
+    "zeeguu-umr/app/translation/translator.js~translator",
     "class/app/translation/Translator.js~Translator.html",
-    "<span>Translator</span> <span class=\"search-result-import-path\">./app/translation/Translator.js</span>",
+    "<span>Translator</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/Translator.js</span>",
     "class"
   ],
   [
-    "./app/translation/undostack.js~undostack",
+    "zeeguu-umr/app/zeeguurequests.js~unfollow_feed_endpoint",
+    "variable/index.html#static-variable-UNFOLLOW_FEED_ENDPOINT",
+    "<span>UNFOLLOW_FEED_ENDPOINT</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
+    "variable"
+  ],
+  [
+    "zeeguu-umr/app/translation/undostack.js~undostack",
     "class/app/translation/UndoStack.js~UndoStack.html",
-    "<span>UndoStack</span> <span class=\"search-result-import-path\">./app/translation/UndoStack.js</span>",
+    "<span>UndoStack</span> <span class=\"search-result-import-path\">zeeguu-umr/app/translation/UndoStack.js</span>",
     "class"
   ],
   [
-    "./app/useractivitylogger.js~useractivitylogger",
+    "zeeguu-umr/app/useractivitylogger.js~useractivitylogger",
     "class/app/UserActivityLogger.js~UserActivityLogger.html",
-    "<span>UserActivityLogger</span> <span class=\"search-result-import-path\">./app/UserActivityLogger.js</span>",
+    "<span>UserActivityLogger</span> <span class=\"search-result-import-path\">zeeguu-umr/app/UserActivityLogger.js</span>",
     "class"
   ],
   [
-    "./app/zeeguurequests.js~zeeguurequests",
+    "zeeguu-umr/app/zeeguurequests.js~zeeguurequests",
     "class/app/zeeguuRequests.js~ZeeguuRequests.html",
-    "<span>ZeeguuRequests</span> <span class=\"search-result-import-path\">./app/zeeguuRequests.js</span>",
+    "<span>ZeeguuRequests</span> <span class=\"search-result-import-path\">zeeguu-umr/app/zeeguuRequests.js</span>",
     "class"
   ],
   [
@@ -462,63 +546,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "app/notifier.js~notifier#constructor",
-    "class/app/Notifier.js~Notifier.html#instance-constructor-constructor",
-    "app/Notifier.js~Notifier#constructor",
-    "method"
-  ],
-  [
-    "app/notifier.js~notifier#lastmessage",
-    "class/app/Notifier.js~Notifier.html#instance-member-lastMessage",
-    "app/Notifier.js~Notifier#lastMessage",
-    "member"
-  ],
-  [
-    "app/notifier.js~notifier#notify",
-    "class/app/Notifier.js~Notifier.html#instance-method-notify",
-    "app/Notifier.js~Notifier#notify",
-    "method"
-  ],
-  [
-    "app/starer.js",
-    "file/app/Starer.js.html",
-    "app/Starer.js",
-    "file"
-  ],
-  [
-    "app/starer.js~starer#_toggleicon",
-    "class/app/Starer.js~Starer.html#instance-method-_toggleIcon",
-    "app/Starer.js~Starer#_toggleIcon",
-    "method"
-  ],
-  [
-    "app/starer.js~starer#_togglestate",
-    "class/app/Starer.js~Starer.html#instance-method-_toggleState",
-    "app/Starer.js~Starer#_toggleState",
-    "method"
-  ],
-  [
-    "app/starer.js~starer#constructor",
-    "class/app/Starer.js~Starer.html#instance-constructor-constructor",
-    "app/Starer.js~Starer#constructor",
-    "method"
-  ],
-  [
-    "app/starer.js~starer#on",
-    "class/app/Starer.js~Starer.html#instance-member-on",
-    "app/Starer.js~Starer#on",
-    "member"
-  ],
-  [
-    "app/starer.js~starer#setstate",
-    "class/app/Starer.js~Starer.html#instance-method-setState",
-    "app/Starer.js~Starer#setState",
-    "method"
-  ],
-  [
-    "app/starer.js~starer#toggle",
-    "class/app/Starer.js~Starer.html#instance-method-toggle",
-    "app/Starer.js~Starer#toggle",
+    "app/notifier.js~notifier.notify",
+    "class/app/Notifier.js~Notifier.html#static-method-notify",
+    "app/Notifier.js~Notifier.notify",
     "method"
   ],
   [
@@ -672,6 +702,18 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/subscription/languagemenu.js~languagemenu#constructor",
+    "class/app/subscription/LanguageMenu.js~LanguageMenu.html#instance-constructor-constructor",
+    "app/subscription/LanguageMenu.js~LanguageMenu#constructor",
+    "method"
+  ],
+  [
+    "app/subscription/languagemenu.js~languagemenu#feedsubscriber",
+    "class/app/subscription/LanguageMenu.js~LanguageMenu.html#instance-member-feedSubscriber",
+    "app/subscription/LanguageMenu.js~LanguageMenu#feedSubscriber",
+    "member"
+  ],
+  [
     "app/subscription/languagemenu.js~languagemenu#load",
     "class/app/subscription/LanguageMenu.js~LanguageMenu.html#instance-method-load",
     "app/subscription/LanguageMenu.js~LanguageMenu#load",
@@ -792,12 +834,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "app/subscription/subscriptionlist.js~subscriptionlist#notifier",
-    "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-member-notifier",
-    "app/subscription/SubscriptionList.js~SubscriptionList#notifier",
-    "member"
-  ],
-  [
     "app/subscription/subscriptionlist.js~subscriptionlist#refresh",
     "class/app/subscription/SubscriptionList.js~SubscriptionList.html#instance-method-refresh",
     "app/subscription/SubscriptionList.js~SubscriptionList#refresh",
@@ -876,12 +912,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "app/translation/altermenu.js~altermenu#notifier",
-    "class/app/translation/AlterMenu.js~AlterMenu.html#instance-member-notifier",
-    "app/translation/AlterMenu.js~AlterMenu#notifier",
-    "member"
-  ],
-  [
     "app/translation/altermenu.js~altermenu#open",
     "class/app/translation/AlterMenu.js~AlterMenu.html#instance-method-open",
     "app/translation/AlterMenu.js~AlterMenu#open",
@@ -903,6 +933,48 @@ window.esdocSearchIndex = [
     "app/translation/speaker.js~speaker#speak",
     "class/app/translation/Speaker.js~Speaker.html#instance-method-speak",
     "app/translation/Speaker.js~Speaker#speak",
+    "method"
+  ],
+  [
+    "app/translation/starer.js",
+    "file/app/translation/Starer.js.html",
+    "app/translation/Starer.js",
+    "file"
+  ],
+  [
+    "app/translation/starer.js~starer#_toggleicon",
+    "class/app/translation/Starer.js~Starer.html#instance-method-_toggleIcon",
+    "app/translation/Starer.js~Starer#_toggleIcon",
+    "method"
+  ],
+  [
+    "app/translation/starer.js~starer#_togglestate",
+    "class/app/translation/Starer.js~Starer.html#instance-method-_toggleState",
+    "app/translation/Starer.js~Starer#_toggleState",
+    "method"
+  ],
+  [
+    "app/translation/starer.js~starer#constructor",
+    "class/app/translation/Starer.js~Starer.html#instance-constructor-constructor",
+    "app/translation/Starer.js~Starer#constructor",
+    "method"
+  ],
+  [
+    "app/translation/starer.js~starer#on",
+    "class/app/translation/Starer.js~Starer.html#instance-member-on",
+    "app/translation/Starer.js~Starer#on",
+    "member"
+  ],
+  [
+    "app/translation/starer.js~starer#setstate",
+    "class/app/translation/Starer.js~Starer.html#instance-method-setState",
+    "app/translation/Starer.js~Starer#setState",
+    "method"
+  ],
+  [
+    "app/translation/starer.js~starer#toggle",
+    "class/app/translation/Starer.js~Starer.html#instance-method-toggle",
+    "app/translation/Starer.js~Starer#toggle",
     "method"
   ],
   [
