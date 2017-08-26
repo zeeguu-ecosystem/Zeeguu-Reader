@@ -27,7 +27,7 @@ then
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
     sudo apt-get install nodejs
     sudo npm install -g webpack
-    sudo npm install -g esdoc
+    sudo npm install -g esdoc@0.5.2
 else
     echo "Skipping apt-get install."
 fi
