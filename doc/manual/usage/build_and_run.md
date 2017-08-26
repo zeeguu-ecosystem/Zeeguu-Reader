@@ -1,6 +1,6 @@
 # How to Build and Run
 ## Sources
-All files needed to setup your own version of Zeeguu UMR can be cloned from this repository. The **master** branch contains the latest stable release, whilst **development_core** contains the in-development version.
+All files needed to setup your own version of Zeeguu UMR can be cloned from this repository. The **master** branch contains the latest stable release, whilst **development** contains the in-development version.
 
 ## Setting up your development environment
 The sources include a small script called `dev_setup.sh`, which you should be able to execute on most UNIX compliant environments. It will try to install the needed packages, after which it will setup a virtual python environment consistent with [virtualenv-wrapper](https://virtualenvwrapper.readthedocs.io) conventions. 
