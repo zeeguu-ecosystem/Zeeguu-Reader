@@ -1,3 +1,4 @@
+
 import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
@@ -102,16 +103,33 @@ export default class ArticleList {
         if (articleLinks.length < 1)
             logger.push("No articles for " + subscription.title + ".");
 
+        let colors = [
+            "#009934",
+            "#00BF41",
+            "#00C207",
+            "#33C600",
+            "#71CA00",
+            "#B1CE00",
+            "#f9f800",
+            "#E7CA00",
+            "#FFAC4C",
+            "#D57300",
+            "#D93400",
+            "#DD000D"
+        ];
+
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
+            let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty.normalized) * 100) / 10;
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
                 articleLinkURL: articleLink.url,
                 articleLinkFeedID: subscription.id,
                 articleLinkLanguage: subscription.language,
                 articleDifficultyDiscrete: articleLink.metrics.difficulty.discrete,
-                articleDifficulty: Math.round(parseFloat(articleLink.metrics.difficulty.normalized) * 100) / 10,
+                articleDifficulty: difficulty,
+                articleDifficultyColor: colors[Math.floor(difficulty)],
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: subscription.image_url
             };
@@ -144,3 +162,4 @@ export default class ArticleList {
         });
     }
 }
+
