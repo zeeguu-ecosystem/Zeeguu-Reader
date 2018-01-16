@@ -138,7 +138,7 @@ export default class ArticleList {
                 articleLinkLanguage: subscription.language,
                 articleDifficultyDiscrete: articleLink.metrics.difficulty.discrete,
                 articleDifficulty: difficulty,
-                articleDifficultyColor: _difficultyToColorMapping(difficulty),
+                articleDifficultyColor: this._difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: subscription.image_url
             };
