@@ -95,14 +95,12 @@ export default class ArticleList {
     }
 
     /**
-     * Generate all the article links from a particular feed.
-     * @param {Object} subscription - The feed the articles are from.
-     * @param {Object[]} articleLinks - List containing the articles for the feed.
+     *
+     * @param difficulty: double between 0 and 10
+     * @returns {string} difficulty color code
+     * @private
      */
-    _renderArticleLinks(subscription, articleLinks) {
-        if (articleLinks.length < 1)
-            logger.push("No articles for " + subscription.title + ".");
-
+    _difficultyToColorMapping(difficulty) {
         let colors = [
             "#009934",
             "#00BF41",
@@ -111,12 +109,23 @@ export default class ArticleList {
             "#71CA00",
             "#B1CE00",
             "#f9f800",
-            "#E7CA00",
             "#FFAC4C",
             "#D57300",
-            "#D93400",
             "#DD000D"
         ];
+        return colors[Math.floor(difficulty)]
+
+    }
+
+    /**
+     * Generate all the article links from a particular feed.
+     * @param {Object} subscription - The feed the articles are from.
+     * @param {Object[]} articleLinks - List containing the articles for the feed.
+     */
+    _renderArticleLinks(subscription, articleLinks) {
+        if (articleLinks.length < 1)
+            logger.push("No articles for " + subscription.title + ".");
+
 
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
@@ -129,7 +138,7 @@ export default class ArticleList {
                 articleLinkLanguage: subscription.language,
                 articleDifficultyDiscrete: articleLink.metrics.difficulty.discrete,
                 articleDifficulty: difficulty,
-                articleDifficultyColor: colors[Math.floor(difficulty)],
+                articleDifficultyColor: _difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: subscription.image_url
             };
