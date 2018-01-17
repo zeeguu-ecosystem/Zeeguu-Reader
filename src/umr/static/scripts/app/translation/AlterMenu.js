@@ -7,7 +7,7 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {POST_TRANSLATION_SUGGESTION} from '../zeeguuRequests';
 
 
-const HTML_ID_ALTERMENU = '#alterMenu';
+export const HTML_ID_ALTERMENU = '#alterMenu';
 const HTML_ID_ALTERMENUCONTAINER = '#alterMenuContainer';
 const TEXT_NO_ALTERNATIVES = 'Sorry, no alternatives.';
 const HTML_ID_USER_ALTERNATIVE = '#userAlternative';
