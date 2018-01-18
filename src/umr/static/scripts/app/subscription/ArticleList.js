@@ -106,12 +106,13 @@ export default class ArticleList {
             "#00BF41",
             "#00C207",
             "#33C600",
-            "#71CA00",
-            "#B1CE00",
+            "#aeca03",
+            "#ceca44",
             "#f9f800",
             "#FFAC4C",
             "#D57300",
-            "#DD000D"
+            "#cc3202",
+            "#ed000d"            
         ];
         return colors[Math.floor(difficulty)]
 
