@@ -4,6 +4,7 @@
 node_modules
 doc/dist
 src/dist
+src/build
 src/umr.egg-info
 src/umr/static/scripts/dist
 npm-debug.log
