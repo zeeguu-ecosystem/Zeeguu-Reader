@@ -6,6 +6,8 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {GET_NATIVE_LANGUAGE} from '../zeeguuRequests';
 import {GET_TRANSLATIONS_ENDPOINT} from '../zeeguuRequests';
 import {POST_TRANSLATION_SUGGESTION} from '../zeeguuRequests';
+import {HTML_ID_ALTERMENU} from "./AlterMenu";
+
 
 
 const USER_EVENT_TRANSLATE = 'TRANSLATE TEXT';
@@ -123,7 +125,7 @@ export default class Translator {
      */
     static _getContext(zeeguuTag) {
         let zeeguuParentClone = zeeguuTag.parentElement.cloneNode(true);        
-        $(zeeguuParentClone).find(config.HTML_ID_ALTERMENU).remove();
+        $(zeeguuParentClone).find(HTML_ID_ALTERMENU).remove();
         return zeeguuParentClone.textContent;
     }
 
