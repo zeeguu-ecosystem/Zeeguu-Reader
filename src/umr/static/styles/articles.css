@@ -130,7 +130,7 @@
 .wordCount
 {
   font-size: x-small;
-  color: lightsteelblue;
+  color: dimgray;
 }
 
 .linkLanguageIcon
@@ -175,7 +175,6 @@
   font-size: large;
   border:none;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
   vertical-align: middle;
