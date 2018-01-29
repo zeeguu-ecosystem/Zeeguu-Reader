@@ -112,7 +112,7 @@ export default class ArticleList {
             "#FFAC4C",
             "#D57300",
             "#cc3202",
-            "#ed000d"            
+            "#ed000d"
         ];
         return colors[Math.floor(difficulty)]
 
@@ -141,7 +141,8 @@ export default class ArticleList {
                 articleDifficulty: difficulty,
                 articleDifficultyColor: this._difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
-                articleIcon: subscription.image_url
+                articleIcon: subscription.image_url,
+                wordCount: articleLink.metrics.word_count
             };
             let element = Mustache.render(template, templateAttributes);
 
