@@ -127,6 +127,12 @@
   z-index: 1;
 }
 
+.wordCount
+{
+  font-size: x-small;
+  color: lightsteelblue;
+}
+
 .linkLanguageIcon
 {
   position: absolute;
