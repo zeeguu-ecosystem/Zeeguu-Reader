@@ -131,6 +131,7 @@
 {
   font-size: x-small;
   color: dimgray;
+  white-space:nowrap;
 }
 
 .linkLanguageIcon
