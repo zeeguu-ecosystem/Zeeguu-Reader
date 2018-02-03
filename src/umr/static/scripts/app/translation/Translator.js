@@ -49,9 +49,10 @@ export default class Translator {
         let tran = document.createElement(config.HTML_TRANSLATED);
 
         $(orig).text(text);
+        $(zeeguuTag).addClass("origtrans");
         $(zeeguuTag).addClass(config.CLASS_LOADING);
         $(tran).attr('chosen', tmp_trans);
-        $(zeeguuTag).empty().append(orig, tran);
+        $(zeeguuTag).empty().append(tran, orig);
 
         let callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
@@ -105,7 +106,7 @@ export default class Translator {
      * @param {Object[]} translations - A list of translations to be added to the given htmlTag content.
      */
     _setTranslations(zeeguuTag, translations) {
-        var tran = zeeguuTag.children[1];
+        var tran = zeeguuTag.children[0];
         translations = translations.translations;
         var transCount = Math.min(translations.length, 3);
         tran.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
@@ -153,7 +154,7 @@ export default class Translator {
             node.parentNode.removeChild(node);
         }
 
-        tmp_trans = tmp_trans.concat(' ' + '..'.repeat(padding_len) + ' ');
+        tmp_trans = tmp_trans.concat(' ' + '.'.repeat(padding_len) + ' ');
         connectives = '';
         node = zeeguuTag.nextSibling;
         while (node && this.connectivesSet.has(node.textContent.trim())) {
