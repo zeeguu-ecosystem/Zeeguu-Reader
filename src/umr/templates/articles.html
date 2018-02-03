@@ -118,9 +118,6 @@
 <script id="starred-articleLink-template" type="text/template">
 	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
 		<div class ="articleLinkHeader">
-			<div class="clear mdl-button mdl-js-button mdl-button--icon mdl-layout-icon headerElement" data-href="{% raw %}{{ articleLinkURL }}{% endraw %}">
-					<i class="material-icons">clear</i>
-			</div>
 			<a class="fadeoutOnClick articleLinkTitle headerElement" href="{{ url_for('umrblue.get_article') }}?articleStarred=True&articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
 				{% raw %}{{ articleLinkTitle }}{% endraw %}
 			</a>

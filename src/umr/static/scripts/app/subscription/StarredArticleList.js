@@ -38,7 +38,7 @@ export default class StarredArticleList {
         $(HTML_ID_EMPTY_STARRED_ARTICLE_LIST).hide();
 
         let template = $(HTML_ID_STARRED_ARTICLELINK_TEMPLATE).html();
-        for (let i = 0; i < articleLinks.length; i++) {
+        for (let i = articleLinks.length -1; i >= 0; i--) {
             let articleLink = articleLinks[i];
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
