@@ -131,7 +131,7 @@ export default class ArticleList {
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
-            let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty_fk) * 100) / 10;
+            let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
                 articleLinkURL: articleLink.url,
