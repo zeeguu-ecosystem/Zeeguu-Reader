@@ -44,8 +44,10 @@ export default class ArticleList {
      * @param {Map} subscriptions - The feeds to retrieve articles from.
      */
     load(subscriptions) {
-        if (subscriptions.size < 1)
+        if (subscriptions.size < 1) {
             this.noFeedTour.show();
+            return;
+        }
         else
             this.noFeedTour.hide();
 
