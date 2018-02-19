@@ -8,7 +8,7 @@ import NoFeedTour from './NoFeedTour';
 import UserActivityLogger from '../UserActivityLogger';
 import 'loggly-jslogger';
 import ZeeguuRequests from '../zeeguuRequests';
-import {GET_FEED_ITEMS} from '../zeeguuRequests';
+import {GET_RECOMMENDED_ARTICLES} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
 const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
@@ -34,6 +34,7 @@ export default class ArticleList {
      */
     constructor() {
         this.noFeedTour = new NoFeedTour();
+        this.articlesOnPage = 42;
     }
 
     /**
@@ -48,17 +49,17 @@ export default class ArticleList {
         else
             this.noFeedTour.hide();
 
-        for (const subscription of subscriptions.values()) {
-            if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id]) {
-                let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription.id];
-                this._renderArticleLinks(subscription, articleLinks);
-                UserActivityLogger.log(EVENT_ARTICLES_CACHED, subscription.id);
-            } else {
-                $(config.HTML_CLASS_LOADER).show();
-                let callback = (articleLinks) => this._loadArticleLinks(subscription, articleLinks);
-                ZeeguuRequests.get(GET_FEED_ITEMS + '/' + subscription.id, {}, callback);
-                UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, subscription.id);
-            }
+        let subscription_combo_hash = Array.from(subscriptions.keys()).join(".")
+
+        if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription_combo_hash]) {
+            let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription_combo_hash];
+            this._renderArticleLinks(articleLinks);
+            UserActivityLogger.log(EVENT_ARTICLES_CACHED, subscription_combo_hash);
+        } else {
+            $(config.HTML_CLASS_LOADER).show();
+            let callback = (articleLinks) => this._loadArticleLinks(articleLinks, subscription_combo_hash);
+            ZeeguuRequests.get(GET_RECOMMENDED_ARTICLES + '/' + this.articlesOnPage, {}, callback);
+            UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
         }
     }
 
@@ -83,15 +84,15 @@ export default class ArticleList {
      * @param {Object} subscription - The feed the articles are from.
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
-    _loadArticleLinks(subscription, articleLinks) {
-        this._renderArticleLinks(subscription, articleLinks);
+    _loadArticleLinks(articleLinks, subscription_combo_hash) {
+        this._renderArticleLinks(articleLinks);
         $(config.HTML_CLASS_LOADER).fadeOut('slow');
 
         // Cache the article links.
         let feedMap = {};
         if (Cache.has(KEY_MAP_FEED_ARTICLE))
             feedMap = Cache.retrieve(KEY_MAP_FEED_ARTICLE);
-        feedMap[subscription.id] = articleLinks;
+        feedMap[subscription_combo_hash] = articleLinks;
         Cache.store(KEY_MAP_FEED_ARTICLE, feedMap);
     }
 
@@ -124,7 +125,7 @@ export default class ArticleList {
      * @param {Object} subscription - The feed the articles are from.
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
-    _renderArticleLinks(subscription, articleLinks) {
+    _renderArticleLinks(articleLinks) {
 
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
