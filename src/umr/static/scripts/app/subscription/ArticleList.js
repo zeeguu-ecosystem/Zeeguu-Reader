@@ -125,9 +125,6 @@ export default class ArticleList {
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
     _renderArticleLinks(subscription, articleLinks) {
-        if (articleLinks.length < 1)
-            logger.push("No articles for " + subscription.title + ".");
-
 
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
@@ -138,12 +135,12 @@ export default class ArticleList {
                 articleLinkTitle: articleLink.title,
                 articleLinkPublished: publishedString,
                 articleLinkURL: articleLink.url,
-                articleLinkFeedID: subscription.id,
-                articleLinkLanguage: subscription.language,
+                articleLinkFeedID: articleLink.feedId,
+                articleLinkLanguage: articleLink.language,
                 articleDifficulty: difficulty,
                 articleDifficultyColor: this._difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
-                articleIcon: subscription.image_url,
+                articleIcon: articleLink.feed_image_url,
                 wordCount: articleLink.metrics.word_count
             };
             let element = Mustache.render(template, templateAttributes);
