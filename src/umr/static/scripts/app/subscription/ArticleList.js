@@ -3,6 +3,7 @@ import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
 import Cache from '../Cache';
+import moment from 'moment';
 import NoFeedTour from './NoFeedTour';
 import UserActivityLogger from '../UserActivityLogger';
 import 'loggly-jslogger';
@@ -131,9 +132,11 @@ export default class ArticleList {
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
             let articleLink = articleLinks[i];
+            var publishedString = moment.utc(articleLink.published).fromNow();
             let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
+                articleLinkPublished: publishedString,
                 articleLinkURL: articleLink.url,
                 articleLinkFeedID: subscription.id,
                 articleLinkLanguage: subscription.language,
