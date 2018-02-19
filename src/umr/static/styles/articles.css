@@ -256,3 +256,29 @@ body
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+
+
+/*
+
+BEGIN: Moving the drawer to the right
+====================================
+cf: https://stackoverflow.com/a/32539822/1200070
+
+*/
+
+.mdl-layout__drawer-button, .mdl-layout__drawer{
+    left: initial;
+    right: 0;
+}
+
+.mdl-layout__header-row {
+    padding-left: 10px;
+}
+
+/*
+
+END: Moving the drawer to the right
+====================================
+*/
+
+
