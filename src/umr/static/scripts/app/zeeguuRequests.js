@@ -4,15 +4,15 @@ const ZEEGUU_SERVER = 'https://zeeguu.unibe.ch/api';
 const ZEEGUU_SESSION = 'sessionID';
 
 /** Get a list of recommended feeds. */
-export const RECOMMENDED_FEED_ENDPOINT = '/interesting_feeds';
+export const RECOMMENDED_FEED_ENDPOINT = '/recommended_feeds';
 /** Follow a feed. */
-export const FOLLOW_FEED_ENDPOINT =  '/start_following_feed_with_id';
+export const FOLLOW_FEED_ENDPOINT =  '/start_following_feed';
 /** Stop following a feed. */
 export const UNFOLLOW_FEED_ENDPOINT = '/stop_following_feed';
 /** Get all possible translations available for a given piece of text. */
 export const GET_TRANSLATIONS_ENDPOINT = '/get_possible_translations';
 /** Get a list of all feeds followed by this user.  */
-export const GET_FEEDS_BEING_FOLLOWED = '/get_feeds_being_followed';
+export const GET_FEEDS_BEING_FOLLOWED = '/followed_feeds';
 /** Get all articles for a particular feed. */
 export const GET_FEED_ITEMS = '/get_feed_items_with_metrics';
 /** Get a list of available languages. */
