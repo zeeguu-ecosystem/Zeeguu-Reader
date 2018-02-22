@@ -134,6 +134,7 @@ export default class ArticleList {
             let articleLink = articleLinks[i];
             var publishedString = moment.utc(articleLink.published).fromNow();
             let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
+
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
                 articleLinkPublished: publishedString,
@@ -144,7 +145,10 @@ export default class ArticleList {
                 articleDifficultyColor: this._difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: articleLink.feed_image_url,
-                wordCount: articleLink.metrics.word_count
+                wordCount: articleLink.metrics.word_count,
+                articleLiked: articleLink.liked?"&articleLiked=True":"",
+                articleStarred: articleLink.starred,
+                articleOpened: articleLink.opened
             };
             let element = Mustache.render(template, templateAttributes);
 

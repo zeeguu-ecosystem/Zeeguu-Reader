@@ -23,6 +23,7 @@ const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
 const USER_EVENT_DISABLE_COPY = 'DISABLE COPY';
 const USER_EVENT_CHANGE_ORIENTATION = 'CHANGE ORIENTATION';
 const USER_EVENT_LIKE_ARTICLE = 'LIKE ARTICLE';
+const USER_EVENT_UNLIKE_ARTICLE = 'UNLIKE ARTICLE';
 const USER_EVENT_EXIT_ARTICLE = 'ARTICLE CLOSED';
 
 const STAR_BORDER = 'star_border';
@@ -88,7 +89,13 @@ $(document).ready(function() {
 
         let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
-        UserActivityLogger.log(USER_EVENT_LIKE_ARTICLE, url, {title: title});
+
+        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
+            UserActivityLogger.log(USER_EVENT_UNLIKE_ARTICLE, url, {title: title});
+        } else {
+            UserActivityLogger.log(USER_EVENT_LIKE_ARTICLE, url, {title: title});
+        }
+
     });
 
     /* Toggle listener for star button. */

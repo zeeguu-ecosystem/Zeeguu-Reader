@@ -18,10 +18,17 @@ def get_article():
     article_url = request.args['articleURL']
     print("User with session " + request.sessionID + " retrieved " + article_url)
 
-    return make_article(article_url, request.args.get('articleLanguage', None), request.args.get('articleStarred', False))
+    liked = request.args.get('articleLiked', False)
+    if liked == "False":
+        liked = False
+
+    return make_article(article_url,
+                        request.args.get('articleLanguage', None),
+                        request.args.get('articleStarred', False),
+                        liked)
 
 
-def make_article(url, language=None, starred=False):
+def make_article(url, language=None, starred=False, liked=False):
     """Create a neatly formatted translatable article html page.
     Keyword arguments:
     url      -- the url of the article
@@ -38,22 +45,29 @@ def make_article(url, language=None, starred=False):
 
     if not language:
         language = article.extractor.language
-    
-    title   = wrap_zeeguu_words(article.title)
+
+    title = wrap_zeeguu_words(article.title)
     authors = ', '.join(article.authors)
     content = add_paragraphs(article.text)
     content = wrap_zeeguu_words(content)
 
+    disabled_like_button_class = ""
+    if not liked:
+        disabled_like_button_class = "mdl-button--disabled"
+
     # Create our article using Soup.
-    soup = Soup(render_template('article.html', fromLanguage=language), 'html.parser')
+    soup = Soup(render_template('article.html',
+                                fromLanguage=language,
+                                disabledLikeButtonClass=disabled_like_button_class),
+                'html.parser')
     soup.find('span', {'id': 'articleURL'}).find('a')['href'] = url
     soup.find('div', {'id': 'articleContent'}).append(Soup(content, 'html.parser'))
 
     if authors:
-        soup.find('p',   {'id': 'articleInfo'}).append(Soup(' | By: ' + authors, 'html.parser'))
+        soup.find('p', {'id': 'articleInfo'}).append(Soup(' | By: ' + authors, 'html.parser'))
     if starred:
         star_border = soup.find('i', class_="material-icons star")
-        star_fill   = soup.find('i', class_="material-icons star off")
+        star_fill = soup.find('i', class_="material-icons star off")
         star_border['class'] = 'material-icons star off'
         star_fill['class'] = 'material-icons star'
 
