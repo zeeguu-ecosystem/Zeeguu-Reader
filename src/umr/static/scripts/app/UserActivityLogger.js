@@ -23,7 +23,7 @@ export default class UserActivityLogger {
         };
         ZeeguuRequests.post(
             POST_USER_ACTIVITY_ENDPOINT,
-            [event_information],
+            event_information,
             this._onReply);
     }
 
