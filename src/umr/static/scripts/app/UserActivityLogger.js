@@ -14,15 +14,17 @@ export default class UserActivityLogger {
      * @param {Object} extra_data - Optional additional information.
      */
     static log(event, value = '', extra_data = {}) {
-        let date = new Date();
-        let time = date.getUTCFullYear() + '-' + (date.getUTCMonth()+1) + '-' + date.getUTCDate()
-                 + 'T' + date.getUTCHours() + ':' + date.getUTCMinutes() + ':' + date.getUTCSeconds();
-        let event_information = {time: time,
-                    event: 'UMR - ' + event,
-                    value:value,
-                    extra_data: JSON.stringify(extra_data)
+
+        let event_information = {
+            time: new Date().toJSON(),
+            event: 'UMR - ' + event,
+            value: value,
+            extra_data: JSON.stringify(extra_data)
         };
-        ZeeguuRequests.post(POST_USER_ACTIVITY_ENDPOINT, event_information, this._onReply);
+        ZeeguuRequests.post(
+            POST_USER_ACTIVITY_ENDPOINT,
+            [event_information],
+            this._onReply);
     }
 
     /**
