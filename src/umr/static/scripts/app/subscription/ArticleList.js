@@ -1,4 +1,3 @@
-
 import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
@@ -11,7 +10,7 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {GET_RECOMMENDED_ARTICLES} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
-const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE';
+const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE FROM LIST';
 const EVENT_ARTICLES_CACHED = 'ARTICLES RETRIEVED FROM CACHE';
 const EVENT_ARTICLES_REQUESTED = 'ARTICLES REQUESTED FROM ZEEGUU';
 const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
@@ -21,8 +20,8 @@ const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
 let logger = new LogglyTracker();
 logger.push({
     'logglyKey': config.LOGGLY_TOKEN,
-    'sendConsoleErrors' : true,
-    'tag' : 'ArticleList'
+    'sendConsoleErrors': true,
+    'tag': 'ArticleList'
 });
 
 /**
@@ -34,7 +33,7 @@ export default class ArticleList {
      */
     constructor() {
         this.noFeedTour = new NoFeedTour();
-        this.articlesOnPage = 42;
+        this.articlesOnPage = 5;
     }
 
     /**
@@ -53,16 +52,26 @@ export default class ArticleList {
 
         let subscription_combo_hash = Array.from(subscriptions.keys()).join(".")
 
-        if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription_combo_hash]) {
-            let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription_combo_hash];
-            this._renderArticleLinks(articleLinks);
-            UserActivityLogger.log(EVENT_ARTICLES_CACHED, subscription_combo_hash);
-        } else {
-            $(config.HTML_CLASS_LOADER).show();
-            let callback = (articleLinks) => this._loadArticleLinks(articleLinks, subscription_combo_hash);
-            ZeeguuRequests.get(GET_RECOMMENDED_ARTICLES + '/' + this.articlesOnPage, {}, callback);
-            UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
-        }
+        // Feb 25: Disabled Cache. Server usually responds within a second
+        // and this way, we can sync the info about articles being starred / liked
+        // between the reader and the browser.
+        // Otherwise the cache would not be updated with the new state of
+        // the article having been starred unstarred liked / unliked / opened ... etc.
+        // A more advanced cache invalidation policty could only retrieve the
+        // new info from the article that was just opened... or maybe update the
+        // cache from the reader... but currently that's not easy because the
+        // two javascript scripts live in two different pages.
+
+        // if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription_combo_hash]) {
+        //     let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[subscription_combo_hash];
+        //     this._renderArticleLinks(articleLinks);
+        //     UserActivityLogger.log(EVENT_ARTICLES_CACHED, subscription_combo_hash);
+        // } else {
+        $(config.HTML_CLASS_LOADER).show();
+        let callback = (articleLinks) => this._loadArticleLinks(articleLinks, subscription_combo_hash);
+        ZeeguuRequests.get(GET_RECOMMENDED_ARTICLES + '/' + this.articlesOnPage, {}, callback);
+        UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
+        // }
     }
 
     /**
@@ -134,6 +143,7 @@ export default class ArticleList {
             let articleLink = articleLinks[i];
             var publishedString = moment.utc(articleLink.published).fromNow();
             let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
+
             let templateAttributes = {
                 articleLinkTitle: articleLink.title,
                 articleLinkPublished: publishedString,
@@ -144,7 +154,19 @@ export default class ArticleList {
                 articleDifficultyColor: this._difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: articleLink.feed_image_url,
-                wordCount: articleLink.metrics.word_count
+                wordCount: articleLink.metrics.word_count,
+
+                // This trick with the state of the article liked/starred
+                // being sent from the reader does not scale
+                // there is other type of info that the article reader
+                // might want to render... e.g. difficulty. it's silly
+                // to send this info via the URL to the server on which
+                // the reader resides. the reader should just get this
+                // info about the article straight from the API
+
+                articleLiked: articleLink.liked ? "&articleLiked=True" : "",
+                articleStarred: articleLink.starred ? "&articleStarred=True" : "",
+                articleOpened: articleLink.opened
             };
             let element = Mustache.render(template, templateAttributes);
 
@@ -166,7 +188,7 @@ export default class ArticleList {
                 // Log that an article has been opened.
                 let url = $(this).find('a')[0].href;
                 let articleInfo = {};
-                url.split('?')[1].split('&').forEach(function(part) {
+                url.split('?')[1].split('&').forEach(function (part) {
                     let item = part.split("=");
                     articleInfo[item[0]] = decodeURIComponent(item[1]);
                 });

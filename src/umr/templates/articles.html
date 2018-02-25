@@ -25,10 +25,13 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
   <header class="mdl-layout__header mdl-layout__header--transparent">
 	  <div class="mdl-layout__header-row">
-		  <div class="mdl-layout-spacer"></div>
+
 		  <a href="/whatnext" id = "return_home" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 			  <i class="material-icons">home_back</i>
 		  </a>
+
+          <div class="mdl-layout-spacer"></div>
+
 	  </div>
 	  <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
 		  <a href="#inbox" class="mdl-layout__tab is-active"><i class="material-icons inbox-icon">inbox</i></a>
@@ -92,7 +95,7 @@
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
 	<li class="fadeoutOnClick articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-		<a href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
+		<a href="{{ url_for('umrblue.get_article') }}?articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}{% raw %}{{ articleLiked }}{% endraw %}{% raw %}{{ articleStarred }}{% endraw %}">
 			<div class ="articleLinkHeader">
 				<div class="articleLinkImage headerElement">
 					<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
@@ -132,4 +135,5 @@
 
 <!-- Dialog window for adding a feed. -->
 {% include 'addFeedDialog.html' %}
+
 </HTML>
