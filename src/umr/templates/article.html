@@ -15,11 +15,6 @@
         })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
 	</script>
 
-	<script>
-		var FROM_LANGUAGE = '{{ fromLanguage }}';
-		var TO_LANGUAGE = 'en';
-	</script>
-
 	<!-- Include the translation package. -->
 	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/translation-0.8.1.css')}}">
 	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation-0.8.1.js')}}"></script>
@@ -41,8 +36,8 @@
 				<i class="material-icons">content_copy</i>
 			</button>
 			<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-				<i class="material-icons star">star_border</i>
-				<i class="material-icons star off">star</i>
+				<i id="star_border" class="material-icons star">star_border</i>
+				<i id="star_fill" class="material-icons star off">star</i>
 			</button>
 		</div>
  	</header>
@@ -62,7 +57,7 @@
 			</div>
 		</div>
 		<div id = "like_button">
-			<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect {{ disabledLikeButtonClass }}">
+			<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect ">
 				<i class="material-icons">thumb_up</i>
 			</button>
 		</div>

@@ -34,6 +34,9 @@ export const POST_USER_ACTIVITY_ENDPOINT = '/upload_user_activity_data';
 /** Get articles recommended by the server. */
 export const GET_RECOMMENDED_ARTICLES = '/get_recommended_articles';
 
+/** Info about a single article **/
+export const GET_USER_ARTICLE_INFO = '/get_user_article_info';
+
 /**
  * Abstracts request to the Zeeguu API.
  * @see https://www.zeeguu.unibe.ch

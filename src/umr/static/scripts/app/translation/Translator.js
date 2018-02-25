@@ -22,12 +22,11 @@ export default class Translator {
     /**
      * Initializes the undo manager.
      */
-    constructor() {
+    constructor(from_language, to_language) {
         this.undoStack = new UndoStack();
+        this.from_language = from_language;
         this.connectivesSet = this._buildConnectivesSet();
-        ZeeguuRequests.get(GET_NATIVE_LANGUAGE, {}, function (language) {
-            TO_LANGUAGE = language;
-        }.bind(this));
+        this.to_language = to_language;
     }
 
     /**
@@ -56,10 +55,10 @@ export default class Translator {
 
         let callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
-        ZeeguuRequests.post(GET_TRANSLATIONS_ENDPOINT + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
+        ZeeguuRequests.post(GET_TRANSLATIONS_ENDPOINT + '/' + this.from_language + '/' + this.to_language,
                            {word: text, context: context, url: url, title: title}, callback);
         
-        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: FROM_LANGUAGE});
+        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: this.from_language});
     }
 
     /**
@@ -69,7 +68,7 @@ export default class Translator {
         this.undoStack.undoState();
         let url = window.location.href;
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
-        UserActivityLogger.log(USER_EVENT_UNDO_TRANSLATE, '', {url: url, title: title, language: FROM_LANGUAGE});
+        UserActivityLogger.log(USER_EVENT_UNDO_TRANSLATE, '', {url: url, title: title, language: this.from_language});
     }
 
     /**
@@ -84,11 +83,11 @@ export default class Translator {
         let translation = $zeeguu.children(config.HTML_TRANSLATED).attr(config.HTML_ATTRIBUTE_SUGGESTION);
 
         // Launch Zeeguu request to supply translation suggestion.
-        ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
+        ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + this.from_language + '/' + this.to_language,
                            {word: word, context: context, url: url, title: title, translation: translation});
 
         UserActivityLogger.log(USER_EVENT_SEND_SUGGESTION, word, 
-                               {url: url, title: title, language: FROM_LANGUAGE, translation: translation});
+                               {url: url, title: title, language: this.from_language, translation: translation});
     }
 
     /**

@@ -24,8 +24,10 @@ export default class AlterMenu {
     /**
      * Initialize the control field for the state of the alter menu (i.e. open or closed).
      */
-    constructor() {
+    constructor(from_language, to_language) {
         this.menuOpen = false;
+        this.from_language = from_language;
+        this.to_language = to_language;
     }
 
     /**
@@ -83,7 +85,7 @@ export default class AlterMenu {
         let selected_from_predefined_choices = true;
 
         // Launch Zeeguu request to supply translation suggestion.
-        ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + FROM_LANGUAGE + '/' + TO_LANGUAGE,
+        ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + this.from_language + '/' + this.to_language,
                            {word: word, context: context, url: url, title: title, translation: translation, 
                             selected_from_predefined_choices: selected_from_predefined_choices});
     }

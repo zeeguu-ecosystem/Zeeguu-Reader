@@ -43,12 +43,12 @@ export default class Starer {
         if (this.on) {
             // Launch Zeeguu request to notify about unstarring of article by user.
             ZeeguuRequests.post(POST_UNSTAR_ARTICLE, {url: url});
-            UserActivityLogger.log(USER_EVENT_UNSTAR_ARTICLE, url, {title: title, language: FROM_LANGUAGE});
+            UserActivityLogger.log(USER_EVENT_UNSTAR_ARTICLE, url);
     
         } else { // it's off            
             // Launch Zeeguu request to notify about starring an article.
-            ZeeguuRequests.post(POST_STAR_ARTICLE, {url: url, title: title, language_id: FROM_LANGUAGE});
-            UserActivityLogger.log(USER_EVENT_STAR_ARTICLE, url, {title: title, language: FROM_LANGUAGE});
+            ZeeguuRequests.post(POST_STAR_ARTICLE, {url: url});
+            UserActivityLogger.log(USER_EVENT_STAR_ARTICLE, url);
         }
         this._toggleState();
         this._toggleIcon();

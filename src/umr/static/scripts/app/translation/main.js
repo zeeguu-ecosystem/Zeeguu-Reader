@@ -1,23 +1,23 @@
 import $ from 'jquery';
 import config from '../config';
+
 import Translator from './Translator';
 import AlterMenu from './AlterMenu'
 import Speaker from './Speaker';
 import Starer from './Starer';
 import UserActivityLogger from '../UserActivityLogger';
 
+import {GET_NATIVE_LANGUAGE, GET_USER_ARTICLE_INFO} from '../zeeguuRequests';
+
 import '../../../styles/mdl/material.min.js';
 import '../../../styles/mdl/material.min.css';
 import '../../../styles/article.css';
 import '../../../styles/material-icons.css';
+import ZeeguuRequests from "../../../../../build/lib/umr/static/scripts/app/zeeguuRequests";
 
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
 
-const translator = new Translator();
-const alterMenu = new AlterMenu();
-const speaker = new Speaker();
-const starer = new Starer();
 
 const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
 const USER_EVENT_DISABLE_COPY = 'DISABLE COPY';
@@ -30,17 +30,22 @@ const USER_EVENT_ARTICLE_FOCUS = 'ARTICLE FOCUSED';
 const USER_EVENT_ARTICLE_LOST_FOCUS = 'ARTICLE LOST FOCUS';
 
 
-const STAR_BORDER = 'star_border';
-
-
 const HTML_ID_TOGGLECOPY = '#toggle_copy';
 const HTML_ID_TOGGLEUNDO = '#toggle_undo';
 const HTML_ID_TOGGLELIKE = '#toggle_like';
 const HTML_ID_TOGGLESTAR = '#toggle_star';
 const CLASS_MDL_BUTTON_DISABLED = 'mdl-button--disabled';
-const CLASS_MATERIAL_STAR_OFF = '.material-icons.star.off';
 const CLASS_NOSELECT = 'noselect';
 const ENTER_KEY = 13;
+
+const starer = new Starer();
+const speaker = new Speaker();
+
+var translator;
+var alterMenu;
+var FROM_LANGUAGE;
+var TO_LANGUAGE;
+
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
@@ -48,9 +53,11 @@ $(document).ready(function () {
     // Disable selection by default.
     disableToggleCopy();
     attachZeeguuListeners();
-    setStarerState();
 
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+
+    initElementsRequiringLanguagesAndArticleInfo(url);
+
     UserActivityLogger.log(USER_EVENT_OPENED_ARTICLE, url, Date.now());
 
     /* When the user leaves the article, log it as an event. */
@@ -175,8 +182,34 @@ function isToggledCopy() {
     return !$(HTML_ID_TOGGLECOPY).hasClass(CLASS_MDL_BUTTON_DISABLED);
 }
 
-function setStarerState() {
-    starer.setState($(CLASS_MATERIAL_STAR_OFF).text() === STAR_BORDER);
+
+function initElementsRequiringLanguagesAndArticleInfo(url) {
+    ZeeguuRequests.get(GET_NATIVE_LANGUAGE, {}, function (language) {
+        TO_LANGUAGE = language;
+
+        ZeeguuRequests.post(GET_USER_ARTICLE_INFO, {url: url}, function (article_info) {
+            FROM_LANGUAGE = article_info.language;
+
+            translator = new Translator(FROM_LANGUAGE, TO_LANGUAGE);
+
+            alterMenu = new AlterMenu(FROM_LANGUAGE, TO_LANGUAGE)
+
+            if (article_info.starred) {
+                // the HTML for the starer component starts
+                // unstarred. thus it's sufficient to toggle it here
+                starer.toggle();
+                starer.setState(true);
+
+            }
+
+            if (!article_info.liked) {
+                $(HTML_ID_TOGGLELIKE).addClass(CLASS_MDL_BUTTON_DISABLED);
+            }
+
+        }.bind(this));
+
+    }.bind(this));
+
 }
 
 /* Attach Zeeguu tag click listener. */
