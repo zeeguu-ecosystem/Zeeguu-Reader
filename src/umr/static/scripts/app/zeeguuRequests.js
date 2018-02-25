@@ -31,6 +31,8 @@ export const POST_STAR_ARTICLE = '/star_article';
 export const POST_UNSTAR_ARTICLE = '/unstar_article';
 /** Post a user-activity event. */
 export const POST_USER_ACTIVITY_ENDPOINT = '/upload_user_activity_data';
+/** Get articles recommended by the server. */
+export const GET_RECOMMENDED_ARTICLES = '/get_recommended_articles';
 
 /**
  * Abstracts request to the Zeeguu API.

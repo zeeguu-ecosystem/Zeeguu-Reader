@@ -39,7 +39,12 @@
 
 .star-icon
 {
-  color: #ffc700;
+  color: #7c7b74;
+}
+
+.publishingTime {
+  color: #7c7b74;
+  font-size:small;
 }
 
 .articleLinkList
