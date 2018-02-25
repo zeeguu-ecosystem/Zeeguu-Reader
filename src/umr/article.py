@@ -18,13 +18,13 @@ def get_article():
     article_url = request.args['articleURL']
     print("User with session " + request.sessionID + " retrieved " + article_url)
 
-    liked = request.args.get('articleLiked', False)
-    if liked == "False":
-        liked = False
+    liked = request.args.get('articleLiked', False) is not False
+
+    starred = request.args.get('articleStarred', False) is not False
 
     return make_article(article_url,
                         request.args.get('articleLanguage', None),
-                        request.args.get('articleStarred', False),
+                        starred,
                         liked)
 
 
