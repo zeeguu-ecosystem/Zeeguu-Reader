@@ -1,3 +1,6 @@
+/* Script that binds listeners to html events, such that the
+ * correct object is called to handle it. */
+
 import $ from 'jquery';
 import config from '../config';
 
@@ -14,9 +17,6 @@ import '../../../styles/mdl/material.min.css';
 import '../../../styles/article.css';
 import '../../../styles/material-icons.css';
 import ZeeguuRequests from "../../../../../build/lib/umr/static/scripts/app/zeeguuRequests";
-
-/* Script that binds listeners to html events, such that the
- * correct object is called to handle it. */
 
 
 const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
