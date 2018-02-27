@@ -33,7 +33,7 @@ export default class ArticleList {
      */
     constructor() {
         this.noFeedTour = new NoFeedTour();
-        this.articlesOnPage = 5;
+        this.articlesOnPage = 21;
     }
 
     /**
