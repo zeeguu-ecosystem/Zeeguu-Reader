@@ -4,6 +4,7 @@ import config from '../config';
 import Cache from '../Cache';
 import moment from 'moment';
 import NoFeedTour from './NoFeedTour';
+import {difficultyToColorMapping} from './DifficultyColors'
 import UserActivityLogger from '../UserActivityLogger';
 import 'loggly-jslogger';
 import ZeeguuRequests from '../zeeguuRequests';
@@ -107,29 +108,7 @@ export default class ArticleList {
         Cache.store(KEY_MAP_FEED_ARTICLE, feedMap);
     }
 
-    /**
-     *
-     * @param difficulty: double between 0 and 10
-     * @returns {string} difficulty color code
-     * @private
-     */
-    _difficultyToColorMapping(difficulty) {
-        let colors = [
-            "#009934",
-            "#00BF41",
-            "#00C207",
-            "#33C600",
-            "#aeca03",
-            "#ceca44",
-            "#f9f800",
-            "#FFAC4C",
-            "#D57300",
-            "#cc3202",
-            "#ed000d"
-        ];
-        return colors[Math.floor(difficulty)]
 
-    }
 
     /**
      * Generate all the article links from a particular feed.
@@ -151,7 +130,7 @@ export default class ArticleList {
                 articleLinkFeedID: articleLink.feedId,
                 articleLinkLanguage: articleLink.language,
                 articleDifficulty: difficulty,
-                articleDifficultyColor: this._difficultyToColorMapping(difficulty),
+                articleDifficultyColor: difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: articleLink.feed_image_url,
                 wordCount: articleLink.metrics.word_count,
