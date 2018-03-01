@@ -21,14 +21,15 @@ let articleList = new ArticleList(subscriptionList);
 let feedSubscriber = new FeedSubscriber(subscriptionList);
 let starredArticleList = new StarredArticleList();
 
-document.addEventListener(config.EVENT_SUBSCRIPTION, function(e) {
+
+document.addEventListener(config.EVENT_SUBSCRIPTION, function (e) {
     articleList.clear();
     articleList.load(e.detail);
 });
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
-$(document).ready(function() {
+$(document).ready(function () {
     starredArticleList.load();
     subscriptionList.load();
     feedSubscriber.load();
@@ -43,3 +44,53 @@ $(document).ready(function() {
 function noAvatar(image) {
     image.src = noAvatarURL;
 }
+
+
+
+$(document).keydown(function (event) {
+
+    let highlighted_element = $("#articleLinkList").children(".highlightedArticle");
+
+    switch (event.key) {
+
+        case 'ArrowDown':
+        case 'j':
+            _select_next_article(highlighted_element, true);
+            break;
+
+        case 'ArrowUp':
+        case 'k':
+            _select_next_article(highlighted_element, false);
+            break;
+        case 'Enter':
+            window.location.href = highlighted_element.children("a")[0].href;
+            break;
+    }
+
+});
+
+function _select_next_article(highlighted_element, direction_forward) {
+
+    if (highlighted_element[0] == undefined) {
+        $("#articleLinkList").children(":first").toggleClass("highlightedArticle");
+    } else {
+
+        let new_higlight;
+
+        if (direction_forward) {
+            new_higlight = $("#articleLinkList").children(".highlightedArticle").next().next();
+        } else {
+            new_higlight = $("#articleLinkList").children(".highlightedArticle").prev().prev();
+        }
+        new_higlight.toggleClass("highlightedArticle");
+        highlighted_element.toggleClass("highlightedArticle");
+
+        // this does not work too nice when going up
+        // to look into this: https://stackoverflow.com/questions/6215779/scroll-if-element-is-not-visible#6216001
+        
+        new_higlight[0].scrollIntoView(false);
+
+    }
+}
+
+

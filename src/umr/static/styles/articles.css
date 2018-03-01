@@ -195,6 +195,12 @@
   border:none;
 }
 
+.highlightedArticle
+{
+  background-color: lightblue;
+}
+
+
 .articleLinkTitle::first-letter {
     font-size: 130%;
 }
