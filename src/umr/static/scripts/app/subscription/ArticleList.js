@@ -134,17 +134,6 @@ export default class ArticleList {
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: articleLink.feed_image_url,
                 wordCount: articleLink.metrics.word_count,
-
-                // This trick with the state of the article liked/starred
-                // being sent from the reader does not scale
-                // there is other type of info that the article reader
-                // might want to render... e.g. difficulty. it's silly
-                // to send this info via the URL to the server on which
-                // the reader resides. the reader should just get this
-                // info about the article straight from the API
-
-                articleLiked: articleLink.liked ? "&articleLiked=True" : "",
-                articleStarred: articleLink.starred ? "&articleStarred=True" : "",
                 articleOpened: articleLink.opened
             };
             let element = Mustache.render(template, templateAttributes);

@@ -30,10 +30,10 @@ const USER_EVENT_ARTICLE_FOCUS = 'ARTICLE FOCUSED';
 const USER_EVENT_ARTICLE_LOST_FOCUS = 'ARTICLE LOST FOCUS';
 
 
-const HTML_ID_TOGGLECOPY = '#toggle_copy';
-const HTML_ID_TOGGLEUNDO = '#toggle_undo';
-const HTML_ID_TOGGLELIKE = '#toggle_like';
-const HTML_ID_TOGGLESTAR = '#toggle_star';
+const HTML_ID_TOGGLE_COPY = '#toggle_copy';
+const HTML_ID_TOGGLE_UNDO = '#toggle_undo';
+const HTML_ID_TOGGLE_LIKE = '#toggle_like';
+const HTML_ID_TOGGLE_STAR = '#toggle_star';
 const CLASS_MDL_BUTTON_DISABLED = 'mdl-button--disabled';
 const CLASS_NOSELECT = 'noselect';
 const ENTER_KEY = 13;
@@ -69,7 +69,7 @@ $(document).ready(function () {
 
     /* When the copy toggle is switched on,
      * copying is enabled and translation gets disabled and vice-versa. */
-    $(HTML_ID_TOGGLECOPY).click(function () {
+    $(HTML_ID_TOGGLE_COPY).click(function () {
         // Selection is disabled -> enable it.
         if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
             enableToggleCopy();
@@ -83,7 +83,7 @@ $(document).ready(function () {
 
     /* When the undo is clicked, content page is replaced
      * with previous one in the stack and listeners are re-attached. */
-    $(HTML_ID_TOGGLEUNDO).click(function () {
+    $(HTML_ID_TOGGLE_UNDO).click(function () {
         if (alterMenu.isOpen()) {
             alterMenu.close();
             return;
@@ -94,7 +94,7 @@ $(document).ready(function () {
     });
 
     /* When the like button is clicked, set its background color. */
-    $(HTML_ID_TOGGLELIKE).click(function () {
+    $(HTML_ID_TOGGLE_LIKE).click(function () {
         $(this).toggleClass(CLASS_MDL_BUTTON_DISABLED);
 
         let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
@@ -109,7 +109,7 @@ $(document).ready(function () {
     });
 
     /* Toggle listener for star button. */
-    $(HTML_ID_TOGGLESTAR).click(function () {
+    $(HTML_ID_TOGGLE_STAR).click(function () {
         starer.toggle();
     });
 
@@ -167,7 +167,7 @@ function disableToggleCopy() {
     $("p").each(function () {
         $(this).addClass(CLASS_NOSELECT);
     });
-    $(HTML_ID_TOGGLECOPY).addClass(CLASS_MDL_BUTTON_DISABLED);
+    $(HTML_ID_TOGGLE_COPY).addClass(CLASS_MDL_BUTTON_DISABLED);
 }
 
 /* Enable selection. */
@@ -175,11 +175,11 @@ function enableToggleCopy() {
     $("p").each(function () {
         $(this).removeClass(CLASS_NOSELECT);
     });
-    $(HTML_ID_TOGGLECOPY).removeClass(CLASS_MDL_BUTTON_DISABLED);
+    $(HTML_ID_TOGGLE_COPY).removeClass(CLASS_MDL_BUTTON_DISABLED);
 }
 
 function isToggledCopy() {
-    return !$(HTML_ID_TOGGLECOPY).hasClass(CLASS_MDL_BUTTON_DISABLED);
+    return !$(HTML_ID_TOGGLE_COPY).hasClass(CLASS_MDL_BUTTON_DISABLED);
 }
 
 
@@ -203,7 +203,7 @@ function initElementsRequiringLanguagesAndArticleInfo(url) {
             }
 
             if (!article_info.liked) {
-                $(HTML_ID_TOGGLELIKE).addClass(CLASS_MDL_BUTTON_DISABLED);
+                $(HTML_ID_TOGGLE_LIKE).addClass(CLASS_MDL_BUTTON_DISABLED);
             }
 
         }.bind(this));
