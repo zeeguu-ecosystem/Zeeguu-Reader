@@ -46,7 +46,6 @@ function noAvatar(image) {
 }
 
 
-
 $(document).keydown(function (event) {
 
     let highlighted_element = $("#articleLinkList").children(".highlightedArticle");
@@ -69,6 +68,28 @@ $(document).keydown(function (event) {
 
 });
 
+function scrollToView(elem) {
+    var margin_of_error = 100;
+
+    var offset = elem.offset().top;
+    if (!elem.is(":visible")) {
+        elem.css({"visibility": "hidden"}).show();
+        var offset = elem.offset().top;
+        elem.css({"visibility": "", "display": ""});
+    }
+
+    var visible_area_start = $(window).scrollTop();
+    var visible_area_end = visible_area_start + window.innerHeight;
+
+    if (offset < visible_area_start + margin_of_error || offset > visible_area_end - margin_of_error) {
+        // Not in view so scroll to it
+        elem[0].scrollIntoView();
+        return false;
+    }
+    return true;
+}
+
+
 function _select_next_article(highlighted_element, direction_forward) {
 
     if (highlighted_element[0] == undefined) {
@@ -82,13 +103,16 @@ function _select_next_article(highlighted_element, direction_forward) {
         } else {
             new_higlight = $("#articleLinkList").children(".highlightedArticle").prev().prev();
         }
+
+        // we couldn't find a next or a previous...
+        if (new_higlight[0] == undefined) {
+            return;
+        }
+
         new_higlight.toggleClass("highlightedArticle");
         highlighted_element.toggleClass("highlightedArticle");
 
-        // this does not work too nice when going up
-        // to look into this: https://stackoverflow.com/questions/6215779/scroll-if-element-is-not-visible#6216001
-        
-        new_higlight[0].scrollIntoView(false);
+        scrollToView(new_higlight);
 
     }
 }
