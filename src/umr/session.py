@@ -1,7 +1,6 @@
 import functools
 import flask
 from flask import request
-from zeeguu import log
 
 ZEEGUU_LOGIN = "https://www.zeeguu.unibe.ch/login"
 
@@ -22,7 +21,6 @@ def with_session(view):
 
         if 'sessionID' in request.cookies:
             request.sessionID = request.cookies.get('sessionID')
-            log(request.url)
         else:
             return flask.redirect(ZEEGUU_LOGIN + '?next=' + request.url)
         return view(*args, **kwargs)
