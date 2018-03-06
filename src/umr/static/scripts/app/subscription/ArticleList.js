@@ -16,6 +16,7 @@ const EVENT_ARTICLES_CACHED = 'ARTICLES RETRIEVED FROM CACHE';
 const EVENT_ARTICLES_REQUESTED = 'ARTICLES REQUESTED FROM ZEEGUU';
 const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
 const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
+const ALREADY_OPENED_ARTICLE_CLASS = "alreadyOpenedArticle";
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -134,8 +135,9 @@ export default class ArticleList {
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: articleLink.feed_image_url,
                 wordCount: articleLink.metrics.word_count,
-                articleOpened: articleLink.opened
+                alreadyOpenedClass: articleLink.opened?ALREADY_OPENED_ARTICLE_CLASS:""
             };
+
             let element = Mustache.render(template, templateAttributes);
 
             $(HTML_ID_ARTICLE_LINK_LIST).append(element);

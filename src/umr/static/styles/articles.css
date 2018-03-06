@@ -94,9 +94,9 @@
   text-decoration:none;
 }
 
-.articleLinkEntry a:visited
+.articleLinkEntry a:visited, .alreadyOpenedArticle a
 {
-  color:grey !important;
+  color: #909090 !important;
 }
 
 .articleLinkHeader

@@ -94,7 +94,7 @@
 
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
-	<li class="fadeoutOnClick articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+	<li class="fadeoutOnClick articleLinkEntry  {% raw %}{{alreadyOpenedClass}}{% endraw %}" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
 		<a href="{{ url_for('umrblue.get_article') }}?articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
 			<div class ="articleLinkHeader">
 				<div class="articleLinkImage headerElement">
