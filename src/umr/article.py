@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as Soup
 from .session import with_session
 import re
 from .umr_blueprint import umrblue
+from zeeguu import log
 
 WORD_TAG = "zeeguu"
 
@@ -16,7 +17,7 @@ def get_article():
     and return a properly processed version of the article.
     """
     article_url = request.args['articleURL']
-    print("User with session " + request.sessionID + " retrieved " + article_url)
+    log("User with session " + request.sessionID + " retrieved " + article_url)
 
     return make_article(article_url)
 
@@ -25,7 +26,9 @@ def make_article(url):
     """
     Create a neatly formatted translatable article html page.
     """
+    log(url)
     article = Article(url=url)
+    log(article.title)
     article.download()
     article.parse()
 
