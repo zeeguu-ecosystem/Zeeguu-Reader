@@ -45,7 +45,13 @@ export default class Cache {
             object = sessionStorage.getItem(key);
             if (object !== null) {
                 object = JSON.parse(object);
-                UserActivityLogger.log(EVENT_HIT, key, object);
+
+                // this used to send also the cache contents...
+                // it was never used, and just a lot of info,
+                // especially in the values of the cache
+                // Now sending only the hashed keys ... just in
+                // case they will be needed sometime
+                UserActivityLogger.log(EVENT_HIT, key, Object.keys(object));
             } else {
                 UserActivityLogger.log(EVENT_MISS, key);
             }
