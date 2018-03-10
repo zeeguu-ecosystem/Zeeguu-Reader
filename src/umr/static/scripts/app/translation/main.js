@@ -196,7 +196,6 @@ function addParagraphs(text) {
 }
 
 function filterShit(text) {
-    console.log(text);
     text = text.replace(/^false/g,'');
     text = text.replace(/^true/g,'');
 
@@ -222,7 +221,9 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
             alterMenu = new AlterMenu(FROM_LANGUAGE, TO_LANGUAGE);
 
             // TITLE
-            $("#articleTitle").text(article_info.title);
+            let title_text = article_info.title;
+            title_text = wrapWordsInZeeguuTags(title_text);
+            $("#articleTitle").html(title_text);
 
             // AUTHORS
             $("#authors").text(article_info.authors);
