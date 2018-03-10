@@ -24,9 +24,7 @@ def make_article(url):
     """
     Create a neatly formatted translatable article html page.
     """
-    log(url)
     article = Article(url=url)
-    log(article.title)
     article.download()
     article.parse()
 

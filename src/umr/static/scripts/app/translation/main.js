@@ -187,13 +187,14 @@ function initElementsRequiringLanguagesAndArticleInfo(url) {
     ZeeguuRequests.get(GET_NATIVE_LANGUAGE, {}, function (language) {
         TO_LANGUAGE = language;
 
-        ZeeguuRequests.post(GET_USER_ARTICLE_INFO, {url: url}, function (article_info) {
+        ZeeguuRequests.get(GET_USER_ARTICLE_INFO, {url: url}, function (article_info) {
             FROM_LANGUAGE = article_info.language;
 
             translator = new Translator(FROM_LANGUAGE, TO_LANGUAGE);
 
             alterMenu = new AlterMenu(FROM_LANGUAGE, TO_LANGUAGE)
 
+            console.log(article_info);
             if (article_info.starred) {
                 // the HTML for the starer component starts
                 // unstarred. thus it's sufficient to toggle it here

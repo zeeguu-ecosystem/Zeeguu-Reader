@@ -15,27 +15,35 @@ export const GET_TRANSLATIONS_ENDPOINT = '/get_possible_translations';
 export const GET_FEEDS_BEING_FOLLOWED = '/followed_feeds';
 /** Get all articles for a particular feed. */
 export const GET_FEED_ITEMS = '/get_feed_items_with_metrics';
+
+
 /** Get a list of available languages. */
 export const GET_AVAILABLE_LANGUAGES = '/available_languages';
 /** Get which language the user is currently learning. */
 export const GET_LEARNED_LANGUAGE = '/learned_language';
 /** Get the native language of this user. */
 export const GET_NATIVE_LANGUAGE = '/native_language';
-/** Get all starred articles. */
-export const GET_STARRED_ARTICLES = '/get_starred_articles';
+
+
 /** Post a user-generated translation for a piece of text. */
 export const POST_TRANSLATION_SUGGESTION = '/contribute_translation';
-/** Post that the user starred an article. */
-export const POST_STAR_ARTICLE = '/star_article';
-/** Post that the user does not want the article starred. */
-export const POST_UNSTAR_ARTICLE = '/unstar_article';
+
 /** Post a user-activity event. */
 export const POST_USER_ACTIVITY_ENDPOINT = '/upload_user_activity_data';
+
+
+/** Get all starred or liked articles. */
+export const GET_STARRED_ARTICLES = '/user_articles/starred_or_liked';
+
 /** Get articles recommended by the server. */
-export const GET_RECOMMENDED_ARTICLES = '/get_recommended_articles';
+export const GET_RECOMMENDED_ARTICLES = '/user_articles/recommended';
+
 
 /** Info about a single article **/
-export const GET_USER_ARTICLE_INFO = '/get_user_article_info';
+export const GET_USER_ARTICLE_INFO = '/user_article';
+
+/** Updates the user article info **/
+export const POST_USER_ARTICLE = '/user_article';
 
 /**
  * Abstracts request to the Zeeguu API.
