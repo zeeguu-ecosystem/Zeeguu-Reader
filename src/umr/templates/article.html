@@ -32,7 +32,7 @@
 			<button id = "toggle_undo" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 				<i class="material-icons">undo</i>
 			</button>
-			<button id = "toggle_copy" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+			<button id = "toggle_copy" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon mdl-button--disabled">
 				<i class="material-icons">content_copy</i>
 			</button>
 			<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
@@ -50,14 +50,15 @@
 				<p class="title translatable">
 					<span id = "articleTitle"></span>
 				</p>
-				<p id="articleInfo">
-					<span id="articleURL">From: <a target="_blank">source</a></span>
+				<p id="articleInfo" style="display:none">
+					<span id="articleURL">From: <a href="{{ article_url }}" target="_blank">source</a></span>
+                    <span id="authors"></span>
 				</p>	
 				<div id="articleContent" class="translatable"></div><br />		
 			</div>
 		</div>
-		<div id = "like_button">
-			<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect ">
+		<div id = "like_button" style="display:none">
+			<button id="toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" >
 				<i class="material-icons">thumb_up</i>
 			</button>
 		</div>

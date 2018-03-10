@@ -31,6 +31,7 @@ const USER_EVENT_ARTICLE_LOST_FOCUS = 'ARTICLE LOST FOCUS';
 
 
 const HTML_ID_TOGGLE_COPY = '#toggle_copy';
+const HTML_ID_LIKE_BUTTON = '#like_button';
 const HTML_ID_TOGGLE_UNDO = '#toggle_undo';
 const HTML_ID_TOGGLE_LIKE = '#toggle_like';
 const HTML_ID_TOGGLE_STAR = '#toggle_star';
@@ -51,67 +52,72 @@ var TO_LANGUAGE;
  * bind all necessary listeners. */
 $(document).ready(function () {
     // Disable selection by default.
-    disableToggleCopy();
-    attachZeeguuListeners();
+
 
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
 
-    initElementsRequiringLanguagesAndArticleInfo(url);
+    initElementsRequiringLanguagesAndArticleInfo(url,
+        function () {
 
-    UserActivityLogger.log(USER_EVENT_OPENED_ARTICLE, url, Date.now());
-
-    /* When the user leaves the article, log it as an event. */
-    window.onbeforeunload = function () {
-        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
-        UserActivityLogger.log(USER_EVENT_EXIT_ARTICLE, url, {title: title});
-    };
-
-    /* When the copy toggle is switched on,
-     * copying is enabled and translation gets disabled and vice-versa. */
-    $(HTML_ID_TOGGLE_COPY).click(function () {
-        // Selection is disabled -> enable it.
-        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
-            enableToggleCopy();
-            UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
-        }
-        else {
             disableToggleCopy();
-            UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
-        }
-    });
+            attachZeeguuListeners();
 
-    /* When the undo is clicked, content page is replaced
-     * with previous one in the stack and listeners are re-attached. */
-    $(HTML_ID_TOGGLE_UNDO).click(function () {
-        if (alterMenu.isOpen()) {
-            alterMenu.close();
-            return;
-        }
-        $(config.HTML_ZEEGUUTAG).off();
-        translator.undoTranslate();
-        attachZeeguuListeners();
-    });
+            /* When the user leaves the article, log it as an event. */
+            window.onbeforeunload = function () {
+                let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+                let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+                UserActivityLogger.log(USER_EVENT_EXIT_ARTICLE, url, {title: title});
+            };
 
-    /* When the like button is clicked, set its background color. */
-    $(HTML_ID_TOGGLE_LIKE).click(function () {
-        $(this).toggleClass(CLASS_MDL_BUTTON_DISABLED);
+            /* When the copy toggle is switched on,
+             * copying is enabled and translation gets disabled and vice-versa. */
+            $(HTML_ID_TOGGLE_COPY).click(function () {
+                // Selection is disabled -> enable it.
+                if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
+                    enableToggleCopy();
+                    UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
+                }
+                else {
+                    disableToggleCopy();
+                    UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
+                }
+            });
 
-        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+            /* When the undo is clicked, content page is replaced
+             * with previous one in the stack and listeners are re-attached. */
+            $(HTML_ID_TOGGLE_UNDO).click(function () {
+                if (alterMenu.isOpen()) {
+                    alterMenu.close();
+                    return;
+                }
+                $(config.HTML_ZEEGUUTAG).off();
+                translator.undoTranslate();
+                attachZeeguuListeners();
+            });
 
-        if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
-            UserActivityLogger.log(USER_EVENT_UNLIKE_ARTICLE, url, {title: title});
-        } else {
-            UserActivityLogger.log(USER_EVENT_LIKE_ARTICLE, url, {title: title});
-        }
+            /* When the like button is clicked, set its background color. */
+            $(HTML_ID_TOGGLE_LIKE).click(function () {
+                $(this).toggleClass(CLASS_MDL_BUTTON_DISABLED);
 
-    });
+                let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+                let title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
-    /* Toggle listener for star button. */
-    $(HTML_ID_TOGGLE_STAR).click(function () {
-        starer.toggle();
-    });
+                if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
+                    UserActivityLogger.log(USER_EVENT_UNLIKE_ARTICLE, url, {title: title});
+                } else {
+                    UserActivityLogger.log(USER_EVENT_LIKE_ARTICLE, url, {title: title});
+                }
+
+            });
+
+            /* Toggle listener for star button. */
+            $(HTML_ID_TOGGLE_STAR).click(function () {
+                starer.toggle();
+            });
+
+            UserActivityLogger.log(USER_EVENT_OPENED_ARTICLE, url, Date.now());
+
+        });
 
 
 });
@@ -183,7 +189,20 @@ function isToggledCopy() {
 }
 
 
-function initElementsRequiringLanguagesAndArticleInfo(url) {
+function addParagraphs(text) {
+    text = '<p>' + text;
+    text = text.replace(/\n\n/g, '</p><p>');
+    return text;
+}
+
+function wrapWordsInZeeguuTags(text) {
+    text = text.replace(/([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_'’-]+)/g,
+        "<" + config.HTML_ZEEGUUTAG + ">$1</" + config.HTML_ZEEGUUTAG + ">");
+    return text;
+}
+
+
+function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) {
     ZeeguuRequests.get(GET_NATIVE_LANGUAGE, {}, function (language) {
         TO_LANGUAGE = language;
 
@@ -192,9 +211,20 @@ function initElementsRequiringLanguagesAndArticleInfo(url) {
 
             translator = new Translator(FROM_LANGUAGE, TO_LANGUAGE);
 
-            alterMenu = new AlterMenu(FROM_LANGUAGE, TO_LANGUAGE)
+            alterMenu = new AlterMenu(FROM_LANGUAGE, TO_LANGUAGE);
 
-            console.log(article_info);
+            // TITLE
+            $("#articleTitle").text(article_info.title);
+
+            // AUTHORS
+            $("#authors").text(article_info.authors);
+
+            // CONTENT
+            let text = wrapWordsInZeeguuTags(article_info.content);
+            text = addParagraphs(text);
+            $("#articleContent").html(text);
+
+            // STARRED
             if (article_info.starred) {
                 // the HTML for the starer component starts
                 // unstarred. thus it's sufficient to toggle it here
@@ -203,13 +233,27 @@ function initElementsRequiringLanguagesAndArticleInfo(url) {
 
             }
 
+            // LIKED
             if (!article_info.liked) {
                 $(HTML_ID_TOGGLE_LIKE).addClass(CLASS_MDL_BUTTON_DISABLED);
             }
 
+            // These things have to be hidden
+            // initially since otherwise they
+            // stand out while we wait for the
+            // text to arrive from the server.
+            // But now that the text is in, we
+            // can show them.
+            $(HTML_ID_LIKE_BUTTON).show();
+
+            $("#articleInfo").show();
+
+            functions_to_follow();
+
         }.bind(this));
 
     }.bind(this));
+
 
 }
 

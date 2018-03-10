@@ -15,11 +15,20 @@ def get_article():
     """Retrieve the supplied article link of the supplied language,
     and return a properly processed version of the article.
     """
+
     article_url = request.args['articleURL']
 
-    return make_article(article_url)
+    # return make_article(article_url)
+    # ^- commented out; used to be the old way of
+    # rendering part of the article content, but now
+    # the entire rendering is moved in Javascript...
+    # which kind of makes this endpoint obsolete...
+    # we should probably keep the template on the
+    # serverside in the first place...
+    return render_template('article.html', article_url=article_url)
 
 
+# DEPRECATED
 def make_article(url):
     """
     Create a neatly formatted translatable article html page.
@@ -47,12 +56,13 @@ def make_article(url):
     return str(soup)
 
 
+# DEPRECATED
 def add_paragraphs(text):
     text = "<p>" + text
     text = text.replace('\n\n', '</p><p>')
     return text
 
-
+# DEPRECATED
 def wrap_zeeguu_words(text):
     """Use a regular expression to wrap all words with a Zeeguu tag.
     Keyword arguments:
