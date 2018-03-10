@@ -195,6 +195,14 @@ function addParagraphs(text) {
     return text;
 }
 
+function filterShit(text) {
+    console.log(text);
+    text = text.replace(/^false/g,'');
+    text = text.replace(/^true/g,'');
+
+    return text;
+}
+
 function wrapWordsInZeeguuTags(text) {
     text = text.replace(/([a-zA-Z0-9\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0180-\u024F_'’-]+)/g,
         "<" + config.HTML_ZEEGUUTAG + ">$1</" + config.HTML_ZEEGUUTAG + ">");
@@ -220,7 +228,9 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
             $("#authors").text(article_info.authors);
 
             // CONTENT
-            let text = wrapWordsInZeeguuTags(article_info.content);
+            let text = article_info.content;
+            text = filterShit(text);
+            text = wrapWordsInZeeguuTags(text);
             text = addParagraphs(text);
             $("#articleContent").html(text);
 
