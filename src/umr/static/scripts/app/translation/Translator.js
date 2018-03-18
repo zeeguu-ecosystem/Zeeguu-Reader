@@ -13,6 +13,7 @@ import {HTML_ID_ALTERMENU} from "./AlterMenu";
 const USER_EVENT_TRANSLATE = 'TRANSLATE TEXT';
 const USER_EVENT_UNDO_TRANSLATE = 'UNDO TEXT TRANSLATION';
 const USER_EVENT_SEND_SUGGESTION = 'SEND SUGGESTION';
+const MAX_TRANSLATIONS_TO_DISPLAY = 5;
 
 /**
  *  Class that allows for translating zeeguu tags.
@@ -107,7 +108,7 @@ export default class Translator {
     _setTranslations(zeeguuTag, translations) {
         var tran = zeeguuTag.children[0];
         translations = translations.translations;
-        var transCount = Math.min(translations.length, 3);
+        var transCount = Math.min(translations.length, MAX_TRANSLATIONS_TO_DISPLAY);
         tran.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
         for (var i = 0; i < transCount; i++)
             tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
