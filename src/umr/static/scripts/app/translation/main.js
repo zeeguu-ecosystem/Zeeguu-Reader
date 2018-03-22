@@ -11,12 +11,12 @@ import Starer from './Starer';
 import UserActivityLogger from '../UserActivityLogger';
 
 import {GET_NATIVE_LANGUAGE, GET_USER_ARTICLE_INFO} from '../zeeguuRequests';
+import ZeeguuRequests from "../zeeguuRequests";
 
 import '../../../styles/mdl/material.min.js';
 import '../../../styles/mdl/material.min.css';
 import '../../../styles/article.css';
 import '../../../styles/material-icons.css';
-import ZeeguuRequests from "../../../../../build/lib/umr/static/scripts/app/zeeguuRequests";
 
 
 const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
@@ -196,8 +196,8 @@ function addParagraphs(text) {
 }
 
 function filterShit(text) {
-    text = text.replace(/^false/g,'');
-    text = text.replace(/^true/g,'');
+    text = text.replace(/^false/g, '');
+    text = text.replace(/^true/g, '');
 
     return text;
 }
@@ -220,6 +220,8 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
 
             alterMenu = new AlterMenu(FROM_LANGUAGE, TO_LANGUAGE);
 
+            // console.log("Previous Translations");
+            // console.log(article_info.translations);
             // TITLE
             let title_text = article_info.title;
             title_text = wrapWordsInZeeguuTags(title_text);
@@ -234,6 +236,14 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
             text = wrapWordsInZeeguuTags(text);
             text = addParagraphs(text);
             $("#articleContent").html(text);
+
+            // for (var i = 0, size = article_info.translations.length; i < size; i++) {
+            //     let origin = article_info.translations[i].origin;
+            //     let tag = $('ZEEGUU:contains("' + origin + '")')[0];
+            //     console.log(tag);
+            //     translator.translate(tag);
+            //
+            // }
 
             // STARRED
             if (article_info.starred) {
@@ -261,12 +271,44 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
 
             functions_to_follow();
 
+            var upload_feedback_answer = function (event) {
+                UserActivityLogger.log(event.target.id, url);
+            };
+
+            $("#back_button").click(function () {
+                $("#header_row").hide();
+                $("#question_article_read_fully").show();
+            });
+
+            $("#maybe_finish_later").click(upload_feedback_answer);
+
+            $("#not_finished_for_boring").click(upload_feedback_answer);
+            $("#not_finished_for_too_difficult").click(upload_feedback_answer);
+            $("#not_finished_for_other").click(upload_feedback_answer);
+
+
+            $("#not_finished").click(function (event) {
+                $("#question_article_read_fully").hide();
+                $("#question_reasons_not_to_finish").show();
+            });
+
+            $("#finished").click(function (event) {
+                $("#question_article_read_fully").hide();
+                $("#question_difficulty_for_finished_article").show();
+            });
+
+            $("#finished_difficulty_easy").click(upload_feedback_answer);
+            $("#finished_difficulty_ok").click(upload_feedback_answer);
+            $("#finished_difficulty_hard").click(upload_feedback_answer);
+
+
         }.bind(this));
 
     }.bind(this));
 
 
 }
+
 
 /* Attach Zeeguu tag click listener. */
 function attachZeeguuListeners() {

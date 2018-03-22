@@ -54,7 +54,7 @@ zeeguu tran[chosen]:after {
     content: attr(chosen);
 }
 
-#toggle_back {
+#back_button {
     left: -2.5em;
 }
 
@@ -69,6 +69,18 @@ zeeguu tran[chosen]:after {
 
 #toggle_star {
     color: rgba(0, 0, 0, .26);
+}
+
+.feedback_question {
+    font-weight: bold;
+    padding-bottom: 1em;
+    font-size: large;
+}
+
+#question_article_read_fully, #question_reasons_not_to_finish, #question_difficulty_for_finished_article {
+    padding: 16px;
+    text-align: left;
+    font-size: small;
 }
 
 #altermenu {
