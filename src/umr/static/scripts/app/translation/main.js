@@ -285,6 +285,7 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
 
             $("#not_finished_for_boring").click(upload_feedback_answer);
             $("#not_finished_for_too_difficult").click(upload_feedback_answer);
+            $("#not_finished_for_broken").click(upload_feedback_answer);
             $("#not_finished_for_other").click(upload_feedback_answer);
 
 
