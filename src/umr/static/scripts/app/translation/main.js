@@ -28,6 +28,7 @@ const USER_EVENT_EXIT_ARTICLE = 'ARTICLE CLOSED';
 const USER_EVENT_OPENED_ARTICLE = 'OPEN ARTICLE';
 const USER_EVENT_ARTICLE_FOCUS = 'ARTICLE FOCUSED';
 const USER_EVENT_ARTICLE_LOST_FOCUS = 'ARTICLE LOST FOCUS';
+const USER_EVENT_FEEDBACK = 'USER FEEDBACK';
 
 
 const HTML_ID_TOGGLE_COPY = '#toggle_copy';
@@ -272,7 +273,7 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
             functions_to_follow();
 
             var upload_feedback_answer = function (event) {
-                UserActivityLogger.log(event.target.id, url);
+                UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
             };
 
             $("#back_button").click(function () {
