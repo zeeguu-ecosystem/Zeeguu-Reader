@@ -225,6 +225,7 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
             // console.log(article_info.translations);
             // TITLE
             let title_text = article_info.title;
+            document.title = title_text;
             title_text = wrapWordsInZeeguuTags(title_text);
             $("#articleTitle").html(title_text);
 
