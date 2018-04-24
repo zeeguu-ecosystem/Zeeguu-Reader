@@ -16,7 +16,7 @@ import '../../../styles/mdl/material.min.js';
 import '../../../styles/mdl/material.min.css';
 import '../../../styles/article.css';
 import '../../../styles/material-icons.css';
-import ZeeguuRequests from "../../../../../build/lib/umr/static/scripts/app/zeeguuRequests";
+import ZeeguuRequests from "../zeeguuRequests";
 
 
 const USER_EVENT_ENABLE_COPY = 'ENABLE COPY';
