@@ -24,14 +24,14 @@ module.exports = {
           use: ExtractTextPlugin.extract({
                 use: 'css-loader'
           })
-	 }],
-	 loaders: [
-		 {
-			 test: /\.js$/,
-			 loader: 'babel-loader',
-			 query: {
-				 presets: ['es2015']
-			 }
+	},
+    {
+    		test: /\.js$/,
+			exclude: /node_modules/,
+			loader: 'babel-loader',
+        	options: {
+			     	 presets: ['env']
+        	}
 		 }
 	 ]
 	},
