@@ -8,5 +8,7 @@ src/build
 src/umr.egg-info
 src/umr/static/scripts/dist
 npm-debug.log
+build
+dist
 
 umr.egg-info/*

@@ -24,10 +24,10 @@ then
     zlib1g-dev \
     python-virtualenv \
     virtualenvwrapper
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-    sudo apt-get install nodejs
-    sudo npm install -g webpack
-    sudo npm install -g esdoc
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    sudo npm install --no-optional -g webpack webpack-cli
+    sudo npm install --no-optional -g esdoc
 else
     echo "Skipping apt-get install."
 fi
