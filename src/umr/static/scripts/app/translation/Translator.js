@@ -115,6 +115,21 @@ export default class Translator {
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
         tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
         $(zeeguuTag).removeClass(config.CLASS_LOADING);
+        var particle = translations[0].particle;
+        if (translations[0].particle) {
+            
+            /* #$(zeeguuTag).after('<sup style="color:lightgray">'+translations[0].particle+'</sup'); */
+            var me = zeeguuTag.children[1];
+            me.setAttribute('style', 'background-color: lightyellow');
+           
+            var x = zeeguuTag;
+            
+            while (x.innerText != particle) {x = x.nextSibling;}
+            x.setAttribute('style', 'background-color: lightyellow');
+  
+            zeeguuTag.after(" ");
+            
+        }
     }
 
     /**
