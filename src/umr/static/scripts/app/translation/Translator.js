@@ -125,9 +125,16 @@ export default class Translator {
             var x = zeeguuTag;
             
             while (x.innerText != particle) {x = x.nextSibling;}
+            $('<separator/>').insertBefore(x);
             x.setAttribute('style', 'background-color: lightyellow');
+            $('<separator/>').insertAfter(x);
   
-            zeeguuTag.after(" ");
+            $('<separator/>').insertBefore(zeeguuTag);
+            $('<separator/>').insertAfter(zeeguuTag);
+            /* 
+            zeeguuTag.before(" <particle/> ");
+            zeeguuTag.after(" <particle/> ");
+*/
             
         }
     }
@@ -156,7 +163,7 @@ export default class Translator {
 
         var node = zeeguuTag.previousSibling;
 
-        while (node && this.connectivesSet.has(node.textContent.trim())) {
+        while (node && node.tagName != 'SEPARATOR' && this.connectivesSet.has(node.textContent.trim())) {
             connectives = node.textContent + connectives;
             node = node.previousSibling;
         }
@@ -171,7 +178,7 @@ export default class Translator {
         tmp_trans = tmp_trans.concat(' ' + '.'.repeat(padding_len) + ' ');
         connectives = '';
         node = zeeguuTag.nextSibling;
-        while (node && this.connectivesSet.has(node.textContent.trim())) {
+        while (node && node.tagName != 'SEPARATOR' && this.connectivesSet.has(node.textContent.trim())) {
             connectives += node.textContent;
             node = node.nextSibling;
         }
