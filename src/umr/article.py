@@ -5,6 +5,11 @@ from bs4 import BeautifulSoup as Soup
 from .session import with_session
 import re
 from .umr_blueprint import umrblue
+import urllib
+from .login import ZEEGUU_SERVER
+import requests
+import json
+
 
 WORD_TAG = "zeeguu"
 
@@ -15,22 +20,37 @@ def get_article():
     """Retrieve the supplied article link of the supplied language,
     and return a properly processed version of the article.
     """
+
     article_url = request.args['articleURL']
 
-    return make_article(article_url)
+    #return make_article(article_url)
+    # ^- commented out; used to be the old way of
+    # rendering part of the article content, but now
+    # the entire rendering is moved in Javascript...
+    # which kind of makes this endpoint obsolete...
+    # we should probably keep the template on the
+    # serverside in the first place...
+    return render_template('article.html', article_url=article_url)
 
 
+def get_article_info(url):
+    encoded_url = urllib.parse.quote_plus(url)
+    result = requests.get(ZEEGUU_SERVER + "/user_article?url=" + encoded_url + "&session=" + request.sessionID)
+    article_info = json.loads(result.content)
+    return article_info
+
+# DEPRECATED
 def make_article(url):
     """
     Create a neatly formatted translatable article html page.
     """
-    article = Article(url=url)
-    article.download()
-    article.parse()
 
-    title = wrap_zeeguu_words(article.title)
-    authors = ', '.join(article.authors)
-    content = add_paragraphs(article.text)
+    article_info = get_article_info(url)
+
+    title = wrap_zeeguu_words(article_info['title'])
+    authors = article_info['authors']
+    content = add_paragraphs(article_info['content'])
+
     content = wrap_zeeguu_words(content)
 
     # Create our article using Soup.
@@ -47,12 +67,13 @@ def make_article(url):
     return str(soup)
 
 
+# DEPRECATED
 def add_paragraphs(text):
     text = "<p>" + text
     text = text.replace('\n\n', '</p><p>')
     return text
 
-
+# DEPRECATED
 def wrap_zeeguu_words(text):
     """Use a regular expression to wrap all words with a Zeeguu tag.
     Keyword arguments:

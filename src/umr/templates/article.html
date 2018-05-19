@@ -16,23 +16,109 @@
 	</script>
 
 	<!-- Include the translation package. -->
-	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/translation-0.8.1.css')}}">
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation-0.8.1.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/translation-0.8.2.css')}}">
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation-0.8.2.js')}}"></script>
 </head>
 <body>
 <!-- Top bar -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header mdl-layout__header--transparent">
-		<div class="mdl-layout__header-row">
-			<a id = "toggle_back" href="{{ url_for('umrblue.articles') }}"
+
+
+            <div id="question_article_read_fully" style="display:none;">
+
+                <div class="feedback_question">
+                    Did you read the article fully?
+                </div>
+
+                <button id="finished" class="mdl-button mdl-js-button mdl-button--raised">
+                  Yes
+                </button>&nbsp;
+
+                <button id="not_finished" class="mdl-button mdl-js-button mdl-button--raised">
+                  No
+                </button>&nbsp;
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="maybe_finish_later"
+                            class="mdl-button mdl-js-button mdl-button--raised"
+                            >
+                        Maybe Later...
+                    </button>
+                </a>
+
+            </div>
+
+
+            <div id="question_reasons_not_to_finish" style="display:none;">
+
+                <div class="feedback_question">
+                    What is the problem with the article?
+                </div>
+
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="not_finished_for_too_difficult" class="mdl-button mdl-js-button mdl-button--raised">
+                        Difficult
+                    </button></a>&nbsp;
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="not_finished_for_boring" class="mdl-button mdl-js-button mdl-button--raised">
+                        Boring
+                    </button></a>&nbsp;
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="not_finished_for_broken" class="mdl-button mdl-js-button mdl-button--raised">
+                        Broken
+                    </button></a>&nbsp;
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="not_finished_for_other" class="mdl-button mdl-js-button mdl-button--raised">
+                        Other
+                    </button></a>
+
+            </div>
+
+
+            <div id="question_difficulty_for_finished_article" style="display:none;">
+
+                <div class="feedback_question">
+                    How difficult was the article?
+                </div>
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="finished_difficulty_easy" class="mdl-button mdl-js-button mdl-button--raised">
+                        Easy
+                    </button></a>
+                &nbsp;
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="finished_difficulty_ok" class="mdl-button mdl-js-button mdl-button--raised">
+                        Ok
+                    </button></a>
+                &nbsp;
+
+                <a href="{{ url_for('umrblue.articles') }}">
+                    <button id="finished_difficulty_hard" class="mdl-button mdl-js-button mdl-button--raised">
+                        Hard
+                    </button></a>
+
+            </div>
+
+
+		<div id="header_row" class="mdl-layout__header-row">
+
+			<a id = "back_button"
+{#            href="{{ url_for('umrblue.articles') }}"    #}
 			   class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
     			<i class="material-icons">arrow_back</i>
     		</a>
+
 			<div class="mdl-layout-spacer"></div>
 			<button id = "toggle_undo" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 				<i class="material-icons">undo</i>
 			</button>
-			<button id = "toggle_copy" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+			<button id = "toggle_copy" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon mdl-button--disabled">
 				<i class="material-icons">content_copy</i>
 			</button>
 			<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
@@ -50,14 +136,15 @@
 				<p class="title translatable">
 					<span id = "articleTitle"></span>
 				</p>
-				<p id="articleInfo">
-					<span id="articleURL">From: <a target="_blank">source</a></span>
+				<p id="articleInfo" style="display:none">
+					<span id="articleURL">From: <a href="{{ article_url }}" target="_blank">source</a></span>
+                    <span id="authors"></span>
 				</p>	
 				<div id="articleContent" class="translatable"></div><br />		
 			</div>
 		</div>
-		<div id = "like_button">
-			<button id = "toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect ">
+		<div id = "like_button" style="display:none">
+			<button id="toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" >
 				<i class="material-icons">thumb_up</i>
 			</button>
 		</div>
