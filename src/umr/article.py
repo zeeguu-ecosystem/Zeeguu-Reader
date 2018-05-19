@@ -23,14 +23,14 @@ def get_article():
 
     article_url = request.args['articleURL']
 
-    return make_article(article_url)
+    #return make_article(article_url)
     # ^- commented out; used to be the old way of
     # rendering part of the article content, but now
     # the entire rendering is moved in Javascript...
     # which kind of makes this endpoint obsolete...
     # we should probably keep the template on the
     # serverside in the first place...
-    #return render_template('article.html', article_url=article_url)
+    return render_template('article.html', article_url=article_url)
 
 
 def get_article_info(url):
