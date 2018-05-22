@@ -1,8 +1,16 @@
 import $ from 'jquery';
 import ArticleList from './ArticleList';
 import StarredArticleList from './StarredArticleList';
-import SubscriptionList from './SubscriptionList';
-import FeedSubscriber from './FeedSubscriber';
+import SourceSubscriptionList from './SourceSubscriptionList.js';
+import SourceSubscriber from './SourceSubscriber.js';
+import TopicSubscriber from './TopicSubscriber.js';
+import TopicSubscriptionList from './TopicSubscriptionList.js';
+import TopicFilterSubscriptionList from "./TopicFilterSubscriptionList";
+import TopicFilterSubscriber from "./TopicFilterSubscriber";
+import SearchFilterSubscriptionList from "./SearchFilterSubscriptionList"
+import SearchSubscriptionList from "./SearchSubscriptionList";
+import LanguageSubscriptionList from "./LanguageSubscriptionList";
+import LanguageSubscriber from "./LanguageSubscriber";
 import config from '../config';
 
 import "../../../styles/mdl/material.min.js";
@@ -11,33 +19,104 @@ import '../../../styles/material-icons.css';
 import '../../../styles/loader.css';
 import '../../../styles/login.css';
 import '../../../styles/articles.css';
-import '../../../styles/addFeedDialog.css';
+import '../../../styles/addSourceDialog.css';
+import '../../../styles/addTopicDialog.css';
 import '../../../styles/sweetalert.css';
-""
+
+
 /* Script that binds listeners to html events, such that the
  * correct object is called to handle it. */
-let subscriptionList = new SubscriptionList();
-let articleList = new ArticleList(subscriptionList);
-let feedSubscriber = new FeedSubscriber(subscriptionList);
+let sourceSubscriptionList = new SourceSubscriptionList();
+let articleList = new ArticleList(sourceSubscriptionList);
+let sourceSubscriber = new SourceSubscriber(sourceSubscriptionList);
 let starredArticleList = new StarredArticleList();
+let topicSubscriptionList = new TopicSubscriptionList();
+let topicSubscriber = new TopicSubscriber(topicSubscriptionList);
+let topicFilterSubscriptionList = new TopicFilterSubscriptionList();
+let topicFilterSubscriber = new TopicFilterSubscriber(topicFilterSubscriptionList);
+let searchSubscriptionList = new SearchSubscriptionList();
+let searchFilterSubscriptionList = new SearchFilterSubscriptionList();
+let languageSubscriptionList = new LanguageSubscriptionList();
+let languageSubscriber = new LanguageSubscriber(languageSubscriptionList)
 
 
-document.addEventListener(config.EVENT_SUBSCRIPTION, function (e) {
+
+document.addEventListener(config.EVENT_SUBSCRIPTION, function () {
     articleList.clear();
-    articleList.load(e.detail);
+    articleList.load();
 });
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function () {
     starredArticleList.load();
-    subscriptionList.load();
-    feedSubscriber.load();
+    sourceSubscriptionList.load();
+    sourceSubscriber.load();
+    topicSubscriptionList.load();
+    topicSubscriber.load();
+    topicFilterSubscriptionList.load();
+    topicFilterSubscriber.load();
+    searchSubscriptionList.load();
+    searchFilterSubscriptionList.load();
+    languageSubscriptionList.load();
+    languageSubscriber.load();
 
-    let showAddFeedDialogButton = document.querySelector('.show-modal');
-    $(showAddFeedDialogButton).click(function () {
-        feedSubscriber.open();
+    let showAddLanguageDialog = document.querySelector('.show-language');
+    $(showAddLanguageDialog).click(function () {
+        languageSubscriber.open();
     });
+
+    let showAddFeedDialogButton = document.querySelector('.show-source');
+    $(showAddFeedDialogButton).click(function () {
+        sourceSubscriber.open();
+    });
+
+    let showAddTopicDialogButton = document.querySelector('.show-sub');
+    $(showAddTopicDialogButton).click(function () {
+        topicSubscriber.open();
+    });
+
+    let showAddFilterDialogButton = document.querySelector('.show-filter');
+    $(showAddFilterDialogButton).click(function () {
+        topicFilterSubscriber.open();
+    });
+
+    let searchExecuted = document.querySelector('#search-expandable');
+    $(searchExecuted).keyup(function(event) {
+        if (event.keyCode === 13) {
+            let input = $(searchExecuted).val();
+            let layout = document.querySelector('.mdl-layout');
+            layout.MaterialLayout.toggleDrawer();
+            articleList.search(input);
+        }
+    });
+
+    let searchSubscriptionButton = document.querySelector('.subscribe-search');
+    $(searchSubscriptionButton).click(function () {
+        // Subscribe to a search here.
+        // Either subscribe to live input
+        let input = $(searchExecuted).val();
+        // Or subscribe to the last search.. and use lastSearch var.
+        articleList.renderTemporary(input, 0);
+        let layout = document.querySelector('.mdl-layout');
+        layout.MaterialLayout.toggleDrawer();
+        searchSubscriptionList.follow(input);
+
+    });
+
+    let searchFilterButton = document.querySelector('.filter-search');
+    $(searchFilterButton).click(function () {
+        // Subscribe to a search here.
+        // Either subscribe to live input
+        let input = $(searchExecuted).val();
+        articleList.renderTemporary(input, 1);
+        let layout = document.querySelector('.mdl-layout');
+        layout.MaterialLayout.toggleDrawer();
+        searchFilterSubscriptionList.follow(input);
+        // Or subscribe to the last search.. and use lastSearch var.
+
+    });
+
 });
 
 /* Called when no image could be loaded as an article avatar. */
@@ -53,12 +132,10 @@ $(document).keydown(function (event) {
     switch (event.key) {
 
         case 'ArrowDown':
-        case 'j':
             _select_next_article(highlighted_element, true);
             break;
 
         case 'ArrowUp':
-        case 'k':
             _select_next_article(highlighted_element, false);
             break;
         case 'Enter':

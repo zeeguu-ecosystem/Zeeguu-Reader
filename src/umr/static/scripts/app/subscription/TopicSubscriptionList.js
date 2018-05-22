@@ -5,13 +5,13 @@ import Notifier from '../Notifier';
 import 'loggly-jslogger';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
-import {GET_FEEDS_BEING_FOLLOWED} from '../zeeguuRequests';
-import {FOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
-import {UNFOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
+import {GET_SUBSCRIBED_TOPICS} from '../zeeguuRequests';
+import {SUBSCRIBE_TOPIC_ENDPOINT} from '../zeeguuRequests';
+import {UNSUBSCRIBE_TOPIC_ENDPOINT} from '../zeeguuRequests';
 
 
-const HTML_ID_SUBSCRIPTION_LIST = '#subscriptionList';
-const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template';
+const HTML_ID_SUBSCRIPTION_LIST = '#topicsList';
+const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-topic';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 const USER_EVENT_FOLLOWED_FEED = 'FOLLOW FEED';
 const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW FEED';
@@ -21,19 +21,19 @@ let logger = new LogglyTracker();
 logger.push({
     'logglyKey': config.LOGGLY_TOKEN,
     'sendConsoleErrors' : true,
-    'tag' : 'SubscriptionList'
+    'tag' : 'TopicSubscriptionList'
 });
 
 /**
- * Shows a list of all subscribed feeds, allows the user to remove them.
+ * Shows a list of all subscribed topics, allows the user to remove them.
  * It updates the {@link ArticleList} accordingly.
  */
-export default class SubscriptionList {
+export default class TopicSubscriptionList {
     /**
      * Initialise an empty {@link Map} of feeds.
      */
     constructor() {
-        this.feedList = new Map();
+        this.topicList = new Map();
     }
 
     /**
@@ -41,7 +41,7 @@ export default class SubscriptionList {
      *  Uses {@link ZeeguuRequests}.
      */
     load() {
-        ZeeguuRequests.get(GET_FEEDS_BEING_FOLLOWED, {}, this._loadSubscriptions.bind(this));
+        ZeeguuRequests.get(GET_SUBSCRIBED_TOPICS, {}, this._loadSubscriptions.bind(this));
     };
 
     /**
@@ -71,28 +71,28 @@ export default class SubscriptionList {
             this._addSubscription(data[i]);
         }
 
-        this._changed();
+        //this._changed();
     }
 
     /**
      * Add the feed to the list of subscribed feeds.
      * @param {Object} feed - Data of the particular feed to add to the list.
      */
-    _addSubscription(feed) {
-        if (this.feedList.has(feed.id))
+    _addSubscription(topic) {
+        if (this.topicList.has(topic.id))
             return;
 
         let template = $(HTML_ID_SUBSCRIPTION_TEMPLATE).html();
-        let subscription = $(Mustache.render(template, feed));
+        let subscription = $(Mustache.render(template, topic));
         let removeButton = $(subscription.find(HTML_CLASS_REMOVE_BUTTON));
         let _unfollow = this._unfollow.bind(this);
-        removeButton.click(function(feed) {
+        removeButton.click(function(topic) {
             return function () {
-                _unfollow(feed);
+                _unfollow(topic);
             };
-        }(feed));
+        }(topic));
         $(HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-        this.feedList.set(feed.id, feed);
+        this.topicList.set(topic.id, topic);
     }
 
     /**
@@ -100,11 +100,11 @@ export default class SubscriptionList {
      * Uses {@link ZeeguuRequests}.
      * @param {Object} feed - Data of the particular feed to subscribe to.
      */
-    follow(feed) {
-        UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, feed.id, feed);
-        this._addSubscription(feed);
-        let callback = ((data) => this._onFeedFollowed(feed, data)).bind(this);
-        ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {feed_id: feed.id}, callback);
+    follow(topic) {
+        UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
+        this._addSubscription(topic);
+        let callback = ((data) => this._onFeedFollowed(topic, data)).bind(this);
+        ZeeguuRequests.post(SUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
 
     /**
@@ -114,12 +114,12 @@ export default class SubscriptionList {
      * @param {Object} feed - Data of the particular feed that has been subscribed to.
      * @param {string} reply - Reply from the server.
      */
-    _onFeedFollowed(feed, reply) {
+    _onFeedFollowed(topic, reply) {
         if (reply === "OK") {
             this._changed();
         } else {
-            Notifier.notify("Network Error - Could not follow " + feed.title + ".");
-            logger.push("Could not follow '" + feed.title + "'. Server reply: \n" + reply);
+            Notifier.notify("Network Error - Could not follow " + topic.title + ".");
+            logger.push("Could not follow '" + topic.title + "'. Server reply: \n" + reply);
         }
     }
 
@@ -128,11 +128,11 @@ export default class SubscriptionList {
      * Uses {@link ZeeguuRequests}.
      * @param {Object} feed - Data of the particular feed to unfollow.
      */
-    _unfollow(feed) {
-        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, feed.id, feed);
-        this._remove(feed);
-        let callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
-        ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
+    _unfollow(topic) {
+        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
+        this._remove(topic);
+        let callback = ((data) => this._onFeedUnfollowed(topic, data)).bind(this);
+        ZeeguuRequests.get(UNSUBSCRIBE_TOPIC_ENDPOINT + "/" + topic.id, {}, callback);
     }
 
     /**
@@ -142,12 +142,12 @@ export default class SubscriptionList {
      * @param {Object} feed - Data of the particular feed to that has been unfollowed.
      * @param {string} reply - Server reply.
      */
-    _onFeedUnfollowed(feed, reply) {
+    _onFeedUnfollowed(topic, reply) {
         if (reply === "OK") {
             this._changed();
         } else {
-            Notifier.notify("Network Error - Could not unfollow " + feed.title + ".");
-            logger.push("Could not unfollow '" + feed.title + "'. Server reply: \n" + reply);
+            Notifier.notify("Network Error - Could not unfollow " + topic.title + ".");
+            logger.push("Could not unfollow '" + topic.title + "'. Server reply: \n" + reply);
         }
     }
 
@@ -156,15 +156,15 @@ export default class SubscriptionList {
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
      * @param {Object} feed - Data of the particular feed to remove from the list.
      */
-    _remove(feed) {
-        if (!this.feedList.delete(feed.id))  { console.log("Error: feed not in feed list."); }
-        $('span[removableID="' + feed.id + '"]').fadeOut();
+    _remove(topic) {
+        if (!this.topicList.delete(topic.id))  { console.log("Error: feed not in feed list."); }
+        $('span[removableID="' + topic.id + '"]').fadeOut();
     }
 
     /**
      * Fire an event to notify change in this class.
      */
     _changed() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION, { "detail": this.feedList }));
+        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
     }
 };

@@ -40,16 +40,46 @@
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">
-		My Sources
+		My Content
 	</span>
     <nav class="mdl-navigation">
 	  <div class="options">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
+                <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+                <input class="mdl-textfield__input" type="text" id="search-expandable">
+                <label class="mdl-textfield__label" for="search-expandable">Search...</label>
+            </div>
+          </div>
+		  <div>
+			  <button type="button" class="mdl-button mdl-js-button subscribe-search">Follow</button>
+			  <button type="button" class="mdl-button mdl-js-button filter-search">Filter</button>
+		  </div>
 		  <!-- List of feeds currently subscribed to. -->
-		  <div id="subscriptionList"></div>
-			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
-				<span class="mdl-chip__text">Add new source</span>
-				<button type="button" class="mdl-chip__action show-modal"><i class="material-icons md-light">add_circle</i></button>
+		  <div id="languagesList"></div>
+		  <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+				<span class="mdl-chip__text">Languages</span>
+				<button type="button" class="mdl-chip__action show-language"><i class="material-icons md-light">add_circle</i></button>
 			</span>
+		  <div id="sourcesList"></div>
+			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+				<span class="mdl-chip__text">Sources</span>
+				<button type="button" class="mdl-chip__action show-source"><i class="material-icons md-light">add_circle</i></button>
+			</span>
+          <div id="topicsList"></div>
+			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+				<span class="mdl-chip__text">Subscriptions</span>
+				<button type="button" class="mdl-chip__action show-sub"><i class="material-icons md-light">add_circle</i></button>
+			</span>
+		  <div id="searchesList"></div>
+          <div id="topicsFilterList"></div>
+			<span class="mdl-chip mdl-chip--deletable mdl-color--red mdl-color-text--white tour">
+				<span class="mdl-chip__text">Filters</span>
+				<button type="button" class="mdl-chip__action show-filter"><i class="material-icons md-light">add_circle</i></button>
+			</span>
+		  <div id="searchesFilterList"></div>
 	  </div>
     </nav>
   </div>
@@ -82,10 +112,40 @@
   </main>
 </div>
 
-<!-- Template for subscribed feed items -->
-<script id="subscription-template" type="text/template">
+<!-- Template for subscribed source items -->
+<script id="subscription-template-source" type="text/template">
 	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
+		<a class="mdl-chip__action removeButton">
+			<i class="material-icons">cancel</i>
+		</a>
+	</span>
+</script>
+
+<!-- Template for subscribed topic items -->
+<script id="subscription-template-topic" type="text/template">
+	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
+		<a class="mdl-chip__action removeButton">
+			<i class="material-icons">cancel</i>
+		</a>
+	</span>
+</script>
+
+<!-- Template for subscribed topic items -->
+<script id="subscription-template-search" type="text/template">
+	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+		<span class="mdl-chip__text">{% raw %}{{ search }}{% endraw %}</span>
+		<a class="mdl-chip__action removeButton">
+			<i class="material-icons">cancel</i>
+		</a>
+	</span>
+</script>
+
+<!-- Template for subscribed topic items -->
+<script id="subscription-template-language" type="text/template">
+	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+		<span class="mdl-chip__text">{% raw %}{{ language }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
 		</a>
@@ -133,7 +193,7 @@
 	<div class="articleLinkSpacer"></div>
 </script>
 
-<!-- Dialog window for adding a feed. -->
-{% include 'addFeedDialog.html' %}
-
+<!-- Dialog windows for adding a source, topic and filter. -->
+{% include 'addSourceDialog.html' %}
+{% include 'addTopicDialog.html' %}
 </HTML>

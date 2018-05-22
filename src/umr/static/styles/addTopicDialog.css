@@ -1,0 +1,51 @@
+#addableTopicList {
+  display:block;
+  height: 40vh;
+}
+
+@keyframes move_up {
+  0%
+  {
+    top: 0;
+  }
+  80%
+  {
+    top:-0.5em;
+  }
+  100%
+  {
+    top:-0.3em;
+  }
+}
+
+.addableTitle {
+  display:block;
+  max-width: 20em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.feedIcon {
+  background: white;
+  width: 32px;
+  height: 32px;
+}
+
+.material-icons.md-light {
+  color: white;
+}
+
+.topiAddTitle {
+  font-size: 2.3em;
+  text-align: center;
+}
+
+.topicAddSubTitle {
+  font-size: 1em;
+  font-style: italic;
+  text-align: center;
+}
+
+.list-control {
+  overflow-y: scroll;
+}

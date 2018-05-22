@@ -12,16 +12,16 @@ const USER_EVENT_SET_LANGUAGE = 'SET LANGUAGE';
 
 /**
  * Retrieves the available languages of Zeeguu and fills
- * the {@link FeedSubscriber}'s dialog with these options.
+ * the {@link SourceSubscriber}'s dialog with these options.
  */
 export default class LanguageMenu {
 
     /**
-     * Bind this instance to the associated {@link FeedSubscriber}.
-     * @param {FeedSubscriber} feedSubscriber - List of non-subscribed feeds to update.
+     * Bind this instance to the associated {@link SourceSubscriber}.
+     * @param {SourceSubscriber} sourceSubscriber - List of non-subscribed feeds to update.
      */
-    constructor(feedSubscriber) {
-        this.feedSubscriber = feedSubscriber;
+    constructor(sourceSubscriber) {
+        this.sourceSubscriber = sourceSubscriber;
     }
 
     /**
@@ -48,17 +48,17 @@ export default class LanguageMenu {
                 languageOptionCode: options[i]
             };
             let languageOption = $(Mustache.render(template, languageOptionData));
-            let feedSubscriber = this.feedSubscriber;
+            let sourceSubscriber = this.sourceSubscriber;
             languageOption.on('click', function () {
                 let language = $(this).attr('id');
                 UserActivityLogger.log(USER_EVENT_SET_LANGUAGE, language, data);
-                feedSubscriber.clear();
-                feedSubscriber.load(language);
+                sourceSubscriber.clear();
+                sourceSubscriber.load(language);
                 $(this).siblings().removeClass(config.HTML_CLASS_FOCUSED);
                 $(this).addClass(config.HTML_CLASS_FOCUSED);
             });
             $(HTML_ID_LANGUAGE_OPTION_LIST).append(languageOption);
         }
-        $('#' + this.feedSubscriber.getCurrentLanguage()).addClass(config.HTML_CLASS_FOCUSED);
+        $('#' + this.sourceSubscriber.getCurrentLanguage()).addClass(config.HTML_CLASS_FOCUSED);
     }
 };
