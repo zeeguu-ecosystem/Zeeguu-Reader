@@ -17,15 +17,15 @@ const HTML_CLASS_FEED_ICON = '.feedIcon';
 const USER_EVENT_OPENED_FEEDSUBSCRIBER = 'OPEN FEEDSUBSCRIBER';
 
 /**
- * Allows the user to add feed subscriptions.
+ * Allows the user to add source subscriptions.
  */
-export default class FeedSubscriber {
+export default class SourceSubscriber {
     /**
-     * Link the {@link SubscriptionList} with this instance so we can update it on change.
-     * @param {SubscriptionList} subscriptionList - Local (!) list of currently subscribed-to feeds.
+     * Link the {@link SourceSubscriptionList} with this instance so we can update it on change.
+     * @param {SourceSubscriptionList} sourceSubscriptionList - Local (!) list of currently subscribed-to sources.
      */
-    constructor(subscriptionList) {
-        this.subscriptionList = subscriptionList;
+    constructor(sourceSubscriptionList) {
+        this.sourceSubscriptionList = sourceSubscriptionList;
         this.languageMenu = new LanguageMenu(this);
         this.currentLanguage = 'nl'; // default
         ZeeguuRequests.get(GET_LEARNED_LANGUAGE, {},
@@ -35,7 +35,7 @@ export default class FeedSubscriber {
     }
 
     /**
-     * Open the dialog window containing the list of feeds.
+     * Open the dialog window containing the list of sources.
      * Uses the sweetalert library.
      */
     open() {
@@ -56,7 +56,7 @@ export default class FeedSubscriber {
     }
 
     /**
-     * Call Zeeguu and requests recommended feeds for the given language.
+     * Call Zeeguu and requests recommended sources for the given language.
      * If the language is not given, it simply uses the last used language.
      * Uses {@link ZeeguuRequests}.
      * @param {string} language - Language code.
@@ -64,20 +64,20 @@ export default class FeedSubscriber {
      */
     load(language = this.currentLanguage) {
         ZeeguuRequests.get(RECOMMENDED_FEED_ENDPOINT + '/' + language,
-                                {}, this._loadFeedOptions.bind(this));
+                                {}, this.loadSourceOptions.bind(this));
         this.currentLanguage = language;
     }
 
     /**
-     * Clear the list of feed options.
+     * Clear the list of source options.
      */
     clear() {
         $(HTML_ID_ADD_FEED_LIST).empty();
     }
 
     /**
-     * Return the language for the feed options currently displayed.
-     * @return {string} - The language of feed options currently on display.
+     * Return the language for the source options currently displayed.
+     * @return {string} - The language of source options currently on display.
      */
     getCurrentLanguage() {
         return this.currentLanguage;
@@ -92,29 +92,29 @@ export default class FeedSubscriber {
     }
 
     /**
-     * Fills the dialog's list with all the addable feeds.
+     * Fills the dialog's list with all the addable sources.
      * Callback function for zeeguu.
-     * @param {Object[]} data - A list of feeds the user can subscribe to.
+     * @param {Object[]} data - A list of sources the user can subscribe to.
      */
-    _loadFeedOptions(data) {
+    loadSourceOptions(data) {
         let template = $(HTML_ID_FEED_TEMPLATE).html();
         for (let i = 0; i < data.length; i++) {
-            let feedOption = $(Mustache.render(template, data[i]));
-            let subscribeButton = $(feedOption.find(HTML_CLASS_SUBSCRIBE_BUTTON));
+            let sourceOption = $(Mustache.render(template, data[i]));
+            let subscribeButton = $(sourceOption.find(HTML_CLASS_SUBSCRIBE_BUTTON));
 
             subscribeButton.click(
-                function (data, feedOption, subscriptionList) {
+                function (data, sourceOption, sourceSubscriptionList) {
                     return function() {
-                        subscriptionList.follow(data);
-                        $(feedOption).fadeOut();
+                        sourceSubscriptionList.follow(data);
+                        $(sourceOption).fadeOut();
                     };
-            }(data[i], feedOption, this.subscriptionList));
+            }(data[i], sourceOption, this.sourceSubscriptionList));
 
-            let feedIcon = $(feedOption.find(HTML_CLASS_FEED_ICON));
-            feedIcon.on( "error", function () {
+            let sourceIcon = $(sourceOption.find(HTML_CLASS_FEED_ICON));
+            sourceIcon.on( "error", function () {
                 $(this).unbind("error").attr("src", "static/images/noAvatar.png");
             });
-            $(HTML_ID_ADD_FEED_LIST).append(feedOption);
+            $(HTML_ID_ADD_FEED_LIST).append(sourceOption);
         }
     }
 };

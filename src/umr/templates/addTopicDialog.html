@@ -1,0 +1,37 @@
+<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/flag-icon/flag-icon.css') }}" type= "text/css">
+
+<!-- Template for the dialog -->
+<script id="add-topic-dialog-template" type="text/template">
+  <div class="mdl-dialog__content">
+    <!-- List of all available languages -->
+    <div id="languageOptionList"></div>
+    <!-- List of all available feeds. -->
+    <div id="addableTopicList" class="list-control list-action mdl-list"></div>
+  </div>
+</script>
+
+<!-- Template for feed items -->
+<script id="topicAddable-template" type="text/template">
+  <div addableID="{% raw %}{{ id }}{% endraw %}" class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      <img src="{% raw %}{{ image_url }}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+      <span class="addableTitle">{% raw %}{{ title }}{% endraw %}</span>
+    </span>
+    <a class="mdl-list__item-secondary-action subscribeButton">
+      <i class="material-icons ">add_circle</i>
+    </a>
+  </div>
+</script>
+
+<!-- Template for feed items -->
+<script id="languageAddable-template" type="text/template">
+  <div addableID="{% raw %}{{ id }}{% endraw %}" class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      <img src="{% raw %}{{ image_url }}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+      <span class="addableTitle">{% raw %}{{ language }}{% endraw %}</span>
+    </span>
+    <a class="mdl-list__item-secondary-action subscribeButton">
+      <i class="material-icons ">add_circle</i>
+    </a>
+  </div>
+</script>
