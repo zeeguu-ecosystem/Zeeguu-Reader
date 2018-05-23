@@ -90,22 +90,6 @@ export default class ArticleList {
         }
     }
 
-    renderTemporary(search, filt) {
-        if (search && 0 !== search.length) {
-            this.clear();
-            $(config.HTML_CLASS_LOADER).show();
-            if (filt == 1) {
-                // In this case it'' a filter search
-                let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
-                ZeeguuRequests.get(FILTER_RENDER + '/' + search , {}, callback);
-            } else {
-                let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
-                ZeeguuRequests.get(SEARCH_RENDER + '/' + search , {}, callback);
-
-            }
-        }
-    }
-
     /**
      * Remove all articles from the list.
      */

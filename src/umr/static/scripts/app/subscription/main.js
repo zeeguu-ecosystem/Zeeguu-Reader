@@ -93,28 +93,14 @@ $(document).ready(function () {
 
     let searchSubscriptionButton = document.querySelector('.subscribe-search');
     $(searchSubscriptionButton).click(function () {
-        // Subscribe to a search here.
-        // Either subscribe to live input
         let input = $(searchExecuted).val();
-        // Or subscribe to the last search.. and use lastSearch var.
-        articleList.renderTemporary(input, 0);
-        let layout = document.querySelector('.mdl-layout');
-        layout.MaterialLayout.toggleDrawer();
         searchSubscriptionList.follow(input);
-
     });
 
     let searchFilterButton = document.querySelector('.filter-search');
     $(searchFilterButton).click(function () {
-        // Subscribe to a search here.
-        // Either subscribe to live input
         let input = $(searchExecuted).val();
-        articleList.renderTemporary(input, 1);
-        let layout = document.querySelector('.mdl-layout');
-        layout.MaterialLayout.toggleDrawer();
         searchFilterSubscriptionList.follow(input);
-        // Or subscribe to the last search.. and use lastSearch var.
-
     });
 
 });
@@ -130,11 +116,9 @@ $(document).keydown(function (event) {
     let highlighted_element = $("#articleLinkList").children(".highlightedArticle");
 
     switch (event.key) {
-
         case 'ArrowDown':
             _select_next_article(highlighted_element, true);
             break;
-
         case 'ArrowUp':
             _select_next_article(highlighted_element, false);
             break;
