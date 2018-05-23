@@ -116,7 +116,7 @@ export default class SearchSubscriptionList {
     _onFeedFollowed(search_terms, reply) {
         if (reply != null) {
             this._addSubscription(reply);
-            //this._changed();
+            this._changed();
         } else {
             Notifier.notify("Network Error - Could not follow " + search_terms + ".");
             logger.push("Could not follow '" + search_terms + "'. Server reply: \n" + reply);

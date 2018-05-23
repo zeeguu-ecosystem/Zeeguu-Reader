@@ -72,10 +72,6 @@ export const GET_FILTERED_SEARCHES = '/filtered_searches';
 export const FILTER_SEARCH_ENDPOINT = '/filter_search';
 /** Unfilter a search term. */
 export const UNFILTER_SEARCH_ENDPOINT = '/unfilter_search';
-/** Render temporary search articles. */
-export const SEARCH_RENDER = '/render_search';
-/** Render temporary filter articles. */
-export const FILTER_RENDER = '/render_filter';
 
 
 /** Post a user-generated translation for a piece of text. */
