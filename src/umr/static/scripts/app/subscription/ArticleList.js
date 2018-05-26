@@ -48,13 +48,6 @@ export default class ArticleList {
      * @param {Map} subscriptions - The feeds to retrieve articles from.
      */
     load() {
-/*        if (subscriptions.size < 1) {
-            this.noFeedTour.show();
-            return;
-        }
-        else
-            this.noFeedTour.hide();*/
-
         //let subscription_combo_hash = Array.from(subscriptions.keys()).join(".")
 
         // Feb 25: Disabled Cache. Server usually responds within a second
@@ -86,7 +79,7 @@ export default class ArticleList {
             $(config.HTML_CLASS_LOADER).show();
             let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
             ZeeguuRequests.get(SEARCH_ENDPOINT + '/' + search , {}, callback);
-            //UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
+            UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
         }
     }
 
@@ -127,10 +120,17 @@ export default class ArticleList {
 
     /**
      * Generate all the article links from a particular feed.
-     * @param {Object} subscription - The feed the articles are from.
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
     _renderArticleLinks(articleLinks) {
+        $(config.HTML_CLASS_LOADER).fadeOut('slow');
+        // If there are no articles in the list, show the noFeedTour
+        if (articleLinks.length < 1) {
+            this.noFeedTour.show();
+            return;
+        }
+        else
+            this.noFeedTour.hide();
 
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {
