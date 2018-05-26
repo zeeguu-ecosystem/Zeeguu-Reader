@@ -30,7 +30,7 @@ logger.push({
  */
 export default class SourceSubscriptionList {
     /**
-     * Initialise an empty {@link Map} of feeds.
+     * Initialise an empty {@link Map} of sources.
      */
     constructor() {
         this.sourceList = new Map();
@@ -104,7 +104,7 @@ export default class SourceSubscriptionList {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, source.id, source);
         this._addSubscription(source);
         let callback = ((data) => this._onFeedFollowed(source, data)).bind(this);
-        ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {feed_id: source.id}, callback);
+        ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
 
     /**

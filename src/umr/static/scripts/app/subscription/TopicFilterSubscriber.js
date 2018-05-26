@@ -27,7 +27,7 @@ export default class TopicFilterSubscriber {
     }
 
     /**
-     * Open the dialog window containing the list of feeds.
+     * Open the dialog window containing the list of topics.
      * Uses the sweetalert library.
      */
     open() {
@@ -47,18 +47,15 @@ export default class TopicFilterSubscriber {
     }
 
     /**
-     * Call Zeeguu and requests available topics for the given language.
-     * If the language is not given, it simply uses the last used language.
+     * Call Zeeguu and requests available topics.
      * Uses {@link ZeeguuRequests}.
-     * @param {string} language - Language code.
-     * @example load('nl');
      */
     load() {
         ZeeguuRequests.get(GET_AVAILABLE_FILTERS, {}, this._loadFeedOptions.bind(this));
     }
 
     /**
-     * Clear the list of feed options.
+     * Clear the list of topic options.
      */
     clear() {
         $(HTML_ID_ADD_FEED_LIST).empty();
@@ -67,7 +64,7 @@ export default class TopicFilterSubscriber {
     /**
      * Fills the dialog's list with all the addable topics.
      * Callback function for zeeguu.
-     * @param {Object[]} data - A list of feeds the user can subscribe to.
+     * @param {Object[]} data - A list of topics the user can subscribe to.
      */
     _loadFeedOptions(data) {
         let template = $(HTML_ID_FEED_TEMPLATE).html();

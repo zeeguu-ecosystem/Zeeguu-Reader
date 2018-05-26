@@ -30,14 +30,14 @@ logger.push({
  */
 export default class TopicFilterSubscriptionList {
     /**
-     * Initialise an empty {@link Map} of feeds.
+     * Initialise an empty {@link Map} of topics.
      */
     constructor() {
         this.topicFilterSubscriptionList = new Map();
     }
 
     /**
-     *  Call zeeguu and retrieve all currently subscribed feeds.
+     *  Call zeeguu and retrieve all currently subscribed topics.
      *  Uses {@link ZeeguuRequests}.
      */
     load() {
@@ -45,7 +45,7 @@ export default class TopicFilterSubscriptionList {
     };
 
     /**
-     * Remove all feeds from the list, clear {@link ArticleList} as well.
+     * Remove all topics from the list, clear {@link ArticleList} as well.
      */
     clear() {
         $(HTML_ID_SUBSCRIPTION_LIST).empty();
@@ -55,16 +55,16 @@ export default class TopicFilterSubscriptionList {
      * Call clear and load successively.
      */
     refresh() {
-        // Refresh the feed list.
+        // Refresh the topic list.
         this.clear();
         this.load();
     };
 
     /**
-     * Fills the subscription list with all the subscribed feeds.
+     * Fills the subscription list with all the subscribed topics.
      * Callback function for the zeeguu request,
-     * makes a call to {@link ArticleList} in order to load the feed's associated articles.
-     * @param {Object[]} data - List containing the feeds the user is subscribed to.
+     * makes a call to {@link ArticleList} in order to load the topic's associated articles.
+     * @param {Object[]} data - List containing the topics the user is subscribed to.
      */
     _loadSubscriptions(data) {
         for (let i = 0; i < data.length; i++) {
@@ -75,8 +75,8 @@ export default class TopicFilterSubscriptionList {
     }
 
     /**
-     * Add the feed to the list of subscribed feeds.
-     * @param {Object} feed - Data of the particular feed to add to the list.
+     * Add the topic to the list of filtered topics.
+     * @param {Object} topic - Data of the particular topic to add to the list.
      */
     _addSubscription(topic) {
         if (this.topicFilterSubscriptionList.has(topic.id))
@@ -96,9 +96,9 @@ export default class TopicFilterSubscriptionList {
     }
 
     /**
-     * Subscribe to a new feed, calls the zeeguu server.
+     * Filter a new topic, calls the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object} feed - Data of the particular feed to subscribe to.
+     * @param {Object} topic - Data of the particular topic to subscribe to.
      */
     follow(topic) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
@@ -108,10 +108,10 @@ export default class TopicFilterSubscriptionList {
     }
 
     /**
-     * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
-     * If there was a failure to follow the feed, we notify the user.
+     * A topic-filter has just been followed, so we call the {@link ArticleList} to update its list of articles.
+     * If there was a failure to follow the topic-filter, we notify the user.
      * Callback function for Zeeguu.
-     * @param {Object} feed - Data of the particular feed that has been subscribed to.
+     * @param {Object} topic - Data of the particular topic-filter that has been subscribed to.
      * @param {string} reply - Reply from the server.
      */
     _onFeedFollowed(topic, reply) {
@@ -124,9 +124,9 @@ export default class TopicFilterSubscriptionList {
     }
 
     /**
-     * Un-subscribe from a feed, call the zeeguu server.
+     * Un-subscribe from a topic filter, call the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object} feed - Data of the particular feed to unfollow.
+     * @param {Object} topic - Data of the particular topic-filter to unfollow.
      */
     _unfollow(topic) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
@@ -136,10 +136,10 @@ export default class TopicFilterSubscriptionList {
     }
 
     /**
-     * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+     * A topic has just been removed, so we remove the mentioned topic from the filter list.
      * On failure we notify the user.
      * Callback function for zeeguu.
-     * @param {Object} feed - Data of the particular feed to that has been unfollowed.
+     * @param {Object} topic - Data of the particular topic to that has been unfollowed.
      * @param {string} reply - Server reply.
      */
     _onFeedUnfollowed(topic, reply) {
@@ -152,12 +152,12 @@ export default class TopicFilterSubscriptionList {
     }
 
     /**
-     * Remove a mentioned feed from the local list (not from the zeeguu list).
+     * Remove a mentioned topic from the local list (not from the zeeguu list).
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-     * @param {Object} feed - Data of the particular feed to remove from the list.
+     * @param {Object} topic - Data of the particular topic to remove from the list.
      */
     _remove(topic) {
-        if (!this.topicFilterSubscriptionList.delete(topic.id))  { console.log("Error: feed not in feed list."); }
+        if (!this.topicFilterSubscriptionList.delete(topic.id))  { console.log("Error: topic not in topic list."); }
         $('span[removableID="' + topic.id + '"]').fadeOut();
     }
 

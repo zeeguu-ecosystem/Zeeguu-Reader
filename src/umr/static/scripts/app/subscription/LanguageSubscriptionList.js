@@ -5,11 +5,9 @@ import Notifier from '../Notifier';
 import 'loggly-jslogger';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
-import {GET_USER_LANGUAGES} from '../zeeguuRequests';
+import {GET_READING_LANGUAGES} from '../zeeguuRequests';
 import {ADD_USER_LANGUAGE} from '../zeeguuRequests';
 import {DELETE_USER_LANGUAGE} from '../zeeguuRequests';
-import {GET_LEARNED_LANGUAGE} from "../zeeguuRequests";
-
 
 const HTML_ID_SUBSCRIPTION_LIST = '#languagesList';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-language';
@@ -26,7 +24,7 @@ logger.push({
 });
 
 /**
- * Shows a list of all subscribed topics, allows the user to remove them.
+ * Shows a list of all subscribed languages, allows the user to remove them.
  * It updates the {@link ArticleList} accordingly.
  */
 export default class LanguageSubscriptionList {
@@ -38,15 +36,15 @@ export default class LanguageSubscriptionList {
     }
 
     /**
-     *  Call zeeguu and retrieve all currently subscribed feeds.
+     *  Call zeeguu and retrieve all currently subscribed languages.
      *  Uses {@link ZeeguuRequests}.
      */
     load() {
-        ZeeguuRequests.get(GET_USER_LANGUAGES, {}, this._loadSubscriptions.bind(this));
+        ZeeguuRequests.get(GET_READING_LANGUAGES, {}, this._loadSubscriptions.bind(this));
     };
 
     /**
-     * Remove all feeds from the list, clear {@link ArticleList} as well.
+     * Remove all languages from the list, clear {@link ArticleList} as well.
      */
     clear() {
         $(HTML_ID_SUBSCRIPTION_LIST).empty();
@@ -62,10 +60,10 @@ export default class LanguageSubscriptionList {
     };
 
     /**
-     * Fills the subscription list with all the subscribed feeds.
+     * Fills the subscription list with all the subscribed languages.
      * Callback function for the zeeguu request,
-     * makes a call to {@link ArticleList} in order to load the feed's associated articles.
-     * @param {Object[]} data - List containing the feeds the user is subscribed to.
+     * makes a call to {@link ArticleList} in order to load the language's associated articles.
+     * @param {Object[]} data - List containing the languages the user is subscribed to.
      */
     _loadSubscriptions(data) {
         for (let i = 0; i < data.length; i++) {
@@ -76,33 +74,30 @@ export default class LanguageSubscriptionList {
     }
 
     /**
-     * Add the feed to the list of subscribed feeds.
-     * @param {Object} feed - Data of the particular feed to add to the list.
+     * Add the language to the list of subscribed feeds.
+     * @param {Object} language - Data of the particular language to add to the list.
      */
     _addSubscription(language) {
         if (this.languageSubscriptionList.has(language.id))
             return;
 
-        let learned_language = ZeeguuRequests.get(GET_LEARNED_LANGUAGE, {});
         let template = $(HTML_ID_SUBSCRIPTION_TEMPLATE).html();
         let subscription = $(Mustache.render(template, language));
         let removeButton = $(subscription.find(HTML_CLASS_REMOVE_BUTTON));
-        if(language.code != learned_language) {
-            let _unfollow = this._unfollow.bind(this);
-            removeButton.click(function (language) {
-                return function () {
-                    _unfollow(language);
-                };
-            }(language));
-        }
+        let _unfollow = this._unfollow.bind(this);
+        removeButton.click(function (language) {
+            return function () {
+                _unfollow(language);
+            };
+        }(language));
         $(HTML_ID_SUBSCRIPTION_LIST).append(subscription);
         this.languageSubscriptionList.set(language.id, language);
     }
 
     /**
-     * Subscribe to a new feed, calls the zeeguu server.
+     * Subscribe to a new language, calls the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object} feed - Data of the particular feed to subscribe to.
+     * @param {Object} language - Data of the particular language to subscribe to.
      */
     follow(language) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, language.id, language);
@@ -112,10 +107,10 @@ export default class LanguageSubscriptionList {
     }
 
     /**
-     * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
-     * If there was a failure to follow the feed, we notify the user.
+     * A language has just been followed, so we call the {@link ArticleList} to update its list of articles.
+     * If there was a failure to follow the language, we notify the user.
      * Callback function for Zeeguu.
-     * @param {Object} feed - Data of the particular feed that has been subscribed to.
+     * @param {Object} language - Data of the particular language that has been subscribed to.
      * @param {string} reply - Reply from the server.
      */
     _onFeedFollowed(language, reply) {
@@ -128,9 +123,9 @@ export default class LanguageSubscriptionList {
     }
 
     /**
-     * Un-subscribe from a feed, call the zeeguu server.
+     * Un-subscribe from a language, call the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object} feed - Data of the particular feed to unfollow.
+     * @param {Object} language - Data of the particular language to unfollow.
      */
     _unfollow(language) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, language.id, language);
@@ -140,10 +135,10 @@ export default class LanguageSubscriptionList {
     }
 
     /**
-     * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+     * A language has just been removed, so we remove the mentioned language from the subscription list.
      * On failure we notify the user.
      * Callback function for zeeguu.
-     * @param {Object} feed - Data of the particular feed to that has been unfollowed.
+     * @param {Object} language - Data of the particular language to that has been unfollowed.
      * @param {string} reply - Server reply.
      */
     _onFeedUnfollowed(language, reply) {
@@ -156,9 +151,9 @@ export default class LanguageSubscriptionList {
     }
 
     /**
-     * Remove a mentioned feed from the local list (not from the zeeguu list).
+     * Remove a mentioned language from the local list (not from the zeeguu list).
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-     * @param {Object} feed - Data of the particular feed to remove from the list.
+     * @param {Object} language - Data of the particular language to remove from the list.
      */
     _remove(language) {
         if (!this.languageSubscriptionList.delete(language.id))  { console.log("Error: feed not in feed list."); }

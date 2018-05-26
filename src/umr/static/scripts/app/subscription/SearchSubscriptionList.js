@@ -25,19 +25,19 @@ logger.push({
 });
 
 /**
- * Shows a list of all subscribed topics, allows the user to remove them.
+ * Shows a list of all subscribed searches, allows the user to remove them.
  * It updates the {@link ArticleList} accordingly.
  */
 export default class SearchSubscriptionList {
     /**
-     * Initialise an empty {@link Map} of feeds.
+     * Initialise an empty {@link Map} of searchs.
      */
     constructor() {
         this.searchList = new Map();
     }
 
     /**
-     *  Call zeeguu and retrieve all currently subscribed feeds.
+     *  Call zeeguu and retrieve all currently subscribed searches.
      *  Uses {@link ZeeguuRequests}.
      */
     load() {
@@ -45,7 +45,7 @@ export default class SearchSubscriptionList {
     };
 
     /**
-     * Remove all feeds from the list, clear {@link ArticleList} as well.
+     * Remove all searches from the list, clear {@link ArticleList} as well.
      */
     clear() {
         $(HTML_ID_SUBSCRIPTION_LIST).empty();
@@ -55,16 +55,16 @@ export default class SearchSubscriptionList {
      * Call clear and load successively.
      */
     refresh() {
-        // Refresh the feed list.
+        // Refresh the search list.
         this.clear();
         this.load();
     };
 
     /**
-     * Fills the subscription list with all the subscribed feeds.
+     * Fills the subscription list with all the subscribed searches.
      * Callback function for the zeeguu request,
-     * makes a call to {@link ArticleList} in order to load the feed's associated articles.
-     * @param {Object[]} data - List containing the feeds the user is subscribed to.
+     * makes a call to {@link ArticleList} in order to load the search's associated articles.
+     * @param {Object[]} data - List containing the searches the user is subscribed to.
      */
     _loadSubscriptions(data) {
         for (let i = 0; i < data.length; i++) {
@@ -75,8 +75,8 @@ export default class SearchSubscriptionList {
     }
 
     /**
-     * Add the feed to the list of subscribed feeds.
-     * @param {Object} feed - Data of the particular feed to add to the list.
+     * Add the search to the list of subscribed searches.
+     * @param {Object} search - Data of the particular search to add to the list.
      */
     _addSubscription(search) {
         if (this.searchList.has(search.id))
@@ -98,7 +98,7 @@ export default class SearchSubscriptionList {
     /**
      * Subscribe to a new search, calls the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object} search_terms - Data of the particular feed to subscribe to.
+     * @param {Object} search_terms - Data of the particular search to subscribe to.
      */
     follow(search_terms) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, search_terms);
@@ -107,10 +107,10 @@ export default class SearchSubscriptionList {
     }
 
     /**
-     * A feed has just been followed, so we call the {@link ArticleList} to update its list of articles.
-     * If there was a failure to follow the feed, we notify the user.
+     * A search has just been followed, so we call the {@link ArticleList} to update its list of articles.
+     * If there was a failure to follow the search, we notify the user.
      * Callback function for Zeeguu.
-     * @param {Object} search_terms - Data of the particular feed that has been subscribed to.
+     * @param {Object} search_terms - Data of the particular search that has been subscribed to.
      * @param {string} reply - Reply from the server.
      */
     _onFeedFollowed(search_terms, reply) {
@@ -124,9 +124,9 @@ export default class SearchSubscriptionList {
     }
 
     /**
-     * Un-subscribe from a feed, call the zeeguu server.
+     * Un-subscribe from a search, call the zeeguu server.
      * Uses {@link ZeeguuRequests}.
-     * @param {Object} search - Data of the particular feed to unfollow.
+     * @param {Object} search - Data of the particular search to unfollow.
      */
     _unfollow(search) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search);
@@ -136,10 +136,10 @@ export default class SearchSubscriptionList {
     }
 
     /**
-     * A feed has just been removed, so we remove the mentioned feed from the subscription list.
+     * A search has just been removed, so we remove the mentioned search from the subscription list.
      * On failure we notify the user.
      * Callback function for zeeguu.
-     * @param {Object} feed - Data of the particular feed to that has been unfollowed.
+     * @param {Object} search - Data of the particular search to that has been unfollowed.
      * @param {string} reply - Server reply.
      */
     _onFeedUnfollowed(search, reply) {
@@ -152,12 +152,12 @@ export default class SearchSubscriptionList {
     }
 
     /**
-     * Remove a mentioned feed from the local list (not from the zeeguu list).
+     * Remove a mentioned search from the local list (not from the zeeguu list).
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
-     * @param {Object} feed - Data of the particular feed to remove from the list.
+     * @param {Object} search - Data of the particular search to remove from the list.
      */
     _remove(search) {
-        if (!this.searchList.delete(search.id))  { console.log("Error: search not in feed list."); }
+        if (!this.searchList.delete(search.id))  { console.log("Error: search not in search list."); }
         $('span[removableID="' + search.id + '"]').fadeOut();
     }
 

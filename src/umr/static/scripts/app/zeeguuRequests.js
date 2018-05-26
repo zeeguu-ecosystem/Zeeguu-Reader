@@ -25,6 +25,8 @@ export const GET_AVAILABLE_LANGUAGES = '/available_languages';
 export const GET_LEARNED_LANGUAGE = '/learned_language';
 /** Get the native language of this user. */
 export const GET_NATIVE_LANGUAGE = '/native_language';
+/** Get the reading languages of this user. */
+export const GET_READING_LANGUAGES = '/user_languages/reading';
 
 /** "NEW LANGUAGE ENDPOINTS FOR THE USER_LANGUAGE " */
 /** Get all the languages the user is learning. */
