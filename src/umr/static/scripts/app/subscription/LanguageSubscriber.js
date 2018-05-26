@@ -19,15 +19,15 @@ const USER_EVENT_OPENED_FEEDSUBSCRIBER = 'OPEN TOPICSUBSCRIBER';
  */
 export default class LanguageSubscriber {
     /**
-     * Link the {@link SubscriptionList} with this instance so we can update it on change.
-     * @param topicSubscriptionList
+     * Link the {@link LanguageSubscriptionList} with this instance so we can update it on change.
+     * @param languageSubscriptionList
      */
     constructor(languageSubscriptionList) {
         this.languageSubscriptionList = languageSubscriptionList;
     }
 
     /**
-     * Open the dialog window containing the list of feeds.
+     * Open the dialog window containing the list of languages.
      * Uses the sweetalert library.
      */
     open() {
@@ -47,27 +47,23 @@ export default class LanguageSubscriber {
     }
 
     /**
-     * Call Zeeguu and requests available topics for the given language.
-     * If the language is not given, it simply uses the last used language.
-     * Uses {@link ZeeguuRequests}.
-     * @param {string} language - Language code.
-     * @example load('nl');
+     * Call Zeeguu and requests available languages.
      */
     load() {
         ZeeguuRequests.get(GET_INTERESTING_LANGUAGES, {}, this._loadFeedOptions.bind(this));
     }
 
     /**
-     * Clear the list of feed options.
+     * Clear the list of languages options.
      */
     clear() {
         $(HTML_ID_ADD_FEED_LIST).empty();
     }
 
     /**
-     * Fills the dialog's list with all the addable topics.
+     * Fills the dialog's list with all the addable languages.
      * Callback function for zeeguu.
-     * @param {Object[]} data - A list of feeds the user can subscribe to.
+     * @param {Object[]} data - A list of languages the user can subscribe to.
      */
     _loadFeedOptions(data) {
         let template = $(HTML_ID_FEED_TEMPLATE).html();

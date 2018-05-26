@@ -47,11 +47,7 @@ export default class TopicSubscriber {
     }
 
     /**
-     * Call Zeeguu and requests available topics for the given language.
-     * If the language is not given, it simply uses the last used language.
-     * Uses {@link ZeeguuRequests}.
-     * @param {string} language - Language code.
-     * @example load('nl');
+     * Call Zeeguu and requests available topics.
      */
     load() {
         ZeeguuRequests.get(GET_AVAILABLE_TOPICS, {}, this._loadFeedOptions.bind(this));
@@ -67,7 +63,7 @@ export default class TopicSubscriber {
     /**
      * Fills the dialog's list with all the addable topics.
      * Callback function for zeeguu.
-     * @param {Object[]} data - A list of feeds the user can subscribe to.
+     * @param {Object[]} data - A list of topics the user can subscribe to.
      */
     _loadFeedOptions(data) {
         let template = $(HTML_ID_FEED_TEMPLATE).html();
