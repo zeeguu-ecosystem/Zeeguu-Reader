@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
 import Cache from '../Cache';
+import Notifier from '../Notifier';
 import moment from 'moment';
 import NoFeedTour from './NoFeedTour';
 import {difficultyToColorMapping} from './DifficultyColors'
@@ -126,6 +127,7 @@ export default class ArticleList {
         $(config.HTML_CLASS_LOADER).fadeOut('slow');
         // If there are no articles in the list, show the noFeedTour
         if (articleLinks.length < 1) {
+            Notifier.notify("Couldn't find any articles for your selection!");
             this.noFeedTour.show();
             return;
         }
