@@ -6,8 +6,7 @@ import 'loggly-jslogger';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_READING_LANGUAGES} from '../zeeguuRequests';
-import {ADD_USER_LANGUAGE} from '../zeeguuRequests';
-import {DELETE_USER_LANGUAGE} from '../zeeguuRequests';
+import {MODIFY_USER_LANGUAGE} from '../zeeguuRequests';
 
 const HTML_ID_SUBSCRIPTION_LIST = '#languagesList';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-language';
@@ -103,7 +102,7 @@ export default class LanguageSubscriptionList {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, language.id, language);
         this._addSubscription(language);
         let callback = ((data) => this._onFeedFollowed(language, data)).bind(this);
-        ZeeguuRequests.post(ADD_USER_LANGUAGE, {language_id: language.id}, callback);
+        ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 1}, callback);
     }
 
     /**
@@ -131,7 +130,7 @@ export default class LanguageSubscriptionList {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, language.id, language);
         this._remove(language);
         let callback = ((data) => this._onFeedUnfollowed(language, data)).bind(this);
-        ZeeguuRequests.get(DELETE_USER_LANGUAGE + "/" + language.id, {}, callback);
+        ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 0}, callback);
     }
 
     /**

@@ -32,7 +32,7 @@ export const GET_READING_LANGUAGES = '/user_languages/reading';
 /** Get all the languages the user is learning. */
 export const GET_USER_LANGUAGES = '/user_languages';
 /** Add a language for the user to learn. */
-export const ADD_USER_LANGUAGE = '/user_languages/add';
+export const MODIFY_USER_LANGUAGE = '/user_languages/modify';
 /** Delete a language the user is learning. */
 export const DELETE_USER_LANGUAGE = '/user_languages/delete';
 /** Get all the interesting languages for a user */
@@ -40,7 +40,7 @@ export const GET_INTERESTING_LANGUAGES = '/user_languages/interesting';
 
 
 /** Get a list of available topics. */
-export const GET_AVAILABLE_TOPICS = '/interesting_topics';
+export const GET_AVAILABLE_TOPICS = '/unfollowed_topics';
 /** Get which topics the user is currently subscribed to. */
 export const GET_SUBSCRIBED_TOPICS = '/subscribed_topics';
 /** Subscribe to a new topic. */
@@ -49,8 +49,6 @@ export const SUBSCRIBE_TOPIC_ENDPOINT = '/subscribe_topic';
 export const UNSUBSCRIBE_TOPIC_ENDPOINT = '/unsubscribe_topic';
 
 
-/** Get a list of the available filters. */
-export const GET_AVAILABLE_FILTERS = '/interesting_filters';
 /** Get a lit of the user's current filters. */
 export const GET_SUBSCRIBED_FILTERS = '/filtered_topics';
 /** Subscribe to a new filter. */
