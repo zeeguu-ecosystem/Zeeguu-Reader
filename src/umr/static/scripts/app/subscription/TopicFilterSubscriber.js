@@ -4,7 +4,7 @@ import config from '../config';
 import swal from 'sweetalert';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
-import {GET_AVAILABLE_FILTERS} from '../zeeguuRequests';
+import {GET_AVAILABLE_TOPICS} from '../zeeguuRequests';
 
 
 const HTML_ID_DIALOG_TEMPLATE = '#add-topic-dialog-template';
@@ -51,7 +51,7 @@ export default class TopicFilterSubscriber {
      * Uses {@link ZeeguuRequests}.
      */
     load() {
-        ZeeguuRequests.get(GET_AVAILABLE_FILTERS, {}, this._loadFeedOptions.bind(this));
+        ZeeguuRequests.get(GET_AVAILABLE_TOPICS, {}, this._loadFeedOptions.bind(this));
     }
 
     /**
