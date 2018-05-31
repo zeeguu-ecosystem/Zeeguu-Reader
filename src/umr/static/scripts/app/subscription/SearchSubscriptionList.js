@@ -132,7 +132,7 @@ export default class SearchSubscriptionList {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search);
         this._remove(search);
         let callback = ((data) => this._onFeedUnfollowed(search, data)).bind(this);
-        ZeeguuRequests.get(UNSUBSCRIBE_SEARCH_ENDPOINT, {search_id: search.id}, callback);
+        ZeeguuRequests.post(UNSUBSCRIBE_SEARCH_ENDPOINT, {search_id: search.id}, callback);
     }
 
     /**
