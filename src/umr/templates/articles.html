@@ -114,7 +114,7 @@
 
 <!-- Template for subscribed source items -->
 <script id="subscription-template-source" type="text/template">
-	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span sourceRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -124,7 +124,7 @@
 
 <!-- Template for subscribed topic items -->
 <script id="subscription-template-topic" type="text/template">
-	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span topicRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -134,7 +134,7 @@
 
 <!-- Template for subscribed topic items -->
 <script id="subscription-template-search" type="text/template">
-	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span searchRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{ search }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -144,7 +144,7 @@
 
 <!-- Template for subscribed topic items -->
 <script id="subscription-template-language" type="text/template">
-	<span removableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span languageRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{ language }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>

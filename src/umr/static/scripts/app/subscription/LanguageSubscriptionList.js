@@ -156,7 +156,7 @@ export default class LanguageSubscriptionList {
      */
     _remove(language) {
         if (!this.languageSubscriptionList.delete(language.id))  { console.log("Error: feed not in feed list."); }
-        $('span[removableID="' + language.id + '"]').fadeOut();
+        $('span[languageRemovableID="' + language.id + '"]').fadeOut();
     }
 
     /**

@@ -132,7 +132,7 @@ export default class SourceSubscriptionList {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, source.id, source);
         this._remove(source);
         let callback = ((data) => this._onFeedUnfollowed(source, data)).bind(this);
-        ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
+        ZeeguuRequests.post(UNFOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
 
     /**
@@ -158,7 +158,7 @@ export default class SourceSubscriptionList {
      */
     _remove(source) {
         if (!this.sourceList.delete(source.id))  { console.log("Error: source not in source list."); }
-        $('span[removableID="' + source.id + '"]').fadeOut();
+        $('span[sourceRemovableID="' + source.id + '"]').fadeOut();
     }
 
     /**

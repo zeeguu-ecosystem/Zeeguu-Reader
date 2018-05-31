@@ -158,7 +158,7 @@ export default class SearchSubscriptionList {
      */
     _remove(search) {
         if (!this.searchList.delete(search.id))  { console.log("Error: search not in search list."); }
-        $('span[removableID="' + search.id + '"]').fadeOut();
+        $('span[searchRemovableID="' + search.id + '"]').fadeOut();
     }
 
     /**
