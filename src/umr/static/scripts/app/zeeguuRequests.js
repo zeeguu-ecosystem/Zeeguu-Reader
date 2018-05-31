@@ -40,7 +40,7 @@ export const GET_INTERESTING_LANGUAGES = '/user_languages/interesting';
 
 
 /** Get a list of available topics. */
-export const GET_AVAILABLE_TOPICS = '/unfollowed_topics';
+export const GET_AVAILABLE_TOPICS = '/interesting_topics';
 /** Get which topics the user is currently subscribed to. */
 export const GET_SUBSCRIBED_TOPICS = '/subscribed_topics';
 /** Subscribe to a new topic. */
