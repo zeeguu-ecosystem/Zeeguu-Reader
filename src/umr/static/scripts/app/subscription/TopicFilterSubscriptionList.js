@@ -158,7 +158,7 @@ export default class TopicFilterSubscriptionList {
      */
     _remove(topic) {
         if (!this.topicFilterSubscriptionList.delete(topic.id))  { console.log("Error: topic not in topic list."); }
-        $('span[removableID="' + topic.id + '"]').fadeOut();
+        $('span[topicRemovableID="' + topic.id + '"]').fadeOut();
     }
 
     /**
