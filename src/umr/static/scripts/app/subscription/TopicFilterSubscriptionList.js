@@ -132,7 +132,7 @@ export default class TopicFilterSubscriptionList {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
         this._remove(topic);
         let callback = ((data) => this._onFeedUnfollowed(topic, data)).bind(this);
-        ZeeguuRequests.get(UNSUBSCRIBE_FILTER_ENDPOINT + "/" + topic.id, {}, callback);
+        ZeeguuRequests.post(UNSUBSCRIBE_FILTER_ENDPOINT, {topic_id: topic.id}, callback);
     }
 
     /**

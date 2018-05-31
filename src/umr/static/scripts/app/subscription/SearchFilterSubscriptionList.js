@@ -132,7 +132,7 @@ export default class SearchFilterSubscriptionList {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search);
         this._remove(search);
         let callback = ((data) => this._onFeedUnfollowed(search, data)).bind(this);
-        ZeeguuRequests.get(UNFILTER_SEARCH_ENDPOINT + "/" + search.id, {}, callback);
+        ZeeguuRequests.post(UNFILTER_SEARCH_ENDPOINT, {search_id: search.id}, callback);
     }
 
     /**

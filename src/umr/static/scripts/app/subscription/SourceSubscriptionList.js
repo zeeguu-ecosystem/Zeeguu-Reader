@@ -132,7 +132,7 @@ export default class SourceSubscriptionList {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, source.id, source);
         this._remove(source);
         let callback = ((data) => this._onFeedUnfollowed(source, data)).bind(this);
-        ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT + "/" + source.id, {}, callback);
+        ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
 
     /**
