@@ -129,7 +129,7 @@ export default class SearchSubscriptionList {
      * @param {Object} search - Data of the particular search to unfollow.
      */
     _unfollow(search) {
-        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search);
+        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search.id, search);
         this._remove(search);
         let callback = ((data) => this._onFeedUnfollowed(search, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_SEARCH_ENDPOINT, {search_id: search.id}, callback);
