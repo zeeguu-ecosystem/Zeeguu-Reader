@@ -36,7 +36,7 @@ export const MODIFY_USER_LANGUAGE = '/user_languages/modify';
 /** Delete a language the user is learning. */
 export const DELETE_USER_LANGUAGE = '/user_languages/delete';
 /** Get all the interesting languages for a user */
-export const GET_INTERESTING_LANGUAGES = '/user_languages/interesting';
+export const GET_INTERESTING_LANGUAGES = '/user_languages/interesting_for_reading';
 
 
 /** Get a list of available topics. */
