@@ -101,7 +101,6 @@ export default class SearchFilterSubscriptionList {
      * @param {Object} search_terms - Data of the particular search to subscribe to.
      */
     follow(search_terms) {
-        UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, search_terms);
         let callback = ((data) => this._onFeedFollowed(search_terms, data)).bind(this);
         ZeeguuRequests.get(FILTER_SEARCH_ENDPOINT + "/" + search_terms , {}, callback);
     }
@@ -115,6 +114,7 @@ export default class SearchFilterSubscriptionList {
      */
     _onFeedFollowed(search_terms, reply) {
         if (reply != null) {
+            UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, reply.id, search_terms);
             this._addSubscription(reply);
             this._changed();
         } else {
@@ -129,7 +129,7 @@ export default class SearchFilterSubscriptionList {
      * @param {Object} search - Data of the particular search to unfollow.
      */
     _unfollow(search) {
-        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search);
+        UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search.id, search);
         this._remove(search);
         let callback = ((data) => this._onFeedUnfollowed(search, data)).bind(this);
         ZeeguuRequests.post(UNFILTER_SEARCH_ENDPOINT, {search_id: search.id}, callback);
