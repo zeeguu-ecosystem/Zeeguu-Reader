@@ -101,7 +101,7 @@ export default class LanguageSubscriptionList {
     follow(language) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, language.id, language);
         this._addSubscription(language);
-        let callback = ((data) => this._onFeedFollowed(language, data)).bind(this);
+        let callback = ((data) => this._onLanguageFollowed(language, data)).bind(this);
         ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 1}, callback);
     }
 
@@ -112,7 +112,7 @@ export default class LanguageSubscriptionList {
      * @param {Object} language - Data of the particular language that has been subscribed to.
      * @param {string} reply - Reply from the server.
      */
-    _onFeedFollowed(language, reply) {
+    _onLanguageFollowed(language, reply) {
         if (reply === "OK") {
             this._changed();
         } else {
@@ -129,7 +129,7 @@ export default class LanguageSubscriptionList {
     _unfollow(language) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, language.id, language);
         this._remove(language);
-        let callback = ((data) => this._onFeedUnfollowed(language, data)).bind(this);
+        let callback = ((data) => this._onLanguageUnfollowed(language, data)).bind(this);
         ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 0}, callback);
     }
 
@@ -140,7 +140,7 @@ export default class LanguageSubscriptionList {
      * @param {Object} language - Data of the particular language to that has been unfollowed.
      * @param {string} reply - Server reply.
      */
-    _onFeedUnfollowed(language, reply) {
+    _onLanguageUnfollowed(language, reply) {
         if (reply === "OK") {
             this._changed();
         } else {

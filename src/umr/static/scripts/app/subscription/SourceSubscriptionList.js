@@ -103,7 +103,7 @@ export default class SourceSubscriptionList {
     follow(source) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, source.id, source);
         this._addSubscription(source);
-        let callback = ((data) => this._onFeedFollowed(source, data)).bind(this);
+        let callback = ((data) => this._onSourceFollowed(source, data)).bind(this);
         ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
 
@@ -114,7 +114,7 @@ export default class SourceSubscriptionList {
      * @param {Object} source - Data of the particular source that has been subscribed to.
      * @param {string} reply - Reply from the server.
      */
-    _onFeedFollowed(source, reply) {
+    _onSourceFollowed(source, reply) {
         if (reply === "OK") {
             this._changed();
         } else {
@@ -131,7 +131,7 @@ export default class SourceSubscriptionList {
     _unfollow(source) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, source.id, source);
         this._remove(source);
-        let callback = ((data) => this._onFeedUnfollowed(source, data)).bind(this);
+        let callback = ((data) => this._onSourceUnfollowed(source, data)).bind(this);
         ZeeguuRequests.post(UNFOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
 
@@ -142,7 +142,7 @@ export default class SourceSubscriptionList {
      * @param {Object} source - Data of the particular source to that has been unfollowed.
      * @param {string} reply - Server reply.
      */
-    _onFeedUnfollowed(source, reply) {
+    _onSourceUnfollowed(source, reply) {
         if (reply === "OK") {
             this._changed();
         } else {
