@@ -103,7 +103,7 @@ export default class TopicSubscriptionList {
     follow(topic) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
         this._addSubscription(topic);
-        let callback = ((data) => this._onFeedFollowed(topic, data)).bind(this);
+        let callback = ((data) => this._onTopicFollowed(topic, data)).bind(this);
         ZeeguuRequests.post(SUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
 
@@ -114,7 +114,7 @@ export default class TopicSubscriptionList {
      * @param {Object} topic - Data of the particular topic that has been subscribed to.
      * @param {string} reply - Reply from the server.
      */
-    _onFeedFollowed(topic, reply) {
+    _onTopicFollowed(topic, reply) {
         if (reply === "OK") {
             this._changed();
         } else {
@@ -131,7 +131,7 @@ export default class TopicSubscriptionList {
     _unfollow(topic) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
         this._remove(topic);
-        let callback = ((data) => this._onFeedUnfollowed(topic, data)).bind(this);
+        let callback = ((data) => this._onTopicUnfollowed(topic, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
 
@@ -142,7 +142,7 @@ export default class TopicSubscriptionList {
      * @param {Object} topic - Data of the particular topic to that has been unfollowed.
      * @param {string} reply - Server reply.
      */
-    _onFeedUnfollowed(topic, reply) {
+    _onTopicUnfollowed(topic, reply) {
         if (reply === "OK") {
             this._changed();
         } else {
