@@ -24,10 +24,7 @@ else
 
 fi
 
-webpack
-
-(cd src; python setup.py develop)
-touch /Users/mircea/my/projects/zeeguu/server/http/web/zeeguu_web/app.py
+webpack && (cd src; python setup.py develop) && touch /Users/mircea/my/projects/zeeguu/server/http/web/zeeguu_web/app.py
 
 if [ -z $ZEEGUU_API_URL ]; then
 	echo ""
