@@ -128,11 +128,14 @@ export default class SubscriptionList {
      * Uses {@link ZeeguuRequests}.
      * @param {Object} feed - Data of the particular feed to unfollow.
      */
+
     _unfollow(feed) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, feed.id, feed);
         this._remove(feed);
         let callback = ((data) => this._onFeedUnfollowed(feed, data)).bind(this);
-        ZeeguuRequests.get(UNFOLLOW_FEED_ENDPOINT + "/" + feed.id, {}, callback);
+        ZeeguuRequests.post(UNFOLLOW_FEED_ENDPOINT,
+            {source_id: feed.id},
+            callback);
     }
 
     /**
