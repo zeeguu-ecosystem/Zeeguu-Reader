@@ -15,7 +15,7 @@ export default class UserActivityLogger {
      */
     static log(event, value = '', extra_data = {}) {
 
-/*        let event_information = {
+        let event_information = {
             time: new Date().toJSON(),
             event: 'UMR - ' + event,
             value: value,
@@ -25,7 +25,6 @@ export default class UserActivityLogger {
             POST_USER_ACTIVITY_ENDPOINT,
             event_information,
             this._onReply);
-*/
     }
 
     /**
