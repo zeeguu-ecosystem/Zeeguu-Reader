@@ -28,6 +28,7 @@ const USER_EVENT_EXIT_ARTICLE = 'ARTICLE CLOSED';
 const USER_EVENT_OPENED_ARTICLE = 'OPEN ARTICLE';
 const USER_EVENT_ARTICLE_FOCUS = 'ARTICLE FOCUSED';
 const USER_EVENT_ARTICLE_LOST_FOCUS = 'ARTICLE LOST FOCUS';
+const USER_EVENT_SCROLL = 'SCROLL';
 const USER_EVENT_FEEDBACK = 'USER FEEDBACK';
 
 
@@ -47,11 +48,38 @@ var translator;
 var alterMenu;
 var FROM_LANGUAGE;
 
+var previous_time = 0;
+var FREQUENCY_KEEPALIVE = 60 * 1000;
+
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function () {
     // Disable selection by default.
+
+        $(".mdl-layout__content").on("scroll",function () {
+
+            var _current_time = new Date();
+
+            var current_time = _current_time.getTime();
+
+            if (previous_time == 0) {
+                let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+                UserActivityLogger.log(USER_EVENT_SCROLL, url);
+                console.log("should be sending it!");
+                previous_time = current_time;
+
+            } else {
+                if ((current_time - previous_time) > FREQUENCY_KEEPALIVE) {
+                    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+                    UserActivityLogger.log(USER_EVENT_SCROLL, url);
+                    console.log("should be sending");
+                    previous_time = current_time;
+                } else {
+                    console.log("not sending not to spam the server");
+                }
+            }
+        });
 
 
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
@@ -170,12 +198,14 @@ $(window).on("orientationchange", function () {
 });
 
 $(window).on("focus", function () {
+    console.log("things work.");
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
     UserActivityLogger.log(USER_EVENT_ARTICLE_FOCUS, url);
 });
 
 $(window).on("blur", function () {
-    UserActivityLogger.log(USER_EVENT_ARTICLE_LOST_FOCUS, "");
+    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+    UserActivityLogger.log(USER_EVENT_ARTICLE_LOST_FOCUS, url);
 });
 
 
