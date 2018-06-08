@@ -89,18 +89,6 @@ $(document).ready(function () {
         }
     });
 
-    let searchSubscriptionButton = document.querySelector('.subscribe-search');
-    $(searchSubscriptionButton).click(function () {
-        let input = $(searchExecuted).val();
-        searchSubscriptionList.follow(input);
-    });
-
-    let searchFilterButton = document.querySelector('.filter-search');
-    $(searchFilterButton).click(function () {
-        let input = $(searchExecuted).val();
-        searchFilterSubscriptionList.follow(input);
-    });
-
 });
 
 /* Called when no image could be loaded as an article avatar. */
