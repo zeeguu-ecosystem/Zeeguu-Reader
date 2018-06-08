@@ -42,12 +42,12 @@ export default class TopicSubscriber {
             text: template,
             html: true,
             type: 'input',
-            inputPlaceholder: "Search for your own topic!",
+            inputPlaceholder: "Subscribe to your own keywords!",
             allowOutsideClick: true,
             showConfirmButton: true,
             showCancelButton: true,
             cancelButtonText: 'Close',
-            confirmButtonText: 'Search',
+            confirmButtonText: 'Subscribe',
         }, function(input) {
             if (input === "" || input === false) {
                 return false
