@@ -31,15 +31,13 @@ let articleList = new ArticleList(sourceSubscriptionList);
 let sourceSubscriber = new SourceSubscriber(sourceSubscriptionList);
 let starredArticleList = new StarredArticleList();
 let topicSubscriptionList = new TopicSubscriptionList();
-let topicSubscriber = new TopicSubscriber(topicSubscriptionList);
 let topicFilterSubscriptionList = new TopicFilterSubscriptionList();
-let topicFilterSubscriber = new TopicFilterSubscriber(topicFilterSubscriptionList);
 let searchSubscriptionList = new SearchSubscriptionList();
 let searchFilterSubscriptionList = new SearchFilterSubscriptionList();
+let topicSubscriber = new TopicSubscriber(topicSubscriptionList, searchSubscriptionList);
+let topicFilterSubscriber = new TopicFilterSubscriber(topicFilterSubscriptionList, searchFilterSubscriptionList);
 let languageSubscriptionList = new LanguageSubscriptionList();
-let languageSubscriber = new LanguageSubscriber(languageSubscriptionList)
-
-
+let languageSubscriber = new LanguageSubscriber(languageSubscriptionList);
 
 document.addEventListener(config.EVENT_SUBSCRIPTION, function () {
     articleList.clear();

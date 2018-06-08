@@ -6,24 +6,31 @@ import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_AVAILABLE_TOPICS} from '../zeeguuRequests';
 
-
 const HTML_ID_DIALOG_TEMPLATE = '#add-topic-dialog-template';
 const HTML_ID_ADD_FEED_LIST = '#addableTopicList';
 const HTML_ID_FEED_TEMPLATE = '#topicAddable-template';
 const HTML_CLASS_SUBSCRIBE_BUTTON = ".subscribeButton";
 const HTML_CLASS_FEED_ICON = '.feedIcon';
 const USER_EVENT_OPENED_FEEDSUBSCRIBER = 'OPEN FILTERSUBSCRIBER';
-
+let self;
 /**
  * Allows the user to add topic subscriptions.
  */
 export default class TopicFilterSubscriber {
+
     /**
      * Link the {@link TopicFilterSubscriptionList} with this instance so we can update it on change.
      * @param topicFilterSubscriptionList
+     * @param searchFilterSubscriptionList
      */
-    constructor(topicFilterSubscriptionList) {
+    constructor(topicFilterSubscriptionList, searchFilterSubscriptionList) {
         this.topicFilterSubscriptionList = topicFilterSubscriptionList;
+        this.searchFilterSubscriptionList = searchFilterSubscriptionList;
+        self = this;
+    }
+
+    follow(input){
+        this.searchFilterSubscriptionList.follow(input)
     }
 
     /**
@@ -37,10 +44,18 @@ export default class TopicFilterSubscriber {
             title: 'Available Filters',
             text: template,
             html: true,
+            type: 'input',
+            inputPlaceholder: "Search for your own filter",
             allowOutsideClick: true,
-            showConfirmButton: false,
+            showConfirmButton: true,
             showCancelButton: true,
             cancelButtonText: 'Close',
+            confirmButtonText: 'Search',
+        }, function(input) {
+            if (input === "" || input === false) {
+                return false
+            }
+            self.searchFilterSubscriptionList.follow(input);
         });
 
         this.load();

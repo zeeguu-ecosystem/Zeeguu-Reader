@@ -33,7 +33,7 @@ export default class SearchFilterSubscriptionList {
      * Initialise an empty {@link Map} of searches.
      */
     constructor() {
-        this.searchFilterList = new Map();
+        this.searchFilterSubscriptionList = new Map();
     }
 
     /**
@@ -79,7 +79,7 @@ export default class SearchFilterSubscriptionList {
      * @param {Object} search - Data of the particular search to add to the list.
      */
     _addSubscription(search) {
-        if (this.searchFilterList.has(search.id))
+        if (this.searchFilterSubscriptionList.has(search.id))
             return;
 
         let template = $(HTML_ID_SUBSCRIPTION_TEMPLATE).html();
@@ -92,7 +92,7 @@ export default class SearchFilterSubscriptionList {
             };
         }(search));
         $(HTML_ID_SUBSCRIPTION_LIST).append(subscription);
-        this.searchFilterList.set(search.id, search);
+        this.searchFilterSubscriptionList.set(search.id, search);
     }
 
     /**
@@ -157,7 +157,7 @@ export default class SearchFilterSubscriptionList {
      * @param {Object} search - Data of the particular search to remove from the list.
      */
     _remove(search) {
-        if (!this.searchFilterList.delete(search.id))  { console.log("Error: search not in search list."); }
+        if (!this.searchFilterSubscriptionList.delete(search.id))  { console.log("Error: search not in search list."); }
         $('span[searchRemovableID="' + search.id + '"]').fadeOut();
     }
 

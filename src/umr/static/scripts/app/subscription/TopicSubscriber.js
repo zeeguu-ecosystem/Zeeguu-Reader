@@ -13,17 +13,21 @@ const HTML_ID_FEED_TEMPLATE = '#topicAddable-template';
 const HTML_CLASS_SUBSCRIBE_BUTTON = ".subscribeButton";
 const HTML_CLASS_FEED_ICON = '.feedIcon';
 const USER_EVENT_OPENED_FEEDSUBSCRIBER = 'OPEN TOPICSUBSCRIBER';
+let self;
 
 /**
  * Allows the user to add topic subscriptions.
  */
 export default class TopicSubscriber {
     /**
-     * Link the {@link SubscriptionList} with this instance so we can update it on change.
+     * Link the {@link TopicSubscriptionList} with this instance so we can update it on change.
      * @param topicSubscriptionList
+     * @param searchSubscriptionList
      */
-    constructor(topicSubscriptionList) {
+    constructor(topicSubscriptionList, searchSubscriptionList) {
         this.topicSubscriptionList = topicSubscriptionList;
+        this.searchSubscriptionList = searchSubscriptionList;
+        self = this;
     }
 
     /**
@@ -37,10 +41,18 @@ export default class TopicSubscriber {
             title: 'Available Topics',
             text: template,
             html: true,
+            type: 'input',
+            inputPlaceholder: "Search for your own topic!",
             allowOutsideClick: true,
-            showConfirmButton: false,
+            showConfirmButton: true,
             showCancelButton: true,
             cancelButtonText: 'Close',
+            confirmButtonText: 'Search',
+        }, function(input) {
+            if (input === "" || input === false) {
+                return false
+            }
+            self.searchSubscriptionList.follow(input);
         });
 
         this.load();
@@ -73,14 +85,14 @@ export default class TopicSubscriber {
 
             subscribeButton.click(
                 function (data, feedOption, topicSubscriptionList) {
-                    return function() {
+                    return function () {
                         topicSubscriptionList.follow(data);
                         $(feedOption).fadeOut();
                     };
-            }(data[i], feedOption, this.topicSubscriptionList));
+                }(data[i], feedOption, this.topicSubscriptionList));
 
             let feedIcon = $(feedOption.find(HTML_CLASS_FEED_ICON));
-            feedIcon.on( "error", function () {
+            feedIcon.on("error", function () {
                 $(this).unbind("error").attr("src", "static/images/noAvatar.png");
             });
             $(HTML_ID_ADD_FEED_LIST).append(feedOption);
