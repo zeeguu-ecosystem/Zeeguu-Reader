@@ -59,22 +59,22 @@ $(document).ready(function () {
     languageSubscriptionList.load();
     languageSubscriber.load();
 
-    let showAddLanguageDialog = document.querySelector('.show-language');
+    let showAddLanguageDialog = document.querySelector('.show-language-subscriber');
     $(showAddLanguageDialog).click(function () {
         languageSubscriber.open();
     });
 
-    let showAddFeedDialogButton = document.querySelector('.show-source');
+    let showAddFeedDialogButton = document.querySelector('.show-source-subscriber');
     $(showAddFeedDialogButton).click(function () {
         sourceSubscriber.open();
     });
 
-    let showAddTopicDialogButton = document.querySelector('.show-sub');
+    let showAddTopicDialogButton = document.querySelector('.show-topic-subscriber');
     $(showAddTopicDialogButton).click(function () {
         topicSubscriber.open();
     });
 
-    let showAddFilterDialogButton = document.querySelector('.show-filter');
+    let showAddFilterDialogButton = document.querySelector('.show-filter-subscriber');
     $(showAddFilterDialogButton).click(function () {
         topicFilterSubscriber.open();
     });

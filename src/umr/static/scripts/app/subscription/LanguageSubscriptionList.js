@@ -24,7 +24,7 @@ logger.push({
 
 /**
  * Shows a list of all subscribed languages, allows the user to remove them.
- * It updates the {@link ArticleList} accordingly.
+ * It updates the {@link L} accordingly.
  */
 export default class LanguageSubscriptionList {
     /**
@@ -68,8 +68,6 @@ export default class LanguageSubscriptionList {
         for (let i = 0; i < data.length; i++) {
             this._addSubscription(data[i]);
         }
-
-        //this._changed();
     }
 
     /**
@@ -150,7 +148,7 @@ export default class LanguageSubscriptionList {
     }
 
     /**
-     * Remove a mentioned language from the local list (not from the zeeguu list).
+     * Remove a mentioned language from the local list which is shown in the User Interface.
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
      * @param {Object} language - Data of the particular language to remove from the list.
      */

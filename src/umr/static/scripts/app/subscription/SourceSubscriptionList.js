@@ -152,7 +152,7 @@ export default class SourceSubscriptionList {
     }
 
     /**
-     * Remove a mentioned source from the local list (not from the zeeguu list).
+     * Remove a mentioned language from the local list which is shown in the User Interface.
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
      * @param {Object} source - Data of the particular source to remove from the list.
      */

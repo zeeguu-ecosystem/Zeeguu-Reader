@@ -70,8 +70,6 @@ export default class SearchSubscriptionList {
         for (let i = 0; i < data.length; i++) {
             this._addSubscription(data[i]);
         }
-
-        //this._changed();
     }
 
     /**
@@ -152,7 +150,7 @@ export default class SearchSubscriptionList {
     }
 
     /**
-     * Remove a mentioned search from the local list (not from the zeeguu list).
+     * Remove a mentioned language from the local list which is shown in the User Interface.
      * Makes sure the associated articles are removed as well by notifying {@link ArticleList}.
      * @param {Object} search - Data of the particular search to remove from the list.
      */
