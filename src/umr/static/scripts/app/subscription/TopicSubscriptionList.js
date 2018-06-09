@@ -100,7 +100,6 @@ export default class TopicSubscriptionList {
      */
     follow(topic) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
-        this._addSubscription(topic);
         let callback = ((data) => this._onTopicFollowed(topic, data)).bind(this);
         ZeeguuRequests.post(SUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
@@ -114,6 +113,7 @@ export default class TopicSubscriptionList {
      */
     _onTopicFollowed(topic, reply) {
         if (reply === "OK") {
+            this._addSubscription(topic);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not follow " + topic.title + ".");
