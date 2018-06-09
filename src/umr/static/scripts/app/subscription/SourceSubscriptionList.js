@@ -116,6 +116,7 @@ export default class SourceSubscriptionList {
      */
     _onSourceFollowed(source, reply) {
         if (reply === "OK") {
+            this._addSubscription(source);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not follow " + source.title + ".");

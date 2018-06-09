@@ -24,7 +24,7 @@ logger.push({
 
 /**
  * Shows a list of all subscribed languages, allows the user to remove them.
- * It updates the {@link L} accordingly.
+ * It updates the {@link ArticleList} accordingly.
  */
 export default class LanguageSubscriptionList {
     /**
@@ -98,7 +98,6 @@ export default class LanguageSubscriptionList {
      */
     follow(language) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, language.id, language);
-        this._addSubscription(language);
         let callback = ((data) => this._onLanguageFollowed(language, data)).bind(this);
         ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 1}, callback);
     }
@@ -112,6 +111,7 @@ export default class LanguageSubscriptionList {
      */
     _onLanguageFollowed(language, reply) {
         if (reply === "OK") {
+            this._addSubscription(language);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not follow " + language.title + ".");
