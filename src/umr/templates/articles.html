@@ -54,26 +54,26 @@
             </div>
           </div>
 		  <br>
-		  <!-- List of feeds currently subscribed to. -->
+		  <!-- List of content currently subscribed to. -->
 		  <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
 				<span class="mdl-chip__text">Languages</span>
-				<button type="button" class="mdl-chip__action show-language"><i class="material-icons md-light">add_circle</i></button>
+				<button type="button" class="mdl-chip__action show-language-subscriber"><i class="material-icons md-light">add_circle</i></button>
 			</span>
 		  <div id="languagesList"></div>
 			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
 				<span class="mdl-chip__text">Sources</span>
-				<button type="button" class="mdl-chip__action show-source"><i class="material-icons md-light">add_circle</i></button>
+				<button type="button" class="mdl-chip__action show-source-subscriber"><i class="material-icons md-light">add_circle</i></button>
 			</span>
 		  <div id="sourcesList"></div>
 			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
 				<span class="mdl-chip__text">Topics</span>
-				<button type="button" class="mdl-chip__action show-sub"><i class="material-icons md-light">add_circle</i></button>
+				<button type="button" class="mdl-chip__action show-topic-subscriber"><i class="material-icons md-light">add_circle</i></button>
 			</span>
 		  <div id="searchesList"></div>
 		  <div id="topicsList"></div>
 			<span class="mdl-chip mdl-chip--deletable mdl-color--red mdl-color-text--white tour">
 				<span class="mdl-chip__text">Filters</span>
-				<button type="button" class="mdl-chip__action show-filter"><i class="material-icons md-light">add_circle</i></button>
+				<button type="button" class="mdl-chip__action show-filter-subscriber"><i class="material-icons md-light">add_circle</i></button>
 			</span>
 		  <div id="searchesFilterList"></div>
 		  <div id="topicsFilterList"></div>
@@ -129,7 +129,7 @@
 	</span>
 </script>
 
-<!-- Template for subscribed topic items -->
+<!-- Template for subscribed search items -->
 <script id="subscription-template-search" type="text/template">
 	<span searchRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{ search }}{% endraw %}</span>
@@ -139,7 +139,7 @@
 	</span>
 </script>
 
-<!-- Template for subscribed topic items -->
+<!-- Template for subscribed language items -->
 <script id="subscription-template-language" type="text/template">
 	<span languageRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
 		<span class="mdl-chip__text">{% raw %}{{ language }}{% endraw %}</span>
