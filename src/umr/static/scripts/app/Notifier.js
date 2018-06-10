@@ -20,5 +20,6 @@ export default class Notifier {
             return;
         snackbar.MaterialSnackbar.showSnackbar({message: message});
         lastMessage = message;
+        snackbar.add();
     };
 };
