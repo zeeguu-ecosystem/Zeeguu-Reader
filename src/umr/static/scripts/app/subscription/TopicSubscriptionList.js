@@ -128,7 +128,6 @@ export default class TopicSubscriptionList {
      */
     _unfollow(topic) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
-        this._remove(topic);
         let callback = ((data) => this._onTopicUnfollowed(topic, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
@@ -142,6 +141,7 @@ export default class TopicSubscriptionList {
      */
     _onTopicUnfollowed(topic, reply) {
         if (reply === "OK") {
+            this._remove(topic);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not unfollow " + topic.title + ".");

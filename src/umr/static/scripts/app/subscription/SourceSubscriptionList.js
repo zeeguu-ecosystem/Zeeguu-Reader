@@ -131,7 +131,6 @@ export default class SourceSubscriptionList {
      */
     _unfollow(source) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, source.id, source);
-        this._remove(source);
         let callback = ((data) => this._onSourceUnfollowed(source, data)).bind(this);
         ZeeguuRequests.post(UNFOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
@@ -145,6 +144,7 @@ export default class SourceSubscriptionList {
      */
     _onSourceUnfollowed(source, reply) {
         if (reply === "OK") {
+            this._remove(source);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not unfollow " + source.title + ".");
