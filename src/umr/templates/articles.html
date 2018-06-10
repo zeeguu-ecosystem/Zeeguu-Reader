@@ -29,8 +29,13 @@
 		  <a href="/whatnext" id = "return_home" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 			  <i class="material-icons">home_back</i>
 		  </a>
+		  	<span class="mdl-chip mdl-chip--deletable mdl-color--blue-grey-100 mdl-color-text--black tour search-block">
+					<span class="mdl-chip__text searchtext"> </span>
+					<button type="button" class="mdl-chip__action search-delete-button"><i class="material-icons md-light search-butt"></i></button>
+			</span>
 
-          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-layout-spacer"></div>"
+
 
 	  </div>
 	  <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -92,10 +97,10 @@
             <div class="loader">
                 <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
             </div>
-            <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
-                <div class="mdl-snackbar__text"></div>
-                <button class="mdl-snackbar__action" type="button"></button>
-            </div>
+			<div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
+				<div class="mdl-snackbar__text"></div>
+				<button class="mdl-snackbar__action" type="button"></button>
+			</div>
         </div>
     </section>
     <section class="mdl-layout__tab-panel" id="starred">
