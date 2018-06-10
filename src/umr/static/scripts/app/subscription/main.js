@@ -105,8 +105,7 @@ function noAvatar(image) {
 }
 
 function showSearchNotification(input){
-    $(SEARCH_TEXT).text('You searched for : ' + input);
-    alert('You searched for : ' + input);
+    $(SEARCH_TEXT).text('Searched for : ' + input);
     $(SEARCH_BUTT_TEXT).text('close');
     $(SEARCH_DEL_BUTTON).click(function () {
         hideSearchNotification();
