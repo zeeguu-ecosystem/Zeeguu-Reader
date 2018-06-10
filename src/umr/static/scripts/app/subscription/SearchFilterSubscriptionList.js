@@ -128,7 +128,6 @@ export default class SearchFilterSubscriptionList {
      */
     _unfollow(search) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search.id, search);
-        this._remove(search);
         let callback = ((data) => this._onSearchFilterUnfollowed(search, data)).bind(this);
         ZeeguuRequests.post(UNFILTER_SEARCH_ENDPOINT, {search_id: search.id}, callback);
     }
@@ -142,6 +141,7 @@ export default class SearchFilterSubscriptionList {
      */
     _onSearchFilterUnfollowed(search, reply) {
         if (reply === "OK") {
+            this._remove(search);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not unfollow " + search.search + ".");
