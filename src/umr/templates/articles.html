@@ -29,13 +29,7 @@
 		  <a href="/whatnext" id = "return_home" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
 			  <i class="material-icons">home_back</i>
 		  </a>
-		  	<span class="mdl-chip mdl-chip--deletable mdl-color--blue-grey-100 mdl-color-text--black tour search-block">
-					<span class="mdl-chip__text searchtext"> </span>
-					<button type="button" class="mdl-chip__action search-delete-button"><i class="material-icons md-light search-butt"></i></button>
-			</span>
-
           <div class="mdl-layout-spacer"></div>"
-
 
 	  </div>
 	  <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -76,7 +70,7 @@
 			</span>
 		  <div id="searchesList"></div>
 		  <div id="topicsList"></div>
-			<span class="mdl-chip mdl-chip--deletable mdl-color--red mdl-color-text--white tour">
+			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
 				<span class="mdl-chip__text">Filters</span>
 				<button type="button" class="mdl-chip__action show-filter-subscriber"><i class="material-icons md-light">add_circle</i></button>
 			</span>
@@ -88,6 +82,8 @@
   <main class="mdl-layout__content">
     <section class="mdl-layout__tab-panel is-active" id="inbox">
         <div class="page-content">
+			<!-- Search notification -->
+			<ul id="searchNotification" class="searchNotification"></ul>
             <!-- List of articles -->
             <ul id="articleLinkList" class="articleLinkList"></ul>
             <BR />
@@ -116,7 +112,7 @@
 
 <!-- Template for subscribed source items -->
 <script id="subscription-template-source" type="text/template">
-	<span sourceRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span sourceRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -126,7 +122,7 @@
 
 <!-- Template for subscribed topic items -->
 <script id="subscription-template-topic" type="text/template">
-	<span topicRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span topicRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -136,7 +132,7 @@
 
 <!-- Template for subscribed search items -->
 <script id="subscription-template-search" type="text/template">
-	<span searchRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span searchRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ search }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -146,7 +142,7 @@
 
 <!-- Template for subscribed language items -->
 <script id="subscription-template-language" type="text/template">
-	<span languageRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable">
+	<span languageRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ language }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -189,6 +185,20 @@
 			</a>
 			<div class="starredFlag headerElement">
 				<span class="flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %} headerElement"></span>
+			</div>
+		</div>
+	</li>
+	<div class="articleLinkSpacer"></div>
+</script>
+
+<script id="search-notification-template" type="text/template">
+	<li class="fadeoutOnClick articleLinkEntry search-notification-box">
+		<div class ="articleLinkHeader">
+			<div class="searchText headerElement">
+				{% raw %}{{ displayText }}{% endraw %}
+			</div>
+			<div class="deleteSearch headerElement">
+				<i class="material-icons">cancel</i>
 			</div>
 		</div>
 	</li>
