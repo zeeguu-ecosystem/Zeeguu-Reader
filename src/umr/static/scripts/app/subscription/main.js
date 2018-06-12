@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import Mustache from 'mustache';
 import ArticleList from './ArticleList';
 import StarredArticleList from './StarredArticleList';
 import SourceSubscriptionList from './SourceSubscriptionList.js';
@@ -13,10 +14,9 @@ import LanguageSubscriptionList from "./LanguageSubscriptionList";
 import LanguageSubscriber from "./LanguageSubscriber";
 import config from '../config';
 
-const SEARCH_TEXT = '.searchtext';
-const SEARCH_DEL_BUTTON = '.search-delete-button';
-const SEARCH_BLOCK = '.search-block';
-const SEARCH_BUTT_TEXT = '.search-butt';
+const HTML_ID_SEARCH_NOTIFCATION_TEMPLATE = '#search-notification-template';
+const HTML_ID_SEARCH_NOTIFICATION = '.searchNotification';
+
 
 import "../../../styles/mdl/material.min.js";
 import '../../../styles/mdl/material.min.css';
@@ -47,7 +47,7 @@ let languageSubscriber = new LanguageSubscriber(languageSubscriptionList);
 document.addEventListener(config.EVENT_SUBSCRIPTION, function () {
     articleList.clear();
     articleList.load();
-    hideSearchNotification();
+    $(HTML_ID_SEARCH_NOTIFICATION).empty();
 });
 
 /* When the document has finished loading,
@@ -105,19 +105,24 @@ function noAvatar(image) {
 }
 
 function showSearchNotification(input){
-    $(SEARCH_TEXT).text('Searched for : ' + input);
-    $(SEARCH_BUTT_TEXT).text('close');
-    $(SEARCH_DEL_BUTTON).click(function () {
-        hideSearchNotification();
+    let template = $(HTML_ID_SEARCH_NOTIFCATION_TEMPLATE).html();
+    $(HTML_ID_SEARCH_NOTIFICATION).empty();
+
+    let templateAttributes = {
+        displayText: "You searched for : " + input,
+    };
+
+    let element = Mustache.render(template, templateAttributes);
+    $(HTML_ID_SEARCH_NOTIFICATION).append(element);
+
+    let searchNotificationBox = document.querySelector('.search-notification-box');
+    $(searchNotificationBox).click(function () {
         articleList.clear();
         articleList.load();
+        $(HTML_ID_SEARCH_NOTIFICATION).empty();
     });
-    $(SEARCH_BLOCK).show();
 }
 
-function hideSearchNotification(){
-    $(SEARCH_BLOCK).hide();
-}
 $(document).keydown(function (event) {
 
     let highlighted_element = $("#articleLinkList").children(".highlightedArticle");

@@ -100,6 +100,7 @@ export default class TopicFilterSubscriptionList {
      */
     follow(topic) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
+        this._addSubscription(topic);
         let callback = ((data) => this._onTopicFilterFollowed(topic, data)).bind(this);
         ZeeguuRequests.post(SUBSCRIBE_FILTER_ENDPOINT, {filter_id: topic.id}, callback);
     }
@@ -113,7 +114,6 @@ export default class TopicFilterSubscriptionList {
      */
     _onTopicFilterFollowed(topic, reply) {
         if (reply === "OK") {
-            this._addSubscription(topic);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not follow " + topic.title + ".");
@@ -128,6 +128,7 @@ export default class TopicFilterSubscriptionList {
      */
     _unfollow(topic) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
+        this._remove(topic);
         let callback = ((data) => this._onTopicFilterUnfollowed(topic, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_FILTER_ENDPOINT, {topic_id: topic.id}, callback);
     }
@@ -141,7 +142,6 @@ export default class TopicFilterSubscriptionList {
      */
     _onTopicFilterUnfollowed(topic, reply) {
         if (reply === "OK") {
-            this._remove(topic);
             this._changed();
         } else {
             Notifier.notify("Network Error - Could not unfollow filter " + topic.title + ".");
