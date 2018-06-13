@@ -38,7 +38,7 @@ export default class TopicSubscriber {
         UserActivityLogger.log(USER_EVENT_OPENED_FEEDSUBSCRIBER);
         let template = $(HTML_ID_DIALOG_TEMPLATE).html();
         swal({
-            title: 'Available Topics',
+            title: 'Interests',
             text: template,
             html: true,
             type: 'input',
@@ -46,8 +46,8 @@ export default class TopicSubscriber {
             allowOutsideClick: true,
             showConfirmButton: true,
             showCancelButton: true,
+            confirmButtonText: 'Add Own Keyword',
             cancelButtonText: 'Close',
-            confirmButtonText: 'Subscribe',
         }, function(input) {
             if (input === "" || input === false) {
                 return false

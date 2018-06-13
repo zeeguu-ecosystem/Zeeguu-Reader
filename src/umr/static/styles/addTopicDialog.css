@@ -41,7 +41,7 @@
 }
 
 .topicAddSubTitle {
-  font-size: 1em;
+  font-size: 1.3em;
   font-style: italic;
   text-align: center;
 }
@@ -49,3 +49,4 @@
 .list-control {
   overflow-y: scroll;
 }
+
