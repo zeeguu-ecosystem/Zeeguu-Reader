@@ -41,7 +41,7 @@ export default class TopicFilterSubscriber {
         UserActivityLogger.log(USER_EVENT_OPENED_FEEDSUBSCRIBER);
         let template = $(HTML_ID_DIALOG_TEMPLATE).html();
         swal({
-            title: 'Available Filters',
+            title: 'Not Interesting',
             text: template,
             html: true,
             type: 'input',
@@ -49,8 +49,8 @@ export default class TopicFilterSubscriber {
             allowOutsideClick: true,
             showConfirmButton: true,
             showCancelButton: true,
+            confirmButtonText: 'Filter Own Keyword',
             cancelButtonText: 'Close',
-            confirmButtonText: 'Filter',
         }, function(input) {
             if (input === "" || input === false) {
                 return false
