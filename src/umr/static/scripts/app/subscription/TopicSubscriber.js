@@ -41,18 +41,31 @@ export default class TopicSubscriber {
             title: 'Interests',
             text: template,
             html: true,
-            type: 'input',
-            inputPlaceholder: "Or add your own keywords!",
             allowOutsideClick: true,
-            showConfirmButton: true,
             showCancelButton: true,
-            confirmButtonText: 'Add Own Keyword',
+            showConfirmButton: false,
             cancelButtonText: 'Close',
-        }, function(input) {
-            if (input === "" || input === false) {
-                return false
-            }
-            self.searchSubscriptionList.follow(input);
+        });
+
+        let addCustomTopic = document.querySelector('.addCustomTopic');
+        $(addCustomTopic).click(function () {
+            swal.close();
+            setTimeout(function() {
+                swal({
+                    title: 'Create a custom topic!',
+                    type: 'input',
+                    inputPlaceholder: "Topic keywords",
+                    allowOutsideClick: true,
+                    showCancelButton: true,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Add own topic!',
+                    cancelButtonText: 'Close',
+                }, function(input) {
+                    if (input === "" || input === false) {
+                        return false
+                    }
+                    self.searchSubscriptionList.follow(input);
+                })}, 150);
         });
 
         this.load();

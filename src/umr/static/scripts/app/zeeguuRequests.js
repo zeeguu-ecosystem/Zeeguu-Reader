@@ -1,4 +1,5 @@
 import $ from 'jquery';
+
 const ZEEGUU_SERVER = 'https://zeeguu.unibe.ch/api';
 const ZEEGUU_SESSION = 'sessionID';
 

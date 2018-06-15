@@ -6,8 +6,8 @@ import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_AVAILABLE_TOPICS} from '../zeeguuRequests';
 
-const HTML_ID_DIALOG_TEMPLATE = '#add-topic-dialog-template';
-const HTML_ID_ADD_FEED_LIST = '#addableTopicList';
+const HTML_ID_DIALOG_TEMPLATE = '#add-filter-dialog-template';
+const HTML_ID_ADD_FEED_LIST = '#addableFilterList';
 const HTML_ID_FEED_TEMPLATE = '#topicAddable-template';
 const HTML_CLASS_SUBSCRIBE_BUTTON = ".subscribeButton";
 const HTML_CLASS_FEED_ICON = '.feedIcon';
@@ -44,18 +44,31 @@ export default class TopicFilterSubscriber {
             title: 'Not Interesting',
             text: template,
             html: true,
-            type: 'input',
-            inputPlaceholder: "Or filter your own keywords!",
             allowOutsideClick: true,
-            showConfirmButton: true,
             showCancelButton: true,
-            confirmButtonText: 'Or filter your own keyword',
+            showConfirmButton: false,
             cancelButtonText: 'Close',
-        }, function(input) {
-            if (input === "" || input === false) {
-                return false
-            }
-            self.searchFilterSubscriptionList.follow(input);
+        });
+
+        let addCustomFilter = document.querySelector('.addCustomFilter');
+        $(addCustomFilter).click(function () {
+            swal.close();
+            setTimeout(function() {
+                swal({
+                    title: 'Filter out content',
+                    type: 'input',
+                    inputPlaceholder: "Filter keywords",
+                    allowOutsideClick: true,
+                    showCancelButton: true,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Add own filter!',
+                    cancelButtonText: 'Close',
+                }, function(input) {
+                    if (input === "" || input === false) {
+                        return false
+                    }
+                    self.searchFilterSubscriptionList.follow(input);
+                })}, 150);
         });
 
         this.load();
