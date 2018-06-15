@@ -3,6 +3,11 @@
   height: 40vh;
 }
 
+#addableLanguageList {
+  display:block;
+  height: 40vh;
+}
+
 @keyframes move_up {
   0%
   {
@@ -41,7 +46,7 @@
 }
 
 .topicAddSubTitle {
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-style: italic;
   text-align: center;
 }

@@ -45,11 +45,11 @@ export default class TopicFilterSubscriber {
             text: template,
             html: true,
             type: 'input',
-            inputPlaceholder: "Filter your own keywords",
+            inputPlaceholder: "Or filter your own keywords!",
             allowOutsideClick: true,
             showConfirmButton: true,
             showCancelButton: true,
-            confirmButtonText: 'Filter Own Keyword',
+            confirmButtonText: 'Or filter your own keyword',
             cancelButtonText: 'Close',
         }, function(input) {
             if (input === "" || input === false) {

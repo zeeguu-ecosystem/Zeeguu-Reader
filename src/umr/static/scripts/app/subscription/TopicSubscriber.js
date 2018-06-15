@@ -42,7 +42,7 @@ export default class TopicSubscriber {
             text: template,
             html: true,
             type: 'input',
-            inputPlaceholder: "Subscribe to your own keywords!",
+            inputPlaceholder: "Or add your own keywords!",
             allowOutsideClick: true,
             showConfirmButton: true,
             showCancelButton: true,

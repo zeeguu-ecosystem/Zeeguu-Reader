@@ -7,8 +7,8 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {GET_INTERESTING_LANGUAGES} from '../zeeguuRequests';
 
 
-const HTML_ID_DIALOG_TEMPLATE = '#add-topic-dialog-template';
-const HTML_ID_ADD_FEED_LIST = '#addableTopicList';
+const HTML_ID_DIALOG_TEMPLATE = '#add-language-dialog-template';
+const HTML_ID_ADD_FEED_LIST = '#addableLanguageList';
 const HTML_ID_FEED_TEMPLATE = '#languageAddable-template';
 const HTML_CLASS_SUBSCRIBE_BUTTON = ".subscribeButton";
 const HTML_CLASS_FEED_ICON = '.feedIcon';
