@@ -1,11 +1,16 @@
 #addableTopicList {
   display:block;
-  height: 40vh;
+  height: 35vh;
+}
+
+#addableFilterList {
+  display:block;
+  height: 35vh;
 }
 
 #addableLanguageList {
   display:block;
-  height: 40vh;
+  height: 35vh;
 }
 
 @keyframes move_up {

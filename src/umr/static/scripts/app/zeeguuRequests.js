@@ -1,5 +1,5 @@
 import $ from 'jquery';
-const ZEEGUU_SERVER = 'http://145.97.138.59:9001';
+const ZEEGUU_SERVER = 'http://localhost:9001';
 const ZEEGUU_SESSION = 'sessionID';
 
 /** Get a list of recommended feeds. */

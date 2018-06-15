@@ -1,14 +1,31 @@
 <LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/flag-icon/flag-icon.css') }}" type= "text/css">
 
-<!-- Template for the dialog -->
+<!-- Template for the topic dialog -->
 <script id="add-topic-dialog-template" type="text/template">
   <div class="mdl-dialog__content">
     <!-- List of all available topics. -->
     <div class="topicAddSubTitle">
-    Select predefined topics
+      Select predefined topics
     </div><br>
     <div id="addableTopicList" class="list-control list-action mdl-list"></div>
-    </div>
+  </div>
+  <div class="topicAddSubTitle">
+    <a class="addCustomTopic" id="addCustomTopic">Or click here to add your own topic!</a>
+  </div>
+</script>
+
+<!-- Template for the filter dialog -->
+<script id="add-filter-dialog-template" type="text/template">
+  <div class="mdl-dialog__content">
+    <!-- List of all available filters. -->
+    <div class="topicAddSubTitle">
+      Select predefined filters
+    </div><br>
+    <div id="addableFilterList" class="list-control list-action mdl-list"></div>
+  </div>
+  <div class="topicAddSubTitle">
+    <a class="addCustomFilter" id="addCustomFilter">Or click here to add your own filter!</a>
+  </div>
 </script>
 
 <!-- Template for language dialog -->
