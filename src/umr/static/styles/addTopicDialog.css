@@ -52,11 +52,15 @@
 
 .topicAddSubTitle {
   font-size: 1.2em;
-  font-style: italic;
+  text-align: center;
+}
+
+.topicAddCustom {
+  font-size: 1.2em;
+  text-decoration: underline;
   text-align: center;
 }
 
 .list-control {
   overflow-y: scroll;
 }
-
