@@ -38,7 +38,7 @@ export default class TopicSubscriber {
         UserActivityLogger.log(USER_EVENT_OPENED_FEEDSUBSCRIBER);
         let template = $(HTML_ID_DIALOG_TEMPLATE).html();
         swal({
-            title: 'Interests',
+            title: 'Interesting',
             text: template,
             html: true,
             allowOutsideClick: true,
