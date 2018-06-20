@@ -54,8 +54,6 @@ document.addEventListener(config.EVENT_SUBSCRIPTION, function () {
  * bind all necessary listeners. */
 $(document).ready(function () {
     starredArticleList.load();
-    sourceSubscriptionList.load();
-    sourceSubscriber.load();
     topicSubscriptionList.load();
     topicSubscriber.load();
     topicFilterSubscriptionList.load();
@@ -64,6 +62,8 @@ $(document).ready(function () {
     searchFilterSubscriptionList.load();
     languageSubscriptionList.load();
     languageSubscriber.load();
+    sourceSubscriptionList.load();
+    sourceSubscriber.load();
 
     let showAddLanguageDialog = document.querySelector('.show-language-subscriber');
     $(showAddLanguageDialog).click(function () {
