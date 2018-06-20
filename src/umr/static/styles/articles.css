@@ -227,6 +227,11 @@
 	max-width: 90%;
 }
 
+.list_item
+{
+  margin-left: 7.5%;
+}
+
 .mdl-chip__text
 {
   max-width: 80%;
@@ -291,4 +296,50 @@ END: Moving the drawer to the right
 ====================================
 */
 
+.searchNotification
+{
+  list-style-position: inside;
+  list-style-type: none;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 60em;
+  cursor: pointer;
+}
 
+.searchText
+{
+  font-size: large;
+  border:none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  outline: none;
+  width: 97%;
+}
+
+.deleteSearch
+{
+  text-align: center;
+  vertical-align: bottom;
+  width: 2em;
+}
+
+/* This changes the order of the SWAL buttons */
+.sa-button-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.sa-button-container .cancel {
+  -webkit-order: 2;
+  order: 2;
+}
+.sa-button-container .sa-confirm-button-container {
+  -webkit-order: 1;
+  order: 1;
+}

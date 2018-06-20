@@ -1,0 +1,66 @@
+<LINK rel="stylesheet" href= "{{ url_for('umrblue.static',filename='styles/flag-icon/flag-icon.css') }}" type= "text/css">
+
+<!-- Template for the topic dialog -->
+<script id="add-topic-dialog-template" type="text/template">
+  <div class="mdl-dialog__content">
+    <!-- List of all available topics. -->
+    <div class="topicAddSubTitle">
+      Select predefined topics
+    </div><br>
+    <div id="addableTopicList" class="list-control list-action mdl-list"></div>
+  </div>
+  <div class="topicAddCustom addCustomTopic">
+    Or add your own topic!
+  </div>
+</script>
+
+<!-- Template for the filter dialog -->
+<script id="add-filter-dialog-template" type="text/template">
+  <div class="mdl-dialog__content">
+    <!-- List of all available filters. -->
+    <div class="topicAddSubTitle">
+      Select predefined filters
+    </div><br>
+    <div id="addableFilterList" class="list-control list-action mdl-list"></div>
+  </div>
+  <div class="topicAddCustom addCustomFilter">
+    Or add your own filter!
+  </div>
+</script>
+
+<!-- Template for language dialog -->
+<script id="add-language-dialog-template" type="text/template">
+  <div class="mdl-dialog__content">
+    <!-- List of all available languages. -->
+    <div class="topicAddSubTitle">
+      Select languages you want to learn
+    </div><br>
+    <div id="addableLanguageList" class="list-control list-action mdl-list"></div>
+  </div>
+</script>
+
+<!-- Template for feed items -->
+<script id="topicAddable-template" type="text/template">
+  <div addableID="{% raw %}{{ id }}{% endraw %}" class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      <img src="{% raw %}{{ image_url }}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+      <span class="addableTitle">{% raw %}{{ title }}{% endraw %}</span>
+    </span>
+    <a class="mdl-list__item-secondary-action subscribeButton">
+      <i class="material-icons ">add_circle</i>
+    </a>
+  </div>
+</script>
+
+<!-- Template for feed items -->
+<script id="languageAddable-template" type="text/template">
+  <div addableID="{% raw %}{{ id }}{% endraw %}" class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      <img src="{% raw %}{{ image_url }}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+      <span class="addableTitle">{% raw %}{{ language }}{% endraw %}</span>
+    </span>
+    <a class="mdl-list__item-secondary-action subscribeButton">
+      <i class="material-icons ">add_circle</i>
+    </a>
+  </div>
+</script>

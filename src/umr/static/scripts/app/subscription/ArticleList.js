@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Mustache from 'mustache';
 import config from '../config';
 import Cache from '../Cache';
+import Notifier from '../Notifier';
 import moment from 'moment';
 import NoFeedTour from './NoFeedTour';
 import {difficultyToColorMapping} from './DifficultyColors'
@@ -9,6 +10,9 @@ import UserActivityLogger from '../UserActivityLogger';
 import 'loggly-jslogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_RECOMMENDED_ARTICLES} from '../zeeguuRequests';
+import {SEARCH_ENDPOINT} from '../zeeguuRequests';
+import {FILTER_RENDER} from '../zeeguuRequests';
+import {SEARCH_RENDER} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
 const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE FROM LIST';
@@ -44,15 +48,8 @@ export default class ArticleList {
      * Uses {@link ZeeguuRequests}.
      * @param {Map} subscriptions - The feeds to retrieve articles from.
      */
-    load(subscriptions) {
-        if (subscriptions.size < 1) {
-            this.noFeedTour.show();
-            return;
-        }
-        else
-            this.noFeedTour.hide();
-
-        let subscription_combo_hash = Array.from(subscriptions.keys()).join(".")
+    load() {
+        //let subscription_combo_hash = Array.from(subscriptions.keys()).join(".")
 
         // Feb 25: Disabled Cache. Server usually responds within a second
         // and this way, we can sync the info about articles being starred / liked
@@ -70,10 +67,21 @@ export default class ArticleList {
         //     UserActivityLogger.log(EVENT_ARTICLES_CACHED, subscription_combo_hash);
         // } else {
         $(config.HTML_CLASS_LOADER).show();
-        let callback = (articleLinks) => this._loadArticleLinks(articleLinks, subscription_combo_hash);
+        //let callback = (articleLinks) => this._loadArticleLinks(articleLinks, subscription_combo_hash);
+        let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
         ZeeguuRequests.get(GET_RECOMMENDED_ARTICLES + '/' + this.articlesOnPage, {}, callback);
         UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
         // }
+    }
+
+    search(search) {
+        if (search && 0 !== search.length) {
+            this.clear();
+            $(config.HTML_CLASS_LOADER).show();
+            let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
+            ZeeguuRequests.get(SEARCH_ENDPOINT + '/' + search , {}, callback);
+            UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
+        }
     }
 
     /**
@@ -113,10 +121,18 @@ export default class ArticleList {
 
     /**
      * Generate all the article links from a particular feed.
-     * @param {Object} subscription - The feed the articles are from.
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
     _renderArticleLinks(articleLinks) {
+        $(config.HTML_CLASS_LOADER).fadeOut('slow');
+        // If there are no articles in the list, show the noFeedTour
+        if (articleLinks.length < 1) {
+            Notifier.notify("Couldn't find any articles for your selection!");
+            this.noFeedTour.show();
+            return;
+        }
+        else
+            this.noFeedTour.hide();
 
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {

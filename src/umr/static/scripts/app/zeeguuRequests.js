@@ -16,13 +16,60 @@ export const GET_FEEDS_BEING_FOLLOWED = '/followed_feeds';
 /** Get all articles for a particular feed. */
 export const GET_FEED_ITEMS = '/get_feed_items_with_metrics';
 
-
+/** "OLD LANGUAGE ENDPOINTS, STILL USED ATM THOUGH. */
 /** Get a list of available languages. */
 export const GET_AVAILABLE_LANGUAGES = '/available_languages';
 /** Get which language the user is currently learning. */
 export const GET_LEARNED_LANGUAGE = '/learned_language';
 /** Get the native language of this user. */
 export const GET_NATIVE_LANGUAGE = '/native_language';
+/** Get the reading languages of this user. */
+export const GET_READING_LANGUAGES = '/user_languages/reading';
+
+/** "NEW LANGUAGE ENDPOINTS FOR THE USER_LANGUAGE " */
+/** Get all the languages the user is learning. */
+export const GET_USER_LANGUAGES = '/user_languages';
+/** Add a language for the user to learn. */
+export const MODIFY_USER_LANGUAGE = '/user_languages/modify';
+/** Delete a language the user is learning. */
+export const DELETE_USER_LANGUAGE = '/user_languages/delete';
+/** Get all the interesting languages for a user */
+export const GET_INTERESTING_LANGUAGES = '/user_languages/interesting_for_reading';
+
+
+/** Get a list of available topics. */
+export const GET_AVAILABLE_TOPICS = '/interesting_topics';
+/** Get which topics the user is currently subscribed to. */
+export const GET_SUBSCRIBED_TOPICS = '/subscribed_topics';
+/** Subscribe to a new topic. */
+export const SUBSCRIBE_TOPIC_ENDPOINT = '/subscribe_topic';
+/** Unsubscribe from a topic. */
+export const UNSUBSCRIBE_TOPIC_ENDPOINT = '/unsubscribe_topic';
+
+
+/** Get a lit of the user's current filters. */
+export const GET_SUBSCRIBED_FILTERS = '/filtered_topics';
+/** Subscribe to a new filter. */
+export const SUBSCRIBE_FILTER_ENDPOINT = '/filter_topic';
+/** Unsubscribe from a filter. */
+export const UNSUBSCRIBE_FILTER_ENDPOINT = '/unfilter_topic';
+
+
+/** General article search in the database. */
+export const SEARCH_ENDPOINT = '/search';
+/** Get a user's current search subscriptions. */
+export const GET_SUBSCRIBED_SEARCHES = '/subscribed_searches';
+/** Subscribe to a search term. */
+export const SUBSCRIBE_SEARCH_ENDPOINT = '/subscribe_search';
+/** Unsubscribe from a search term. */
+export const UNSUBSCRIBE_SEARCH_ENDPOINT = '/unsubscribe_search';
+
+/** Get a user's current search filters. */
+export const GET_FILTERED_SEARCHES = '/filtered_searches';
+/** Filter a search term out. */
+export const FILTER_SEARCH_ENDPOINT = '/filter_search';
+/** Unfilter a search term. */
+export const UNFILTER_SEARCH_ENDPOINT = '/unfilter_search';
 
 
 /** Post a user-generated translation for a piece of text. */

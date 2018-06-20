@@ -1,6 +1,13 @@
 #!/bin/bash
 
-ESCAPE_SLASHES='s/\//\\\//g'
+# somewhere in the JS code there's a hardcoded API reference
+# this script replaces it with the value of the $ZEEGUU_API_URL env var
+# the compiles
+# and then changes the corresponding file back
+# 
+# expects also to be given the path to the zeeguu web app.py in $ZEEGUU_WEB_APP_PY 
+# if given it touches that file which will trigger the reloading of the web
+
 
 
 DEFAULT_ZEEGUU_API="https://zeeguu.unibe.ch/api"
@@ -24,7 +31,7 @@ else
 
 fi
 
-webpack && (cd src; python setup.py develop) && touch /Users/mircea/my/projects/zeeguu/server/http/web/zeeguu_web/app.py
+webpack && (cd src; python setup.py develop) && touch $ZEEGUU_WEB_APP_PY
 
 if [ -z $ZEEGUU_API_URL ]; then
 	echo ""
