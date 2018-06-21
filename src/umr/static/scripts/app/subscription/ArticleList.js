@@ -92,6 +92,13 @@ export default class ArticleList {
     }
 
     /**
+     * Shows the loader
+     */
+    showLoader(){
+        $(config.HTML_CLASS_LOADER).show();
+    }
+
+    /**
      * Remove all articles from the list associated with the given feed.
      * @param {string} feedID - The identification code associated with the feed.
      */

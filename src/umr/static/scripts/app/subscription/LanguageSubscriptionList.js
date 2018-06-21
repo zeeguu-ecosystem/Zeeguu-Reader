@@ -99,6 +99,7 @@ export default class LanguageSubscriptionList {
     follow(language) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, language.id, language);
         this._addSubscription(language);
+        this._loading();
         let callback = ((data) => this._onLanguageFollowed(language, data)).bind(this);
         ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 1}, callback);
     }
@@ -127,6 +128,7 @@ export default class LanguageSubscriptionList {
     _unfollow(language) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, language.id, language);
         this._remove(language);
+        this._loading();
         let callback = ((data) => this._onLanguageUnfollowed(language, data)).bind(this);
         ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 0}, callback);
     }
@@ -162,5 +164,12 @@ export default class LanguageSubscriptionList {
      */
     _changed() {
         document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+    }
+
+    /**
+     * Fire event to show loader while subscribing / unsubscribing
+     */
+    _loading() {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };

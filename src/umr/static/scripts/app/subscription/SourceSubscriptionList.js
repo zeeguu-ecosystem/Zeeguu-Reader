@@ -103,6 +103,7 @@ export default class SourceSubscriptionList {
     follow(source) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, source.id, source);
         this._addSubscription(source);
+        this._loading();
         let callback = ((data) => this._onSourceFollowed(source, data)).bind(this);
         ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
@@ -131,6 +132,7 @@ export default class SourceSubscriptionList {
     _unfollow(source) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, source.id, source);
         this._remove(source);
+        this._loading();
         let callback = ((data) => this._onSourceUnfollowed(source, data)).bind(this);
         ZeeguuRequests.post(UNFOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
@@ -166,5 +168,12 @@ export default class SourceSubscriptionList {
      */
     _changed() {
         document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+    }
+
+    /**
+     * Fire event to show loader while subscribing / unsubscribing
+     */
+    _loading() {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };

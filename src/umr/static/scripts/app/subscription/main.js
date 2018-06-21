@@ -50,6 +50,11 @@ document.addEventListener(config.EVENT_SUBSCRIPTION, function () {
     $(HTML_ID_SEARCH_NOTIFICATION).empty();
 });
 
+document.addEventListener(config.EVENT_LOADING, function () {
+    articleList.clear();
+    articleList.showLoader();
+});
+
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function () {

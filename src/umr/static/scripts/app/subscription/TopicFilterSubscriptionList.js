@@ -101,6 +101,7 @@ export default class TopicFilterSubscriptionList {
     follow(topic) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
         this._addSubscription(topic);
+        this._loading();
         let callback = ((data) => this._onTopicFilterFollowed(topic, data)).bind(this);
         ZeeguuRequests.post(SUBSCRIBE_FILTER_ENDPOINT, {filter_id: topic.id}, callback);
     }
@@ -129,6 +130,7 @@ export default class TopicFilterSubscriptionList {
     _unfollow(topic) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
         this._remove(topic);
+        this._loading();
         let callback = ((data) => this._onTopicFilterUnfollowed(topic, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_FILTER_ENDPOINT, {topic_id: topic.id}, callback);
     }
@@ -164,5 +166,12 @@ export default class TopicFilterSubscriptionList {
      */
     _changed() {
         document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+    }
+
+    /**
+     * Fire event to show loader while subscribing / unsubscribing
+     */
+    _loading() {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };
