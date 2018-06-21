@@ -146,10 +146,11 @@ export default class ArticleList {
             let articleLink = articleLinks[i];
             var publishedString = moment.utc(articleLink.published).fromNow();
             let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
-
+            let topicsText = articleLink.topics.trim().replace(/(^|\s+)/g, "$1#");
+            if (topicsText == "#") topicsText = "";
             let templateAttributes = {
-                articleLinkTitle: articleLink.title,
                 articleLinkPublished: publishedString,
+                articleLinkTitle: articleLink.title,
                 articleLinkURL: articleLink.url,
                 articleLinkFeedID: articleLink.feedId,
                 articleLinkLanguage: articleLink.language,
@@ -157,7 +158,7 @@ export default class ArticleList {
                 articleDifficultyColor: difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
                 articleIcon: articleLink.feed_image_url,
-                articleTopics: articleLink.topics,
+                articleTopics: topicsText,
                 wordCount: articleLink.metrics.word_count,
                 alreadyOpenedClass: articleLink.opened?ALREADY_OPENED_ARTICLE_CLASS:""
             };
