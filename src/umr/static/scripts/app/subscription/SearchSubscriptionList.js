@@ -100,6 +100,7 @@ export default class SearchSubscriptionList {
      */
     follow(search_terms) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, search_terms);
+        this._loading();
         let callback = ((data) => this._onSearchFollowed(search_terms, data)).bind(this);
         ZeeguuRequests.get(SUBSCRIBE_SEARCH_ENDPOINT + "/" + search_terms , {}, callback);
     }
@@ -129,6 +130,7 @@ export default class SearchSubscriptionList {
     _unfollow(search) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search.id, search);
         this._remove(search);
+        this._loading();
         let callback = ((data) => this._onSearchUnfollowed(search, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_SEARCH_ENDPOINT, {search_id: search.id}, callback);
     }
@@ -164,5 +166,12 @@ export default class SearchSubscriptionList {
      */
     _changed() {
         document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+    }
+
+    /**
+     * Fire event to show loader while subscribing / unsubscribing
+     */
+    _loading() {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };

@@ -8,6 +8,7 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {GET_SUBSCRIBED_TOPICS} from '../zeeguuRequests';
 import {SUBSCRIBE_TOPIC_ENDPOINT} from '../zeeguuRequests';
 import {UNSUBSCRIBE_TOPIC_ENDPOINT} from '../zeeguuRequests';
+import ArticleList from "./ArticleList";
 
 
 const HTML_ID_SUBSCRIPTION_LIST = '#topicsList';
@@ -101,6 +102,7 @@ export default class TopicSubscriptionList {
     follow(topic) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
         this._addSubscription(topic);
+        this._loading();
         let callback = ((data) => this._onTopicFollowed(topic, data)).bind(this);
         ZeeguuRequests.post(SUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
@@ -129,6 +131,7 @@ export default class TopicSubscriptionList {
     _unfollow(topic) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
         this._remove(topic);
+        this._loading();
         let callback = ((data) => this._onTopicUnfollowed(topic, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
@@ -164,5 +167,12 @@ export default class TopicSubscriptionList {
      */
     _changed() {
         document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+    }
+
+    /**
+     * Fire event to show loader while subscribing / unsubscribing
+     */
+    _loading() {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };
