@@ -210,7 +210,17 @@
   padding-left: 1em;
   padding-right: 1em;
   max-width: 59em;
-  height: 6.2em;
+  height: 5.5em;
+  overflow:hidden;
+}
+
+.articleTopics {
+  margin:auto;
+  font-style: italic;
+  padding-left: 1em;
+  padding-right: 1em;
+  max-width: 59em;
+  height: 2.2em;
   overflow:hidden;
 }
 
