@@ -78,7 +78,7 @@ export default class ArticleList {
         if (search && 0 !== search.length) {
             this.clear();
             $(config.HTML_CLASS_LOADER).show();
-            let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
+            let callback = (articleLinks) => this._loadArticleLinks(articleLinks, search);
             ZeeguuRequests.get(SEARCH_ENDPOINT + '/' + search , {}, callback);
             UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
         }
@@ -107,22 +107,35 @@ export default class ArticleList {
     }
 
     /**
-     * Store all the article links from a particular feed if possible, makes sure they are rendered.
+     * Store all the article links from a particular search if possible, makes sure they are rendered.
      * Callback function for the zeeguu request.
-     * @param {Object} subscription - The feed the articles are from.
+     * @param {Object} search - The search term the articles belong to.
      * @param {Object[]} articleLinks - List containing the articles for the feed.
      */
-    _loadArticleLinks(articleLinks, subscription_combo_hash) {
+    _loadArticleLinks(articleLinks, search) {
         this._renderArticleLinks(articleLinks);
-        $(config.HTML_CLASS_LOADER).fadeOut('slow');
 
         // Cache the article links.
         let feedMap = {};
         if (Cache.has(KEY_MAP_FEED_ARTICLE))
             feedMap = Cache.retrieve(KEY_MAP_FEED_ARTICLE);
-        feedMap[subscription_combo_hash] = articleLinks;
+        feedMap[search] = articleLinks;
         Cache.store(KEY_MAP_FEED_ARTICLE, feedMap);
     }
+
+
+    /**
+     * Load the search artricles for particular searchword from the cache if they are there.
+     * @param {Object} search - The search term the articles belong to.
+     */
+    loadSearchCache(search) {
+        if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[search]) {
+            let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[search];
+            this._renderArticleLinks(articleLinks);
+            UserActivityLogger.log(EVENT_ARTICLES_CACHED, search);
+        }
+    }
+
 
 
 
@@ -134,12 +147,12 @@ export default class ArticleList {
         $(config.HTML_CLASS_LOADER).fadeOut('slow');
         // If there are no articles in the list, show the noFeedTour
         if (articleLinks.length < 1) {
-            Notifier.notify("Couldn't find any articles for your selection!");
             this.noFeedTour.show();
+            Notifier.notify("Couldn't find any articles for your selection!");
             return;
-        }
-        else
+        } else {
             this.noFeedTour.hide();
+        }
 
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
         for (let i = 0; i < articleLinks.length; i++) {

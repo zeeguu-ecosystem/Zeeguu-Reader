@@ -70,6 +70,12 @@ $(document).ready(function () {
     sourceSubscriptionList.load();
     sourceSubscriber.load();
 
+    if (search != null){
+        showSearchNotification(search);
+        articleList.clear();
+        articleList.loadSearchCache(search);
+    }
+
     let showAddLanguageDialog = document.querySelector('.show-language-subscriber');
     $(showAddLanguageDialog).click(function () {
         languageSubscriber.open();
@@ -98,7 +104,7 @@ $(document).ready(function () {
             let layout = document.querySelector('.mdl-layout');
             layout.MaterialLayout.toggleDrawer();
             articleList.search(input);
-            showSearchNotification(input)
+            showSearchNotification(input);
         }
     });
 
