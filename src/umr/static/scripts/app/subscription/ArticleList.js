@@ -125,7 +125,7 @@ export default class ArticleList {
 
 
     /**
-     * Load the search artricles for particular searchword from the cache if they are there.
+     * Load the search artricles for particular search word from the cache if they are there.
      * @param {Object} search - The search term the articles belong to.
      */
     loadSearchCache(search) {
@@ -133,11 +133,12 @@ export default class ArticleList {
             let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[search];
             this._renderArticleLinks(articleLinks);
             UserActivityLogger.log(EVENT_ARTICLES_CACHED, search);
+        } else {
+            // This else case should never happen, added it for the case something with cache goes wrong.
+            // We could later also set a certain max time for the cache, that we reload it after that passed.
+            this.search(search);
         }
     }
-
-
-
 
     /**
      * Generate all the article links from a particular feed.

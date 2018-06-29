@@ -16,6 +16,7 @@ import config from '../config';
 
 const HTML_ID_SEARCH_NOTIFCATION_TEMPLATE = '#search-notification-template';
 const HTML_ID_SEARCH_NOTIFICATION = '.searchNotification';
+const SEARCH_COOKIE_NAME = 'zeeguu-search';
 
 
 import "../../../styles/mdl/material.min.js";
@@ -45,9 +46,15 @@ let languageSubscriptionList = new LanguageSubscriptionList();
 let languageSubscriber = new LanguageSubscriber(languageSubscriptionList);
 
 document.addEventListener(config.EVENT_SUBSCRIPTION, function () {
-    articleList.clear();
-    articleList.load();
-    $(HTML_ID_SEARCH_NOTIFICATION).empty();
+    let search = getSearchCookie();
+    if (search != null){
+        showSearchNotification(search);
+        articleList.clear();
+        articleList.loadSearchCache(search);
+    } else {
+        articleList.clear();
+        articleList.load();
+    }
 });
 
 document.addEventListener(config.EVENT_LOADING, function () {
@@ -99,6 +106,7 @@ $(document).ready(function () {
             layout.MaterialLayout.toggleDrawer();
             articleList.search(input);
             showSearchNotification(input);
+            setSearchCookie(input);
         }
     });
 
@@ -125,7 +133,36 @@ function showSearchNotification(input){
         articleList.clear();
         articleList.load();
         $(HTML_ID_SEARCH_NOTIFICATION).empty();
+        deleteSearchCookie();
     });
+}
+
+function setSearchCookie(input){
+    let d = new Date();
+    // We make it expire after one day
+    d.setTime(d.getTime() + (24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = SEARCH_COOKIE_NAME + "=" + input + ";" + expires + ";path=/";
+}
+
+function getSearchCookie(){
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    let nameEq = SEARCH_COOKIE_NAME + "=";
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(nameEq) == 0) {
+            return c.substring(nameEq.length, c.length);
+        }
+    }
+    return null;
+}
+
+function deleteSearchCookie(){
+    document.cookie = SEARCH_COOKIE_NAME + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
 $(document).keydown(function (event) {
