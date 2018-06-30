@@ -15,6 +15,8 @@ const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-search';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 const USER_EVENT_FOLLOWED_FEED = 'FOLLOW SEARCH FILTER';
 const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW SEARCH FILTER';
+const SEARCH_FILTER_SUBSCRIPTION_LOADING_TEXT = "Subscribing to filter: ";
+const SEARCH_FILTER_UNSUBSCRIPTION_LOADING_TEXT = "Unsubscribing from filter: ";
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -100,7 +102,7 @@ export default class SearchFilterSubscriptionList {
      */
     follow(search_terms) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, search_terms);
-        this._loading();
+        this._loading(SEARCH_FILTER_SUBSCRIPTION_LOADING_TEXT + search_terms);
         let callback = ((data) => this._onSearchFilterFollowed(search_terms, data)).bind(this);
         ZeeguuRequests.get(FILTER_SEARCH_ENDPOINT + "/" + search_terms , {}, callback);
     }
@@ -131,7 +133,7 @@ export default class SearchFilterSubscriptionList {
     _unfollow(search) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, search.id, search);
         this._remove(search);
-        this._loading();
+        this._loading(SEARCH_FILTER_UNSUBSCRIPTION_LOADING_TEXT + search.search);
         let callback = ((data) => this._onSearchFilterUnfollowed(search, data)).bind(this);
         ZeeguuRequests.post(UNFILTER_SEARCH_ENDPOINT, {search_id: search.id}, callback);
     }
@@ -172,7 +174,8 @@ export default class SearchFilterSubscriptionList {
     /**
      * Fire event to show loader while subscribing / unsubscribing
      */
-    _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
+    _loading(loadingText) {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING,
+            {"detail": {"loadingText": loadingText}}));
     }
 };

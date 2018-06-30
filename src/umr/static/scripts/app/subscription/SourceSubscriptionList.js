@@ -15,6 +15,8 @@ const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-source';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 const USER_EVENT_FOLLOWED_FEED = 'FOLLOW FEED';
 const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW FEED';
+const SOURCE_SUBSCRIPTION_LOADING_TEXT = "Subscribing to source: ";
+const SOURCE_UNSUBSCRIPTION_LOADING_TEXT = "Unsubscribing from source: ";
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -103,7 +105,7 @@ export default class SourceSubscriptionList {
     follow(source) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, source.id, source);
         this._addSubscription(source);
-        this._loading();
+        this._loading(SOURCE_SUBSCRIPTION_LOADING_TEXT + source.title);
         let callback = ((data) => this._onSourceFollowed(source, data)).bind(this);
         ZeeguuRequests.post(FOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
@@ -132,7 +134,7 @@ export default class SourceSubscriptionList {
     _unfollow(source) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, source.id, source);
         this._remove(source);
-        this._loading();
+        this._loading(SOURCE_UNSUBSCRIPTION_LOADING_TEXT + source.title);
         let callback = ((data) => this._onSourceUnfollowed(source, data)).bind(this);
         ZeeguuRequests.post(UNFOLLOW_FEED_ENDPOINT, {source_id: source.id}, callback);
     }
@@ -173,7 +175,8 @@ export default class SourceSubscriptionList {
     /**
      * Fire event to show loader while subscribing / unsubscribing
      */
-    _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
+    _loading(loadingText) {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING,
+            {"detail": {"loadingText": loadingText}}));
     }
 };

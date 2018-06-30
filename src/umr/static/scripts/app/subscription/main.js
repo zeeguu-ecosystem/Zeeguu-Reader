@@ -16,7 +16,7 @@ import config from '../config';
 
 const HTML_ID_SEARCH_NOTIFCATION_TEMPLATE = '#search-notification-template';
 const HTML_ID_SEARCH_NOTIFICATION = '.searchNotification';
-const SEARCH_COOKIE_NAME = 'zeeguu-search';
+const SEARCH_COOKIE_NAME = 'zeeguu-reader-search-terms';
 
 
 import "../../../styles/mdl/material.min.js";
@@ -57,9 +57,9 @@ document.addEventListener(config.EVENT_SUBSCRIPTION, function () {
     }
 });
 
-document.addEventListener(config.EVENT_LOADING, function () {
+document.addEventListener(config.EVENT_LOADING, function (e) {
     articleList.clear();
-    articleList.showLoader();
+    articleList.showLoader(e.detail.loadingText);
 });
 
 /* When the document has finished loading,
@@ -147,15 +147,13 @@ function setSearchCookie(input){
 
 function getSearchCookie(){
     let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
+    let cookieElements = decodedCookie.split(';');
     let nameEq = SEARCH_COOKIE_NAME + "=";
-    for(let i = 0; i <ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(nameEq) == 0) {
-            return c.substring(nameEq.length, c.length);
+    for(let i = 0; i <cookieElements.length; i++) {
+        let cookieElement = cookieElements[i];
+        cookieElement = cookieElement.trim();
+        if (cookieElement.indexOf(nameEq) == 0) {
+            return cookieElement.substring(nameEq.length, cookieElement.length);
         }
     }
     return null;

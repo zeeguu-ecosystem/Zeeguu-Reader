@@ -13,6 +13,8 @@ const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-language';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 const USER_EVENT_FOLLOWED_FEED = 'FOLLOW LANGUAGE';
 const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW LANGUAGE';
+const LANGUAGE_SUBSCRIPTION_LOADING_TEXT = "Subscribing to language: ";
+const LANGUAGE_UNSUBSCRIPTION_LOADING_TEXT = "Unsubscribing from language: ";
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -99,7 +101,7 @@ export default class LanguageSubscriptionList {
     follow(language) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, language.id, language);
         this._addSubscription(language);
-        this._loading();
+        this._loading(LANGUAGE_SUBSCRIPTION_LOADING_TEXT + language.title);
         let callback = ((data) => this._onLanguageFollowed(language, data)).bind(this);
         ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 1}, callback);
     }
@@ -128,7 +130,7 @@ export default class LanguageSubscriptionList {
     _unfollow(language) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, language.id, language);
         this._remove(language);
-        this._loading();
+        this._loading(LANGUAGE_UNSUBSCRIPTION_LOADING_TEXT + language.title);
         let callback = ((data) => this._onLanguageUnfollowed(language, data)).bind(this);
         ZeeguuRequests.post(MODIFY_USER_LANGUAGE, {language_id: language.id, language_reading: 0}, callback);
     }
@@ -169,7 +171,8 @@ export default class LanguageSubscriptionList {
     /**
      * Fire event to show loader while subscribing / unsubscribing
      */
-    _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
+    _loading(loadingText) {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING,
+            {"detail": {"loadingText": loadingText}}));
     }
 };

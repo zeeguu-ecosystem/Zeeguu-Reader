@@ -15,6 +15,8 @@ const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-topic';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 const USER_EVENT_FOLLOWED_FEED = 'FILTER TOPIC';
 const USER_EVENT_UNFOLLOWED_FEED = 'UNFILTER TOPIC';
+const TOPIC_FILTER_SUBSCRIPTION_LOADING_TEXT = "Subscribing to filter: ";
+const TOPIC_FILTER_UNSUBSCRIPTION_LOADING_TEXT = "Unsubscribing from filter: ";
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -101,7 +103,7 @@ export default class TopicFilterSubscriptionList {
     follow(topic) {
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
         this._addSubscription(topic);
-        this._loading();
+        this._loading(TOPIC_FILTER_SUBSCRIPTION_LOADING_TEXT + topic.title);
         let callback = ((data) => this._onTopicFilterFollowed(topic, data)).bind(this);
         ZeeguuRequests.post(SUBSCRIBE_FILTER_ENDPOINT, {filter_id: topic.id}, callback);
     }
@@ -130,7 +132,7 @@ export default class TopicFilterSubscriptionList {
     _unfollow(topic) {
         UserActivityLogger.log(USER_EVENT_UNFOLLOWED_FEED, topic.id, topic);
         this._remove(topic);
-        this._loading();
+        this._loading(TOPIC_FILTER_UNSUBSCRIPTION_LOADING_TEXT + topic.title);
         let callback = ((data) => this._onTopicFilterUnfollowed(topic, data)).bind(this);
         ZeeguuRequests.post(UNSUBSCRIBE_FILTER_ENDPOINT, {topic_id: topic.id}, callback);
     }
@@ -171,7 +173,8 @@ export default class TopicFilterSubscriptionList {
     /**
      * Fire event to show loader while subscribing / unsubscribing
      */
-    _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
+    _loading(loadingText) {
+        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING,
+            {"detail": {"loadingText": loadingText}}));
     }
 };

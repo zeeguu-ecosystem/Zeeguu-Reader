@@ -14,13 +14,15 @@ import {SEARCH_ENDPOINT} from '../zeeguuRequests';
 import {FILTER_RENDER} from '../zeeguuRequests';
 import {SEARCH_RENDER} from '../zeeguuRequests';
 
-const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
+const KEY_CACHED_SEARCH_RESULTS = 'search_results';
 const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE FROM LIST';
 const EVENT_ARTICLES_CACHED = 'ARTICLES RETRIEVED FROM CACHE';
 const EVENT_ARTICLES_REQUESTED = 'ARTICLES REQUESTED FROM ZEEGUU';
 const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
 const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
 const ALREADY_OPENED_ARTICLE_CLASS = "alreadyOpenedArticle";
+const HTML_CLASS_LOADING_TEXT = ".loading_text";
+const LOADING_ARTICLES_TEXT = "Loading articles";
 
 /* Setup remote logging. */
 let logger = new LogglyTracker();
@@ -67,6 +69,7 @@ export default class ArticleList {
         //     UserActivityLogger.log(EVENT_ARTICLES_CACHED, subscription_combo_hash);
         // } else {
         $(config.HTML_CLASS_LOADER).show();
+        $(HTML_CLASS_LOADING_TEXT).text(LOADING_ARTICLES_TEXT);
         //let callback = (articleLinks) => this._loadArticleLinks(articleLinks, subscription_combo_hash);
         let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
         ZeeguuRequests.get(GET_RECOMMENDED_ARTICLES + '/' + this.articlesOnPage, {}, callback);
@@ -94,8 +97,9 @@ export default class ArticleList {
     /**
      * Shows the loader
      */
-    showLoader(){
+    showLoader(loadingText){
         $(config.HTML_CLASS_LOADER).show();
+        $(HTML_CLASS_LOADING_TEXT).text(loadingText);
     }
 
     /**
@@ -117,10 +121,10 @@ export default class ArticleList {
 
         // Cache the article links.
         let feedMap = {};
-        if (Cache.has(KEY_MAP_FEED_ARTICLE))
-            feedMap = Cache.retrieve(KEY_MAP_FEED_ARTICLE);
+        if (Cache.has(KEY_CACHED_SEARCH_RESULTS))
+            feedMap = Cache.retrieve(KEY_CACHED_SEARCH_RESULTS);
         feedMap[search] = articleLinks;
-        Cache.store(KEY_MAP_FEED_ARTICLE, feedMap);
+        Cache.store(KEY_CACHED_SEARCH_RESULTS, feedMap);
     }
 
 
@@ -129,8 +133,8 @@ export default class ArticleList {
      * @param {Object} search - The search term the articles belong to.
      */
     loadSearchCache(search) {
-        if (Cache.has(KEY_MAP_FEED_ARTICLE) && Cache.retrieve(KEY_MAP_FEED_ARTICLE)[search]) {
-            let articleLinks = Cache.retrieve(KEY_MAP_FEED_ARTICLE)[search];
+        if (Cache.has(KEY_CACHED_SEARCH_RESULTS) && Cache.retrieve(KEY_CACHED_SEARCH_RESULTS)[search]) {
+            let articleLinks = Cache.retrieve(KEY_CACHED_SEARCH_RESULTS)[search];
             this._renderArticleLinks(articleLinks);
             UserActivityLogger.log(EVENT_ARTICLES_CACHED, search);
         } else {
