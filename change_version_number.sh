@@ -9,6 +9,7 @@ fi
 
 echo "changing $1 to $2 in three files"
 
+sed -i.bak "s/$1/$2/g" src/setup.py
 sed -i.bak "s/$1/$2/g" package.json
 sed -i.bak "s/$1/$2/g" src/umr/templates/article.html
 sed -i.bak "s/$1/$2/g" src/umr/templates/articles.html
