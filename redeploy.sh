@@ -8,7 +8,7 @@
 # expects also to be given the path to the zeeguu web app.py in $ZEEGUU_WEB_APP_PY 
 # if given it touches that file which will trigger the reloading of the web
 
-
+ESCAPE_SLASHES='s/\//\\\//g'
 
 DEFAULT_ZEEGUU_API="https://zeeguu.unibe.ch/api"
 DEFAULT_ZEEGUU_API_ESCAPED=$(echo $DEFAULT_ZEEGUU_API | sed $ESCAPE_SLASHES)
