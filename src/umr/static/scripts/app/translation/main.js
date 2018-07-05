@@ -57,29 +57,29 @@ var FREQUENCY_KEEPALIVE = 60 * 1000;
 $(document).ready(function () {
     // Disable selection by default.
 
-        $(".mdl-layout__content").on("scroll",function () {
+    $(".mdl-layout__content").on("scroll", function () {
 
-            var _current_time = new Date();
+        var _current_time = new Date();
 
-            var current_time = _current_time.getTime();
+        var current_time = _current_time.getTime();
 
-            if (previous_time == 0) {
+        if (previous_time == 0) {
+            let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+            UserActivityLogger.log(USER_EVENT_SCROLL, url);
+            console.log("should be sending it!");
+            previous_time = current_time;
+
+        } else {
+            if ((current_time - previous_time) > FREQUENCY_KEEPALIVE) {
                 let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
                 UserActivityLogger.log(USER_EVENT_SCROLL, url);
-                console.log("should be sending it!");
+                console.log("should be sending");
                 previous_time = current_time;
-
             } else {
-                if ((current_time - previous_time) > FREQUENCY_KEEPALIVE) {
-                    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-                    UserActivityLogger.log(USER_EVENT_SCROLL, url);
-                    console.log("should be sending");
-                    previous_time = current_time;
-                } else {
-                    console.log("not sending not to spam the server");
-                }
+                console.log("not sending not to spam the server");
             }
-        });
+        }
+    });
 
 
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
@@ -309,38 +309,45 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
 
         $("#articleInfo").show();
 
+        $("#bottom_feedback_div").show();
+
         functions_to_follow();
+
+        var color_and_upload_feedback_answer = function (event) {
+
+            $("#finished_difficulty_easy").css('background', '');
+            $("#finished_difficulty_ok").css('background', '');
+            $("#finished_difficulty_hard").css('background', '');
+
+            $(event.target).css("background", "#b3d4fc");
+            UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+
+            // the bottom page linkn should be visible only ocne the user
+            // has provided feedback
+            $("#bottom_page_back_link").show();
+        };
 
         var upload_feedback_answer = function (event) {
             UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
         };
 
+
         $("#back_button").click(function () {
             $("#header_row").hide();
-            $("#question_article_read_fully").show();
+            $("#question_reasons_not_to_finish").show();
         });
 
-        $("#maybe_finish_later").click(upload_feedback_answer);
+
+        $("#read_later").click(upload_feedback_answer);
 
         $("#not_finished_for_boring").click(upload_feedback_answer);
         $("#not_finished_for_too_difficult").click(upload_feedback_answer);
         $("#not_finished_for_broken").click(upload_feedback_answer);
         $("#not_finished_for_other").click(upload_feedback_answer);
 
-
-        $("#not_finished").click(function (event) {
-            $("#question_article_read_fully").hide();
-            $("#question_reasons_not_to_finish").show();
-        });
-
-        $("#finished").click(function (event) {
-            $("#question_article_read_fully").hide();
-            $("#question_difficulty_for_finished_article").show();
-        });
-
-        $("#finished_difficulty_easy").click(upload_feedback_answer);
-        $("#finished_difficulty_ok").click(upload_feedback_answer);
-        $("#finished_difficulty_hard").click(upload_feedback_answer);
+        $("#finished_difficulty_easy").click(color_and_upload_feedback_answer);
+        $("#finished_difficulty_ok").click(color_and_upload_feedback_answer);
+        $("#finished_difficulty_hard").click(color_and_upload_feedback_answer);
 
 
     }.bind(this));

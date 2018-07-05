@@ -58,6 +58,14 @@ zeeguu tran[chosen]:after {
     left: -2.5em;
 }
 
+#read_later_link {
+    left: -2.5em;
+}
+
+.reader_toolbar_button {
+    color: lightgray;
+}
+
 #toggle_undo {
     right: 1em;
     color: rgba(0, 0, 0, .26);
@@ -77,7 +85,7 @@ zeeguu tran[chosen]:after {
     font-size: large;
 }
 
-#question_article_read_fully, #question_reasons_not_to_finish, #question_difficulty_for_finished_article {
+#question_reasons_not_to_finish, #question_difficulty_for_finished_article {
     padding: 16px;
     text-align: left;
     font-size: small;

@@ -1,165 +1,126 @@
+{% from "bottom_page_question.html" import bottom_feedback_div %}
+{% from "top_page_questions.html" import top_feedback_divs %}
+
+
 <html>
 <head>
-	<title>Zeeguu Reader</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zeeguu Reader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
-	<script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:510081,hjsv:5};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    <!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
+    <script>
+        (function (h, o, t, j, a, r) {
+            h.hj = h.hj || function () {
+                (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings = {hjid: 510081, hjsv: 5};
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script');
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
             a.appendChild(r);
-        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-	</script>
+        })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
 
-	<!-- Include the translation package. -->
-	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.2.css')}}">
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/translation-0.9.2.js')}}"></script>
+    <!-- Include the translation package. -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.2.css') }}">
+    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.2.js') }}"></script>
 </head>
 <body>
 <!-- Top bar -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <header class="mdl-layout__header mdl-layout__header--transparent">
 
 
-            <div id="question_article_read_fully" style="display:none;">
+        {{ top_feedback_divs() }}
 
-                <div class="feedback_question">
-                    Did you read the article fully?
-                </div>
 
-                <button id="finished" class="mdl-button mdl-js-button mdl-button--raised">
-                  Yes
-                </button>&nbsp;
+        <div id="header_row" class="mdl-layout__header-row">
 
-                <button id="not_finished" class="mdl-button mdl-js-button mdl-button--raised">
-                  No
-                </button>&nbsp;
+            <a id="back_button"
+                    {#            href="{{ url_for('umrblue.articles') }}"    #}
+               class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon reader_toolbar_button">
+                <i class="material-icons">arrow_back</i>
+            </a>
 
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="maybe_finish_later"
-                            class="mdl-button mdl-js-button mdl-button--raised"
-                            >
-                        Maybe Later...
-                    </button>
-                </a>
-
+            <div class="mdl-tooltip" data-mdl-for="back_button">
+                Back To Article List
             </div>
 
 
-            <div id="question_reasons_not_to_finish" style="display:none;">
+            <a id="read_later_link"
+               href="{{ url_for('umrblue.articles') }}"
+            >
+                <i id="read_later" class="material-icons reader_toolbar_button">watch_later</i>
+            </a>
 
-                <div class="feedback_question">
-                    What is the problem with the article?
-                </div>
-
-
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="not_finished_for_too_difficult" class="mdl-button mdl-js-button mdl-button--raised">
-                        Difficult
-                    </button></a>&nbsp;
-
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="not_finished_for_boring" class="mdl-button mdl-js-button mdl-button--raised">
-                        Boring
-                    </button></a>&nbsp;
-
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="not_finished_for_broken" class="mdl-button mdl-js-button mdl-button--raised">
-                        Broken
-                    </button></a>&nbsp;
-
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="not_finished_for_other" class="mdl-button mdl-js-button mdl-button--raised">
-                        Other
-                    </button></a>
-
+            <div class="mdl-tooltip" data-mdl-for="read_later_link">
+                Read Later...
             </div>
 
 
-            <div id="question_difficulty_for_finished_article" style="display:none;">
+            <div class="mdl-layout-spacer"></div>
+            <button id="toggle_undo" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon ">
+                <i class="material-icons">undo</i>
+            </button>
 
-                <div class="feedback_question">
-                    How difficult was the article?
+
+            <button id="toggle_copy"
+                    class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon mdl-button--disabled ">
+                <i class="material-icons">content_copy</i>
+            </button>
+
+
+            <button id="toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon ">
+                <i id="star_border" class="material-icons star">star_border</i>
+                <i id="star_fill" class="material-icons star off">star</i>
+            </button>
+
+
+        </div>
+    </header>
+
+    <!-- Article content. -->
+    <main class="mdl-layout__content">
+        <div class="page-content-container">
+            <div class="content-container">
+                <div class="page-content">
+                    <p class="title translatable">
+                        <span id="articleTitle"></span>
+                    </p>
+                    <p id="articleInfo" style="display:none">
+                        <span id="articleURL">From: <a href="{{ article_url }}" target="_blank">source</a></span>
+                        <span id="authors"></span>
+                    </p>
+                    <div id="articleContent" class="translatable"></div>
+                    <br/>
                 </div>
-
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="finished_difficulty_easy" class="mdl-button mdl-js-button mdl-button--raised">
-                        Easy
-                    </button></a>
-                &nbsp;
-
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="finished_difficulty_ok" class="mdl-button mdl-js-button mdl-button--raised">
-                        Ok
-                    </button></a>
-                &nbsp;
-
-                <a href="{{ url_for('umrblue.articles') }}">
-                    <button id="finished_difficulty_hard" class="mdl-button mdl-js-button mdl-button--raised">
-                        Hard
-                    </button></a>
-
             </div>
+            <div id="like_button" style="display:none">
+                <button id="toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+                    <i class="material-icons">thumb_up</i>
+                </button>
+            </div>
+        </div>
 
 
-		<div id="header_row" class="mdl-layout__header-row">
+        <br/><br/>
 
-			<a id = "back_button"
-{#            href="{{ url_for('umrblue.articles') }}"    #}
-			   class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-    			<i class="material-icons">arrow_back</i>
-    		</a>
+        {{ bottom_feedback_div() }}
 
-			<div class="mdl-layout-spacer"></div>
-			<button id = "toggle_undo" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-				<i class="material-icons">undo</i>
-			</button>
-			<button id = "toggle_copy" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon mdl-button--disabled">
-				<i class="material-icons">content_copy</i>
-			</button>
-			<button id = "toggle_star" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-				<i id="star_border" class="material-icons star">star_border</i>
-				<i id="star_fill" class="material-icons star off">star</i>
-			</button>
-		</div>
- 	</header>
 
-<!-- Article content. -->
-  <main class="mdl-layout__content">
-	<div class="page-content-container"> 
-		<div class="content-container">
-			<div class="page-content">
-				<p class="title translatable">
-					<span id = "articleTitle"></span>
-				</p>
-				<p id="articleInfo" style="display:none">
-					<span id="articleURL">From: <a href="{{ article_url }}" target="_blank">source</a></span>
-                    <span id="authors"></span>
-				</p>	
-				<div id="articleContent" class="translatable"></div><br />		
-			</div>
-		</div>
-		<div id = "like_button" style="display:none">
-			<button id="toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" >
-				<i class="material-icons">thumb_up</i>
-			</button>
-		</div>
-	</div>
-    
-  </main>
-  <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
-	  <div class="mdl-snackbar__text"></div>
-	  <button class="mdl-snackbar__action" type="button"></button>
-  </div>
+    </main>
+    <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
 </div>
+
 
 <!-- Menu to change the translation -->
 <div id="alterMenuContainer">
-	<div id="alterMenu"></div>
+    <div id="alterMenu"></div>
 </div>
 
 </body>
