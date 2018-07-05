@@ -66,17 +66,14 @@ $(document).ready(function () {
         if (previous_time == 0) {
             let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
             UserActivityLogger.log(USER_EVENT_SCROLL, url);
-            console.log("should be sending it!");
             previous_time = current_time;
 
         } else {
             if ((current_time - previous_time) > FREQUENCY_KEEPALIVE) {
                 let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
                 UserActivityLogger.log(USER_EVENT_SCROLL, url);
-                console.log("should be sending");
                 previous_time = current_time;
             } else {
-                console.log("not sending not to spam the server");
             }
         }
     });
@@ -198,7 +195,7 @@ $(window).on("orientationchange", function () {
 });
 
 $(window).on("focus", function () {
-    console.log("things work.");
+
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
     UserActivityLogger.log(USER_EVENT_ARTICLE_FOCUS, url);
 });
@@ -331,6 +328,13 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
             UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
         };
 
+        var set_starred = function (event) {
+            UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+            starer.setState(false);
+            starer.toggle();
+
+        };
+
 
         $("#back_button").click(function () {
             $("#header_row").hide();
@@ -338,7 +342,7 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
         });
 
 
-        $("#read_later").click(upload_feedback_answer);
+        $("#read_later").click(set_starred);
 
         $("#not_finished_for_boring").click(upload_feedback_answer);
         $("#not_finished_for_too_long").click(upload_feedback_answer);

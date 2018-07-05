@@ -19,8 +19,8 @@
 	<script> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</script>
 
 	<!-- Include the subscription package. -->
-	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.3.css')}}">
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.9.3.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.5.css')}}">
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.9.5.js')}}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
   <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -34,7 +34,10 @@
 	  </div>
 	  <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
 		  <a href="#inbox" class="mdl-layout__tab is-active"><i class="material-icons inbox-icon">inbox</i></a>
-		  <a href="#starred" class="mdl-layout__tab"><i class="material-icons star-icon">star</i></a>
+		  <a href="#starred" class="mdl-layout__tab" >
+              <i class="material-icons " style="color:lightgray">star</i>
+              <i class="material-icons " style="color:lightgray">watch_later</i>
+                <i class="material-icons " style="color:lightgray">thumb_up</i></a>
 	  </div>
   </header>
   <div class="mdl-layout__drawer">
