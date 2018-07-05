@@ -341,6 +341,7 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
         $("#read_later").click(upload_feedback_answer);
 
         $("#not_finished_for_boring").click(upload_feedback_answer);
+        $("#not_finished_for_too_long").click(upload_feedback_answer);
         $("#not_finished_for_too_difficult").click(upload_feedback_answer);
         $("#not_finished_for_broken").click(upload_feedback_answer);
         $("#not_finished_for_other").click(upload_feedback_answer);
