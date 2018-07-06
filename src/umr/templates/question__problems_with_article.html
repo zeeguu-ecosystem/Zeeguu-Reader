@@ -1,0 +1,32 @@
+<div id="question_reasons_not_to_finish" style="display:none;">
+
+    <div class="feedback_question">
+        Was there a problem with the article?
+    </div>
+
+    <div id="article_feedback_buttons">
+
+        {% for button_info in [
+                ("not_finished_for_no_reason","No"),
+                ("not_finished_for_too_difficult","Too Difficult"),
+                ("not_finished_for_too_long","Too Long"),
+                ("not_finished_for_boring","Not Interesting"),
+                ("not_finished_for_broken","Broken"),
+                ("not_finished_for_other","Other")] %}
+
+            <a href="{{ url_for('umrblue.articles') }}">
+                <button
+                        id="{{ button_info[0] }}"
+                        class="mdl-button mdl-js-button mdl-button--raised"
+                        style="margin-bottom: 6px"
+                >
+                    {{ button_info[1] }}
+                </button></a>&nbsp;
+
+
+        {% endfor %}
+
+
+    </div>
+
+</div>

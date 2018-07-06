@@ -49,59 +49,49 @@ var alterMenu;
 var FROM_LANGUAGE;
 
 var previous_time = 0;
+
 var FREQUENCY_KEEPALIVE = 60 * 1000;
+
+const ARTICLE_FEEDBACK_BUTTON_IDS = [
+    "#not_finished_for_boring",
+    "#not_finished_for_too_long",
+    "#not_finished_for_too_difficult",
+    "#not_finished_for_broken",
+    "#not_finished_for_other"];
+
+const ARTICLE_DIFFICULTY_BUTTON_IDS = [
+    "#finished_easy",
+    "#finished_ok",
+    "#finished_hard",
+    "#finished_very_hard"];
 
 
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function () {
-    // Disable selection by default.
-
-    $(".mdl-layout__content").on("scroll", function () {
-
-        var _current_time = new Date();
-
-        var current_time = _current_time.getTime();
-
-        if (previous_time == 0) {
-            let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-            UserActivityLogger.log(USER_EVENT_SCROLL, url);
-            previous_time = current_time;
-
-        } else {
-            if ((current_time - previous_time) > FREQUENCY_KEEPALIVE) {
-                let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-                UserActivityLogger.log(USER_EVENT_SCROLL, url);
-                previous_time = current_time;
-            } else {
-            }
-        }
-    });
-
 
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
 
 
     if ("TO_LANGUAGE" in localStorage) {
-        initElementsRequiringLanguagesAndArticleInfo(url, attachInteractionScripts);
+        getArticleInfoAndInitElementsRequiringIt(url, attachInteractionScripts);
     } else {
         // cache TO_LANGUAGE in localStorage if it's not there already
         ZeeguuRequests.get(GET_NATIVE_LANGUAGE, {}, function (language) {
             localStorage["TO_LANGUAGE"] = language;
 
-            initElementsRequiringLanguagesAndArticleInfo(url, attachInteractionScripts);
+            getArticleInfoAndInitElementsRequiringIt(url, attachInteractionScripts);
         });
     }
 
     UserActivityLogger.log(USER_EVENT_OPENED_ARTICLE, url, Date.now());
-
 
 });
 
 function attachInteractionScripts() {
 
     disableToggleCopy();
-    attachZeeguuListeners();
+    attachZeeguuTagListeners();
 
     /* When the user leaves the article, log it as an event. */
     window.onbeforeunload = function () {
@@ -133,7 +123,7 @@ function attachInteractionScripts() {
         }
         $(config.HTML_ZEEGUUTAG).off();
         translator.undoTranslate();
-        attachZeeguuListeners();
+        attachZeeguuTagListeners();
     });
 
     /* When the like button is clicked, set its background color. */
@@ -155,6 +145,29 @@ function attachInteractionScripts() {
     $(HTML_ID_TOGGLE_STAR).click(function () {
         starer.toggle();
     });
+
+
+    $(".mdl-layout__content").on("scroll", function () {
+
+        var _current_time = new Date();
+
+        var current_time = _current_time.getTime();
+
+        if (previous_time == 0) {
+            let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+            UserActivityLogger.log(USER_EVENT_SCROLL, url);
+            previous_time = current_time;
+
+        } else {
+            if ((current_time - previous_time) > FREQUENCY_KEEPALIVE) {
+                let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+                UserActivityLogger.log(USER_EVENT_SCROLL, url);
+                previous_time = current_time;
+            } else {
+            }
+        }
+    });
+
 
 }
 
@@ -247,9 +260,58 @@ function wrapWordsInZeeguuTags(text) {
 }
 
 
-function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) {
+function handle_difficulty_feebdack_button(url) {
+    // Returns the handler with the url already bound
+
+    function difficulty_feedback_button_clicked_partial(event) {
+
+        ARTICLE_DIFFICULTY_BUTTON_IDS.forEach(function (button_id) {
+            $(button_id).css('background', '');
+        });
+
+        $(event.target).css("background", "#b3d4fc");
+
+        UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+
+        // the bottom page link should be visible only once the user
+        // has provided feedback
+        $("#bottom_page_back_link").show();
+    }
+
+    return difficulty_feedback_button_clicked_partial;
+}
+
+function handle_article_feedback_buttonn(url) {
+    // Returns the handler with the given url bound
+    function upload_feedback_answer(event) {
+        UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+    }
+
+    return upload_feedback_answer
+}
+
+function handle_star_button_click(url) {
+    function set_starred(event) {
+        UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+        starer.setState(false);
+        starer.toggle();
+
+    }
+
+    return set_starred
+}
+
+function handle_back_button() {
+
+    $("#header_row").hide();
+    $("#question_reasons_not_to_finish").show();
+}
+
+
+function getArticleInfoAndInitElementsRequiringIt(url, functions_to_follow) {
 
     ZeeguuRequests.get(GET_USER_ARTICLE_INFO, {url: url}, function (article_info) {
+
         FROM_LANGUAGE = article_info.language;
 
         translator = new Translator(FROM_LANGUAGE, localStorage["TO_LANGUAGE"]);
@@ -310,49 +372,23 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
 
         functions_to_follow();
 
-        var color_and_upload_feedback_answer = function (event) {
 
-            $("#finished_difficulty_easy").css('background', '');
-            $("#finished_difficulty_ok").css('background', '');
-            $("#finished_difficulty_hard").css('background', '');
-
-            $(event.target).css("background", "#b3d4fc");
-            UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
-
-            // the bottom page linkn should be visible only ocne the user
-            // has provided feedback
-            $("#bottom_page_back_link").show();
-        };
-
-        var upload_feedback_answer = function (event) {
-            UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
-        };
-
-        var set_starred = function (event) {
-            UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
-            starer.setState(false);
-            starer.toggle();
-
-        };
+        $("#back_button").click(handle_back_button);
 
 
-        $("#back_button").click(function () {
-            $("#header_row").hide();
-            $("#question_reasons_not_to_finish").show();
+        let difficulty_feedback_handler = handle_difficulty_feebdack_button(url);
+        ARTICLE_DIFFICULTY_BUTTON_IDS.forEach(function (button_id) {
+            $(button_id).click(difficulty_feedback_handler)
         });
 
 
-        $("#read_later").click(set_starred);
+        let feedback_button_handler = handle_article_feedback_buttonn(url);
+        ARTICLE_FEEDBACK_BUTTON_IDS.forEach(function (button_id) {
+            $(button_id).click(feedback_button_handler);
+        });
 
-        $("#not_finished_for_boring").click(upload_feedback_answer);
-        $("#not_finished_for_too_long").click(upload_feedback_answer);
-        $("#not_finished_for_too_difficult").click(upload_feedback_answer);
-        $("#not_finished_for_broken").click(upload_feedback_answer);
-        $("#not_finished_for_other").click(upload_feedback_answer);
 
-        $("#finished_difficulty_easy").click(color_and_upload_feedback_answer);
-        $("#finished_difficulty_ok").click(color_and_upload_feedback_answer);
-        $("#finished_difficulty_hard").click(color_and_upload_feedback_answer);
+        $("#read_later").click(handle_star_button_click(url));
 
 
     }.bind(this));
@@ -362,7 +398,7 @@ function initElementsRequiringLanguagesAndArticleInfo(url, functions_to_follow) 
 
 
 /* Attach Zeeguu tag click listener. */
-function attachZeeguuListeners() {
+function attachZeeguuTagListeners() {
     /* When a translatable word has been clicked,
      * either try to translate it, speak it, or open an alternative
      * translation window.  */

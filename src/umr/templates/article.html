@@ -1,31 +1,12 @@
-{% from "bottom_page_question.html" import bottom_feedback_div %}
-{% from "top_page_questions.html" import top_feedback_divs %}
-
-
 <html>
 <head>
     <title>Zeeguu Reader</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
-    <script>
-        (function (h, o, t, j, a, r) {
-            h.hj = h.hj || function () {
-                (h.hj.q = h.hj.q || []).push(arguments)
-            };
-            h._hjSettings = {hjid: 510081, hjsv: 5};
-            a = o.getElementsByTagName('head')[0];
-            r = o.createElement('script');
-            r.async = 1;
-            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
-    </script>
-
     <!-- Include the translation package. -->
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.5.css') }}">
-    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.5.js') }}"></script>
+          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.7.css') }}">
+    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.7.js') }}"></script>
 </head>
 <body>
 <!-- Top bar -->
@@ -33,7 +14,7 @@
     <header class="mdl-layout__header mdl-layout__header--transparent">
 
 
-        {{ top_feedback_divs() }}
+        {% include "question__problems_with_article.html" %}
 
 
         <div id="header_row" class="mdl-layout__header-row">
@@ -83,6 +64,7 @@
 
     <!-- Article content. -->
     <main class="mdl-layout__content">
+
         <div class="page-content-container">
             <div class="content-container">
                 <div class="page-content">
@@ -102,12 +84,21 @@
                     <i class="material-icons">thumb_up</i>
                 </button>
             </div>
-        </div>
 
+
+        </div>
 
         <br/><br/>
 
-        {{ bottom_feedback_div() }}
+        <div id="bottom_feedback_div" class="page-content-container" style="display:none">
+            <div class="content-container">
+                <div class="page-content" style="text-align: center">
+
+                    {% include 'question__article_difficulty.html' %}
+
+                </div>
+            </div>
+        </div>
 
 
     </main>

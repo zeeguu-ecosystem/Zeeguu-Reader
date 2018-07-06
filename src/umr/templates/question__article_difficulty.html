@@ -1,0 +1,51 @@
+{# Renders the following question:
+
+    If you read the article fully, please answer<br/>
+    Easy - Ok - Hard
+
+at the bottom of the
+
+#}
+
+
+<div id="question_difficulty_for_finished_article_">
+
+    <p>
+        <small>If you read the article fully, please answer<br/></small>
+    </p>
+
+    <div class="feedback_question">
+        How difficult was the text?
+    </div>
+
+
+    {% for button_info in
+            [
+                ("finished_easy","Easy"),
+                ("finished_ok","Ok"),
+                ("finished_hard","Hard"),
+                ("finished_very_hard","Very Hard")
+                ] %}
+
+        <button
+                id="{{ button_info[0] }}"
+                class="mdl-button mdl-js-button mdl-button--raised"
+                style="margin-bottom:6px">{{ button_info[1] }}</button>
+        &nbsp;
+
+    {% endfor %}
+
+
+    <br/><br/>
+
+    <div id="bottom_page_back_link" style="display: none;">
+        <a href="{{ url_for('umrblue.articles') }}">
+            <b>Back to article list</b></a>
+
+        <br/>
+    </div>
+
+    <br/><br/>
+
+
+</div>
