@@ -8,10 +8,10 @@
 
         {% for button_info in [
                 ("not_finished_for_no_reason","No"),
-                ("not_finished_for_too_difficult","Too Difficult"),
-                ("not_finished_for_too_long","Too Long"),
-                ("not_finished_for_boring","Not Interesting"),
-                ("not_finished_for_broken","Broken"),
+                ("not_finished_for_too_difficult","Difficult"),
+                ("not_finished_for_incomplete", "Incomplete"),
+                ("not_finished_for_boring","Boring"),
+                ("not_finished_for_too_long","Long"),
                 ("not_finished_for_other","Other")] %}
 
             <a href="{{ url_for('umrblue.articles') }}">

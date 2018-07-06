@@ -57,6 +57,7 @@ const ARTICLE_FEEDBACK_BUTTON_IDS = [
     "#not_finished_for_too_long",
     "#not_finished_for_too_difficult",
     "#not_finished_for_broken",
+    "#not_finished_for_incomplete",
     "#not_finished_for_other"];
 
 const ARTICLE_DIFFICULTY_BUTTON_IDS = [
