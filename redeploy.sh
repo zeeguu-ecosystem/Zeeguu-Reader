@@ -10,8 +10,10 @@
 
 ESCAPE_SLASHES='s/\//\\\//g'
 
+REMOVE_TRAILING_SLASH='s/\/$//g'
+
 DEFAULT_ZEEGUU_API="https://zeeguu.unibe.ch/api"
-DEFAULT_ZEEGUU_API_ESCAPED=$(echo $DEFAULT_ZEEGUU_API | sed $ESCAPE_SLASHES)
+DEFAULT_ZEEGUU_API_ESCAPED=$(echo $DEFAULT_ZEEGUU_API | sed $REMOVE_TRAILING_SLASH | sed $ESCAPE_SLASHES)
 echo $DEFAULT_ZEEGUU_API_ESCAPED
 
 
@@ -23,7 +25,7 @@ else
 	echo "ZEEGUU_API_URL defined ($ZEEGUU_API_URL)"
 	echo  "... chaging the API url accordingly in zeeguuRequests"
 	
-	ZEEGUU_API_URL_ESCAPED=$(echo $ZEEGUU_API_URL | sed $ESCAPE_SLASHES)
+	ZEEGUU_API_URL_ESCAPED=$(echo $ZEEGUU_API_URL | sed $REMOVE_TRAILING_SLASH | sed $ESCAPE_SLASHES  )
 	sed -i.bak "s/$DEFAULT_ZEEGUU_API_ESCAPED/$ZEEGUU_API_URL_ESCAPED/g" src/umr/static/scripts/app/zeeguuRequests.js
 
 	echo "config line in zeeguuRequests.js"
@@ -31,6 +33,7 @@ else
 
 fi
 
+echo "running webpack..."
 webpack && (cd src; python setup.py develop) && touch $ZEEGUU_WEB_APP_PY
 
 if [ -z $ZEEGUU_API_URL ]; then
@@ -43,4 +46,11 @@ else
 	echo "config line in zeeguuRequests.js"
 	cat src/umr/static/scripts/app/zeeguuRequests.js | grep "const ZEEGUU_SERVER"
 
+fi
+
+if [ -z $ZEEGUU_WEB_APP_MAIN_FILE ]; then
+	echo ""
+else
+	echo "Restarting the web app..."
+	touch $ZEEGUU_WEB_APP_MAIN_FILE
 fi
