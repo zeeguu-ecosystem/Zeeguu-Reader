@@ -1,6 +1,6 @@
 {
   "name": "zeeguu-umr",
-  "version": "0.9.7",
+  "version": "0.9.9",
   "description": "Multilanguage Article Reader for the Zeeguu platform",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "file-loader": "^0.10.1",
     "loggly-jslogger": "^2.2.2",
     "moment": "^2.22.1",
-    "node-sass": "^4.5.1",
+    "node-sass": "^4.9.2",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.0",
     "sweetalert": "^1.1.3",
