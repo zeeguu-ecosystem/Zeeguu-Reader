@@ -1,5 +1,5 @@
 beautifulsoup4==4.6.0
-Flask==0.12
+Flask==0.12.2
 requests==2.9.1
 pytest==3.0.7
 newspaper3k==0.1.9
