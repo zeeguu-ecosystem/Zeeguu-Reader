@@ -75,6 +75,8 @@ $(document).ready(function () {
 
     let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
 
+    console.log("document ready for " + url);
+    
     ensuring_TO_LANGUAGE_in_localStorage(function () {
         getArticleInfoAndInitElementsRequiringIt(url);
     });

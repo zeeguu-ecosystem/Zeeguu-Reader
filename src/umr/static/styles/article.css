@@ -178,8 +178,12 @@ a:hover {
 
 }
 
+#main_article_content {
+    margin-bottom: 2em;
+}
 
-.page-content-container {
+
+.page-content-container, #bottom_feedback_div {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
