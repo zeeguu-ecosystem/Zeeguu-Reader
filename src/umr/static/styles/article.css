@@ -165,13 +165,19 @@ a:hover {
     color: #505050;
 }
 
-.page-content {
+.page-content, .questionnaire-content {
     margin-left: auto;
     margin-right: auto;
     width: 80%;
     text-align: justify;
     padding-top: 3em;
 }
+
+.questionnaire-content {
+    text-align: center;
+
+}
+
 
 .page-content-container {
     margin-left: auto;

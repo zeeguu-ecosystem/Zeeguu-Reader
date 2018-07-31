@@ -89,6 +89,8 @@ function getArticleInfoAndInitElementsRequiringIt(url) {
 
     ZeeguuRequests.get(GET_USER_ARTICLE_INFO, {url: url}, function (article_info) {
 
+        console.log("got user article info...");
+
         let FROM_LANGUAGE = article_info.language;
 
         translator = new Translator(FROM_LANGUAGE, TO_LANGUAGE);
@@ -336,6 +338,8 @@ function handle_back_button() {
 
 
 function load_article_info_in_page(article_info) {
+
+    console.log("loading article info in page...");
 
     // TITLE
     let title_text = article_info.title;
