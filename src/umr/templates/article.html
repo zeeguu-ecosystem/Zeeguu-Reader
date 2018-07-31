@@ -5,10 +5,26 @@
 
     <!-- Include the translation package. -->
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.9.css') }}">
-    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.9.js') }}"></script>
+          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.10.css') }}">
+    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.10.js') }}"></script>
 </head>
 <body>
+
+<div id="loaderanimation"
+     style="left: 0;
+     position: absolute;
+     text-align: center;
+     color: gray;
+     top: 50%;
+     width: 100%;
+     z-index: 9999;
+     animation: fadein 2s 0s 6 linear alternate;">
+
+     <img style="width:60px; opacity: 40%;" class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
+
+</div>
+
+
 <!-- Top bar -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -17,7 +33,7 @@
         {% include "question__problems_with_article.html" %}
 
 
-        <div id="header_row" class="mdl-layout__header-row">
+        <div id="header_row" style="visibility:hidden" class="mdl-layout__header-row">
 
             <a id="back_button"
                     {#            href="{{ url_for('umrblue.articles') }}"    #}
@@ -65,13 +81,13 @@
     <!-- Article content. -->
     <main class="mdl-layout__content">
 
-        <div class="page-content-container">
+        <div id="main_article_content" style="visibility:hidden" class="page-content-container">
             <div class="content-container">
                 <div class="page-content">
                     <p class="title translatable">
                         <span id="articleTitle"></span>
                     </p>
-                    <p id="articleInfo" style="display:none">
+                    <p id="articleInfo">
                         <span id="articleURL">From: <a href="{{ article_url }}" target="_blank">source</a></span>
                         <span id="authors"></span>
                     </p>
@@ -79,7 +95,7 @@
                     <br/>
                 </div>
             </div>
-            <div id="like_button" style="display:none">
+            <div id="like_button">
                 <button id="toggle_like" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
                     <i class="material-icons">thumb_up</i>
                 </button>
@@ -90,7 +106,7 @@
 
         <br/><br/>
 
-        <div id="bottom_feedback_div" class="page-content-container" style="display:none">
+        <div id="bottom_feedback_div" style="visibility:hidden" class="page-content-container">
             <div class="content-container">
                 <div class="page-content" style="text-align: center">
 
@@ -113,6 +129,7 @@
 <div id="alterMenuContainer">
     <div id="alterMenu"></div>
 </div>
+
 
 </body>
 </html>

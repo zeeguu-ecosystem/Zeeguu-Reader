@@ -11,6 +11,10 @@ const OFF = 'off';
 
 const HTML_ID_TOGGLESTAR = '#toggle_star';
 
+const HTML_ID_STAR_FILL = '#toggle_star>#star_fill';
+const HTML_ID_STAR_BORDER = '#toggle_star>#star_border';
+
+
 /**
  * Implements the functionality for starring an article, together with
  * notifying Zeeguu about the changes.
@@ -20,15 +24,22 @@ export default class Starer {
      * Initializes the state of the starer (default is false).
      */
     constructor(state = false) {
-        this.on = state;
+        this.setState(state);
     }
 
     /**
-     * Sets the state of the starer.
+     * Sets the state of the starer and updates the UI
      * @param {boolean} state - Defines the state for the starer: true - 'on' or false - 'off'
      */
     setState(state) {
         this.on = state;
+        if (this.on) {
+            $(HTML_ID_STAR_FILL).removeClass(OFF);
+            $(HTML_ID_STAR_BORDER).addClass(OFF);
+        } else {
+            $(HTML_ID_STAR_FILL).addClass(OFF);
+            $(HTML_ID_STAR_BORDER).removeClass(OFF);
+        }
     }
 
     /**
@@ -53,6 +64,7 @@ export default class Starer {
         this._toggleState();
         this._toggleIcon();
     }
+
 
     /**
      * Toggles the internal state of this class between true and false.
