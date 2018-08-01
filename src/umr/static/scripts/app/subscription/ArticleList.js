@@ -179,15 +179,6 @@ export default class ArticleList {
                     // Animation complete.
                     $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
-
-                // Log that an article has been opened.
-                let url = $(this).find('a')[0].href;
-                let articleInfo = {};
-                url.split('?')[1].split('&').forEach(function (part) {
-                    let item = part.split("=");
-                    articleInfo[item[0]] = decodeURIComponent(item[1]);
-                });
-                UserActivityLogger.log(USER_EVENT_CLICKED_ARTICLE, url, articleInfo);
             }
         });
     }

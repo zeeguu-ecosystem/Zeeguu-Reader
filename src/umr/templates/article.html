@@ -5,8 +5,8 @@
 
     <!-- Include the translation package. -->
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.12.css') }}">
-    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.12.js') }}"></script>
+          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.123.css') }}">
+    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.123.js') }}"></script>
 </head>
 <body>
 
@@ -77,6 +77,8 @@
         </div>
     </header>
 
+    <span id="articleID">{{ article_id }}</span>
+
     <!-- Article content. -->
     <main class="mdl-layout__content">
 
@@ -87,7 +89,8 @@
                         <span id="articleTitle"></span>
                     </p>
                     <p id="articleInfo">
-                        <span id="articleURL">From: <a href="{{ article_url }}" target="_blank">source</a></span>
+
+                        <span id="articleURL"></span>
                         <span id="authors"></span>
                     </p>
                     <div id="articleContent" class="translatable"></div>
@@ -100,9 +103,8 @@
                 </button>
             </div>
 
-
         </div>
-        
+
 
         <div id="bottom_feedback_div" style="visibility:hidden">
 

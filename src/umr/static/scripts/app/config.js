@@ -8,6 +8,7 @@ export default {
     HTML_ATTRIBUTE_CHOSEN: 'chosen',
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
+    HTML_ID_ARTICLE_ID: '#articleID',
     HTML_ID_ARTICLE_TITLE: '#articleTitle',
     
     HTML_CLASS_ARTICLELINK_FADEOUT: '.fadeoutOnClick',

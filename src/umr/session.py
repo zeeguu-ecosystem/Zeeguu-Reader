@@ -1,8 +1,8 @@
 import functools
 import flask
 from flask import request
+from umr.zeeguu_server import ZEEGUU_LOGIN
 
-ZEEGUU_LOGIN = "https://www.zeeguu.unibe.ch/login"
 
 def with_session(view):
     """

@@ -3,10 +3,10 @@ import config from '../config';
 import UndoStack from './UndoStack';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
-import {GET_NATIVE_LANGUAGE} from '../zeeguuRequests';
 import {GET_TRANSLATIONS_ENDPOINT} from '../zeeguuRequests';
 import {POST_TRANSLATION_SUGGESTION} from '../zeeguuRequests';
 import {HTML_ID_ALTERMENU} from "./AlterMenu";
+import {get_article_id} from './article_id.js'
 
 
 
@@ -59,7 +59,7 @@ export default class Translator {
         ZeeguuRequests.post(GET_TRANSLATIONS_ENDPOINT + '/' + this.from_language + '/' + this.to_language,
                            {word: text, context: context, url: url, title: title}, callback);
         
-        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: this.from_language});
+        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {language: this.from_language}, get_article_id());
     }
 
     /**

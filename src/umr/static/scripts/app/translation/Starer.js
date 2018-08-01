@@ -3,6 +3,7 @@ import config from '../config';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {POST_USER_ARTICLE} from '../zeeguuRequests';
+import {get_article_id} from './article_id.js'
 
 
 const USER_EVENT_STAR_ARTICLE = 'STAR ARTICLE';
@@ -47,19 +48,20 @@ export default class Starer {
      * Zeeguu accordingly.
      */
     toggle() {
-        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
+
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
 
         if (this.on) {
             // Launch Zeeguu request to notify about unstarring of article by user.
-            // ZeeguuRequests.post(POST_UNSTAR_ARTICLE, {url: url});
-            ZeeguuRequests.post(POST_USER_ARTICLE, {url: url, starred: "False"});
-            UserActivityLogger.log(USER_EVENT_UNSTAR_ARTICLE, url);
+            let payload = {article_id: get_article_id(), starred: "False"}
+            console.log(payload);
+            ZeeguuRequests.post(POST_USER_ARTICLE, payload);
+            UserActivityLogger.log(USER_EVENT_UNSTAR_ARTICLE, '', {}, get_article_id());
 
         } else { // it's off            
             // Launch Zeeguu request to notify about starring an article.
-            ZeeguuRequests.post(POST_USER_ARTICLE, {url: url, starred: "True"});
-            UserActivityLogger.log(USER_EVENT_STAR_ARTICLE, url);
+            ZeeguuRequests.post(POST_USER_ARTICLE, {article_id: get_article_id(), starred: "True"});
+            UserActivityLogger.log(USER_EVENT_STAR_ARTICLE, '', {}, get_article_id());
         }
         this._toggleState();
         this._toggleIcon();

@@ -13,13 +13,14 @@ export default class UserActivityLogger {
      * @param {string} value - Primary information of the event, can be empty.
      * @param {Object} extra_data - Optional additional information.
      */
-    static log(event, value = '', extra_data = {}) {
+    static log(event, value = '', extra_data = {}, article_id='') {
 
         let event_information = {
             time: new Date().toJSON(),
             event: 'UMR - ' + event,
             value: value,
-            extra_data: JSON.stringify(extra_data)
+            extra_data: JSON.stringify(extra_data),
+            article_id: article_id
         };
         ZeeguuRequests.post(
             POST_USER_ACTIVITY_ENDPOINT,
