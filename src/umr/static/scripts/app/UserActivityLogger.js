@@ -1,5 +1,6 @@
 import ZeeguuRequests from './zeeguuRequests';
 import {POST_USER_ACTIVITY_ENDPOINT} from './zeeguuRequests';
+import {get_article_id} from "./translation/article_id";
 
 /**
  * Abstracts logging a user event.
@@ -26,6 +27,10 @@ export default class UserActivityLogger {
             POST_USER_ACTIVITY_ENDPOINT,
             event_information,
             this._onReply);
+    }
+
+    static log_article_interaction(event, value = '', extra_data = {}) {
+        this.log(event, value, extra_data, get_article_id())
     }
 
     /**
