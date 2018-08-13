@@ -6,7 +6,6 @@ from .zeeguu_server import ZEEGUU_API
 import requests
 import json
 
-WORD_TAG = "zeeguu"
 
 
 @umrblue.route('/article', methods=['GET'])
