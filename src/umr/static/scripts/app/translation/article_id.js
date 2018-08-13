@@ -3,7 +3,6 @@ import config from "../config";
 
 export function get_article_id() {
 
-    let v = $(config.HTML_ID_ARTICLE_ID).text();
-    console.log(v)
-    return v;
+    let id = $(config.HTML_ID_ARTICLE_ID).text();
+    return id;
 }

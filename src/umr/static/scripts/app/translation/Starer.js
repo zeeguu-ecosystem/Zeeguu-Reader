@@ -54,7 +54,6 @@ export default class Starer {
         if (this.on) {
             // Launch Zeeguu request to notify about unstarring of article by user.
             let payload = {article_id: get_article_id(), starred: "False"}
-            console.log(payload);
             ZeeguuRequests.post(POST_USER_ARTICLE, payload);
             UserActivityLogger.log(USER_EVENT_UNSTAR_ARTICLE, '', {}, get_article_id());
 

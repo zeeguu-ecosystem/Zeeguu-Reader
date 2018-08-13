@@ -15,8 +15,6 @@ import {FILTER_RENDER} from '../zeeguuRequests';
 import {SEARCH_RENDER} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
-const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE FROM LIST';
-const EVENT_ARTICLES_CACHED = 'ARTICLES RETRIEVED FROM CACHE';
 const EVENT_ARTICLES_REQUESTED = 'ARTICLES REQUESTED FROM ZEEGUU';
 const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
 const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
