@@ -77,7 +77,7 @@ $(document).ready(function () {
         getArticleInfoAndInitElementsRequiringIt(get_article_id());
     });
 
-    UserActivityLogger.log_article_interaction(USER_EVENT_OPENED_ARTICLE, '', Date.now());
+    UserActivityLogger.log_article_interaction(USER_EVENT_OPENED_ARTICLE);
 
 });
 
