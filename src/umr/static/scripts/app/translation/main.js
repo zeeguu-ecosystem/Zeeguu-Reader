@@ -87,7 +87,7 @@ function getArticleInfoAndInitElementsRequiringIt(article_id) {
 
     ZeeguuRequests.get(GET_USER_ARTICLE_INFO, {article_id: article_id}, function (article_info) {
 
-        let FROM_LANGUAGE = article_info.language;
+        FROM_LANGUAGE = article_info.language;
 
         translator = new Translator(FROM_LANGUAGE, TO_LANGUAGE);
 
