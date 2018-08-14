@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-const ZEEGUU_SERVER = 'http://0.0.0.0:9001';
+const ZEEGUU_SERVER = 'https://zeeguu.unibe.ch/api';
 const ZEEGUU_SESSION = 'sessionID';
 
 /** Get a list of recommended feeds. */
