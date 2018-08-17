@@ -19,8 +19,8 @@
 	<script> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</script>
 
 	<!-- Include the subscription package. -->
-	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.127.css')}}">
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.9.127.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.128.css')}}">
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.9.128.js')}}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
   <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -62,11 +62,13 @@
 				<button type="button" class="mdl-chip__action show-language-subscriber"><i class="material-icons md-light">add_circle</i></button>
 			</span>
 		  <div id="languagesList"></div>
-			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+
+			<span style="display: none" class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
 				<span class="mdl-chip__text">Sources</span>
 				<button type="button" class="mdl-chip__action show-source-subscriber"><i class="material-icons md-light">add_circle</i></button>
 			</span>
-		  <div id="sourcesList"></div>
+		  <div style="display: none" id="sourcesList"></div>
+
 			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
 				<span class="mdl-chip__text">Interesting</span>
 				<button type="button" class="mdl-chip__action show-topic-subscriber"><i class="material-icons md-light">add_circle</i></button>
