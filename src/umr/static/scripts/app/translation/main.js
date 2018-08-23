@@ -336,6 +336,9 @@ function load_article_info_in_page(article_info) {
     // AUTHORS
     $("#authors").text(article_info.authors);
 
+    // LINK TO SOURCE
+    $("#source").attr("href", article_info.url);
+
     // CONTENT
     let text = article_info.content;
     text = filterShit(text);
