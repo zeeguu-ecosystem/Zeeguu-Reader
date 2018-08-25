@@ -17,6 +17,6 @@ export default class Speaker {
         utterance.text = text;
         speechSynthesis.speak(utterance);
 
-        UserActivityLogger.log(USER_EVENT_TEXT_TO_SPEECH, text, {language : language});
+        UserActivityLogger.log_article_interaction(USER_EVENT_TEXT_TO_SPEECH, text, {language : language});
     }
 };

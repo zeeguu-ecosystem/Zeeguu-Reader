@@ -11,6 +11,7 @@ import Starer from './Starer';
 import UserActivityLogger from '../UserActivityLogger';
 import {ensuring_TO_LANGUAGE_in_localStorage} from './cachingToLocalStorage';
 import {addParagraphs, filterShit, wrapWordsInZeeguuTags} from './textProcessing';
+import {get_article_id} from './article_id.js'
 
 import {GET_USER_ARTICLE_INFO} from '../zeeguuRequests';
 import ZeeguuRequests from "../zeeguuRequests";
@@ -35,7 +36,6 @@ const USER_EVENT_FEEDBACK = 'USER FEEDBACK';
 
 
 const HTML_ID_TOGGLE_COPY = '#toggle_copy';
-const HTML_ID_LIKE_BUTTON = '#like_button';
 const HTML_ID_TOGGLE_UNDO = '#toggle_undo';
 const HTML_ID_TOGGLE_LIKE = '#toggle_like';
 const HTML_ID_TOGGLE_STAR = '#toggle_star';
@@ -46,13 +46,13 @@ const ENTER_KEY = 13;
 var starer;
 const speaker = new Speaker();
 
-var translator;
-var alterMenu;
-var FROM_LANGUAGE;
+let translator;
+let alterMenu;
+let FROM_LANGUAGE;
 
-var previous_time = 0;
+let previous_time = 0;
 
-var FREQUENCY_KEEPALIVE = 60 * 1000;
+let FREQUENCY_KEEPALIVE = 60 * 1000;
 
 const ARTICLE_FEEDBACK_BUTTON_IDS = [
     "#not_finished_for_boring",
@@ -73,27 +73,21 @@ const ARTICLE_DIFFICULTY_BUTTON_IDS = [
  * bind all necessary listeners. */
 $(document).ready(function () {
 
-    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-
-    console.log("document ready for " + url);
-    
     ensuring_TO_LANGUAGE_in_localStorage(function () {
-        getArticleInfoAndInitElementsRequiringIt(url);
+        getArticleInfoAndInitElementsRequiringIt(get_article_id());
     });
 
-    UserActivityLogger.log(USER_EVENT_OPENED_ARTICLE, url, Date.now());
+    UserActivityLogger.log_article_interaction(USER_EVENT_OPENED_ARTICLE);
 
 });
 
-function getArticleInfoAndInitElementsRequiringIt(url) {
+function getArticleInfoAndInitElementsRequiringIt(article_id) {
 
     let TO_LANGUAGE = localStorage["TO_LANGUAGE"];
 
-    ZeeguuRequests.get(GET_USER_ARTICLE_INFO, {url: url}, function (article_info) {
+    ZeeguuRequests.get(GET_USER_ARTICLE_INFO, {article_id: article_id}, function (article_info) {
 
-        console.log("got user article info...");
-
-        let FROM_LANGUAGE = article_info.language;
+        FROM_LANGUAGE = article_info.language;
 
         translator = new Translator(FROM_LANGUAGE, TO_LANGUAGE);
 
@@ -101,7 +95,7 @@ function getArticleInfoAndInitElementsRequiringIt(url) {
 
         load_article_info_in_page(article_info);
 
-        attachInteractionScripts(url);
+        attachInteractionScripts();
 
         make_article_elements_visible();
 
@@ -110,7 +104,7 @@ function getArticleInfoAndInitElementsRequiringIt(url) {
 }
 
 
-function attachInteractionScripts(url) {
+function attachInteractionScripts() {
 
     disableToggleCopy();
     attachZeeguuTagListeners();
@@ -139,28 +133,26 @@ function attachInteractionScripts(url) {
 
     $("#back_button").click(handle_back_button);
 
-    let difficulty_feedback_handler = handle_difficulty_feebdack_button(url);
+    let difficulty_feedback_handler = handle_difficulty_feebdack_button();
     ARTICLE_DIFFICULTY_BUTTON_IDS.forEach(function (button_id) {
         $(button_id).click(difficulty_feedback_handler)
     });
 
 
-    let feedback_button_handler = handle_article_feedback_button(url);
+    let feedback_button_handler = handle_article_feedback_button();
     ARTICLE_FEEDBACK_BUTTON_IDS.forEach(function (button_id) {
         $(button_id).click(feedback_button_handler);
     });
 
 
-    $("#read_later").click(handle_read_later_button_click(url));
+    $("#read_later").click(handle_read_later_button_click());
 
 
 }
 
 
 function log_user_leaves_article() {
-    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-    let title = $(config.HTML_ID_ARTICLE_TITLE).text();
-    UserActivityLogger.log(USER_EVENT_EXIT_ARTICLE, url, {title: title});
+    UserActivityLogger.log_article_interaction(USER_EVENT_EXIT_ARTICLE);
 
 }
 
@@ -168,11 +160,11 @@ function handle_TOGGLE_COPY_click() {
     // Selection is disabled -> enable it.
     if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
         enableToggleCopy();
-        UserActivityLogger.log(USER_EVENT_ENABLE_COPY);
+        UserActivityLogger.log_article_interaction(USER_EVENT_ENABLE_COPY);
     }
     else {
         disableToggleCopy();
-        UserActivityLogger.log(USER_EVENT_DISABLE_COPY);
+        UserActivityLogger.log_article_interaction(USER_EVENT_DISABLE_COPY);
     }
 }
 
@@ -189,32 +181,28 @@ function handle_TOGGLE_UNDO_click() {
 function handle_TOGGLE_LIKE_click() {
     $(this).toggleClass(CLASS_MDL_BUTTON_DISABLED);
 
-    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-    let title = $(config.HTML_ID_ARTICLE_TITLE).text();
-
     if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
-        UserActivityLogger.log(USER_EVENT_UNLIKE_ARTICLE, url, {title: title});
+        UserActivityLogger.log_article_interaction(USER_EVENT_UNLIKE_ARTICLE);
     } else {
-        UserActivityLogger.log(USER_EVENT_LIKE_ARTICLE, url, {title: title});
+        UserActivityLogger.log_article_interaction(USER_EVENT_LIKE_ARTICLE);
     }
 
 }
 
 function handle_CONTENT_SCROLL_EVENT() {
 
-    var _current_time = new Date();
+    let _current_time = new Date();
 
-    var current_time = _current_time.getTime();
+    let current_time = _current_time.getTime();
 
     if (previous_time == 0) {
-        let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-        UserActivityLogger.log(USER_EVENT_SCROLL, url);
+
+        UserActivityLogger.log_article_interaction(USER_EVENT_SCROLL);
         previous_time = current_time;
 
     } else {
         if ((current_time - previous_time) > FREQUENCY_KEEPALIVE) {
-            let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-            UserActivityLogger.log(USER_EVENT_SCROLL, url);
+            UserActivityLogger.log_article_interaction(USER_EVENT_SCROLL);
             previous_time = current_time;
         } else {
         }
@@ -255,18 +243,16 @@ $(document).keypress(function (event) {
  * the alter menu will be closed. */
 $(window).on("orientationchange", function () {
     alterMenu.close();
-    UserActivityLogger.log(USER_EVENT_CHANGE_ORIENTATION);
+    UserActivityLogger.log_article_interaction(USER_EVENT_CHANGE_ORIENTATION);
 });
 
 $(window).on("focus", function () {
 
-    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-    UserActivityLogger.log(USER_EVENT_ARTICLE_FOCUS, url);
+    UserActivityLogger.log_article_interaction(USER_EVENT_ARTICLE_FOCUS);
 });
 
 $(window).on("blur", function () {
-    let url = $(config.HTML_ID_ARTICLE_URL).children('a').attr('href');
-    UserActivityLogger.log(USER_EVENT_ARTICLE_LOST_FOCUS, url);
+    UserActivityLogger.log_article_interaction(USER_EVENT_ARTICLE_LOST_FOCUS);
 });
 
 
@@ -291,8 +277,8 @@ function isToggledCopy() {
 }
 
 
-function handle_difficulty_feebdack_button(url) {
-    // Returns the handler with the url already bound
+function handle_difficulty_feebdack_button() {
+    // Returns the handler with the article_id already bound
 
     function difficulty_feedback_button_clicked_partial(event) {
 
@@ -302,7 +288,7 @@ function handle_difficulty_feebdack_button(url) {
 
         $(event.target).css("background", "#b3d4fc");
 
-        UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+        UserActivityLogger.log_article_interaction(USER_EVENT_FEEDBACK, event.target.id);
 
         // the bottom page link should be visible only once the user
         // has provided feedback
@@ -312,18 +298,18 @@ function handle_difficulty_feebdack_button(url) {
     return difficulty_feedback_button_clicked_partial;
 }
 
-function handle_article_feedback_button(url) {
+function handle_article_feedback_button() {
     // Returns the handler with the given url bound
     function upload_feedback_answer(event) {
-        UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+        UserActivityLogger.log_article_interaction(USER_EVENT_FEEDBACK, event.target.id);
     }
 
     return upload_feedback_answer
 }
 
-function handle_read_later_button_click(url) {
+function handle_read_later_button_click() {
     function set_starred(event) {
-        UserActivityLogger.log(USER_EVENT_FEEDBACK, url, event.target.id);
+        UserActivityLogger.log_article_interaction(USER_EVENT_FEEDBACK, event.target.id);
         starer.setState(false);
         starer.toggle();
 
@@ -341,8 +327,6 @@ function handle_back_button() {
 
 function load_article_info_in_page(article_info) {
 
-    console.log("loading article info in page...");
-
     // TITLE
     let title_text = article_info.title;
     document.title = title_text;
@@ -351,6 +335,9 @@ function load_article_info_in_page(article_info) {
 
     // AUTHORS
     $("#authors").text(article_info.authors);
+
+    // LINK TO SOURCE
+    $("#source").attr("href", article_info.url);
 
     // CONTENT
     let text = article_info.content;

@@ -148,7 +148,7 @@ export default class AlterMenu {
      */
     close() {
         let word = $(HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
-        UserActivityLogger.log(USER_EVENT_CLOSED_ALTERMENU, word);
+        UserActivityLogger.log_article_interaction(USER_EVENT_CLOSED_ALTERMENU, word);
 
         $(HTML_ID_ALTERMENU).slideUp(function () {
             $(HTML_ID_ALTERMENUCONTAINER).append($(HTML_ID_ALTERMENU));
@@ -161,7 +161,7 @@ export default class AlterMenu {
      */
     open() {
         let word = $(HTML_ID_ALTERMENU).parent().parent().children(config.HTML_ORIGINAL).text();
-        UserActivityLogger.log(USER_EVENT_OPENED_ALTERMENU, word);
+        UserActivityLogger.log_article_interaction(USER_EVENT_OPENED_ALTERMENU, word);
         
         $(HTML_ID_ALTERMENU).slideDown(function () {
             this.menuOpen = true

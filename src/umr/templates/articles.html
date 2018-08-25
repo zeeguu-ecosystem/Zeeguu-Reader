@@ -19,8 +19,8 @@
 	<script> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</script>
 
 	<!-- Include the subscription package. -->
-	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.12.css')}}">
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.9.12.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.129.css')}}">
+	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.9.129.js')}}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
   <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -41,11 +41,52 @@
 	  </div>
   </header>
   <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">
-		My Content
-	</span>
     <nav class="mdl-navigation">
 	  <div class="options">
+
+
+		  <br/><br/><br/>
+
+
+    <span class="mdl-layout-title">
+		My Interests
+	</span>
+          <br/>
+
+
+		  <!-- List of content currently subscribed to. -->
+		  <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+				<span class="mdl-chip__text">Languages</span>
+				<button type="button" class="mdl-chip__action show-language-subscriber"><i class="material-icons md-light">add_circle</i></button>
+			</span>
+		  <div id="languagesList"></div>
+
+          <div style="font-size: xx-small">&nbsp;</div>
+
+            <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+                <span class="mdl-chip__text">Topics</span>
+                <button type="button" class="mdl-chip__action show-topic-subscriber"><i class="material-icons md-light">add_circle</i></button>
+            </span>
+    		  <div id="searchesList"></div>
+	    	  <div id="topicsList"></div>
+
+          <div style="font-size: xx-small">&nbsp;</div>
+
+            <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+                <span class="mdl-chip__text">Non-Interests</span>
+                <button type="button" class="mdl-chip__action show-filter-subscriber"><i class="material-icons md-light">add_circle</i></button>
+            </span>
+              <div id="searchesFilterList"></div>
+              <div id="topicsFilterList"></div>
+
+          <div style="font-size: xx-small">&nbsp;</div>
+
+          <br/>
+    <span class="mdl-layout-title">
+		Search
+	</span>
+
+
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
             <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
                 <i class="material-icons">search</i>
@@ -55,30 +96,9 @@
                 <label class="mdl-textfield__label" for="search-expandable">Search...</label>
             </div>
           </div>
-		  <br>
-		  <!-- List of content currently subscribed to. -->
-		  <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
-				<span class="mdl-chip__text">Languages</span>
-				<button type="button" class="mdl-chip__action show-language-subscriber"><i class="material-icons md-light">add_circle</i></button>
-			</span>
-		  <div id="languagesList"></div>
-			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
-				<span class="mdl-chip__text">Sources</span>
-				<button type="button" class="mdl-chip__action show-source-subscriber"><i class="material-icons md-light">add_circle</i></button>
-			</span>
-		  <div id="sourcesList"></div>
-			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
-				<span class="mdl-chip__text">Interesting</span>
-				<button type="button" class="mdl-chip__action show-topic-subscriber"><i class="material-icons md-light">add_circle</i></button>
-			</span>
-		  <div id="searchesList"></div>
-		  <div id="topicsList"></div>
-			<span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
-				<span class="mdl-chip__text">Not Interesting</span>
-				<button type="button" class="mdl-chip__action show-filter-subscriber"><i class="material-icons md-light">add_circle</i></button>
-			</span>
-		  <div id="searchesFilterList"></div>
-		  <div id="topicsFilterList"></div>
+
+
+
 	  </div>
     </nav>
   </div>

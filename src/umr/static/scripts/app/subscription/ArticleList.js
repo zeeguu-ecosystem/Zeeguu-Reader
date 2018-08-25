@@ -15,8 +15,6 @@ import {FILTER_RENDER} from '../zeeguuRequests';
 import {SEARCH_RENDER} from '../zeeguuRequests';
 
 const KEY_MAP_FEED_ARTICLE = 'feed_article_map';
-const USER_EVENT_CLICKED_ARTICLE = 'OPEN ARTICLE FROM LIST';
-const EVENT_ARTICLES_CACHED = 'ARTICLES RETRIEVED FROM CACHE';
 const EVENT_ARTICLES_REQUESTED = 'ARTICLES REQUESTED FROM ZEEGUU';
 const HTML_ID_ARTICLE_LINK_LIST = '#articleLinkList';
 const HTML_ID_ARTICLE_LINK_TEMPLATE = '#articleLink-template';
@@ -179,15 +177,6 @@ export default class ArticleList {
                     // Animation complete.
                     $(config.HTML_CLASS_PAGECONTENT).fadeOut();
                 });
-
-                // Log that an article has been opened.
-                let url = $(this).find('a')[0].href;
-                let articleInfo = {};
-                url.split('?')[1].split('&').forEach(function (part) {
-                    let item = part.split("=");
-                    articleInfo[item[0]] = decodeURIComponent(item[1]);
-                });
-                UserActivityLogger.log(USER_EVENT_CLICKED_ARTICLE, url, articleInfo);
             }
         });
     }

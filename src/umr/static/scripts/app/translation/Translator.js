@@ -3,11 +3,9 @@ import config from '../config';
 import UndoStack from './UndoStack';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
-import {GET_NATIVE_LANGUAGE} from '../zeeguuRequests';
 import {GET_TRANSLATIONS_ENDPOINT} from '../zeeguuRequests';
 import {POST_TRANSLATION_SUGGESTION} from '../zeeguuRequests';
 import {HTML_ID_ALTERMENU} from "./AlterMenu";
-
 
 
 const USER_EVENT_TRANSLATE = 'TRANSLATE TEXT';
@@ -57,9 +55,9 @@ export default class Translator {
         let callback = (data) => this._setTranslations(zeeguuTag, data);
         // Launch Zeeguu request to fill translation options.
         ZeeguuRequests.post(GET_TRANSLATIONS_ENDPOINT + '/' + this.from_language + '/' + this.to_language,
-                           {word: text, context: context, url: url, title: title}, callback);
-        
-        UserActivityLogger.log(USER_EVENT_TRANSLATE, text, {url: url, title: title, language: this.from_language});
+            {word: text, context: context, url: url, title: title}, callback);
+
+        UserActivityLogger.log_article_interaction(USER_EVENT_TRANSLATE, text);
     }
 
     /**
@@ -67,16 +65,14 @@ export default class Translator {
      */
     undoTranslate() {
         this.undoStack.undoState();
-        let url = window.location.href;
-        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
-        UserActivityLogger.log(USER_EVENT_UNDO_TRANSLATE, '', {url: url, title: title, language: this.from_language});
+        UserActivityLogger.log_article_interaction(USER_EVENT_UNDO_TRANSLATE);
     }
 
     /**
      * Sends a post request to Zeeguu about a contribution/suggestion for a translation from user.
      * @param {jQuery} $zeeguu - Zeeguu reference tag for which to send the user suggestion.
      */
-    sendSuggestion ($zeeguu) {
+    sendSuggestion($zeeguu) {
         let word = $zeeguu.children(config.HTML_ORIGINAL).text();
         let context = Translator._getContext($zeeguu.get(0));
         let url = window.location.href;
@@ -85,10 +81,9 @@ export default class Translator {
 
         // Launch Zeeguu request to supply translation suggestion.
         ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + this.from_language + '/' + this.to_language,
-                           {word: word, context: context, url: url, title: title, translation: translation});
+            {word: word, context: context, url: url, title: title, translation: translation});
 
-        UserActivityLogger.log(USER_EVENT_SEND_SUGGESTION, word, 
-                               {url: url, title: title, language: this.from_language, translation: translation});
+        UserActivityLogger.log_article_interaction(USER_EVENT_SEND_SUGGESTION, word, {translation: translation});
     }
 
     /**
@@ -125,7 +120,7 @@ export default class Translator {
      * @return {string} - Textual context.
      */
     static _getContext(zeeguuTag) {
-        let zeeguuParentClone = zeeguuTag.parentElement.cloneNode(true);        
+        let zeeguuParentClone = zeeguuTag.parentElement.cloneNode(true);
         $(zeeguuParentClone).find(HTML_ID_ALTERMENU).remove();
         return zeeguuParentClone.textContent;
     }
