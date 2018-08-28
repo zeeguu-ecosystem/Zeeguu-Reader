@@ -9,7 +9,12 @@ if [ $# -eq 0 ]
    
    echo "-- package.json "
    grep version package.json
-   echo " " 
+
+   CURR_VERSION=`grep version package.json | sed s/.*version\":\ \"//g | sed s/\",//g`
+
+   # magic perl due to: https://stackoverflow.com/questions/32541720/increment-version-number-in-file-via-bash-command
+   NEW_VERSION=`grep version package.json | sed s/.*version\":\ \"//g | sed s/\",//g | perl -pe 's/\b(\d+)(?=\D*$)/$1+1/e'`
+
 
    echo "-- article.html "
    grep scripts/dist/translation src/umr/templates/article.html
@@ -23,30 +28,35 @@ if [ $# -eq 0 ]
    grep version src/setup.py
    echo " " 
 
-   exit
+   echo "Current version: $CURR_VERSION " 
+   echo "New version: $NEW_VERSION " 
+   echo " "
+   read -p "Press enter to continue"
+
+   
 fi
 
-echo "changing $1 to $2 in three files"
+echo "changing $CURR_VERSION to $NEW_VERSION in three files"
 
-sed -i.bak "s/$1/$2/g" src/setup.py
-sed -i.bak "s/$1/$2/g" package.json
-sed -i.bak "s/$1/$2/g" src/umr/templates/article.html
-sed -i.bak "s/$1/$2/g" src/umr/templates/articles.html
+sed -i.bak "s/$CURR_VERSION/$NEW_VERSION/g" src/setup.py
+sed -i.bak "s/$CURR_VERSION/$NEW_VERSION/g" package.json
+sed -i.bak "s/$CURR_VERSION/$NEW_VERSION/g" src/umr/templates/article.html
+sed -i.bak "s/$CURR_VERSION/$NEW_VERSION/g" src/umr/templates/articles.html
 
 echo "Done"
 
 echo "--- package.json ---"
-grep $2 package.json 
+grep $NEW_VERSION package.json 
 echo " "
 
 echo "--- article.html ---"
-grep $2 src/umr/templates/article.html
+grep $NEW_VERSION src/umr/templates/article.html
 echo " "
 
 echo "--- articles.html ---"
-grep $2 src/umr/templates/articles.html
+grep $NEW_VERSION src/umr/templates/articles.html
 echo " "
 
 echo "--- setup.py ---"
-grep $2 src/setup.py
+grep $NEW_VERSION src/setup.py
 echo " "

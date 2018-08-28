@@ -34,6 +34,9 @@ else
 
 fi
 
+echo "updating the version number"
+
+./change_version_number.sh
 
 echo "running webpack..."
 
