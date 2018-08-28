@@ -9,6 +9,7 @@ import {GET_SUBSCRIBED_TOPICS} from '../zeeguuRequests';
 import {SUBSCRIBE_TOPIC_ENDPOINT} from '../zeeguuRequests';
 import {UNSUBSCRIBE_TOPIC_ENDPOINT} from '../zeeguuRequests';
 import ArticleList from "./ArticleList";
+import {reload_articles_on_drawer_close} from './main.js';
 
 
 const HTML_ID_SUBSCRIPTION_LIST = '#topicsList';
@@ -21,8 +22,8 @@ const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW FEED';
 let logger = new LogglyTracker();
 logger.push({
     'logglyKey': config.LOGGLY_TOKEN,
-    'sendConsoleErrors' : true,
-    'tag' : 'TopicSubscriptionList'
+    'sendConsoleErrors': true,
+    'tag': 'TopicSubscriptionList'
 });
 
 /**
@@ -85,7 +86,7 @@ export default class TopicSubscriptionList {
         let subscription = $(Mustache.render(template, topic));
         let removeButton = $(subscription.find(HTML_CLASS_REMOVE_BUTTON));
         let _unfollow = this._unfollow.bind(this);
-        removeButton.click(function(topic) {
+        removeButton.click(function (topic) {
             return function () {
                 _unfollow(topic);
             };
@@ -100,10 +101,12 @@ export default class TopicSubscriptionList {
      * @param {Object} topic - Data of the particular topic to subscribe to.
      */
     follow(topic) {
+
         UserActivityLogger.log(USER_EVENT_FOLLOWED_FEED, topic.id, topic);
         this._addSubscription(topic);
         this._loading();
         let callback = ((data) => this._onTopicFollowed(topic, data)).bind(this);
+
         ZeeguuRequests.post(SUBSCRIBE_TOPIC_ENDPOINT, {topic_id: topic.id}, callback);
     }
 
@@ -158,7 +161,9 @@ export default class TopicSubscriptionList {
      * @param {Object} topic - Data of the particular topic to remove from the list.
      */
     _remove(topic) {
-        if (!this.topicList.delete(topic.id))  { console.log("Error: topic not in topic list."); }
+        if (!this.topicList.delete(topic.id)) {
+            console.log("Error: topic not in topic list.");
+        }
         $('span[topicRemovableID="' + topic.id + '"]').fadeOut();
     }
 
@@ -166,13 +171,13 @@ export default class TopicSubscriptionList {
      * Fire an event to notify change in this class.
      */
     _changed() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+        reload_articles_on_drawer_close();
     }
 
     /**
-     * Fire event to show loader while subscribing / unsubscribing
+     * Was used to fire event to show loader while subscribing / unsubscribing
+     * Not doing anything anymore because we're not reloading anymore
      */
     _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };

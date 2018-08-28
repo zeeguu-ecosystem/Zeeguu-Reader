@@ -8,6 +8,7 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {GET_FEEDS_BEING_FOLLOWED} from '../zeeguuRequests';
 import {FOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
 import {UNFOLLOW_FEED_ENDPOINT} from '../zeeguuRequests';
+import {reload_articles_on_drawer_close} from "./main.js";
 
 
 const HTML_ID_SUBSCRIPTION_LIST = '#sourcesList';
@@ -167,13 +168,13 @@ export default class SourceSubscriptionList {
      * Fire an event to notify change in this class.
      */
     _changed() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+        reload_articles_on_drawer_close();
     }
 
     /**
      * Fire event to show loader while subscribing / unsubscribing
+     * Not doing anything anymore because we're not reloading anymore
      */
     _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };

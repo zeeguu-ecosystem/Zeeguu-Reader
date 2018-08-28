@@ -7,7 +7,7 @@ import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_LEARNED_LANGUAGE} from '../zeeguuRequests';
 import {RECOMMENDED_FEED_ENDPOINT} from '../zeeguuRequests';
-
+import {take_keyboard_focus_away_from_article_list} from './main.js';
 
 const HTML_ID_DIALOG_TEMPLATE = '#add-subscription-dialog-template';
 const HTML_ID_ADD_FEED_LIST = '#addableFeedList';
@@ -39,6 +39,9 @@ export default class SourceSubscriber {
      * Uses the sweetalert library.
      */
     open() {
+
+        take_keyboard_focus_away_from_article_list();
+
         UserActivityLogger.log(USER_EVENT_OPENED_FEEDSUBSCRIBER, this.currentLanguage);
         let template = $(HTML_ID_DIALOG_TEMPLATE).html();
         swal({

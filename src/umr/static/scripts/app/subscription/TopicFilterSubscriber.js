@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import Mustache from 'mustache';
-import config from '../config';
 import swal from 'sweetalert';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_AVAILABLE_TOPICS} from '../zeeguuRequests';
+import {take_keyboard_focus_away_from_article_list} from './main.js';
 
 const HTML_ID_DIALOG_TEMPLATE = '#add-filter-dialog-template';
 const HTML_ID_ADD_FEED_LIST = '#addableFilterList';
@@ -38,6 +38,9 @@ export default class TopicFilterSubscriber {
      * Uses the sweetalert library.
      */
     open() {
+
+        take_keyboard_focus_away_from_article_list();
+
         UserActivityLogger.log(USER_EVENT_OPENED_FEEDSUBSCRIBER);
         let template = $(HTML_ID_DIALOG_TEMPLATE).html();
         swal({

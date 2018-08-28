@@ -8,6 +8,7 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {GET_SUBSCRIBED_FILTERS} from '../zeeguuRequests';
 import {SUBSCRIBE_FILTER_ENDPOINT} from '../zeeguuRequests';
 import {UNSUBSCRIBE_FILTER_ENDPOINT} from '../zeeguuRequests';
+import {reload_articles_on_drawer_close} from "./main.js";
 
 
 const HTML_ID_SUBSCRIPTION_LIST = '#topicsFilterList';
@@ -165,13 +166,14 @@ export default class TopicFilterSubscriptionList {
      * Fire an event to notify change in this class.
      */
     _changed() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+        reload_articles_on_drawer_close();
     }
 
     /**
      * Fire event to show loader while subscribing / unsubscribing
+     * Not doing anything anymore because we're not reloading anymore
      */
     _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
+
     }
 };

@@ -55,6 +55,22 @@ document.addEventListener(config.EVENT_LOADING, function () {
     articleList.showLoader();
 });
 
+var interacting_with_the_main_article_list;
+
+export function take_keyboard_focus_away_from_article_list() {
+    console.log("focus taken away");
+    interacting_with_the_main_article_list = false;
+}
+
+export function set_keyboard_focus_to_article_list() {
+    console.log("focus retrieved");
+    interacting_with_the_main_article_list = true;
+}
+
+export function article_list_has_focus() {
+    return interacting_with_the_main_article_list;
+}
+
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function () {
@@ -91,16 +107,24 @@ $(document).ready(function () {
     });
 
     let searchExecuted = document.querySelector('#search-expandable');
-    $(searchExecuted).keyup(function(event) {
+    $(searchExecuted).keyup(function (event) {
         if (event.keyCode === 13) {
             let input = $(searchExecuted).val();
             $(searchExecuted).val('');
+
             let layout = document.querySelector('.mdl-layout');
             layout.MaterialLayout.toggleDrawer();
+
             articleList.search(input);
             showSearchNotification(input)
         }
     });
+
+    // reload articles
+    document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+
+    // keyboard navigation
+    set_keyboard_focus_to_article_list();
 
 });
 
@@ -109,7 +133,7 @@ function noAvatar(image) {
     image.src = noAvatarURL;
 }
 
-function showSearchNotification(input){
+function showSearchNotification(input) {
     let template = $(HTML_ID_SEARCH_NOTIFCATION_TEMPLATE).html();
     $(HTML_ID_SEARCH_NOTIFICATION).empty();
 
@@ -130,20 +154,21 @@ function showSearchNotification(input){
 
 $(document).keydown(function (event) {
 
-    let highlighted_element = $("#articleLinkList").children(".highlightedArticle");
+    if (article_list_has_focus()) {
+        let highlighted_element = $("#articleLinkList").children(".highlightedArticle");
 
-    switch (event.key) {
-        case 'ArrowDown':
-            _select_next_article(highlighted_element, true);
-            break;
-        case 'ArrowUp':
-            _select_next_article(highlighted_element, false);
-            break;
-        case 'Enter':
-            window.location.href = highlighted_element.children("a")[0].href;
-            break;
+        switch (event.key) {
+            case 'ArrowDown':
+                _select_next_article(highlighted_element, true);
+                break;
+            case 'ArrowUp':
+                _select_next_article(highlighted_element, false);
+                break;
+            case 'Enter':
+                window.location.href = highlighted_element.children("a")[0].href;
+                break;
+        }
     }
-
 });
 
 function scrollToView(elem) {
@@ -195,4 +220,15 @@ function _select_next_article(highlighted_element, direction_forward) {
     }
 }
 
+
+export function reload_articles_on_drawer_close() {
+
+    $(".mdl-layout__obfuscator").click(function () {
+        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+        set_keyboard_focus_to_article_list();
+    });
+
+
+
+}
 

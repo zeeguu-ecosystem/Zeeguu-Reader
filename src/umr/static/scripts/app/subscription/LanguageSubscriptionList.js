@@ -7,6 +7,7 @@ import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
 import {GET_READING_LANGUAGES} from '../zeeguuRequests';
 import {MODIFY_USER_LANGUAGE} from '../zeeguuRequests';
+import {reload_articles_on_drawer_close} from "./main.js";
 
 const HTML_ID_SUBSCRIPTION_LIST = '#languagesList';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-language';
@@ -18,8 +19,8 @@ const USER_EVENT_UNFOLLOWED_FEED = 'UNFOLLOW LANGUAGE';
 let logger = new LogglyTracker();
 logger.push({
     'logglyKey': config.LOGGLY_TOKEN,
-    'sendConsoleErrors' : true,
-    'tag' : 'LanguageSubscriptionList'
+    'sendConsoleErrors': true,
+    'tag': 'LanguageSubscriptionList'
 });
 
 /**
@@ -155,7 +156,9 @@ export default class LanguageSubscriptionList {
      * @param {Object} language - Data of the particular language to remove from the list.
      */
     _remove(language) {
-        if (!this.languageSubscriptionList.delete(language.id))  { console.log("Error: feed not in feed list."); }
+        if (!this.languageSubscriptionList.delete(language.id)) {
+            console.log("Error: feed not in feed list.");
+        }
         $('span[languageRemovableID="' + language.id + '"]').fadeOut();
     }
 
@@ -163,13 +166,13 @@ export default class LanguageSubscriptionList {
      * Fire an event to notify change in this class.
      */
     _changed() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+        reload_articles_on_drawer_close();
     }
 
     /**
-     * Fire event to show loader while subscribing / unsubscribing
+     * Was used to fire event to show loader while subscribing / unsubscribing
+     * Not doing anything anymore because we're not reloading anymore
      */
     _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };

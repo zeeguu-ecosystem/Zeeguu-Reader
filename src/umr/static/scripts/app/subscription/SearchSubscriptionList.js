@@ -8,6 +8,7 @@ import ZeeguuRequests from '../zeeguuRequests';
 import {GET_SUBSCRIBED_SEARCHES} from '../zeeguuRequests';
 import {SUBSCRIBE_SEARCH_ENDPOINT} from '../zeeguuRequests';
 import {UNSUBSCRIBE_SEARCH_ENDPOINT} from '../zeeguuRequests';
+import {reload_articles_on_drawer_close} from "./main.js";
 
 
 const HTML_ID_SUBSCRIPTION_LIST = '#searchesList';
@@ -165,13 +166,13 @@ export default class SearchSubscriptionList {
      * Fire an event to notify change in this class.
      */
     _changed() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
+        reload_articles_on_drawer_close();
     }
 
     /**
      * Fire event to show loader while subscribing / unsubscribing
      */
     _loading() {
-        document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
+        // document.dispatchEvent(new CustomEvent(config.EVENT_LOADING));
     }
 };
