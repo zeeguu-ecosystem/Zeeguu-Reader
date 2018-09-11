@@ -91,6 +91,7 @@ export default class TopicFilterSubscriptionList {
             };
         }(topic));
         $(HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+        $(HTML_ID_NO_TOPIC_SELECTED).hide();
         this.topicFilterSubscriptionList.set(topic.id, topic);
     }
 

@@ -13,6 +13,7 @@ import {reload_articles_on_drawer_close} from './main.js';
 
 
 const HTML_ID_SUBSCRIPTION_LIST = '#topicsList';
+const HTML_ID_NO_TOPIC_SELECTED = '#any_topic';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-topic';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 const USER_EVENT_FOLLOWED_FEED = 'FOLLOW FEED';
@@ -92,7 +93,19 @@ export default class TopicSubscriptionList {
             };
         }(topic));
         $(HTML_ID_SUBSCRIPTION_LIST).append(subscription);
+
         this.topicList.set(topic.id, topic);
+        this.show_no_topic_message_if_necessary();
+
+
+    }
+
+    show_no_topic_message_if_necessary() {
+        if (this.topicList.size > 0) {
+            $(HTML_ID_NO_TOPIC_SELECTED).hide();
+        } else {
+            $(HTML_ID_NO_TOPIC_SELECTED).show();
+        }
     }
 
     /**
@@ -149,6 +162,7 @@ export default class TopicSubscriptionList {
     _onTopicUnfollowed(topic, reply) {
         if (reply === "OK") {
             this._changed();
+            this.show_no_topic_message_if_necessary();
         } else {
             Notifier.notify("Network Error - Could not unfollow " + topic.title + ".");
             logger.push("Could not unfollow '" + topic.title + "'. Server reply: \n" + reply);

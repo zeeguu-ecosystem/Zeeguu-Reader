@@ -6,7 +6,7 @@ import setuptools
 
 setuptools.setup(
     name="umr",
-    version="0.9.144",
+    version="0.9.154",
     packages=setuptools.find_packages(),
     include_package_data=True,
     zip_safe=False,
