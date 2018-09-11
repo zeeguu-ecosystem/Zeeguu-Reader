@@ -45,6 +45,7 @@ export default class TopicSubscriptionList {
      */
     load() {
         ZeeguuRequests.get(GET_SUBSCRIBED_TOPICS, {}, this._loadSubscriptions.bind(this));
+        this.show_no_topic_message_if_necessary();
     };
 
     /**
@@ -102,8 +103,10 @@ export default class TopicSubscriptionList {
 
     show_no_topic_message_if_necessary() {
         if (this.topicList.size > 0) {
+            console.log("hiding...");
             $(HTML_ID_NO_TOPIC_SELECTED).hide();
         } else {
+            console.log("showing...");
             $(HTML_ID_NO_TOPIC_SELECTED).show();
         }
     }
