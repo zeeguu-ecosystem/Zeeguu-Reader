@@ -28,6 +28,7 @@ const USER_EVENT_CHANGE_ORIENTATION = 'CHANGE ORIENTATION';
 const USER_EVENT_LIKE_ARTICLE = 'LIKE ARTICLE';
 const USER_EVENT_UNLIKE_ARTICLE = 'UNLIKE ARTICLE';
 const USER_EVENT_EXIT_ARTICLE = 'ARTICLE CLOSED';
+const USER_EVENT_OPEN_VOCABULARY_FOR_ARTICLE = 'OPEN ARTICLE VOCABULARY';
 const USER_EVENT_OPENED_ARTICLE = 'OPEN ARTICLE';
 const USER_EVENT_ARTICLE_FOCUS = 'ARTICLE FOCUSED';
 const USER_EVENT_ARTICLE_LOST_FOCUS = 'ARTICLE LOST FOCUS';
@@ -39,6 +40,7 @@ const HTML_ID_TOGGLE_COPY = '#toggle_copy';
 const HTML_ID_TOGGLE_UNDO = '#toggle_undo';
 const HTML_ID_TOGGLE_LIKE = '#toggle_like';
 const HTML_ID_TOGGLE_STAR = '#toggle_star';
+const HTML_ID_ARTICLE_VOCABULARY_LINK = "#bookmarks_for_article_link";
 const CLASS_MDL_BUTTON_DISABLED = 'mdl-button--disabled';
 const CLASS_NOSELECT = 'noselect';
 const ENTER_KEY = 13;
@@ -128,6 +130,9 @@ function attachInteractionScripts() {
         starer.toggle();
     });
 
+    $(HTML_ID_ARTICLE_VOCABULARY_LINK).click(function () {
+        UserActivityLogger.log_article_interaction(USER_EVENT_OPEN_VOCABULARY_FOR_ARTICLE);
+    });
 
     $(".mdl-layout__content").on("scroll", handle_CONTENT_SCROLL_EVENT);
 
