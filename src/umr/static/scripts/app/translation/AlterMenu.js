@@ -129,7 +129,7 @@ export default class AlterMenu {
         $tran.append($(HTML_ID_ALTERMENU));
         $(HTML_ID_ALTERMENU).css({
             position: "absolute",
-            maxWidth: "35%",
+            maxWidth: "24em",
             display: "inline-block",
             left: position.left + (tagWidth - menuWidth) / 2 + "px",
             top: position.top + tagHeight + topScroll + "px"
