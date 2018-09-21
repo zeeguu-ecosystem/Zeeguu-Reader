@@ -111,6 +111,9 @@ zeeguu tran[chosen]:after {
     white-space: normal;
     border-bottom: 1px solid lightgray;
     text-align: left;
+    line-height: 1em;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 #altermenu * {
