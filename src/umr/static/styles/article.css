@@ -40,6 +40,7 @@ zeeguu tran {
 
     font-size: medium;
     line-height: 1em;
+    max-width: 320px;
 }
 
 zeeguu orig {
@@ -109,6 +110,7 @@ zeeguu tran[chosen]:after {
     text-transform: none;
     white-space: normal;
     border-bottom: 1px solid lightgray;
+    text-align: left;
 }
 
 #altermenu * {
