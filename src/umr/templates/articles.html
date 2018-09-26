@@ -23,8 +23,8 @@
 
     <!-- Include the subscription package. -->
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.213.css') }}">
-    <script src="{{ url_for('umrblue.static',filename='scripts/dist/subscription-0.9.213.js') }}"></script>
+          href="{{ url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.217.css') }}">
+    <script src="{{ url_for('umrblue.static',filename='scripts/dist/subscription-0.9.217.js') }}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
     <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -225,14 +225,17 @@
 
             <a class="fadeoutOnClick articleLinkTitle headerElement"
                href="{{ url_for('umrblue.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
-                
+
+
                 {% raw %}{{ articleLinkTitle }}{% endraw %}
 
-            <i style="display:{% raw %}{{ articleLinkDisplayStar }}{% endraw %}" class="material-icons star">star</i>
-            <i style="display:{% raw %}{{ articleLinkDisplayLike }}{% endraw %}" class="material-icons star">thumb_up</i>
+                <br/>
+                <i style="display:{% raw %}{{ articleLinkDisplayStar }}{% endraw %}"
+                   class="material-icons star">star</i>
+                <i style="display:{% raw %}{{ articleLinkDisplayLike }}{% endraw %}" class="material-icons star">thumb_up</i>
+
 
             </a>
-
 
 
             <div class="starredFlag headerElement">
