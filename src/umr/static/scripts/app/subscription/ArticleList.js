@@ -146,7 +146,9 @@ export default class ArticleList {
             let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
             let topicsText = articleLink.topics.trim().replace(/(^|\s+)/g, "$1#");
             if (topicsText == "#") topicsText = "";
+
             let templateAttributes = {
+                articleLinkID: articleLink.id,
                 articleLinkPublished: publishedString,
                 articleLinkTitle: articleLink.title,
                 articleLinkURL: articleLink.url,

@@ -1,143 +1,153 @@
 <!DOCTYPE html>
 <HTML>
 <HEAD>
-	<TITLE>Zeeguu Reader</TITLE>
-	<META name="viewport" content="width=device-width, initial-scale=1">
+    <TITLE>Zeeguu Reader</TITLE>
+    <META name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
-	<script>
-	    (function(h,o,t,j,a,r){
-		h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-		h._hjSettings={hjid:510081,hjsv:5};
-		a=o.getElementsByTagName('head')[0];
-		r=o.createElement('script');r.async=1;
-		r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-		a.appendChild(r);
-	    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-	</script>
+    <!-- Hotjar Tracking Code for https://www.zeeguu.unibe.ch/read -->
+    <script>
+        (function (h, o, t, j, a, r) {
+            h.hj = h.hj || function () {
+                (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings = {hjid: 510081, hjsv: 5};
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script');
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
 
-	<script> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</script>
+    <script> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</script>
 
-	<!-- Include the subscription package. -->
-	<link rel="stylesheet" type="text/css" href="{{url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.170.css')}}">
-	<script src="{{url_for('umrblue.static',filename='scripts/dist/subscription-0.9.170.js')}}"></script>
+    <!-- Include the subscription package. -->
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.213.css') }}">
+    <script src="{{ url_for('umrblue.static',filename='scripts/dist/subscription-0.9.213.js') }}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
-  <header class="mdl-layout__header mdl-layout__header--transparent">
-	  <div class="mdl-layout__header-row">
+    <header class="mdl-layout__header mdl-layout__header--transparent">
+        <div class="mdl-layout__header-row">
 
-		  <a href="/whatnext" id = "return_home" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
-			  <i class="material-icons">home_back</i>
-		  </a>
-          <div class="mdl-layout-spacer"></div>"
+            <a href="/whatnext" id="return_home" class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon">
+                <i class="material-icons">home_back</i>
+            </a>
+            <div class="mdl-layout-spacer"></div>
+            "
 
-	  </div>
-	  <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-		  <a href="#inbox" class="mdl-layout__tab is-active"><i class="material-icons inbox-icon">inbox</i></a>
-		  <a href="#starred" class="mdl-layout__tab" >
-              <i class="material-icons " style="color:lightgray">star</i>
-              <i class="material-icons " style="color:lightgray">watch_later</i>
+        </div>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a href="#inbox" class="mdl-layout__tab is-active"><i class="material-icons inbox-icon">inbox</i></a>
+            <a href="#starred" class="mdl-layout__tab">
+                <i class="material-icons " style="color:lightgray">star</i>
+                <i class="material-icons " style="color:lightgray">watch_later</i>
                 <i class="material-icons " style="color:lightgray">thumb_up</i></a>
-	  </div>
-  </header>
-  <div class="mdl-layout__drawer">
-    <nav class="mdl-navigation">
-	  <div class="options">
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <nav class="mdl-navigation">
+            <div class="options">
 
 
-		  <br/><br/><br/>
+                <br/><br/><br/>
 
 
-    <span class="mdl-layout-title">
+                <span class="mdl-layout-title">
 		My Interests
 	</span>
-          <br/>
+                <br/>
 
 
-		  <!-- List of content currently subscribed to. -->
-		  <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+                <!-- List of content currently subscribed to. -->
+                <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
 				<span class="mdl-chip__text">Languages</span>
-				<button type="button" class="mdl-chip__action show-language-subscriber"><i class="material-icons md-light">add_circle</i></button>
+				<button type="button" class="mdl-chip__action show-language-subscriber"><i
+                        class="material-icons md-light">add_circle</i></button>
 			</span>
-		  <div id="languagesList"></div>
+                <div id="languagesList"></div>
 
-          <div style="font-size: xx-small">&nbsp;</div>
+                <div style="font-size: xx-small">&nbsp;</div>
 
-            <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+                <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
                 <span class="mdl-chip__text">Topics</span>
                 <button type="button" class="mdl-chip__action show-topic-subscriber"><i class="material-icons md-light">add_circle</i></button>
             </span>
-    		  <div id="searchesList"></div>
-	    	  <div id="topicsList">
-                  <div id="any_topic" style="display:none;">&nbsp;&nbsp;&nbsp;&nbsp;<i style="color:gray">Showing all topics...</i></div>
-              </div>
+                <div id="searchesList"></div>
+                <div id="topicsList">
+                    <div id="any_topic" style="display:none;">&nbsp;&nbsp;&nbsp;&nbsp;<i style="color:gray">Showing all
+                        topics...</i></div>
+                </div>
 
-          <div style="font-size: xx-small">&nbsp;</div>
+                <div style="font-size: xx-small">&nbsp;</div>
 
-            <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
+                <span class="mdl-chip mdl-chip--deletable mdl-color--indigo mdl-color-text--white tour">
                 <span class="mdl-chip__text">Non-Interests</span>
-                <button type="button" class="mdl-chip__action show-filter-subscriber"><i class="material-icons md-light">add_circle</i></button>
+                <button type="button" class="mdl-chip__action show-filter-subscriber"><i
+                        class="material-icons md-light">add_circle</i></button>
             </span>
-              <div id="searchesFilterList"></div>
-              <div id="topicsFilterList"></div>
+                <div id="searchesFilterList"></div>
+                <div id="topicsFilterList"></div>
 
-          <div style="font-size: xx-small">&nbsp;</div>
+                <div style="font-size: xx-small">&nbsp;</div>
 
-          <br/>
-    <span class="mdl-layout-title">
+                <br/>
+                <span class="mdl-layout-title">
 		Search
 	</span>
 
 
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
-                <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-                <input class="mdl-textfield__input" type="text" id="search-expandable">
-                <label class="mdl-textfield__label" for="search-expandable">Search...</label>
-            </div>
-          </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="search-expandable">
+                        <label class="mdl-textfield__label" for="search-expandable">Search...</label>
+                    </div>
+                </div>
 
 
-
-	  </div>
-    </nav>
-  </div>
-  <main class="mdl-layout__content">
-    <section class="mdl-layout__tab-panel is-active" id="inbox">
-        <div class="page-content">
-			<!-- Search notification -->
-			<ul id="searchNotification" class="searchNotification"></ul>
-            <!-- List of articles -->
-            <ul id="articleLinkList" class="articleLinkList"></ul>
-            <BR />
-            <div id="emptyArticleListImage" class="emptyPage">
-                <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
             </div>
-            <div class="loader">
-                <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}" alt="Loading..."/>
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel is-active" id="inbox">
+            <div class="page-content">
+                <!-- Search notification -->
+                <ul id="searchNotification" class="searchNotification"></ul>
+                <!-- List of articles -->
+                <ul id="articleLinkList" class="articleLinkList"></ul>
+                <BR/>
+                <div id="emptyArticleListImage" class="emptyPage">
+                    <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}"
+                         alt="Not subscribed to any feeds..."/>
+                </div>
+                <div class="loader">
+                    <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}"
+                         alt="Loading..."/>
+                </div>
+                <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
+                    <div class="mdl-snackbar__text"></div>
+                    <button class="mdl-snackbar__action" type="button"></button>
+                </div>
             </div>
-			<div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
-				<div class="mdl-snackbar__text"></div>
-				<button class="mdl-snackbar__action" type="button"></button>
-			</div>
-        </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="starred">
-        <div class="page-content">
-            <ul id="starredArticleList" class="articleLinkList"></ul>
-			<div id="emptyStarredArticleListImage" class="emptyPage">
-				<img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}" alt="Not subscribed to any feeds..."/>
-			</div>
-        </div>
-    </section>
-  </main>
+        </section>
+        <section class="mdl-layout__tab-panel" id="starred">
+            <div class="page-content">
+                <ul id="starredArticleList" class="articleLinkList"></ul>
+                <div id="emptyStarredArticleListImage" class="emptyPage">
+                    <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}"
+                         alt="Not subscribed to any feeds..."/>
+                </div>
+            </div>
+        </section>
+    </main>
 </div>
 
 <!-- Template for subscribed source items -->
 <script id="subscription-template-source" type="text/template">
-	<span sourceRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
+    <span sourceRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -147,7 +157,7 @@
 
 <!-- Template for subscribed topic items -->
 <script id="subscription-template-topic" type="text/template">
-	<span topicRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
+    <span topicRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ title }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -157,7 +167,7 @@
 
 <!-- Template for subscribed search items -->
 <script id="subscription-template-search" type="text/template">
-	<span searchRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
+    <span searchRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ search }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -167,7 +177,7 @@
 
 <!-- Template for subscribed language items -->
 <script id="subscription-template-language" type="text/template">
-	<span languageRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
+    <span languageRemovableID="{% raw %}{{ id }}{% endraw %}" class="mdl-chip mdl-chip--deletable list_item">
 		<span class="mdl-chip__text">{% raw %}{{ language }}{% endraw %}</span>
 		<a class="mdl-chip__action removeButton">
 			<i class="material-icons">cancel</i>
@@ -177,60 +187,74 @@
 
 <!-- Template for an article link. -->
 <script id="articleLink-template" type="text/template">
-	<li class="fadeoutOnClick articleLinkEntry  {% raw %}{{alreadyOpenedClass}}{% endraw %}" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-		<a href="{{ url_for('umrblue.get_article') }}?articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
-			<div class ="articleLinkHeader">
-				<div class="articleLinkImage headerElement">
-					<img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
-				</div>
-				<div class="articleLinkTitle headerElement" >
-					{% raw %}{{ articleLinkTitle }}{% endraw %}
+    <li class="fadeoutOnClick articleLinkEntry  {% raw %}{{alreadyOpenedClass}}{% endraw %}"
+        articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+        <a href="{{ url_for('umrblue.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
+            <div class="articleLinkHeader">
+                <div class="articleLinkImage headerElement">
+                    <img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+                </div>
+                <div class="articleLinkTitle headerElement">
+                    {% raw %}{{ articleLinkTitle }}{% endraw %}
                     <span class="wordCount"> ({% raw %}{{ wordCount }}{% endraw %} words)</span>
-				</div>
-				<div class="articleLinkDifficulty headerElement">
-					<span class ="articleLinkDifficultyText" style="background: {% raw %}{{articleDifficultyColor}}{% endraw %}"> {% raw %}{{articleDifficulty}}{% endraw %} </span>
-					<span class="linkLanguageIcon flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %}"></span>
-				</div>
-			</div>
-			<div class="articleLinkSummary">
+                </div>
+                <div class="articleLinkDifficulty headerElement">
+                    <span class="articleLinkDifficultyText"
+                          style="background: {% raw %}{{articleDifficultyColor}}{% endraw %}"> {% raw %}{{articleDifficulty}}{% endraw %} </span>
+                    <span class="linkLanguageIcon flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %}"></span>
+                </div>
+            </div>
+            <div class="articleLinkSummary">
                 <span class="publishingTime">({% raw %}{{articleLinkPublished}}{% endraw %})</span>
-				{% raw %}{{articleSummary}}{% endraw %}
-			</div>
-			<div class="articleTopics">
-				{% raw %}{{articleTopics}}{% endraw %}
-			</div>
-		</a>
-	</li>
-	<div class="articleLinkSpacer"></div>
+                {% raw %}{{articleSummary}}{% endraw %}
+            </div>
+            <div class="articleTopics">
+                {% raw %}{{articleTopics}}{% endraw %}
+            </div>
+        </a>
+    </li>
+    <div class="articleLinkSpacer"></div>
 </script>
 
 <!-- Template for a starred article link. -->
 <script id="starred-articleLink-template" type="text/template">
-	<li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-		<div class ="articleLinkHeader">
-			<a class="fadeoutOnClick articleLinkTitle headerElement" href="{{ url_for('umrblue.get_article') }}?articleStarred=True&articleLanguage={% raw %}{{ articleLinkLanguage }}{% endraw %}&articleURL={% raw %}{{ articleLinkURL }}{% endraw %}">
-				{% raw %}{{ articleLinkTitle }}{% endraw %}
-			</a>
-			<div class="starredFlag headerElement">
-				<span class="flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %} headerElement"></span>
-			</div>
-		</div>
-	</li>
-	<div class="articleLinkSpacer"></div>
+    <li class="articleLinkEntry" articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+
+        <div class="articleLinkHeader">
+
+
+            <a class="fadeoutOnClick articleLinkTitle headerElement"
+               href="{{ url_for('umrblue.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
+                
+                {% raw %}{{ articleLinkTitle }}{% endraw %}
+
+            <i style="display:{% raw %}{{ articleLinkDisplayStar }}{% endraw %}" class="material-icons star">star</i>
+            <i style="display:{% raw %}{{ articleLinkDisplayLike }}{% endraw %}" class="material-icons star">thumb_up</i>
+
+            </a>
+
+
+
+            <div class="starredFlag headerElement">
+                <span class="flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %} headerElement"></span>
+            </div>
+        </div>
+    </li>
+    <div class="articleLinkSpacer"></div>
 </script>
 
 <script id="search-notification-template" type="text/template">
-	<li class="fadeoutOnClick articleLinkEntry search-notification-box">
-		<div class ="articleLinkHeader">
-			<div class="searchText headerElement">
-				{% raw %}{{ displayText }}{% endraw %}
-			</div>
-			<div class="deleteSearch headerElement">
-				<i class="material-icons">cancel</i>
-			</div>
-		</div>
-	</li>
-	<div class="articleLinkSpacer"></div>
+    <li class="fadeoutOnClick articleLinkEntry search-notification-box">
+        <div class="articleLinkHeader">
+            <div class="searchText headerElement">
+                {% raw %}{{ displayText }}{% endraw %}
+            </div>
+            <div class="deleteSearch headerElement">
+                <i class="material-icons">cancel</i>
+            </div>
+        </div>
+    </li>
+    <div class="articleLinkSpacer"></div>
 </script>
 
 <!-- Dialog windows for adding a source, topic and filter. -->

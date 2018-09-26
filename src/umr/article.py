@@ -7,7 +7,6 @@ import requests
 import json
 
 
-
 @umrblue.route('/article', methods=['GET'])
 @with_session
 def get_article():
@@ -16,18 +15,24 @@ def get_article():
         Retrieve the supplied article link of the supplied language,
         and return a properly processed version of the article.
 
+        can be called either with articleURL or articleID
+
     """
 
-    article_url = request.args['articleURL']
-    print(article_url)
+    article_id = request.args.get('articleID', None)
 
-    encoded_url = urllib.parse.quote_plus(article_url)
-    request_url = ZEEGUU_API + "/article_id?url=" + encoded_url + "&session=" + request.sessionID
-    print(request_url)
-    result = requests.get(request_url)
-    print(result)
-    print(result.content)
-    article_id = json.loads(result.content)['article_id']
-    print(f"====== got article_id: {article_id}")
+    if article_id:
+        return render_template('article.html', article_id=article_id)
 
-    return render_template('article.html', article_id=article_id)
+    else:
+
+        article_url = request.args.get('articleURL', None)
+
+        encoded_url = urllib.parse.quote_plus(article_url)
+        request_url = ZEEGUU_API + "/article_id?url=" + encoded_url + "&session=" + request.sessionID
+
+        result = requests.get(request_url)
+
+        article_id = json.loads(result.content)['article_id']
+
+        return render_template('article.html', article_id=article_id)

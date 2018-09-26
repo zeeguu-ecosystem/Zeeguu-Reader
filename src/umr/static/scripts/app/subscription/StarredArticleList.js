@@ -38,14 +38,20 @@ export default class StarredArticleList {
         $(HTML_ID_EMPTY_STARRED_ARTICLE_LIST).hide();
 
         let template = $(HTML_ID_STARRED_ARTICLELINK_TEMPLATE).html();
-        for (let i = articleLinks.length -1; i >= 0; i--) {
+        for (let i = articleLinks.length - 1; i >= 0; i--) {
             let articleLink = articleLinks[i];
+
             let templateAttributes = {
+                articleLinkID: articleLink.id,
                 articleLinkTitle: articleLink.title,
                 articleLinkLanguage: articleLink.language,
-                articleLinkURL: articleLink.url
+                articleLinkURL: articleLink.url,
+                articleLinkDisplayStar: articleLink.starred ? "inline" : "none",
+                articleLinkDisplayLike: articleLink.liked ? "inline" : "none"
             };
+
             let element = Mustache.render(template, templateAttributes);
+
 
             $(HTML_ID_STARRED_ARTICLE_LIST).append(element);
         }
