@@ -5,8 +5,8 @@
 
     <!-- Include the translation package. -->
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('umrblue.static',filename='scripts/dist/css/translation-0.9.217.css') }}">
-    <script src="{{ url_for('umrblue.static',filename='scripts/dist/translation-0.9.217.js') }}"></script>
+          href="{{ url_for('reader_blueprint.static',filename='scripts/dist/css/translation-0.9.217.css') }}">
+    <script src="{{ url_for('reader_blueprint.static',filename='scripts/dist/translation-0.9.217.js') }}"></script>
 </head>
 <body>
 
@@ -35,7 +35,7 @@
         <div id="header_row" style="visibility:hidden" class="mdl-layout__header-row">
 
             <a id="back_button"
-                    {#            href="{{ url_for('umrblue.articles') }}"    #}
+                    {#            href="{{ url_for('reader_blueprint.articles') }}"    #}
                class="mdl-button mdl-js-button mdl-button--icon mdl-layout-icon reader_toolbar_button">
                 <i class="material-icons">arrow_back</i>
             </a>
@@ -46,7 +46,7 @@
 
 
             <a id="read_later_link"
-               href="{{ url_for('umrblue.articles') }}"
+               href="{{ url_for('reader_blueprint.articles') }}"
             >
                 <i id="read_later" class="material-icons reader_toolbar_button">watch_later</i>
             </a>

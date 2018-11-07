@@ -1,13 +1,13 @@
 from flask import request, render_template
 from .session import with_session
-from .umr_blueprint import umrblue
+from .umr_blueprint import reader_blueprint
 import urllib
 from .zeeguu_server import ZEEGUU_API
 import requests
 import json
 
 
-@umrblue.route('/article', methods=['GET'])
+@reader_blueprint.route('/article', methods=['GET'])
 @with_session
 def get_article():
     """

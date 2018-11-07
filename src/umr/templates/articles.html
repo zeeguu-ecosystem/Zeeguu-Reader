@@ -19,12 +19,12 @@
         })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
     </script>
 
-    <script> var noAvatarURL = "{{url_for('umrblue.static',filename='images/noAvatar.png')}}";</script>
+    <script> var noAvatarURL = "{{url_for('reader_blueprint.static',filename='images/noAvatar.png')}}";</script>
 
     <!-- Include the subscription package. -->
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('umrblue.static',filename='scripts/dist/css/subscription-0.9.217.css') }}">
-    <script src="{{ url_for('umrblue.static',filename='scripts/dist/subscription-0.9.217.js') }}"></script>
+          href="{{ url_for('reader_blueprint.static',filename='scripts/dist/css/subscription-0.9.217.css') }}">
+    <script src="{{ url_for('reader_blueprint.static',filename='scripts/dist/subscription-0.9.217.js') }}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
     <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -120,11 +120,11 @@
                 <ul id="articleLinkList" class="articleLinkList"></ul>
                 <BR/>
                 <div id="emptyArticleListImage" class="emptyPage">
-                    <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}"
+                    <img class="sadEleph" src="{{ url_for('reader_blueprint.static',filename='images/empty.png') }}"
                          alt="Not subscribed to any feeds..."/>
                 </div>
                 <div class="loader">
-                    <img class="eleph" src="{{ url_for('umrblue.static',filename='images/elephlogo.png') }}"
+                    <img class="eleph" src="{{ url_for('reader_blueprint.static',filename='images/elephlogo.png') }}"
                          alt="Loading..."/>
                 </div>
                 <div id="toastmessage" class="mdl-js-snackbar mdl-snackbar">
@@ -137,7 +137,7 @@
             <div class="page-content">
                 <ul id="starredArticleList" class="articleLinkList"></ul>
                 <div id="emptyStarredArticleListImage" class="emptyPage">
-                    <img class="sadEleph" src="{{ url_for('umrblue.static',filename='images/empty.png') }}"
+                    <img class="sadEleph" src="{{ url_for('reader_blueprint.static',filename='images/empty.png') }}"
                          alt="Not subscribed to any feeds..."/>
                 </div>
             </div>
@@ -189,7 +189,7 @@
 <script id="articleLink-template" type="text/template">
     <li class="fadeoutOnClick articleLinkEntry  {% raw %}{{alreadyOpenedClass}}{% endraw %}"
         articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
-        <a href="{{ url_for('umrblue.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
+        <a href="{{ url_for('reader_blueprint.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
             <div class="articleLinkHeader">
                 <div class="articleLinkImage headerElement">
                     <img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
@@ -224,7 +224,7 @@
 
 
             <a class="fadeoutOnClick articleLinkTitle headerElement"
-               href="{{ url_for('umrblue.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
+               href="{{ url_for('reader_blueprint.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
 
 
                 {% raw %}{{ articleLinkTitle }}{% endraw %}

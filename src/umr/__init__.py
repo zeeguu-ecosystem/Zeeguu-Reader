@@ -1,4 +1,4 @@
-from .umr_blueprint import umrblue
+from .umr_blueprint import reader_blueprint
 
 # make sure that we load the .article and .articles endpoints.
 # otherwise our blueprint won't be complete!
