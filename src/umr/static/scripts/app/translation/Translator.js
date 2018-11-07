@@ -110,6 +110,18 @@ export default class Translator {
 
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
         tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
+
+
+        if (transCount > 1) {
+            var d = document.createElement(config.HTML_TAG__MORE_ALTERNATIVES);
+            $(d).on("click", function(event){$(this).parent().trigger("click")});
+            tran.appendChild(d);
+        } else {
+            var d = document.createElement(config.HTML_TAG__SINGLE_ALTERNATIVE);
+            tran.appendChild(d);
+        }
+        ;
+
         $(zeeguuTag).removeClass(config.CLASS_LOADING);
     }
 

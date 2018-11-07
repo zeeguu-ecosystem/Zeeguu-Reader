@@ -36,20 +36,86 @@ zeeguu tran {
     border-radius: 0.3em 0.3em 0.3em 0.3em;
     background-clip: padding-box;
 
-    background-color: #e8f8ff;
+    /*background-color: #e8f8ff;*/
+    background-color: rgba(230, 208, 137, 0.49);
 
     font-size: medium;
     line-height: 1em;
     max-width: 24em;
 }
 
+zeeguu tran moreAlternatives {
+    font-size: small;
+    float:right;
+    color: green;
+    font-weight: bold;
+    /*background-color: yellow;*/
+}
+
+zeeguu tran singleAlternative {
+    font-size: small;
+    float:right;
+    color: rgba(230, 208, 137, 0.55);
+    font-weight: bold;
+}
+
+
+
+
+zeeguu tran moreAlternatives:after {
+    /*content: " ...";*/
+    content: " ▼";
+}
+
+.handSelected:after {
+    /*content: " ...";*/
+    content: " ✓";
+    visibility: hidden;
+    opacity: 0.1;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.handContributed:after {
+    /*content: " ...";*/
+    content: " :)";
+    visibility: hidden;
+    opacity: 0.1;
+    transition: visibility 0s 2s, opacity 2s linear;
+
+}
+
+
+
+zeeguu tran singleAlternative:after {
+    /*content: " ...";*/
+    content: " ▼";
+}
+
+zeeguu tran singleAlternative .handSelected {
+    color: green;
+}
+
+
+
 zeeguu orig {
 
-    border-bottom: 1px solid #82D8FF;;
-
+    border-bottom: 1px solid #e6d089;
     width: 100%;
 
 }
+
+.selectedAlternative, .contributedAlternativeTran {
+    background-color: #bdee95;
+}
+
+.selectedAlternativeOrig, .contributedAlternativeOrig {
+    border-bottom: 1px solid #bdee95;
+}
+
+.handSelected, .handContributed {
+    color: green;
+}
+
 
 zeeguu tran[chosen]:after {
     content: attr(chosen);

@@ -238,6 +238,18 @@ $(document).keypress(function (event) {
         if ($target.val() !== '') {
             $trans.attr(config.HTML_ATTRIBUTE_CHOSEN, $target.val());
             $trans.attr(config.HTML_ATTRIBUTE_SUGGESTION, $target.val());
+
+            // $trans.children(config.HTML_TAG__MORE_ALTERNATIVES).remove();
+
+            $trans.children(config.HTML_TAG__MORE_ALTERNATIVES).removeClass();
+            $trans.children(config.HTML_TAG__SINGLE_ALTERNATIVE).removeClass();
+
+            $trans.children(config.HTML_TAG__MORE_ALTERNATIVES).addClass("handContributed");
+            $trans.children(config.HTML_TAG__SINGLE_ALTERNATIVE).addClass("handContributed");
+
+            $trans.addClass("contributedAlternativeTran");
+            $trans.parent().children("orig").addClass("contributedAlternativeOrig");
+
             translator.sendSuggestion($zeeguu);
         }
         alterMenu.close();

@@ -88,6 +88,20 @@ export default class AlterMenu {
         ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + this.from_language + '/' + this.to_language,
                            {word: word, context: context, url: url, title: title, translation: translation, 
                             selected_from_predefined_choices: selected_from_predefined_choices});
+
+            // we can update the intensity of the uncertain flag...
+
+            $tran.children(config.HTML_TAG__MORE_ALTERNATIVES).removeClass();
+            $tran.children(config.HTML_TAG__SINGLE_ALTERNATIVE).removeClass();
+
+            $tran.children(config.HTML_TAG__MORE_ALTERNATIVES).addClass("handSelected");
+            $tran.children(config.HTML_TAG__SINGLE_ALTERNATIVE).addClass("handSelected");
+
+            var d = document.createElement(config.HTML_TAG__MORE_ALTERNATIVES);
+
+            $tran.addClass("selectedAlternative");
+            $tran.parent().children("orig").addClass("contributedAlternativeOrig");
+
     }
 
     /** 

@@ -6,6 +6,7 @@ export default {
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ATTRIBUTE_CHOSEN: 'chosen',
+
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',
     HTML_ID_ARTICLE_ID: '#articleID',
@@ -16,6 +17,8 @@ export default {
     HTML_CLASS_LOADER: '.loader',
     HTML_CLASS_EMPTY_PAGE: '.emptyPage',
 
+    HTML_TAG__MORE_ALTERNATIVES: 'moreAlternatives',
+    HTML_TAG__SINGLE_ALTERNATIVE: 'singleAlternative',
     HTML_CLASS_FOCUSED: 'focused',
     CLASS_LOADING: 'loading',
     EVENT_SUBSCRIPTION: 'event-subscription',
