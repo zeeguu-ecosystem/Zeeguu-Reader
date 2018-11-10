@@ -47,6 +47,7 @@ zeeguu tran {
     line-height: 1em;
     max-width: 24em;
     font-weight: 300;
+    color: #4f4f4f;
 }
 
 /*
@@ -133,6 +134,7 @@ that made the UI too heavy ... */
 
 .selectedAlternative, .contributedAlternativeTran {
     font-weight: 500;
+    color: black;
 }
 
 .selectedAlternativeOrig, .contributedAlternativeOrig {
