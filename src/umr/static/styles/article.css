@@ -46,7 +46,7 @@ zeeguu tran {
     font-size: medium;
     line-height: 1em;
     max-width: 24em;
-    font-weight: lighter;
+    font-weight: 300;
 }
 
 /*
@@ -131,8 +131,8 @@ classes for the origin... because at some point we were considering
 distinguishing between the two types of contribution... eventually
 that made the UI too heavy ... */
 
-.contributedAlternativeTran {
-    font-weight: normal;
+.selectedAlternative, .contributedAlternativeTran {
+    font-weight: 500;
 }
 
 .selectedAlternativeOrig, .contributedAlternativeOrig {
