@@ -15,7 +15,7 @@ setuptools.setup(
     description="Basic Web Reader for Zeeguu",
     keywords="The reader is a cool module",
     dependency_links=[
-        "git+https://github.com/mircealungu/zeeguu-core.git#egg=zeeguu"
+        "git+https://github.com/mircealungu/zeeguu-core.git#egg=zeeguu_core"
     ],
     install_requires=("flask>=0.10.1",
                       "Flask-SQLAlchemy",
