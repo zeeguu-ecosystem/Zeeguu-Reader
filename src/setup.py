@@ -21,5 +21,5 @@ setuptools.setup(
                       "Flask-SQLAlchemy",
                       "Flask-Assets",
                       "cssmin",
-                      "zeeguu")
+                      "zeeguu_core")
 )
