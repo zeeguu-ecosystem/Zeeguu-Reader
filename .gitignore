@@ -13,3 +13,4 @@ build
 dist
 
 umr.egg-info/*
+*DS_Store*
