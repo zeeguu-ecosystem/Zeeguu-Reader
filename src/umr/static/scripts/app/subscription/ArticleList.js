@@ -157,7 +157,7 @@ export default class ArticleList {
                 articleDifficulty: difficulty,
                 articleDifficultyColor: difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
-                articleIcon: articleLink.feed_image_url,
+                articleIcon: "/read/static/images/news-icons/"+articleLink.icon_name,
                 articleTopics: topicsText,
                 wordCount: articleLink.metrics.word_count,
                 alreadyOpenedClass: articleLink.opened?ALREADY_OPENED_ARTICLE_CLASS:""
