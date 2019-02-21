@@ -12,6 +12,7 @@ import {reload_articles_on_drawer_close} from "./main.js";
 
 
 const HTML_ID_SUBSCRIPTION_LIST = '#topicsFilterList';
+const HTML_ID_NO_TOPIC_SELECTED = '#any_topic';
 const HTML_ID_SUBSCRIPTION_TEMPLATE = '#subscription-template-topic';
 const HTML_CLASS_REMOVE_BUTTON = '.removeButton';
 const USER_EVENT_FOLLOWED_FEED = 'FILTER TOPIC';
