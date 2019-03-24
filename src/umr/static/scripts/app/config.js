@@ -5,6 +5,7 @@ export default {
     HTML_TRANSLATED: 'tran',
     HTML_ATTRIBUTE_TRANSCOUNT: 'transCount',
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
+    HTML_ATTRIBUTE_SERVICENAME_TRANSLATION: 'servicenametranslation',
     HTML_ATTRIBUTE_CHOSEN: 'chosen',
 
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
