@@ -105,8 +105,10 @@ export default class Translator {
         translations = translations.translations;
         var transCount = Math.min(translations.length, MAX_TRANSLATIONS_TO_DISPLAY);
         tran.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
-        for (var i = 0; i < transCount; i++)
+        for (var i = 0; i < transCount; i++) {
             tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+            tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + i, translations[i].source);
+        }
 
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
         tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');

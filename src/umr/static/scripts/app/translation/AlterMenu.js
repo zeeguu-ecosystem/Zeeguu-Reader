@@ -79,6 +79,7 @@ export default class AlterMenu {
     
         let word = $tran.parent().children(config.HTML_ORIGINAL).text();
         let translation = $tran.attr(config.HTML_ATTRIBUTE_TRANSLATION + selectedAlternative.data.alternative);
+        let servicename_translation = $tran.attr(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + selectedAlternative.data.alternative)
         let context = Translator._getContext($tran.parent().get(0));
         let url = window.location.href;
         let title = $(config.HTML_ID_ARTICLE_TITLE).text();
@@ -87,7 +88,8 @@ export default class AlterMenu {
         // Launch Zeeguu request to supply translation suggestion.
         ZeeguuRequests.post(POST_TRANSLATION_SUGGESTION + '/' + this.from_language + '/' + this.to_language,
                            {word: word, context: context, url: url, title: title, translation: translation, 
-                            selected_from_predefined_choices: selected_from_predefined_choices});
+                            selected_from_predefined_choices: selected_from_predefined_choices,
+                            servicename_translation: servicename_translation});
 
             // we can update the intensity of the uncertain flag...
 
