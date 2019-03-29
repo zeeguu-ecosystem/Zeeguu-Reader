@@ -9,7 +9,7 @@ import AlterMenu from './AlterMenu'
 import Speaker from './Speaker';
 import Starer from './Starer';
 import UserActivityLogger from '../UserActivityLogger';
-import {ensuring_TO_LANGUAGE_in_localStorage} from './cachingToLocalStorage';
+import {readCookie} from '../cookieWorks';
 import {addParagraphs, filterShit, wrapWordsInZeeguuTags} from './textProcessing';
 import {get_article_id} from './article_id.js'
 
@@ -75,9 +75,7 @@ const ARTICLE_DIFFICULTY_BUTTON_IDS = [
  * bind all necessary listeners. */
 $(document).ready(function () {
 
-    ensuring_TO_LANGUAGE_in_localStorage(function () {
-        getArticleInfoAndInitElementsRequiringIt(get_article_id());
-    });
+    getArticleInfoAndInitElementsRequiringIt(get_article_id());
 
     UserActivityLogger.log_article_interaction(USER_EVENT_OPENED_ARTICLE);
 
@@ -85,7 +83,7 @@ $(document).ready(function () {
 
 function getArticleInfoAndInitElementsRequiringIt(article_id) {
 
-    let TO_LANGUAGE = localStorage["TO_LANGUAGE"];
+    let TO_LANGUAGE = readCookie("native_lang");
 
     ZeeguuRequests.get(GET_USER_ARTICLE_INFO, {article_id: article_id}, function (article_info) {
 
@@ -166,8 +164,7 @@ function handle_TOGGLE_COPY_click() {
     if ($(this).hasClass(CLASS_MDL_BUTTON_DISABLED)) {
         enableToggleCopy();
         UserActivityLogger.log_article_interaction(USER_EVENT_ENABLE_COPY);
-    }
-    else {
+    } else {
         disableToggleCopy();
         UserActivityLogger.log_article_interaction(USER_EVENT_DISABLE_COPY);
     }
