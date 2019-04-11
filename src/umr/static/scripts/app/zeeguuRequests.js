@@ -85,6 +85,8 @@ export const GET_STARRED_ARTICLES = '/user_articles/starred_or_liked';
 /** Get articles recommended by the server. */
 export const GET_RECOMMENDED_ARTICLES = '/user_articles/recommended';
 
+/** Get all articles assosiated with the cohort */
+export const GET_COHORT_ARTICLES = "/cohort_articles";
 
 /** Info about a single article **/
 export const GET_USER_ARTICLE_INFO = '/user_article';

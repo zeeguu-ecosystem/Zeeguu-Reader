@@ -3,6 +3,7 @@ import Mustache from 'mustache';
 import ArticleList from './ArticleList';
 import StarredArticleList from './StarredArticleList';
 import SourceSubscriptionList from './SourceSubscriptionList.js';
+import CohortArticleList from "./CohortArticleList";
 import SourceSubscriber from './SourceSubscriber.js';
 import TopicSubscriber from './TopicSubscriber.js';
 import TopicSubscriptionList from './TopicSubscriptionList.js';
@@ -35,6 +36,7 @@ let sourceSubscriptionList = new SourceSubscriptionList();
 let articleList = new ArticleList(sourceSubscriptionList);
 let sourceSubscriber = new SourceSubscriber(sourceSubscriptionList);
 let starredArticleList = new StarredArticleList();
+let cohortArticleList = new CohortArticleList();
 let topicSubscriptionList = new TopicSubscriptionList();
 let topicFilterSubscriptionList = new TopicFilterSubscriptionList();
 let searchSubscriptionList = new SearchSubscriptionList();
@@ -75,6 +77,7 @@ export function article_list_has_focus() {
  * bind all necessary listeners. */
 $(document).ready(function () {
     starredArticleList.load();
+    cohortArticleList.load();
     topicSubscriptionList.load();
     topicSubscriber.load();
     topicFilterSubscriptionList.load();
