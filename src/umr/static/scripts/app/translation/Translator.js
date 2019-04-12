@@ -101,9 +101,35 @@ export default class Translator {
      * @param {Object[]} translations - A list of translations to be added to the given htmlTag content.
      */
     _setTranslations(zeeguuTag, translations) {
+
         var tran = zeeguuTag.children[0];
         translations = translations.translations;
+
+        this._setTopTranslation(zeeguuTag, translations);
+        this._setAlternativeTranslations(zeeguuTag, translations);
+
+    }
+
+    _remove_loading_class(zeeguuTag) {
+        if ($(zeeguuTag).hasClass(config.CLASS_LOADING)) {
+            $(zeeguuTag).removeClass(config.CLASS_LOADING);
+        }
+    }
+
+    _setTopTranslation(zeeguuTag, translations) {
+        var tran = zeeguuTag.children[0];
+
+        tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
+        tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
+
+        this._remove_loading_class(zeeguuTag);
+    }
+
+    _setAlternativeTranslations(zeeguuTag, translations) {
+        var tran = zeeguuTag.children[0];
+
         var transCount = Math.min(translations.length, MAX_TRANSLATIONS_TO_DISPLAY);
+
         tran.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
         for (var i = 0; i < transCount; i++) {
             tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
@@ -116,15 +142,17 @@ export default class Translator {
 
         if (transCount > 1) {
             var d = document.createElement(config.HTML_TAG__MORE_ALTERNATIVES);
-            $(d).on("click", function(event){$(this).parent().trigger("click")});
+            $(d).on("click", function (event) {
+                $(this).parent().trigger("click")
+            });
             tran.appendChild(d);
         } else {
             var d = document.createElement(config.HTML_TAG__SINGLE_ALTERNATIVE);
             tran.appendChild(d);
         }
-        ;
 
-        $(zeeguuTag).removeClass(config.CLASS_LOADING);
+        this._remove_loading_class(zeeguuTag);
+
     }
 
     /**
