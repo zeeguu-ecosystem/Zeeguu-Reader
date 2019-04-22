@@ -12,6 +12,8 @@ export const FOLLOW_FEED_ENDPOINT = '/start_following_feed';
 export const UNFOLLOW_FEED_ENDPOINT = '/stop_following_feed';
 /** Get all possible translations available for a given piece of text. */
 export const GET_TRANSLATIONS_ENDPOINT = '/get_possible_translations';
+/** Get next translations available for a given piece of text. */
+export const GET_NEXT_TRANSLATIONS_ENDPOINT = '/get_next_translations';
 /** Get a list of all feeds followed by this user.  */
 export const GET_FEEDS_BEING_FOLLOWED = '/followed_feeds';
 /** Get all articles for a particular feed. */
