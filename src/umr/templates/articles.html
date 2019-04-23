@@ -35,7 +35,6 @@
             </a>
             <div class="mdl-layout-spacer"></div>
             "
-
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
             <a href="#inbox" class="mdl-layout__tab is-active"><i class="material-icons inbox-icon">inbox</i></a>
@@ -43,6 +42,8 @@
                 <i class="material-icons " style="color:lightgray">star</i>
                 <i class="material-icons " style="color:lightgray">watch_later</i>
                 <i class="material-icons " style="color:lightgray">thumb_up</i></a>
+            <a href="#cohort" class="mdl-layout__tab">
+                <i class="material-icons inbox-icon">people</i></a>
         </div>
     </header>
     <div class="mdl-layout__drawer">
@@ -139,6 +140,18 @@
                 <div id="emptyStarredArticleListImage" class="emptyPage">
                     <img class="sadEleph" src="{{ url_for('reader_blueprint.static',filename='images/empty.png') }}"
                          alt="Not subscribed to any feeds..."/>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="cohort">
+            <div class="page-content">
+                <ul id="cohortArticleList" class="articleLinkList"></ul>
+                <div id="emptyCohortArticleListImage" class="emptyPage">
+                    <p>There are no articles in your class</p>
+                    <img
+                        class="sadEleph"
+                        src="{{ url_for('reader_blueprint.static',filename='images/empty.png') }}"
+                        alt="Not subscribed to any feeds..."/>
                 </div>
             </div>
         </section>
@@ -245,6 +258,38 @@
     </li>
     <div class="articleLinkSpacer"></div>
 </script>
+
+   <!-- Template for a cohort article link. -->
+  <script id="cohort-articleLink-template" type="text/template">
+    <li class="fadeoutOnClick articleLinkEntry  {% raw %}{{alreadyOpenedClass}}{% endraw %}"
+        articleLinkFeedID="{% raw %}{{articleLinkFeedID}}{% endraw %}">
+        <a href="{{ url_for('reader_blueprint.get_article') }}?articleID={% raw %}{{ articleLinkID }}{% endraw %}">
+            <div class="articleLinkHeader">
+                <!-- <div class="articleLinkImage headerElement">
+                    <img src="{% raw %}{{articleIcon}}{% endraw %}" class="feedIcon mdl-list__item-avatar"/>
+                </div> -->
+                <div class="articleLinkTitle headerElement">
+                    {% raw %}{{ articleLinkTitle }}{% endraw %}
+                    <span class="wordCount"> ({% raw %}{{ wordCount }}{% endraw %} words)</span>
+                </div>
+                <div class="articleLinkDifficulty headerElement">
+                    <span class="articleLinkDifficultyText"
+                          style="background: {% raw %}{{articleDifficultyColor}}{% endraw %}"> {% raw %}{{articleDifficulty}}{% endraw %} </span>
+                    <span class="linkLanguageIcon flag-icon flag-icon-{% raw %}{{ articleLinkLanguage }}{% endraw %}"></span>
+                </div>
+            </div>
+            <div class="articleLinkSummary">
+                <span class="publishingTime">({% raw %}{{articleLinkPublished}}{% endraw %})</span>
+                {% raw %}{{articleSummary}}{% endraw %}
+            </div>
+            <div class="articleTopics">
+                {% raw %}{{articleTopics}}{% endraw %}
+            </div>
+        </a>
+    </li>
+    <div class="articleLinkSpacer"></div>
+  </script>
+      
 
 <script id="search-notification-template" type="text/template">
     <li class="fadeoutOnClick articleLinkEntry search-notification-box">
