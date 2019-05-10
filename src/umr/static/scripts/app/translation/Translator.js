@@ -3,7 +3,7 @@ import config from '../config';
 import UndoStack from './UndoStack';
 import UserActivityLogger from '../UserActivityLogger';
 import ZeeguuRequests from '../zeeguuRequests';
-import {GET_TRANSLATIONS_ENDPOINT} from '../zeeguuRequests';
+import {GET_TRANSLATIONS_ENDPOINT, GET_NEXT_TRANSLATIONS_ENDPOINT} from '../zeeguuRequests';
 import {POST_TRANSLATION_SUGGESTION} from '../zeeguuRequests';
 import {HTML_ID_ALTERMENU} from "./AlterMenu";
 
@@ -61,6 +61,77 @@ export default class Translator {
     }
 
     /**
+     * Merge the surrounding translated zeeguuTags
+     * and insert translations for the tag's content by calling Zeeguu.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Element} zeeguuTag - Document element containing the content to be translated.
+     */
+    getTopTranslation(zeeguuTag) {
+        this.undoStack.pushState();
+        let tmp_trans = this._mergeZeeguu(zeeguuTag);
+
+        let text = zeeguuTag.textContent.trim();
+        let context = Translator._getContext(zeeguuTag);
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+
+        let orig = document.createElement(config.HTML_ORIGINAL);
+        let tran = document.createElement(config.HTML_TRANSLATED);
+
+        $(orig).text(text);
+        $(zeeguuTag).addClass("origtrans");
+        $(zeeguuTag).addClass(config.CLASS_LOADING);
+        $(tran).attr('chosen', tmp_trans);
+        $(zeeguuTag).empty().append(tran, orig);
+
+        let callback = (data) => {
+            this._setTopTranslation(zeeguuTag, data.translations);
+            this._set_transcount(zeeguuTag, data.translations.length);
+        }
+        // Launch Zeeguu request to fill translation options.
+        ZeeguuRequests.post(GET_NEXT_TRANSLATIONS_ENDPOINT + '/' + this.from_language + '/' + this.to_language,
+            {word: text, context: context, url: url, title: title, numberOfResults: 1}, callback);
+
+        UserActivityLogger.log_article_interaction(USER_EVENT_TRANSLATE, text);
+    }
+
+    /**
+     * Merge the surrounding translated zeeguuTags
+     * and insert translations for the tag's content by calling Zeeguu.
+     * Uses {@link ZeeguuRequests}.
+     * @param {Element} zeeguuTag - Document element containing the content to be translated.
+     * @param {String} serviceName - Previous service name that served the request.
+     * @param {String} previousTranslation - Previous translation result from the serviceName service.
+     * @param {Element} alterMenu - AlterMenu element which will be automatically opened
+        in the callback.
+     * @param {Element} target - Document element which will be used for the AlterMenu
+        build method call in the callback.
+     */
+    getNextTranslations(zeeguuTag, serviceName, previousTranslation, alterMenu, target) {
+        let text = zeeguuTag.textContent.trim();
+        let context = Translator._getContext(zeeguuTag);
+        let url = window.location.href;
+        let title = $(config.HTML_ID_ARTICLE_TITLE).text();
+
+        let orig = document.getElementById(config.HTML_ORIGINAL);
+        let tran = document.getElementById(config.HTML_TRANSLATED);
+
+        $(zeeguuTag).addClass(config.CLASS_LOADING);
+
+        let callback = (data) => {
+            this._setAlternativeTranslations(zeeguuTag, data.translations);
+            this._set_transcount(zeeguuTag, data.translations.length + 1);
+            alterMenu.build(target);
+        }
+        // Launch Zeeguu request to fill translation options.
+        ZeeguuRequests.post(GET_NEXT_TRANSLATIONS_ENDPOINT + '/' + this.from_language + '/' + this.to_language,
+            {word: text, context: context, url: url, title: title, service: serviceName, numberOfResults: -1,
+                currentTranslation: previousTranslation}, callback);
+
+        UserActivityLogger.log_article_interaction(USER_EVENT_TRANSLATE, text);
+    }
+
+    /**
      * Resets to previous state (i.e. removes translation from last translated word).
      */
     undoTranslate() {
@@ -106,8 +177,29 @@ export default class Translator {
         translations = translations.translations;
 
         this._setTopTranslation(zeeguuTag, translations);
-        this._setAlternativeTranslations(zeeguuTag, translations);
+        // Setting the rest of the translations. Passing all translations except the first one.
+        // Slice will return empty array if the translations length is 1.
+        this._setAlternativeTranslations(zeeguuTag, translations.slice(1));
 
+        this._set_transcount(zeeguuTag, translations.length);
+    }
+
+    _set_transcount(zeeguuTag, translationsNumber) {
+        var tran = zeeguuTag.children[0];
+        var transCount = Math.min(translationsNumber, MAX_TRANSLATIONS_TO_DISPLAY);
+
+        if (transCount > 1) {
+            var d = document.createElement(config.HTML_TAG__MORE_ALTERNATIVES);
+            $(d).on("click", function (event) {
+                $(this).parent().trigger("click")
+            });
+            tran.appendChild(d);
+        } else {
+            var d = document.createElement(config.HTML_TAG__SINGLE_ALTERNATIVE);
+            tran.appendChild(d);
+        }
+
+        tran.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
     }
 
     _remove_loading_class(zeeguuTag) {
@@ -121,6 +213,10 @@ export default class Translator {
 
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
         tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
+        // Set the attribute translate all to empty which will make the next request to fetch all translations
+        tran.setAttribute(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS, '');
+        tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + 0, translations[0].translation);
+        tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + 0, translations[0].source);
 
         this._remove_loading_class(zeeguuTag);
     }
@@ -128,31 +224,17 @@ export default class Translator {
     _setAlternativeTranslations(zeeguuTag, translations) {
         var tran = zeeguuTag.children[0];
 
-        var transCount = Math.min(translations.length, MAX_TRANSLATIONS_TO_DISPLAY);
-
-        tran.setAttribute(config.HTML_ATTRIBUTE_TRANSCOUNT, transCount);
-        for (var i = 0; i < transCount; i++) {
-            tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
-            tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + i, translations[i].source);
+        // The first translation (config.HTML_ATTRIBUTE_TRANSLATION + 0) is already set.
+        // The array translations doesn't contain the first translation, only the alternatives,
+        // thus starting from (config.HTML_ATTRIBUTE_TRANSLATION + 1).
+        for (var i = 1; i < translations.length + 1; i++) {
+            tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i - 1].translation);
+            tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + i, translations[i - 1].source);
         }
 
-        tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
-        tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
-
-
-        if (transCount > 1) {
-            var d = document.createElement(config.HTML_TAG__MORE_ALTERNATIVES);
-            $(d).on("click", function (event) {
-                $(this).parent().trigger("click")
-            });
-            tran.appendChild(d);
-        } else {
-            var d = document.createElement(config.HTML_TAG__SINGLE_ALTERNATIVE);
-            tran.appendChild(d);
-        }
+        tran.setAttribute(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS, 'false');
 
         this._remove_loading_class(zeeguuTag);
-
     }
 
     /**

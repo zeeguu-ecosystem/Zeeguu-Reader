@@ -7,6 +7,7 @@ export default {
     HTML_ATTRIBUTE_TRANSLATION: 'translation',
     HTML_ATTRIBUTE_SERVICENAME_TRANSLATION: 'servicenametranslation',
     HTML_ATTRIBUTE_CHOSEN: 'chosen',
+    HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS: 'possibly_more_translations',
 
     HTML_ATTRIBUTE_SUGGESTION: 'suggestion',
     HTML_ID_ARTICLE_URL: '#articleURL',

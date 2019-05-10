@@ -399,13 +399,25 @@ function attachZeeguuTagListeners() {
         let $target = $(event.target);
         if ($target.is(config.HTML_ZEEGUUTAG) && !translator.isTranslated($target)) {
             // A non-translated word is clicked, so we translate it.
-            translator.translate(this);
+            translator.getTopTranslation(this);
+            // NOTE: To fall back to the previous version uncomment the following line
+            // and comment the above line.
+            // translator.translate(this);
         } else if ($target.is(config.HTML_ORIGINAL)) {
             // Original text is clicked, so we pronounce it using the speaker.
             speaker.speak($target.text(), FROM_LANGUAGE);
         } else if ($target.is(config.HTML_TRANSLATED)) {
             // Translated text is clicked, so we open the alterMenu to allow for suggestions.
-            alterMenu.build($target);
+            let getAllTranslations = ($target.attr(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS) === '')
+            if (getAllTranslations) {
+                let currentService = $target.attr(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + "0");
+                let currentTranslation = $target.attr(config.HTML_ATTRIBUTE_TRANSLATION + "0");
+                // Fetch the rest of the translations. Passing the alterMenu variable to automatically
+                // build and show the alterMenu via the callback once the next translations are fetched.
+                translator.getNextTranslations(this, currentService, currentTranslation, alterMenu, $target);
+            } else {
+                alterMenu.build($target);
+            }
         }
     });
 }
