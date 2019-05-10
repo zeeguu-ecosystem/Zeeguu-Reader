@@ -214,7 +214,7 @@ export default class Translator {
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
         tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
         // Set the attribute translate all to empty which will make the next request to fetch all translations
-        tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATE_ALL, '');
+        tran.setAttribute(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS, '');
         tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + 0, translations[0].translation);
         tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + 0, translations[0].source);
 
@@ -232,7 +232,7 @@ export default class Translator {
             tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + i, translations[i - 1].source);
         }
 
-        tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATE_ALL, 'false');
+        tran.setAttribute(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS, 'false');
 
         this._remove_loading_class(zeeguuTag);
     }
