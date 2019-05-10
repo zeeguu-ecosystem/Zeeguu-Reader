@@ -408,7 +408,7 @@ function attachZeeguuTagListeners() {
             speaker.speak($target.text(), FROM_LANGUAGE);
         } else if ($target.is(config.HTML_TRANSLATED)) {
             // Translated text is clicked, so we open the alterMenu to allow for suggestions.
-            let getAllTranslations = ($target.attr(config.HTML_ATTRIBUTE_TRANSLATE_ALL) === '')
+            let getAllTranslations = ($target.attr(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS) === '')
             if (getAllTranslations) {
                 let currentService = $target.attr(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + "0");
                 let currentTranslation = $target.attr(config.HTML_ATTRIBUTE_TRANSLATION + "0");
