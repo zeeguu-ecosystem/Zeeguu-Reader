@@ -77,7 +77,7 @@ export default class ArticleList {
             this.clear();
             $(config.HTML_CLASS_LOADER).show();
             let callback = (articleLinks) => this._renderArticleLinks(articleLinks);
-            ZeeguuRequests.get(SEARCH_ENDPOINT + '/' + search , {}, callback);
+            ZeeguuRequests.get(SEARCH_ENDPOINT + '/' + search, {}, callback);
             UserActivityLogger.log(EVENT_ARTICLES_REQUESTED, this.articlesOnPage);
         }
     }
@@ -92,7 +92,7 @@ export default class ArticleList {
     /**
      * Shows the loader
      */
-    showLoader(){
+    showLoader() {
         $(config.HTML_CLASS_LOADER).show();
     }
 
@@ -123,7 +123,6 @@ export default class ArticleList {
     }
 
 
-
     /**
      * Generate all the article links from a particular feed.
      * @param {Object[]} articleLinks - List containing the articles for the feed.
@@ -135,8 +134,7 @@ export default class ArticleList {
             Notifier.notify("Couldn't find any articles for your selection!");
             this.noFeedTour.show();
             return;
-        }
-        else
+        } else
             this.noFeedTour.hide();
 
         let template = $(HTML_ID_ARTICLE_LINK_TEMPLATE).html();
@@ -146,6 +144,18 @@ export default class ArticleList {
             let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
             let topicsText = articleLink.topics.trim().replace(/(^|\s+)/g, "$1#");
             if (topicsText == "#") topicsText = "";
+
+            // In case we don't have an articleLink url let's point to a fancy letter
+            // that matches the initials of the author
+
+            var articleIconURL;
+
+            if (articleLink.icon_name) {
+                articleIconURL = "/read/static/images/news-icons/" + articleLink.icon_name;
+            } else {
+                let authorsInitial = articleLink.authors[0].toLowerCase();
+                articleIconURL = "https://img.icons8.com/dusk/2x/" + authorsInitial + ".png";
+            }
 
             let templateAttributes = {
                 articleLinkID: articleLink.id,
@@ -157,10 +167,10 @@ export default class ArticleList {
                 articleDifficulty: difficulty,
                 articleDifficultyColor: difficultyToColorMapping(difficulty),
                 articleSummary: $('<p>' + articleLink.summary + '</p>').text(),
-                articleIcon: "/read/static/images/news-icons/"+articleLink.icon_name,
+                articleIcon: articleIconURL,
                 articleTopics: topicsText,
                 wordCount: articleLink.metrics.word_count,
-                alreadyOpenedClass: articleLink.opened?ALREADY_OPENED_ARTICLE_CLASS:""
+                alreadyOpenedClass: articleLink.opened ? ALREADY_OPENED_ARTICLE_CLASS : ""
             };
 
             let element = Mustache.render(template, templateAttributes);
