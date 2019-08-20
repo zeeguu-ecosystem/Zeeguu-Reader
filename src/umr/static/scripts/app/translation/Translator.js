@@ -213,10 +213,19 @@ export default class Translator {
 
         tran.setAttribute(config.HTML_ATTRIBUTE_CHOSEN, translations[0].translation); // default chosen translation is 0
         tran.setAttribute(config.HTML_ATTRIBUTE_SUGGESTION, '');
-        // Set the attribute translate all to empty which will make the next request to fetch all translations
-        tran.setAttribute(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS, '');
-        tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + 0, translations[0].translation);
-        tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + 0, translations[0].source);
+        if (this.from_language == "en" && this.to_language == "en") {
+            // The translator returned more than one result. Mark possibly more translations as false
+            tran.setAttribute(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS, 'false');
+            for (var i = 0; i < translations.length; i++) {
+                tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + i, translations[i].translation);
+                tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + i, translations[i].source);
+            }
+        } else {
+            // Set the attribute translate all to empty which will make the next request to fetch all translations
+            tran.setAttribute(config.HTML_ATTRIBUTE_POSSIBLY_MORE_TRANSLATIONS, '');
+            tran.setAttribute(config.HTML_ATTRIBUTE_TRANSLATION + 0, translations[0].translation);
+            tran.setAttribute(config.HTML_ATTRIBUTE_SERVICENAME_TRANSLATION + 0, translations[0].source);
+        }
 
         this._remove_loading_class(zeeguuTag);
     }
