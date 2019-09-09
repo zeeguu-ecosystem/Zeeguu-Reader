@@ -73,6 +73,29 @@ export function article_list_has_focus() {
     return interacting_with_the_main_article_list;
 }
 
+function prepare_tab_interaction(tab_name) {
+    //this is designed for the cohort, inbox, and starred tabs on the home of the reader
+    $("#" + tab_name + "_tab").click(function (e) {
+        localStorage.setItem('activeTab', tab_name);
+    });
+}
+
+function activate_last_used_tab_if_available() {
+
+    var activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+        $('a.mdl-layout__tab').removeClass('is-active');
+        $("#" + activeTab + "_tab").addClass('is-active');
+
+        $('.mdl-layout__tab-panel').removeClass('is-active');
+        $('#' + activeTab).addClass('is-active');
+    } else {
+        $("#inbox_tab").addClass('is-active');
+        $('#inbox').addClass('is-active');
+    }
+
+}
+
 /* When the document has finished loading,
  * bind all necessary listeners. */
 $(document).ready(function () {
@@ -88,6 +111,11 @@ $(document).ready(function () {
     languageSubscriber.load();
     sourceSubscriptionList.load();
     sourceSubscriber.load();
+
+    prepare_tab_interaction("cohort");
+    prepare_tab_interaction("inbox");
+    prepare_tab_interaction("starred");
+    activate_last_used_tab_if_available();
 
     let showAddLanguageDialog = document.querySelector('.show-language-subscriber');
     $(showAddLanguageDialog).click(function () {
@@ -230,7 +258,6 @@ export function reload_articles_on_drawer_close() {
         document.dispatchEvent(new CustomEvent(config.EVENT_SUBSCRIPTION));
         set_keyboard_focus_to_article_list();
     });
-
 
 
 }

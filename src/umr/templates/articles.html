@@ -23,8 +23,8 @@
 
     <!-- Include the subscription package. -->
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('reader_blueprint.static',filename='scripts/dist/css/subscription-0.9.343.css') }}">
-    <script src="{{ url_for('reader_blueprint.static',filename='scripts/dist/subscription-0.9.343.js') }}"></script>
+          href="{{ url_for('reader_blueprint.static',filename='scripts/dist/css/subscription-0.9.353.css') }}">
+    <script src="{{ url_for('reader_blueprint.static',filename='scripts/dist/subscription-0.9.353.js') }}"></script>
 </HEAD>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
     <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -37,12 +37,12 @@
             "
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#inbox" class="mdl-layout__tab is-active"><i class="material-icons inbox-icon">inbox</i></a>
+            <a id="inbox_tab" href="#inbox" class="mdl-layout__tab"><i class="material-icons inbox-icon">inbox</i></a>
 
-            <a href="#cohort" class="mdl-layout__tab">
+            <a id="cohort_tab" href="#cohort" class="mdl-layout__tab">
                 <i class="material-icons inbox-icon">people</i></a>
 
-            <a href="#starred" class="mdl-layout__tab">
+            <a id="starred_tab" href="#starred" class="mdl-layout__tab">
                 <i class="material-icons " style="color:lightgray">star</i>
                 <i class="material-icons " style="color:lightgray">watch_later</i>
                 <i class="material-icons " style="color:lightgray">thumb_up</i></a>
