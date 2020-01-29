@@ -3,6 +3,17 @@
     <title>Zeeguu Reader</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89557275-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-89557275-2');
+    </script>
+
+    
     <!-- Include the translation package. -->
     <link rel="stylesheet" type="text/css"
           href="{{ url_for('reader_blueprint.static',filename='scripts/dist/css/translation-0.9.353.css') }}">
