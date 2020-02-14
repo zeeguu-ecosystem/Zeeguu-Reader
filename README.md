@@ -16,7 +16,7 @@ The Zeeguu Reader project is open-source according to the definitions of the MIT
 The deployed version of Reader can be found on: [www.zeeguu.org](https://www.zeeguu.org/reader/articles).
 
 ## Further reading
-Most, if not all, of the information regarding this project can be found in our [documentation](https://zeeguu-ecosystem.github.io/Unified-Multilanguage-Reader/). This page documents the master branch, where in-development versions can be read by pulling a specific branch and running `autodoc.sh` to build your own local documentation.
+Most, if not all, of the information regarding this project can be found in our [documentation](https://zeeguu-ecosystem.github.io/Zeeguu-Reader/). This page documents the master branch, where in-development versions can be read by pulling a specific branch and running `autodoc.sh` to build your own local documentation.
 This will cover subjects like:
 - Setting up your development environment.
 - Architecutre and UI design.
