@@ -38,7 +38,7 @@ export default class CohortArticleList {
     $(HTML_ID_EMPTY_COHORT_ARTICLE_LIST).hide();
 
     let template = $(HTML_ID_COHORT_ARTICLELINK_TEMPLATE).html();
-    for (let i = articleLinks.length - 1; i >= 0; i--) {
+    for (let i = 0; i < articleLinks.length; i++) {
       let articleLink = articleLinks[i];
       var publishedString = moment.utc(articleLink.published).fromNow();
       let difficulty = Math.round(parseFloat(articleLink.metrics.difficulty) * 100) / 10;
