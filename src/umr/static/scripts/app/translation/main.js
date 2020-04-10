@@ -351,7 +351,7 @@ function load_article_info_in_page(article_info) {
     $("#authors").text(article_info.authors);
 
     // LINK TO SOURCE
-    if (article_info.url.startsWith("https://www.zeeguu.org/read/userarticle")) {
+    if (article_info.url.startsWith("userarticle")) {
         $("#source").attr("href", "");
     } else {
         $("#source").attr("href", article_info.url);
