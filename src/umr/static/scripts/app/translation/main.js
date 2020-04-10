@@ -351,7 +351,12 @@ function load_article_info_in_page(article_info) {
     $("#authors").text(article_info.authors);
 
     // LINK TO SOURCE
-    $("#source").attr("href", article_info.url);
+    if (article_info.url.startsWith("https://www.zeeguu.org")) {
+        $("#source").attr("href", "");
+    } else {
+        $("#source").attr("href", article_info.url);
+    }
+
 
     // CONTENT
     let text = article_info.content;
